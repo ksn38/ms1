@@ -1,1 +1,1 @@
-web: gunicorn mybl.wsgi --log-file -
+web: gunicorn .wsgi --log-file -
