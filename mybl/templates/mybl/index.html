@@ -1,4 +1,5 @@
 {% extends "mybl/base.html" %}
 {% block content %}
-<p>mysite</p>
+{% load static %}
+<img src="{% static "mybl/pepe.jpg" %}" width="310" height="310">
 {% endblock content %}
