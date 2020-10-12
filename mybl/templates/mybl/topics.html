@@ -1,6 +1,6 @@
 {% extends "mybl/base.html" %}
 {% block header %}
-  <h1>Topics</h1>
+  <h1>Темы</h1>
 {% endblock header %}
 {% block content %}
   <ul>
@@ -11,9 +11,9 @@
       </h3>
     </li>
   {% empty %}
-    <li>No topics have been added yet.</li>
+    <li>Ни одной темы еще не было добавлено</li>
   {% endfor %}
   </ul>
 
-  <h3><a href="{% url 'new_topic' %}">Add new topic</h3>
+  <h3><a href="{% url 'new_topic' %}">Добавить новую тему</h3>
 {% endblock content %}

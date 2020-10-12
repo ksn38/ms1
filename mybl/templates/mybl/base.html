@@ -21,21 +21,21 @@
             data-toggle="collapse" data-target="#navbar"
             aria-expanded="false" aria-controls="navbar">
           </button>
-          <a class="navbar-brand" href="{% url 'index' %}">mysite</a>
+          <a class="navbar-brand" href="{% url 'index' %}">ksn38</a>
         </div>
 
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="{% url 'topics' %}">Topics</a></li>
+            <li><a href="{% url 'topics' %}">Темы</a></li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
               <li><a>Hello, {{ user.username }}.</a></li>
-              <li><a href="{% url 'logout' %}">log out</a></li>
+              <li><a href="{% url 'logout' %}">Выйти</a></li>
             {% else %}
-              <li><a href="{% url 'register' %}">register</a></li>
-              <li><a href="{% url 'login' %}">log in</a></li>
+              <li><a href="{% url 'register' %}">Регистрация</a></li>
+              <li><a href="{% url 'login' %}">Логин</a></li>
             {% endif %}
           </ul>
         </div><!--/.nav-collapse -->

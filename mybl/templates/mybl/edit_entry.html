@@ -3,11 +3,11 @@
 
   <p><a href="{% url 'topic' topic.id %}">{{ topic }}</a></p>
 
-  <p>Edit entry:</p>
+  <p>Редактировать запись:</p>
 
   <form action="{% url 'edit_entry' entry.id %}" method='post'>
     {% csrf_token %}
     {{ form.as_p }}
-	  <button name="submit">save changes</button>
+	  <button name="submit">Сохранить изменения</button>
  </form>
 {% endblock content %}

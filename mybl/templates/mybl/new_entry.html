@@ -7,7 +7,7 @@
   <form action="{% url 'new_entry' topic.id %}" method='post'>
     {% csrf_token %}
     {{ form.as_p }}
-    <button name='submit'>add entry</button>
+    <button name='submit'>Добавить запись</button>
   </form>
 
 {% endblock content %}

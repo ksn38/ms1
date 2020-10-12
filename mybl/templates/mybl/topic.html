@@ -4,7 +4,7 @@
 {% endblock header %}
 {% block content %}
 <p>
-  <a href="{% url 'new_entry' topic.id %}">add new entry</a>
+  <a href="{% url 'new_entry' topic.id %}">Добавить запись</a>
 </p>
 {% for entry in entries %}
   <div class="panel panel-default">
@@ -12,7 +12,7 @@
       <h3>
         {{ entry.date_added|date:'M d, Y H:i' }}
         <small>
-          <a href="{% url 'edit_entry' entry.id %}">edit entry</a>
+          <a href="{% url 'edit_entry' entry.id %}">Редактировать запись</a>
         </small>
       </h3>
     </div>
