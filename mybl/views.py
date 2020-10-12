@@ -27,7 +27,7 @@ def new_topic(request):
     else:
         form = TopicForm(request.POST)
         if form.is_valid():
-            new_topic = form.save(commi=False)
+            new_topic = form.save(commit=False)
             new_topic.owner = request.user
             new_topic.save()
             return HttpResponseRedirect(reverse('topics'))
