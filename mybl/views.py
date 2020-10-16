@@ -1,71 +1,88 @@
 from django.shortcuts import render
-from mybl.models import Topic, Entry
+from mybl.models import Bpost, Comment
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
-from mybl.forms import TopicForm, EntryForm
+from mybl.forms import BpostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 
 
 def index(request):
     return render(request, 'mybl/index.html')
 
-def topics(request):
-    topics = Topic.objects.order_by('date_added')
-    context = {'topics': topics}
-    return render(request, 'mybl/topics.html', context)
+def blog(request):
+    blog = Bpost.objects.order_by('date_added')
+    context = {'blog': blog}
+    return render(request, 'mybl/blog.html', context)
 
-def topic(request, topic_id):
-    topic = Topic.objects.get(id=topic_id)
-    entries = topic.entry_set.order_by('-date_added')
-    context = {'topic': topic, 'entries': entries}
-    return render(request, 'mybl/topic.html', context)
+def bpost(request, bpost_id):
+    bpost = Bpost.objects.get(id=bpost_id)
+    comments = bpost.comment_set.order_by('-date_added')
+    context = {'bpost': bpost, 'comments': comments}
+    return render(request, 'mybl/bpost.html', context)
 
 @login_required
-def new_topic(request):
+def new_bpost(request):
     if request.method != 'POST':
-        form = TopicForm()
+        form = BpostForm()
     else:
-        form = TopicForm(request.POST)
+        form = BpostForm(request.POST)
         if form.is_valid():
-            new_topic = form.save(commit=False)
-            new_topic.owner = request.user
-            new_topic.save()
-            return HttpResponseRedirect(reverse('topics'))
+            new_bpost = form.save(commit=False)
+            new_bpost.owner = request.user
+            new_bpost.save()
+            return HttpResponseRedirect(reverse('blog'))
             
     context = {'form': form}
-    return render(request, 'mybl/new_topic.html', context)
+    return render(request, 'mybl/new_bpost.html', context)
 
 @login_required
-def new_entry(request, topic_id):
-    topic = Topic.objects.get(id=topic_id)
+def new_comment(request, bpost_id):
+    bpost = Bpost.objects.get(id=bpost_id)
     
     if request.method != 'POST':
-        form = EntryForm()
+        form = CommentForm()
     else:
-        form = EntryForm(data=request.POST)
+        form = CommentForm(data=request.POST)
         if form.is_valid():
-            new_entry = form.save(commit=False)
-            new_entry.topic = topic
-            new_entry.save()
-            return HttpResponseRedirect(reverse('topic', args=[topic_id]))
+            new_comment = form.save(commit=False)
+            new_comment.bpost = bpost
+            new_comment.save()
+            return HttpResponseRedirect(reverse('bpost', args=[bpost_id]))
             
-    context = {'topic': topic, 'form': form}
-    return render(request, 'mybl/new_entry.html', context)
+    context = {'bpost': bpost, 'form': form}
+    return render(request, 'mybl/new_comment.html', context)
     
-@login_required
-def edit_entry(request, entry_id):
-    entry = Entry.objects.get(id=entry_id)
-    topic = entry.topic
-    if topic.owner != request.user:
+'''@login_required
+def edit_comment(request, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    bpost = comment.bpost
+    if bpost.owner != request.user:
         raise Http404
     
     if request.method != 'POST':
-        form = EntryForm(instance=entry)
+        form = CommentForm(instance=comment)
     else:
-        form = EntryForm(instance=entry, data=request.POST)
+        form = CommentForm(instance=comment, data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('topic', args=[topic.id]))
+            return HttpResponseRedirect(reverse('bpost', args=[bpost.id]))
             
-    context = {'entry': entry, 'topic': topic, 'form': form}
-    return render(request, 'mybl/edit_entry.html', context)
+    context = {'comment': comment, 'bpost': bpost, 'form': form}
+    return render(request, 'mybl/edit_comment.html', context)'''
+    
+@login_required
+def edit_bpost(request, bpost_id):
+    bpost = Bpost.objects.get(id=bpost_id)
+    if bpost.owner != request.user:
+        raise Http404
+    
+    if request.method != 'POST':
+        form = BpostForm(instance=bpost)
+    else:
+        form = BpostForm(instance=bpost, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('bpost', args=[bpost.id]))
+            
+    context = {'bpost': bpost, 'form': form}
+    return render(request, 'mybl/edit_bpost.html', context)

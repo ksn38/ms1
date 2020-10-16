@@ -1,5 +1,5 @@
 from django.contrib import admin
-from mybl.models import Topic, Entry
+from mybl.models import Bpost, Comment
 
-admin.site.register(Topic)
-admin.site.register(Entry)
+admin.site.register(Bpost)
+admin.site.register(Comment)

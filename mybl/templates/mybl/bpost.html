@@ -1,0 +1,35 @@
+{% extends 'mybl/base.html' %}
+{% block header %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3>
+      {{ bpost.header }}
+      {{ bpost.date_added|date:'M d, Y H:i' }}
+      <small>
+        <a href="{% url 'edit_bpost' bpost.id %}">Редактировать пост</a>
+      </small>
+    </h3>
+  </div>
+<div class="panel-body">
+  <main>{{ bpost.main }}</main>
+</div> 
+{% endblock header %}
+{% block content %}
+<p>
+  <a href="{% url 'new_comment' bpost.id %}">Добавить комментарий</a>
+</p>
+{% for comment in comments %}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3>
+        {{ comment.date_added|date:'M d, Y H:i' }}
+      </h3>
+    </div>
+    <div class="panel-body">
+      {{ comment.text|linebreaks }}
+    </div>
+  </div> 
+{% empty %}
+  Здесь еще нет комментариев
+{% endfor %}
+{% endblock content %}

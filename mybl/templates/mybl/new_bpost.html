@@ -1,0 +1,10 @@
+{% extends "mybl/base.html" %}
+{% block content %}
+<p>Добавить новую запись:</p>
+<form action="{% url 'new_bpost' %}" method='post'>
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button name="submit">Добавить запись</button>
+ </form>
+
+{% endblock content %} 

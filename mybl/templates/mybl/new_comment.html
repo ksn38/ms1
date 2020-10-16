@@ -1,0 +1,13 @@
+{% extends "mybl/base.html" %}
+{% block content %}
+
+  <p><a href="{% url 'bpost' bpost.id %}">{{ bpost }}</a></p>
+
+  <p>Добaвить новый комментарий</p>
+  <form action="{% url 'new_comment' bpost.id %}" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name='submit'>Добавить</button>
+  </form>
+
+{% endblock content %}

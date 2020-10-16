@@ -1,11 +1,11 @@
 {% extends "mybl/base.html" %}
 {% block content %}
 
-  <p><a href="{% url 'topic' topic.id %}">{{ topic }}</a></p>
+  <p><a href="{% url 'bpost' bpost.id %}">{{ bpost }}</a></p>
 
   <p>Редактировать запись:</p>
 
-  <form action="{% url 'edit_entry' entry.id %}" method='post'>
+  <form action="{% url 'edit_bpost' bpost.id %}" method='post'>
     {% csrf_token %}
     {{ form.as_p }}
 	  <button name="submit">Сохранить изменения</button>

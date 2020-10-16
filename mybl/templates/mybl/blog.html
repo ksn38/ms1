@@ -1,0 +1,33 @@
+{% extends "mybl/base.html" %}
+{% block header %}
+  <!--h1>Посты</h1 -->
+{% endblock header %}
+{% block content %}
+  <ul>
+  {% for bpost in blog %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>
+          <a href="{% url 'bpost' bpost.id %}">{{ bpost.header }}</a>
+          {{ bpost.date_added|date:'M d, Y H:i' }}
+      </h3>
+    </div>
+    <div class="panel-body">
+      {{bpost.main}}
+    </div>
+  </div> 
+    <!--li>
+      <h3>
+        <article>
+          <a href="{% url 'bpost' bpost.id %}">{{ bpost.header }}</a>
+          <main>{{bpost.main}}</main>
+        </article>
+      </h3>
+    </li -->
+  {% empty %}
+    <li>Ни одной записи еще не было добавлено</li>
+  {% endfor %}
+  </ul>
+
+  <h3><a href="{% url 'new_bpost' %}">Добавить новую запись</h3>
+{% endblock content %}

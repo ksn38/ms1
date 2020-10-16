@@ -1,17 +1,18 @@
 from django import forms
-from mybl.models import Topic, Entry
+from mybl.models import Bpost, Comment
 
 
-class TopicForm(forms.ModelForm):
+class BpostForm(forms.ModelForm):
     class Meta:
-        model = Topic
-        fields = ['text']
-        labels = {'text': ''}
+        model = Bpost
+        fields = ['header', 'main']
+        labels = {'header': 'Заголовок'}
+        labels = {'main': ''}
 
 
-class EntryForm(forms.ModelForm):
+class CommentForm(forms.ModelForm):
     class Meta:
-        model = Entry
+        model = Comment
         fields = ['text']
         labels = {'text': ''}
         widgets = {'text': forms.Textarea(attrs={'cols': 80})}
