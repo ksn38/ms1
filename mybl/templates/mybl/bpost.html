@@ -5,7 +5,6 @@
       <span class="d-flex justify-content-between">
         {{ bpost.header }}
         <small>
-          <a class="text-secondary" href="{% url 'edit_bpost' bpost.id %}">Редактировать пост</a>
           {{ bpost.date_added|date:'M d, Y H:i' }}
         </small>
       </span>
@@ -13,6 +12,7 @@
   <div class="card card-body text-dark">
     <main>{{ bpost.main }}</main>
   </div>
+  <a class="text-secondary d-flex justify-content-end" href="{% url 'edit_bpost' bpost.id %}">Редактировать пост</a>
 </div>
 {% endblock header %}
 {% block content %}
@@ -22,7 +22,7 @@
 {% for comment in comments %}
 <div class="card card-body my-2 bg-secondary text-white">
   <span class="d-flex justify-content-end">
-      {{ comment.date_added|date:'M d, Y H:i' }}
+    {{ comment.date_added|date:'M d, Y H:i' }}
   </span>
   <div class="card card-body text-dark">
     {{ comment.text}}

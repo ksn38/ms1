@@ -17,10 +17,11 @@
     <div class="card card-body text-dark">
       {{bpost.main}}
     </div>
+    <a class="text-secondary" href="{% url 'new_comment' bpost.id %}">Добавить комментарий</a>
   </div> 
   {% empty %}
     <li>Ни одной записи еще не было добавлено</li>
   {% endfor %}
 </ul>
-<h5><a class="text-secondary d-flex justify-content-around" href="{% url 'new_bpost' %}">Добавить новую запись</h5>
+<h5><a class="text-secondary d-flex justify-content-center" href="{% url 'new_bpost' %}">Добавить новую запись</h5>
 {% endblock content %}
