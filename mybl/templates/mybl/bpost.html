@@ -1,30 +1,30 @@
 {% extends 'mybl/base.html' %}
 {% block header %}
-<div class="card card-body">
+<div class="card card-body border-dark my-2 bg-dark text-white">
     <h5>
       <span class="d-flex justify-content-between">
         {{ bpost.header }}
         <small>
-          <a class="card-link" href="{% url 'edit_bpost' bpost.id %}">Редактировать пост</a>
+          <a class="text-secondary" href="{% url 'edit_bpost' bpost.id %}">Редактировать пост</a>
           {{ bpost.date_added|date:'M d, Y H:i' }}
         </small>
       </span>
     </h5>
-  <div class="card card-body">
+  <div class="card card-body text-dark">
     <main>{{ bpost.main }}</main>
   </div>
 </div>
 {% endblock header %}
 {% block content %}
 <p>
-  <a class="card-link" href="{% url 'new_comment' bpost.id %}">Добавить комментарий</a>
+  <a class="text-secondary d-flex justify-content-around" href="{% url 'new_comment' bpost.id %}">Добавить комментарий</a>
 </p>
 {% for comment in comments %}
-<div class="card card-body">
+<div class="card card-body my-2 bg-secondary text-white">
   <span class="d-flex justify-content-end">
       {{ comment.date_added|date:'M d, Y H:i' }}
   </span>
-  <div class="card card-body">
+  <div class="card card-body text-dark">
     {{ comment.text}}
   </div>
 </div> 

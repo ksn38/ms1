@@ -5,16 +5,16 @@
 {% block content %}
 <ul>
   {% for bpost in blog %}
-  <div class="card card-body">
+  <div class="card card-body border-dark my-2 bg-dark text-white">
     <div>
       <h5>
         <span class="d-flex justify-content-between">
-          <a class="card-link" href="{% url 'bpost' bpost.id %}">{{ bpost.header }}</a>
+          <a class="text-light" href="{% url 'bpost' bpost.id %}">{{ bpost.header }}</a>
           <small>{{ bpost.date_added|date:'M d, Y H:i' }}</small>
         </span>
       </h5>
     </div>
-    <div class="card card-body">
+    <div class="card card-body text-dark">
       {{bpost.main}}
     </div>
   </div> 
@@ -22,5 +22,5 @@
     <li>Ни одной записи еще не было добавлено</li>
   {% endfor %}
 </ul>
-<h5><a class="card-link d-flex justify-content-end" href="{% url 'new_bpost' %}">Добавить новую запись</h5>
+<h5><a class="text-secondary d-flex justify-content-around" href="{% url 'new_bpost' %}">Добавить новую запись</h5>
 {% endblock content %}
