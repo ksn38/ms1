@@ -19,7 +19,7 @@ let dict = function (dif) {
   dateLast = dateLast.toISOString().slice(0, 10);
   console.log(`dateLast slice ${dateLast}`);
   for (let i = 0; i < 201; i += 100) {
-    let url = 'http://iss.moex.com/iss/history/engines/stock/markets/shares/boards/tqbr/securities.json?date=' + dateLast + '&start=' + i;
+    let url = 'https://iss.moex.com/iss/history/engines/stock/markets/shares/boards/tqbr/securities.json?date=' + dateLast + '&start=' + i;
     $.ajax({
     url: url,
     async: false,
