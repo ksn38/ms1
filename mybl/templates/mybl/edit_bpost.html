@@ -1,13 +1,12 @@
 {% extends "mybl/base.html" %}
 {% block content %}
-
+<div class="form-group"></div>
   <p><a href="{% url 'bpost' bpost.id %}">{{ bpost }}</a></p>
-
   <p>Редактировать запись:</p>
-
   <form action="{% url 'edit_bpost' bpost.id %}" method='post'>
     {% csrf_token %}
     {{ form.as_p }}
-	  <button name="submit">Сохранить изменения</button>
- </form>
+	  <button class='btn btn-primary' name="submit">Сохранить изменения</button>
+  </form>
+</div>
 {% endblock content %}

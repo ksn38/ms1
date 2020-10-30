@@ -1,11 +1,11 @@
 {% extends "mybl/base.html" %}
 {% block content %}
+<div class="form-group"></div>
   <form method="post" action="{% url 'register' %}">
     {% csrf_token %}
     {{ form.as_p }}
-
-    <button name="submit">register</button>
+    <button class='btn btn-primary' name='submit'>Регистрация</button>
     <input type="hidden" name="next" value="{% url 'index' %}" />
   </form>
-
+</div>
 {% endblock content %}

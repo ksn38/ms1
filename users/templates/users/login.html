@@ -1,15 +1,14 @@
 {% extends "mybl/base.html" %}
 {% block content %}
+<div class="form-group"></div>
   {% if form.errors %}
-  <p>Your username and password didn't match. Please try again.</p>
+  <p>Ваше имя пользователя и пароль не совпадают. Пожалуйста, попробуйте еще раз.</p>
   {% endif %}
-
   <form method="post" action="{% url 'login' %}">
   {% csrf_token %}
   {{ form.as_p }}
-
-  <button name="submit">log in</button>
+  <button class='btn btn-primary' name='submit'>Войти</button>
   <input type="hidden" name="next" value="{% url 'index' %}" />
   </form>
-
+</div>
 {% endblock content %}

@@ -6,7 +6,7 @@ class BpostForm(forms.ModelForm):
     class Meta:
         model = Bpost
         fields = ['header', 'main']
-        labels = {'header': 'Заголовок'}
+        labels = {'header': ''}
         labels = {'main': ''}
 
 

@@ -3,31 +3,24 @@
   <!--h1>Посты</h1 -->
 {% endblock header %}
 {% block content %}
-  <ul>
+<ul>
   {% for bpost in blog %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3>
-          <a href="{% url 'bpost' bpost.id %}">{{ bpost.header }}</a>
-          {{ bpost.date_added|date:'M d, Y H:i' }}
-      </h3>
+  <div class="card card-body">
+    <div>
+      <h5>
+        <span class="d-flex justify-content-between">
+          <a class="card-link" href="{% url 'bpost' bpost.id %}">{{ bpost.header }}</a>
+          <small>{{ bpost.date_added|date:'M d, Y H:i' }}</small>
+        </span>
+      </h5>
     </div>
-    <div class="panel-body">
+    <div class="card card-body">
       {{bpost.main}}
     </div>
   </div> 
-    <!--li>
-      <h3>
-        <article>
-          <a href="{% url 'bpost' bpost.id %}">{{ bpost.header }}</a>
-          <main>{{bpost.main}}</main>
-        </article>
-      </h3>
-    </li -->
   {% empty %}
     <li>Ни одной записи еще не было добавлено</li>
   {% endfor %}
-  </ul>
-
-  <h3><a href="{% url 'new_bpost' %}">Добавить новую запись</h3>
+</ul>
+<h5><a class="card-link d-flex justify-content-end" href="{% url 'new_bpost' %}">Добавить новую запись</h5>
 {% endblock content %}

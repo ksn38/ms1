@@ -1,10 +1,11 @@
 {% extends "mybl/base.html" %}
 {% block content %}
-<p>Добавить новую запись:</p>
-<form action="{% url 'new_bpost' %}" method='post'>
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button name="submit">Добавить запись</button>
- </form>
-
+<div class="form-group"></div>
+  <p>Добавить новую запись:</p>
+  <form action="{% url 'new_bpost' %}" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class='btn btn-primary' name="submit">Добавить запись</button>
+  </form>
+</div>
 {% endblock content %} 
