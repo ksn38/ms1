@@ -7,6 +7,5 @@ urlpatterns = [
     path('blog/', views.blog, name='blog'),
     path('bpost/<bpost_id>', views.bpost, name='bpost'),
     path('new_bpost/', views.new_bpost, name='new_bpost'),
-    path('new_comment/<bpost_id>', views.new_comment, name='new_comment'),
     path('edit_bpost/<bpost_id>', views.edit_bpost, name='edit_bpost'),
 ]

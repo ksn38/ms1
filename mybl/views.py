@@ -17,7 +17,17 @@ def blog(request):
 def bpost(request, bpost_id):
     bpost = Bpost.objects.get(id=bpost_id)
     comments = bpost.comment_set.order_by('-date_added')
-    context = {'bpost': bpost, 'comments': comments}
+    if request.method != 'POST':
+        form = CommentForm()
+    else:
+        form = CommentForm(data=request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.bpost = bpost
+            new_comment.save()
+            return HttpResponseRedirect(reverse('bpost', args=[bpost_id]))
+            
+    context = {'bpost': bpost, 'comments': comments, 'form': form}
     return render(request, 'mybl/bpost.html', context)
 
 @login_required
@@ -35,7 +45,7 @@ def new_bpost(request):
     context = {'form': form}
     return render(request, 'mybl/new_bpost.html', context)
 
-@login_required
+'''@login_required
 def new_comment(request, bpost_id):
     bpost = Bpost.objects.get(id=bpost_id)
     
@@ -52,23 +62,7 @@ def new_comment(request, bpost_id):
     context = {'bpost': bpost, 'form': form}
     return render(request, 'mybl/new_comment.html', context)
     
-'''@login_required
-def edit_comment(request, comment_id):
-    comment = Comment.objects.get(id=comment_id)
-    bpost = comment.bpost
-    if bpost.owner != request.user:
-        raise Http404
-    
-    if request.method != 'POST':
-        form = CommentForm(instance=comment)
-    else:
-        form = CommentForm(instance=comment, data=request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('bpost', args=[bpost.id]))
-            
-    context = {'comment': comment, 'bpost': bpost, 'form': form}
-    return render(request, 'mybl/edit_comment.html', context)'''
+'''
     
 @login_required
 def edit_bpost(request, bpost_id):

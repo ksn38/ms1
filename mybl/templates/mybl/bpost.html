@@ -12,13 +12,13 @@
   <div class="card card-body text-dark">
     <main>{{ bpost.main }}</main>
   </div>
-  <a class="text-secondary d-flex justify-content-end" href="{% url 'edit_bpost' bpost.id %}">Редактировать пост</a>
+  <a class="text-right text-secondary" href="{% url 'edit_bpost' bpost.id %}">Редактировать пост</a>
 </div>
 {% endblock header %}
 {% block content %}
-<p>
-  <a class="text-secondary d-flex justify-content-around" href="{% url 'new_comment' bpost.id %}">Добавить комментарий</a>
-</p>
+<div class="col text-center">
+  <a class="text-secondary col text-center" href="#new_comment">Добавить комментарий</a>
+</div>
 {% for comment in comments %}
 <div class="card card-body my-2 bg-secondary text-white">
   <span class="d-flex justify-content-end">
@@ -31,4 +31,16 @@
 {% empty %}
   Здесь еще нет комментариев
 {% endfor %}
+<div class="text-center">Добaвить новый комментарий:</div>
+<div class="d-flex justify-content-center">
+  <div class="form-group" id='new_comment'></div>
+    <form action="{% url 'bpost' bpost.id %}" method='post'>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="col text-center">
+        <button class='btn btn-primary' name='submit'>Добавить</button>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock content %}
