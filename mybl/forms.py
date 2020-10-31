@@ -6,8 +6,9 @@ class BpostForm(forms.ModelForm):
     class Meta:
         model = Bpost
         fields = ['header', 'main']
-        labels = {'header': ''}
-        labels = {'main': ''}
+        labels = {'header': 'Заголовок', 'main': 'Текст'}
+        widgets = {'header': forms.TextInput(attrs={'size': 100}),
+         'main': forms.Textarea(attrs={'cols': 100, 'rows': 10})}
 
 
 class CommentForm(forms.ModelForm):
