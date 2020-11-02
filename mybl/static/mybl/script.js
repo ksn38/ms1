@@ -38,7 +38,7 @@ let dict = function (dif) {
 button.onclick = function () {
   let date = new Date();
   if (date.getDay() == 1 && parseInt(days.value) < 4) {
-    days.value = parseInt(days.value) + 2;
+    days.value = 4;
   } 
   let dict1 = dict(1);
   dict1 = new Map([...dict1.entries()]);
