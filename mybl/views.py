@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from mybl.models import Bpost, Comment
+from mybl.models import Bpost, Comment, Currency
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from mybl.forms import BpostForm, CommentForm
@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 
 
 def index(request):
+    name = Currency
+    
     return render(request, 'mybl/index.html')
 
 def blog(request):

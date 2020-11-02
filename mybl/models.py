@@ -22,3 +22,14 @@ class Comment(models.Model):
 	
     def __str__(self):
         return self.text[:50] + '...'
+        
+class Currency(models.Model):
+    name = models.CharField(max_length=50)
+    change = models.FloatField()
+    period = models.IntegerField()
+    
+    def __str__(self):
+      return self.name
+      return self.change
+	
+

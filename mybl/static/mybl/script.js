@@ -36,13 +36,10 @@ let dict = function (dif) {
   
 
 button.onclick = function () {
-  /*let date = new Date();
-  if (date.getDay() == 0) {
-    date = 2;
-  } else if (date.getDay() == 1) {
-    date = 3;
-  } else {date = 1;};
-  date.setDate(date.getDate() - 1)*/
+  let date = new Date();
+  if (date.getDay() == 1 && parseInt(days.value) < 4) {
+    days.value = parseInt(days.value) + 2;
+  } 
   let dict1 = dict(1);
   dict1 = new Map([...dict1.entries()]);
   let dict2 = new Map([...dict(days.value).entries()]);
