@@ -55,10 +55,10 @@ button.onclick = function () {
   };
   outMapRev = new Map([...outMap.entries()].sort((a,b) => a[1] - b[1]));
   outMap = new Map([...outMap.entries()].sort((a,b) => b[1] - a[1]));
-  outMapKeys = [...outMap.keys()].slice(0, 30);
-  outMapValues = [...outMap.values()].slice(0, 30);
-  outMapRevKeys = [...outMapRev.keys()].slice(0, 30);
-  outMapRevValues = [...outMapRev.values()].slice(0, 30);
+  outMapKeys = [...outMap.keys()].slice(0, 20);
+  outMapValues = [...outMap.values()].slice(0, 20);
+  outMapRevKeys = [...outMapRev.keys()].slice(0, 20);
+  outMapRevValues = [...outMapRev.values()].slice(0, 20);
   for (let i = 0; i < namesHigh.length; i++) {
     namesHigh[i].textContent = outMapKeys[i];
     changesHigh[i].textContent = outMapValues[i];

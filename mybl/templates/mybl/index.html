@@ -1,18 +1,46 @@
 {% extends "mybl/base.html" %}
 {% block content %}
 {% load static %}
-<!DOCTYPE html>
 <body>
-  <span class='d-flex justify-content-center mt-2'>
-    Акции-лидеры и аутсайдеры Мосбиржи. Разница между последней сессией
-  </span>
-  <span class='d-flex justify-content-center mb-2'>
-    <label for='days sr-only' style='padding-right: 10px'>и числом</label>
-    <input class='' id='days' value='2' size='2'>
-    <input type='submit' class='button' value='дней назад'></input>
-  </span>
-  <div class='d-flex justify-content-center'>
+  <div class='d-flex justify-content-around  m-2 flex-row-reverse flex-wrap'>
     <table class='table-sm table-dark table-striped table-bordered'>
+      <caption style='caption-side: top'>
+        <span class='d-flex justify-content-center'>
+          Цена валюты
+        </span>
+        <!-- span class='d-flex justify-content-center mb-2'>
+          <label for='days sr-only' style='padding-right: 10px'>и числом</label>
+          <input class='' id='days' value='2' size='2'>
+          <input type='submit' class='button' value='дней назад'></input>
+        </span -->
+      </caption>
+      <tr>
+        <td>Валюта</td>
+        <td>Цена, ₽</td>
+      </tr>
+      {% for key, values in dict_curr.items %}
+        <tr>
+          <td>
+            {{ key }}
+          </td>
+          <td>
+            {{ values }}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    <table class='table-sm table-dark table-striped table-bordered'>
+      <caption style='caption-side: top'>
+        <span class='d-flex justify-content-center'>
+          Акции-лидеры и аутсайдеры Мосбиржи. Разница между последней сессией
+        </span>
+        <span class='d-flex justify-content-center mb-2'>
+          <label for='days sr-only' style='padding-right: 10px'>и числом</label>
+          <input class='' id='days' value='2' size='2'>
+          <input type='submit' class='button' value='дней назад'></input>
+        </span>
+      </caption>
       <tr>
         <th>Акция</th>
         <th>Изменение</th>
@@ -122,6 +150,66 @@
         <td class='change-low'>-</td>
       </tr>
       <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+            <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+            <tr>
         <td class='name-high'>-</td>
         <td class='change-high'>-</td>
         <td class='name-low'>-</td>

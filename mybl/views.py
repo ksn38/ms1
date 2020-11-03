@@ -4,12 +4,21 @@ from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from mybl.forms import BpostForm, CommentForm
 from django.contrib.auth.decorators import login_required
+import requests
 
 
 def index(request):
-    name = Currency
-    
-    return render(request, 'mybl/index.html')
+    response = requests.get('http://www.cbr.ru/scripts/XML_daily.asp')
+    currency = response.content
+    currency = currency.decode("cp1251").split('>')
+    dict_curr = {}
+
+    for i in range(len(currency)):
+        if currency[i] == '<Name':
+            dict_curr[currency[i + 1].split('<')[0]] = float(currency[i + 3].split('<')[0].replace(',', '.'))
+            
+    context = {'dict_curr': dict_curr}
+    return render(request, 'mybl/index.html', context)
 
 def blog(request):
     blog = Bpost.objects.order_by('date_added')

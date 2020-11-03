@@ -48,17 +48,17 @@ button.onclick = function () {
   for (let key = 0; key < listKeys.length; key++) {
     let val = ((dict1.get(listKeys[key])/dict2.get(listKeys[key])) - 1) * 10000;
     if (!Number.isNaN(val)) {
-      val = Math.round(val, 2);
+      val = Math.round(val);
       val = val/100;
       outMap.set(listKeys[key], val);
     };
   };
   outMapRev = new Map([...outMap.entries()].sort((a,b) => a[1] - b[1]));
   outMap = new Map([...outMap.entries()].sort((a,b) => b[1] - a[1]));
-  outMapKeys = [...outMap.keys()].slice(0, 20);
-  outMapValues = [...outMap.values()].slice(0, 20);
-  outMapRevKeys = [...outMapRev.keys()].slice(0, 20);
-  outMapRevValues = [...outMapRev.values()].slice(0, 20);
+  outMapKeys = [...outMap.keys()].slice(0, 30);
+  outMapValues = [...outMap.values()].slice(0, 30);
+  outMapRevKeys = [...outMapRev.keys()].slice(0, 30);
+  outMapRevValues = [...outMapRev.values()].slice(0, 30);
   for (let i = 0; i < namesHigh.length; i++) {
     namesHigh[i].textContent = outMapKeys[i];
     changesHigh[i].textContent = outMapValues[i];
