@@ -11,12 +11,11 @@ from collections import OrderedDict
 
 
 def index(request):
-    def dif_dict(dif):
+    '''def dif_dict():
         def parser(dif):
             url = 'http://www.cbr.ru/scripts/XML_daily.asp'
             today = date.today() - timedelta(days=dif)
             dif = today.strftime("?date_req=%d/%m/%Y")
-            print(dif)
             response = requests.get(url + dif)
             currency = response.content.decode("cp1251").split('>')
             dict_curr = {}
@@ -28,7 +27,7 @@ def index(request):
             return dict_curr
 
         now = parser(0)
-        delta = parser(dif)
+        delta = parser(2)
         order_dif = {}
 
         for key in now.keys():
@@ -37,7 +36,7 @@ def index(request):
             except KeyError:
                 pass
 
-        order_dif = OrderedDict(sorted(order_dif.items(), key=lambda item: item[1], reverse=True))
+        order_dif = OrderedDict(sorted(order_dif.items(), key=lambda item: item[1]))
 
         dif_plus = []
 
@@ -53,13 +52,15 @@ def index(request):
             if i[1] < 0:
                 dif_minus.append(i)
 
-        return dif_plus, dif_minus
+        return order_dif
+        
+    #dif_plus = {}
 
-    if(request.GET.get('mybtn')):
-        dif_dict = dif_dict(int(request.GET.get('mytextbox')))
+    #if(request.GET.get('mybtn')):
+        #dif_plus = dif_dict(int(request.GET.get('mytextbox')))
     
-    context = {'dif_plus': dif_dict[0], 'dif_minus': dif_dict[1]}
-    return render(request, 'mybl/index.html', context)
+    context = {'dif_plus': dif_dict()}'''
+    return render(request, 'mybl/index.html')
 
 def blog(request):
     blog = Bpost.objects.order_by('date_added')

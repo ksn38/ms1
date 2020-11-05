@@ -3,7 +3,7 @@
 {% load static %}
 <body>
   <div class='d-flex justify-content-around  m-2 flex-row-reverse flex-wrap'>
-    <div class='d-flex justify-center flex-wrap' style='flex-basis: 30%;'>
+    <!-- div class='d-flex justify-center flex-wrap' style='flex-basis: 30%;'>
       <div class='mb-3'>
         <small class='d-flex justify-center mt-2 text-secondary'>Изменение валюты относительно рубля<br> за период</small>
         <form action="#" method="get" class='d-flex justify-start'>
@@ -16,18 +16,18 @@
           <th class='px-2'>Валюта</th>
           <th class='px-2'>%</th>
         </tr>
-        {% for name, values in dif_plus %}
+        {% for value in dif_plus %}
           <tr>
             <td>
-              {{ name }}
+              {{ value }}
             </td>
             <td>
-              {{ values }}
+              {{ value }}
             </td>
           </tr>
         {% endfor %}
       </table>
-      <table class='table-sm table-dark table-striped table-bordered'>
+      <!--table class='table-sm table-dark table-striped table-bordered'>
         <tr>
           <th class='px-2'>Валюта</th>
           <th class='px-2'>%</th>
@@ -43,7 +43,7 @@
           </tr>
         {% endfor %}
       </table>
-      </div>
+      </div-->
     
     <table class='table-sm table-dark table-striped table-bordered'>
       <caption style='caption-side: top'>
