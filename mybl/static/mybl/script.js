@@ -2,7 +2,7 @@ let namesHigh = document.querySelectorAll('.name-high');
 let namesLow = document.querySelectorAll('.name-low');
 let changesHigh = document.querySelectorAll('.change-high');
 let changesLow = document.querySelectorAll('.change-low');
-let button = document.querySelector('.button');
+let button = document.getElementById('stocks');
 let text = document.querySelector('p');
 let days = document.getElementById('days');
 

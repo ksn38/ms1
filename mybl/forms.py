@@ -1,5 +1,5 @@
 from django import forms
-from mybl.models import Bpost, Comment
+from mybl.models import Bpost, Comment, Currency
 
 
 class BpostForm(forms.ModelForm):
@@ -7,7 +7,7 @@ class BpostForm(forms.ModelForm):
         model = Bpost
         fields = ['header', 'main']
         labels = {'header': 'Заголовок', 'main': ''}
-        widgets = {'header': forms.TextInput(attrs={'size': 70}),
+        widgets = {'header': forms.TextInput(attrs={'size': 50}),
          'main': forms.Textarea(attrs={'cols': 80, 'rows': 10})}
 
 
@@ -17,3 +17,4 @@ class CommentForm(forms.ModelForm):
         fields = ['text']
         labels = {'text': ''}
         widgets = {'text': forms.Textarea(attrs={'cols': 50, 'rows': 5})}
+        

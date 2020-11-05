@@ -11,34 +11,40 @@ from collections import OrderedDict
 
 
 def index(request):
-    url = 'http://www.cbr.ru/scripts/XML_daily.asp'
-    today = date.today() - timedelta(days=10)
-    dif = today.strftime("?date_req=%d/%m/%Y")
+    def dif_dict(dif):
+        def parser(dif):
+            url = 'http://www.cbr.ru/scripts/XML_daily.asp'
+            today = date.today() - timedelta(days=dif)
+            dif = today.strftime("?date_req=%d/%m/%Y")
+            print(dif)
+            response = requests.get(url + dif)
+            currency = response.content.decode("cp1251").split('>')
+            dict_curr = {}
 
-    def parser(url):
-        response = requests.get(url)
-        currency = response.content.decode("cp1251").split('>')
-        dict_curr = {}
+            for i in range(len(currency)):
+                if currency[i] == '<CharCode':
+                    dict_curr[currency[i + 1].split('<')[0]] = float(currency[i + 7].split('<')[0].replace(',', '.'))
 
-        for i in range(len(currency)):
-            if currency[i] == '<CharCode':
-                dict_curr[currency[i + 1].split('<')[0]] = float(currency[i + 7].split('<')[0].replace(',', '.'))
+            return dict_curr
 
-        return dict_curr
+        now = parser(0)
+        delta = parser(dif)
+        order_dif = {}
 
-    now = parser(url)
-    delta = parser(url + dif)
-    order_dif = {}
+        for key in now.keys():
+            try:
+                order_dif[key] = round((now[key] / delta[key] - 1) * 100, 2)
+            except KeyError:
+                pass
 
-    for key in now.keys():
-      try:
-          order_dif[key] = round((now[key]/delta[key] - 1) * 100, 2)
-      except KeyError:
-          pass      
-      
-    order_dif = OrderedDict(sorted(order_dif.items(), key=lambda item: item[1]))
+        order_dif = OrderedDict(sorted(order_dif.items(), key=lambda item: item[1]))
+
+        return order_dif
+
+    if(request.GET.get('mybtn')):
+        dif_dict = dif_dict(int(request.GET.get('mytextbox')))
     
-    context = {'order_dif': order_dif}
+    context = {'dif_dict': dif_dict}
     return render(request, 'mybl/index.html', context)
 
 def blog(request):
