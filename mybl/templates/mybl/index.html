@@ -3,40 +3,54 @@
 {% load static %}
 <body>
   <div class='d-flex justify-content-around  m-2 flex-row-reverse flex-wrap'>
-    <table class='table-sm table-dark table-striped table-bordered'>
-      <caption style='caption-side: top'>
-        <span class='d-flex justify-content-center'>
-          <small class='pb-2'>Изменение валюты относительно рубля за пеиод</small>
-        </span>
-        <span class='d-flex justify-content-center mb-2'>
-          <form action="#" method="get">
-            <input type="text" value="2" name="mytextbox" size="1"/>
-            <input type="submit" class="button" value="дней" name="mybtn">
-          </form>
-        </span>
-      </caption>
-      <tr>
-        <th class='px-2'>Валюта</th>
-        <th class='px-2'>%</th>
-      </tr>
-      {% for key, values in dif_dict.items %}
+    <div class='d-flex justify-center flex-wrap' style='flex-basis: 30%;'>
+      <div class='mb-3'>
+        <small class='d-flex justify-center mt-2 text-secondary'>Изменение валюты относительно рубля<br> за период</small>
+        <form action="#" method="get" class='d-flex justify-start'>
+          <input type="text" value="2" name="mytextbox" size="1"/>
+          <input type="submit" class="button" value="дней" name="mybtn">
+        </form>
+      </div>
+      <table class='table-sm table-dark table-striped table-bordered'>
         <tr>
-          <td>
-            {{ key }}
-          </td>
-          <td>
-            {{ values }}
-          </td>
+          <th class='px-2'>Валюта</th>
+          <th class='px-2'>%</th>
         </tr>
-      {% endfor %}
-    </table>
+        {% for name, values in dif_plus %}
+          <tr>
+            <td>
+              {{ name }}
+            </td>
+            <td>
+              {{ values }}
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+      <table class='table-sm table-dark table-striped table-bordered'>
+        <tr>
+          <th class='px-2'>Валюта</th>
+          <th class='px-2'>%</th>
+        </tr>
+        {% for name, values in dif_minus %}
+          <tr>
+            <td>
+              {{ name }}
+            </td>
+            <td>
+              {{ values }}
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+      </div>
     
     <table class='table-sm table-dark table-striped table-bordered'>
       <caption style='caption-side: top'>
-        <span class='d-flex justify-content-center'>
+        <span class='d-flex justify-content-start'>
           <small>Акции-лидеры и аутсайдеры Мосбиржи. <br>Разница между последней сессией и числом</small>
         </span>
-        <span class='d-flex justify-content-center mb-2'>
+        <span class='d-flex justify-content-start mb-2'>
           <!-- label for='days sr-only' style='padding-right: 10px'></label -->
           <input class='' id='days' value='5' size='2'>
           <input type='submit' class='button' id='stocks' value='дней назад'></input>

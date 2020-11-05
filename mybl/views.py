@@ -37,14 +37,28 @@ def index(request):
             except KeyError:
                 pass
 
+        order_dif = OrderedDict(sorted(order_dif.items(), key=lambda item: item[1], reverse=True))
+
+        dif_plus = []
+
+        for i in order_dif.items():
+            if i[1] >= 0:
+                dif_plus.append(i)
+
         order_dif = OrderedDict(sorted(order_dif.items(), key=lambda item: item[1]))
 
-        return order_dif
+        dif_minus = []
+
+        for i in order_dif.items():
+            if i[1] < 0:
+                dif_minus.append(i)
+
+        return dif_plus, dif_minus
 
     if(request.GET.get('mybtn')):
         dif_dict = dif_dict(int(request.GET.get('mytextbox')))
     
-    context = {'dif_dict': dif_dict}
+    context = {'dif_plus': dif_dict[0], 'dif_minus': dif_dict[1]}
     return render(request, 'mybl/index.html', context)
 
 def blog(request):
