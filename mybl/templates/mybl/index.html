@@ -6,7 +6,7 @@
     <table class='table-sm table-dark table-striped table-bordered'>
       <caption style='caption-side: top'>
         <span class='d-flex justify-content-center'>
-          Цена валюты
+          Изменение валюты относительно рубля за 20 дней
         </span>
         <!-- span class='d-flex justify-content-center mb-2'>
           <label for='days sr-only' style='padding-right: 10px'>и числом</label>
@@ -15,10 +15,10 @@
         </span -->
       </caption>
       <tr>
-        <td>Валюта</td>
-        <td>Цена, ₽</td>
+        <th>Валюта</th>
+        <th>%</th>
       </tr>
-      {% for key, values in dict_curr.items %}
+      {% for key, values in order_dif.items %}
         <tr>
           <td>
             {{ key }}
@@ -37,15 +37,15 @@
         </span>
         <span class='d-flex justify-content-center mb-2'>
           <label for='days sr-only' style='padding-right: 10px'>и числом</label>
-          <input class='' id='days' value='2' size='2'>
+          <input class='' id='days' value='5' size='2'>
           <input type='submit' class='button' value='дней назад'></input>
         </span>
       </caption>
       <tr>
         <th>Акция</th>
-        <th>Изменение</th>
+        <th>%</th>
         <th>Акция</th>
-        <th>Изменение</th>
+        <th>%</th>
       </tr>
       <tr>
         <td class='name-high'>-</td>
