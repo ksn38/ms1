@@ -26,7 +26,7 @@ def index(request):
         return dict_curr
 
     now = parser(0)
-    delta = 2
+    delta = 1
     
     if(request.GET.get('mybtn')):
         delta = (int(request.GET.get('mytextbox')))
