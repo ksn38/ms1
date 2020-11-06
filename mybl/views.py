@@ -21,7 +21,7 @@ def index(request):
 
         for i in range(len(currency)):
             if currency[i] == '<CharCode':
-                dict_curr[currency[i + 1].split('<')[0]] = float(currency[i + 7].split('<')[0].replace(',', '.'))
+                dict_curr[currency[i + 1].split('<')[0]] = float(currency[i + 7].split('<')[0].replace(',', '.')) / float(currency[i + 3].split('<')[0])
 
         return dict_curr
 
