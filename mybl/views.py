@@ -11,56 +11,52 @@ from collections import OrderedDict
 
 
 def index(request):
-    '''def dif_dict():
-        def parser(dif):
-            url = 'http://www.cbr.ru/scripts/XML_daily.asp'
-            today = date.today() - timedelta(days=dif)
-            dif = today.strftime("?date_req=%d/%m/%Y")
-            response = requests.get(url + dif)
-            currency = response.content.decode("cp1251").split('>')
-            dict_curr = {}
+    def parser(dif):
+        url = 'http://www.cbr.ru/scripts/XML_daily.asp'
+        today = date.today() - timedelta(days=dif)
+        dif = today.strftime("?date_req=%d/%m/%Y")
+        response = requests.get(url + dif)
+        currency = response.content.decode("cp1251").split('>')
+        dict_curr = {}
 
-            for i in range(len(currency)):
-                if currency[i] == '<CharCode':
-                    dict_curr[currency[i + 1].split('<')[0]] = float(currency[i + 7].split('<')[0].replace(',', '.'))
+        for i in range(len(currency)):
+            if currency[i] == '<CharCode':
+                dict_curr[currency[i + 1].split('<')[0]] = float(currency[i + 7].split('<')[0].replace(',', '.'))
 
-            return dict_curr
+        return dict_curr
 
-        now = parser(0)
-        delta = parser(2)
-        order_dif = {}
-
-        for key in now.keys():
-            try:
-                order_dif[key] = round((now[key] / delta[key] - 1) * 100, 2)
-            except KeyError:
-                pass
-
-        order_dif = OrderedDict(sorted(order_dif.items(), key=lambda item: item[1]))
-
-        dif_plus = []
-
-        for i in order_dif.items():
-            if i[1] >= 0:
-                dif_plus.append(i)
-
-        order_dif = OrderedDict(sorted(order_dif.items(), key=lambda item: item[1]))
-
-        dif_minus = []
-
-        for i in order_dif.items():
-            if i[1] < 0:
-                dif_minus.append(i)
-
-        return order_dif
-        
-    #dif_plus = {}
-
-    #if(request.GET.get('mybtn')):
-        #dif_plus = dif_dict(int(request.GET.get('mytextbox')))
+    now = parser(0)
     
-    context = {'dif_plus': dif_dict()}'''
-    return render(request, 'mybl/index.html')
+    delta = 0
+    
+    if(request.GET.get('mybtn')):
+        delta = (int(request.GET.get('mytextbox')))
+        
+    delta = parser(delta)
+    order_dif = {}
+
+    for key in now.keys():
+        try:
+            order_dif[key] = round((now[key] / delta[key] - 1) * 100, 2)
+        except KeyError:
+            pass
+
+    order_dif_plus = OrderedDict(sorted(order_dif.items(), key=lambda item: item[1], reverse=True))
+    dif_plus = []
+
+    for i in order_dif_plus.items():
+        if i[1] >= 0:
+            dif_plus.append(i)
+
+    order_dif_minus = OrderedDict(sorted(order_dif.items(), key=lambda item: item[1]))
+    dif_minus = []
+
+    for i in order_dif_minus.items():
+        if i[1] < 0:
+            dif_minus.append(i)
+
+    context = {'dif_plus': dif_plus, 'dif_minus': dif_minus}
+    return render(request, 'mybl/index.html', context)
 
 def blog(request):
     blog = Bpost.objects.order_by('date_added')

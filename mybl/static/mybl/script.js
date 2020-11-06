@@ -27,7 +27,8 @@ let dict = function (dif) {
     success: function (data) {
       let rows = data.history.data;
       for (let row = 0; row < rows.length; row++) {
-        day.set(rows[row][2], rows[row][9]);
+        /*day.set('<a href="https://www.moex.com/ru/issue.aspx?board=TQBR&code=' + rows[row][3] + '">' + rows[row][2] + '</a>', rows[row][9]);*/
+        day.set(rows[row][2] + ' (' + rows[row][3] + ')', rows[row][9]);
       };
     }});
   };

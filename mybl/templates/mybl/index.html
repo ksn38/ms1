@@ -2,8 +2,8 @@
 {% block content %}
 {% load static %}
 <body>
-  <div class='d-flex justify-content-around  m-2 flex-row-reverse flex-wrap'>
-    <!-- div class='d-flex justify-center flex-wrap' style='flex-basis: 30%;'>
+  <div class='d-flex justify-content-around  m-2 flex-row-reverse flex-wrap align-items-start'>
+    <div class='d-flex justify-center flex-wrap' style='flex-basis: 30%;'>
       <div class='mb-3'>
         <small class='d-flex justify-center mt-2 text-secondary'>Изменение валюты относительно рубля<br> за период</small>
         <form action="#" method="get" class='d-flex justify-start'>
@@ -16,10 +16,10 @@
           <th class='px-2'>Валюта</th>
           <th class='px-2'>%</th>
         </tr>
-        {% for value in dif_plus %}
+        {% for key, value in dif_plus %}
           <tr>
             <td>
-              {{ value }}
+              {{ key }}
             </td>
             <td>
               {{ value }}
@@ -27,23 +27,23 @@
           </tr>
         {% endfor %}
       </table>
-      <!--table class='table-sm table-dark table-striped table-bordered'>
+      <table class='table-sm table-dark table-striped table-bordered'>
         <tr>
           <th class='px-2'>Валюта</th>
           <th class='px-2'>%</th>
         </tr>
-        {% for name, values in dif_minus %}
+        {% for name, value in dif_minus %}
           <tr>
             <td>
               {{ name }}
             </td>
             <td>
-              {{ values }}
+              {{ value }}
             </td>
           </tr>
         {% endfor %}
       </table>
-      </div-->
+      </div>
     
     <table class='table-sm table-dark table-striped table-bordered'>
       <caption style='caption-side: top'>
@@ -57,10 +57,10 @@
         </span>
       </caption>
       <tr>
-        <th class='px-4'>Акция</th>
-        <th class='px-4'>%</th>
-        <th class='px-4'>Акция</th>
-        <th class='px-4'>%</th>
+        <th class='px-5'>Акция</th>
+        <th class='px-2'>%</th>
+        <th class='px-5'>Акция</th>
+        <th class='px-2'>%</th>
       </tr>
       <tr>
         <td class='name-high'>-</td>
