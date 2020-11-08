@@ -30,12 +30,10 @@ def index(request):
     today = date.today().weekday()
     delta = 1
 
-    '''if today == 5:
+    if today == 6:
         delta = 2
-    elif today == 6:
-        delta = 3
     elif today == 0:
-        delta = 4'''
+        delta = 3
     
     if(request.GET.get('mybtn')):
         delta = (int(request.GET.get('mytextbox')))

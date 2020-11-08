@@ -40,7 +40,9 @@ button.onclick = function () {
   let date = new Date();
   if (date.getDay() == 1 && parseInt(days.value) < 4) {
     days.value = 4;
-  } 
+  } else if (date.getDay() == 0 && parseInt(days.value) < 4) {
+    days.value = 3;
+  };
   let dict1 = dict(1);
   dict1 = new Map([...dict1.entries()]);
   let dict2 = new Map([...dict(days.value).entries()]);
