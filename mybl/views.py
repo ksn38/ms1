@@ -181,9 +181,9 @@ def hh(request):
         context = {'langs': langs}
     else:
         dict_langs = proportions('')
-        for k, v, v_ne in zip(dict_langs.keys(), dict_langs.values(), proportions(noexp).values()):
+        for k, v, in dict_langs.items():
             new_values = {'name': k,
-             'val': v, 'val_noexp': v_ne}
+             'val': v, 'val_noexp': 0}
             obj = Lang(**new_values)
             obj.save()
         langs = Lang.objects.extra(where=["date_added='" + date_today + "'"])
