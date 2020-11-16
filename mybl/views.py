@@ -186,6 +186,12 @@ def hh(request):
              'val': v, 'val_noexp': 0}
             obj = Lang(**new_values)
             obj.save()
+        dict_langs = proportions(noexp)
+        for k, v, in dict_langs.items():
+            new_values = {'name': k,
+             'val': v, 'val_noexp': 1}
+            obj = Lang(**new_values)
+            obj.save()
         langs = Lang.objects.extra(where=["date_added='" + date_today + "'"])
         context = {'langs': langs}
         
