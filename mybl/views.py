@@ -174,9 +174,6 @@ def hh(request):
     noexp = 'experience=noExperience&'
     #print(proportions(''))
     #print(proportions(noexp))
-    
-    #if(request.GET.get('mybtn')):
-        #delta = (int(request.GET.get('mytextbox')))
     date_today = date.today().strftime("%Y-%m-%d")
     langs = Lang.objects.extra(where=["date_added='" + date_today + "'"])
     
@@ -184,9 +181,9 @@ def hh(request):
         context = {'langs': langs}
     else:
         dict_langs = proportions('')
-        for k, v in dict_langs.items():
+        for k, v, v_ne in zip(dict_langs.keys(), dict_langs.values(), proportions(noexp).values()):
             new_values = {'name': k,
-             'val': v}
+             'val': v, 'val_noexp': v_ne}
             obj = Lang(**new_values)
             obj.save()
         langs = Lang.objects.extra(where=["date_added='" + date_today + "'"])

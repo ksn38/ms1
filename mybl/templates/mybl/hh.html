@@ -5,20 +5,26 @@
   <input type="text" value="1" name="mytextbox" size="1"/>
   <input type="submit" class="button" value="дней" name="mybtn">
 </form-->
-<table class='table-sm table-dark table-striped table-bordered'>
-  <tr>
-    <th class='px-2'>lang</th>
-    <th class='px-2'>val</th>
-  </tr>
-  {% for lang in langs %}
+<div class='d-flex justify-content-around m-2 flex-wrap align-items-start'>
+  <table class='table-sm table-dark table-striped table-bordered'>
     <tr>
-      <td>
-        {{ lang.name }}
-      </td>
-      <td>
-        {{ lang.val }}
-      </td>
+      <th class='px-2'>lang</th>
+      <th class='px-2'>val</th>
+      <th class='px-2'>val_ne</th>
     </tr>
-  {% endfor %}
-</table>
-{% endblock content %}
+    {% for lang in langs %}
+      <tr>
+        <td>
+          {{ lang.name }}
+        </td>
+        <td>
+          {{ lang.val }}
+        </td>
+        <td>
+          {{ lang.val_noexp }}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+  {% endblock content %}
+</div>
