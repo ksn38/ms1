@@ -1,5 +1,5 @@
 from django import forms
-from mybl.models import Bpost, Comment, Currency
+from mybl.models import Bpost, Comment
 
 
 class BpostForm(forms.ModelForm):

@@ -23,13 +23,14 @@ class Comment(models.Model):
     def __str__(self):
         return self.text[:50] + '...'
         
-class Currency(models.Model):
+class Lang(models.Model):
     name = models.CharField(max_length=50)
-    change = models.FloatField()
-    period = models.IntegerField()
+    val = models.IntegerField()
+    date_added = models.DateField(auto_now_add=True)
     
     def __str__(self):
       return self.name
-      return self.change
+      return self.val
+      return self.date_added
 	
 

@@ -1,0 +1,24 @@
+{% extends "mybl/base.html" %}
+{% block content %}
+{% load static %}
+<!--form action="#" method="get" class='d-flex justify-start'>
+  <input type="text" value="1" name="mytextbox" size="1"/>
+  <input type="submit" class="button" value="дней" name="mybtn">
+</form-->
+<table class='table-sm table-dark table-striped table-bordered'>
+  <tr>
+    <th class='px-2'>lang</th>
+    <th class='px-2'>val</th>
+  </tr>
+  {% for lang in langs %}
+    <tr>
+      <td>
+        {{ lang.name }}
+      </td>
+      <td>
+        {{ lang.val }}
+      </td>
+    </tr>
+  {% endfor %}
+</table>
+{% endblock content %}

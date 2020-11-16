@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from mybl.models import Bpost, Comment, Currency
+from mybl.models import Bpost, Comment, Lang
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from mybl.forms import BpostForm, CommentForm
@@ -8,6 +8,8 @@ import requests
 from datetime import date
 from datetime import timedelta
 from collections import OrderedDict
+import json
+from bs4 import BeautifulSoup as bs
 
 
 def index(request):
@@ -135,3 +137,59 @@ def edit_bpost(request, bpost_id):
             
     context = {'bpost': bpost, 'form': form}
     return render(request, 'mybl/edit_bpost.html', context)
+    
+def hh(request):
+    def proportions(expir):
+        vac = {}
+
+        for i in ['python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'ruby', 'go', '1c', 'Data scientist', 'Scala']:
+            url = 'https://api.hh.ru/vacancies?&' + expir + 'search_field=name&text=' + i
+            #url = 'https://api.hh.ru/vacancies?&search_field=name&text=' + i
+            response = requests.get(url)
+            val = json.loads(response.content.decode("utf-8"))
+            vac[i] = val['found']
+
+        res = {}
+
+        for i in ['python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'ruby', 'go', '1c', 'Data scientist', 'Scala']:
+            # url = 'https://hh.ru/search/resume?clusters=true&exp_period=all_time&logic=normal&no_magic=false&order_by=relevance&pos=position&text=' + i
+            url = 'https://hh.ru/search/resume?clusters=true&exp_period=all_time&logic=normal&no_magic=false&order_by=relevance&pos=position&' + expir + 'text=' + i
+            headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'}
+            response = requests.get(url, headers=headers).text
+            parsed_html = bs(response, 'lxml')
+            bloko = parsed_html.find('h1', {'class': 'bloko-header-1'}).text.split(' ')[-1].split('\xa0')
+            if len(bloko) == 3:
+                bloko = ''.join(map(str, bloko[:2]))
+            else:
+                bloko = ''.join(map(str, bloko[:1]))
+            res[i] = int(bloko)
+
+        langs = {}
+
+        for i in vac.keys():
+            langs[i] = round(res[i]/vac[i])
+
+        return langs
+
+    noexp = 'experience=noExperience&'
+    #print(proportions(''))
+    #print(proportions(noexp))
+    
+    #if(request.GET.get('mybtn')):
+        #delta = (int(request.GET.get('mytextbox')))
+    date_today = date.today().strftime("%Y-%m-%d")
+    langs = Lang.objects.extra(where=["date_added='" + date_today + "'"])
+    
+    if len(langs) != 0:
+        context = {'langs': langs}
+    else:
+        dict_langs = proportions('')
+        for k, v in dict_langs.items():
+            new_values = {'name': k,
+             'val': v}
+            obj = Lang(**new_values)
+            obj.save()
+        langs = Lang.objects.extra(where=["date_added='" + date_today + "'"])
+        context = {'langs': langs}
+        
+    return render(request, 'mybl/hh.html', context)
