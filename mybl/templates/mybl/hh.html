@@ -13,9 +13,19 @@
     </tr>
     {% for lang in langs %}
       <tr>
-        <td>
+        {% if lang.name == 'C%23' %}
+          <td>
+          {{ 'C#' }}
+          </td>
+        {% elif lang.name == 'c%2B%2B' %}
+          <td>
+          {{ 'C++' }}
+          </td>
+        {% else %}
+          <td>
           {{ lang.name }}
-        </td>
+          </td>
+        {% endif %}
         <td>
           {{ lang.val }}
         </td>
@@ -29,9 +39,19 @@
     </tr>
     {% for lang in langs_noexp %}
       <tr>
-        <td>
+        {% if lang.name == 'C%23' %}
+          <td>
+          {{ 'C#' }}
+          </td>
+        {% elif lang.name == 'c%2B%2B' %}
+          <td>
+          {{ 'C++' }}
+          </td>
+        {% else %}
+          <td>
           {{ lang.name }}
-        </td>
+          </td>
+        {% endif %}
         <td>
           {{ lang.val }}
         </td>
