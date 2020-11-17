@@ -10,7 +10,6 @@
     <tr>
       <th class='px-2'>lang</th>
       <th class='px-2'>val</th>
-      <th class='px-2'>val_ne</th>
     </tr>
     {% for lang in langs %}
       <tr>
@@ -20,8 +19,21 @@
         <td>
           {{ lang.val }}
         </td>
+      </tr>
+    {% endfor %}
+  </table>
+  <table class='table-sm table-dark table-striped table-bordered'>
+    <tr>
+      <th class='px-2'>lang</th>
+      <th class='px-2'>val</th>
+    </tr>
+    {% for lang in langs_noexp %}
+      <tr>
         <td>
-          {{ lang.val_noexp }}
+          {{ lang.name }}
+        </td>
+        <td>
+          {{ lang.val }}
         </td>
       </tr>
     {% endfor %}

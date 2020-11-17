@@ -177,22 +177,29 @@ def hh(request):
     date_today = date.today().strftime("%Y-%m-%d")
     langs = Lang.objects.extra(where=["date_added='" + date_today + "'"])
     
-    if len(langs) != 0:
-        context = {'langs': langs}
-    else:
+    if len(langs) == 0:
         dict_langs = proportions('')
         for k, v, in dict_langs.items():
             new_values = {'name': k,
              'val': v, 'val_noexp': 0}
             obj = Lang(**new_values)
             obj.save()
-        dict_langs = proportions(noexp)
-        for k, v, in dict_langs.items():
+        
+        langs = Lang.objects.extra(where=["date_added='" + date_today + "'", "val_noexp=0"])
+        context = {'langs': langs}
+    elif len(langs) == 11:
+        dict_langs_noexp = proportions(noexp)
+        for k, v, in dict_langs_noexp.items():
             new_values = {'name': k,
              'val': v, 'val_noexp': 1}
             obj = Lang(**new_values)
             obj.save()
-        langs = Lang.objects.extra(where=["date_added='" + date_today + "'"])
-        context = {'langs': langs}
+        langs = Lang.objects.extra(where=["date_added='" + date_today + "'", "val_noexp=0"])
+        langs_noexp = Lang.objects.extra(where=["date_added='" + date_today + "'", "val_noexp=1"])
+        context = {'langs': langs, 'langs_noexp': langs_noexp}
+    else:
+        langs = Lang.objects.extra(where=["date_added='" + date_today + "'", "val_noexp=0"])
+        langs_noexp = Lang.objects.extra(where=["date_added='" + date_today + "'", "val_noexp=1"])
+        context = {'langs': langs, 'langs_noexp': langs_noexp}
         
     return render(request, 'mybl/hh.html', context)
