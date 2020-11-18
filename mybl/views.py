@@ -142,7 +142,7 @@ def hh(request):
     def apivac(expir):
         vac = {}
 
-        for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Go', '1c', 'Data scientist', 'Scala']:
+        for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Go', '1c', 'Data scientist', 'Scala', 'Swift']:
             url = 'https://api.hh.ru/vacancies?&' + expir + 'search_field=name&text=' + i
             # url = 'https://api.hh.ru/vacancies?&search_field=name&text=' + i
             response = requests.get(url)
@@ -155,7 +155,7 @@ def hh(request):
     def parservac():
         res = {}
 
-        for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Go', '1c', 'Data scientist', 'Scala']:
+        for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Go', '1c', 'Data scientist', 'Scala', 'Swift']:
             url = 'https://hh.ru/search/resume?clusters=true&exp_period=all_time&logic=normal&no_magic=false&order_by=relevance&pos=position&text=' + i
             headers = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'}
