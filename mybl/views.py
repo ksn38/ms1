@@ -153,7 +153,7 @@ def hh(request):
 
 
     def parservac():
-        res = []
+        res = {}
 
         for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Go', '1c', 'Data scientist', 'Scala']:
             url = 'https://hh.ru/search/resume?clusters=true&exp_period=all_time&logic=normal&no_magic=false&order_by=relevance&pos=position&text=' + i
@@ -166,8 +166,8 @@ def hh(request):
                 bloko = ''.join(map(str, bloko[:2]))
             else:
                 bloko = ''.join(map(str, bloko[:1]))
-            res.append(int(bloko))
-            #res[i] = int(bloko)
+            #res.append(int(bloko))
+            res[i] = int(bloko)
 
         return res
 
@@ -180,12 +180,13 @@ def hh(request):
         vacs_noexp = apivac(noexp)
         res = parservac()
 
-        for k in vacs_noexp.keys():
+        for k, k2 in zip(vacs_noexp.keys(), res.keys()):
             vacs_noexp[k] = round(vacs_noexp[k] * 100 / vacs[k])
+            res[k2] = round(res[k2] / vacs_noexp[k])
 
-        for k, v, vne, i in zip(vacs.keys(), vacs.values(), vacs_noexp.values(), res):
+        for k, v, vne, vrv in zip(vacs.keys(), vacs.values(), vacs_noexp.values(), res.values()):
             new_values = {'name': k,
-             'val': v, 'val_noexp': vne, 'res_vac': i}
+             'val': v, 'val_noexp': vne, 'res_vac': vrv}
             obj = Lang(**new_values)
             obj.save()
         
