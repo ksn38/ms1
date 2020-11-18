@@ -139,22 +139,26 @@ def edit_bpost(request, bpost_id):
     return render(request, 'mybl/edit_bpost.html', context)
     
 def hh(request):
-    def proportions(expir):
-        vac = {}
+    def apivac(expir):
+        vac = OrderedDict()
 
-        for i in ['python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'ruby', 'go', '1c', 'Data scientist', 'Scala']:
+        for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Go', '1c', 'Data scientist', 'Scala']:
             url = 'https://api.hh.ru/vacancies?&' + expir + 'search_field=name&text=' + i
-            #url = 'https://api.hh.ru/vacancies?&search_field=name&text=' + i
+            # url = 'https://api.hh.ru/vacancies?&search_field=name&text=' + i
             response = requests.get(url)
             val = json.loads(response.content.decode("utf-8"))
             vac[i] = val['found']
 
-        res = {}
+        return vac
 
-        for i in ['python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'ruby', 'go', '1c', 'Data scientist', 'Scala']:
-            # url = 'https://hh.ru/search/resume?clusters=true&exp_period=all_time&logic=normal&no_magic=false&order_by=relevance&pos=position&text=' + i
-            url = 'https://hh.ru/search/resume?clusters=true&exp_period=all_time&logic=normal&no_magic=false&order_by=relevance&pos=position&' + expir + 'text=' + i
-            headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'}
+
+    def parservac():
+        res = []
+
+        for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Go', '1c', 'Data scientist', 'Scala']:
+            url = 'https://hh.ru/search/resume?clusters=true&exp_period=all_time&logic=normal&no_magic=false&order_by=relevance&pos=position&text=' + i
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'}
             response = requests.get(url, headers=headers).text
             parsed_html = bs(response, 'lxml')
             bloko = parsed_html.find('h1', {'class': 'bloko-header-1'}).text.split(' ')[-1].split('\xa0')
@@ -162,44 +166,32 @@ def hh(request):
                 bloko = ''.join(map(str, bloko[:2]))
             else:
                 bloko = ''.join(map(str, bloko[:1]))
-            res[i] = int(bloko)
+            res.append(int(bloko))
 
-        langs = {}
+        return res
 
-        for i in vac.keys():
-            langs[i] = round(res[i]/vac[i])
-
-        return langs
-
-    noexp = 'experience=noExperience&'
-    #print(proportions(''))
-    #print(proportions(noexp))
     date_today = date.today().strftime("%Y-%m-%d")
     langs = Lang.objects.extra(where=["date_added='" + date_today + "'"])
     
     if len(langs) == 0:
-        dict_langs = proportions('')
-        for k, v, in dict_langs.items():
+        noexp = 'experience=noExperience&'
+        vacs = apivac('')
+        vacs_noexp = apivac(noexp)
+        res = parservac()
+
+        for k, v in vacs_noexp.items():
+            vacs_noexp[k] = round(v*100/vacs[k])
+
+        for k, v, vne, i in zip(vacs.keys(), vacs.values(), vacs_noexp.values(), res):
             new_values = {'name': k,
-             'val': v, 'val_noexp': 0}
+             'val': v, 'val_noexp': vne, 'res_vac': round(i/v)}
             obj = Lang(**new_values)
             obj.save()
         
-        langs = Lang.objects.extra(where=["date_added='" + date_today + "'", "val_noexp=0"])
+        langs = Lang.objects.extra(where=["date_added='" + date_today + "'"])
         context = {'langs': langs}
-    elif len(langs) == 11:
-        dict_langs_noexp = proportions(noexp)
-        for k, v, in dict_langs_noexp.items():
-            new_values = {'name': k,
-             'val': v, 'val_noexp': 1}
-            obj = Lang(**new_values)
-            obj.save()
-        langs = Lang.objects.extra(where=["date_added='" + date_today + "'", "val_noexp=0"])
-        langs_noexp = Lang.objects.extra(where=["date_added='" + date_today + "'", "val_noexp=1"])
-        context = {'langs': langs, 'langs_noexp': langs_noexp}
     else:
-        langs = Lang.objects.extra(where=["date_added='" + date_today + "'", "val_noexp=0"])
-        langs_noexp = Lang.objects.extra(where=["date_added='" + date_today + "'", "val_noexp=1"])
-        context = {'langs': langs, 'langs_noexp': langs_noexp}
+        langs = Lang.objects.extra(where=["date_added='" + date_today + "'"])
+        context = {'langs': langs}
         
     return render(request, 'mybl/hh.html', context)

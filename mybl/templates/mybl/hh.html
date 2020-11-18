@@ -6,11 +6,12 @@
   <input type="submit" class="button" value="дней" name="mybtn">
 </form-->
 <div class='d-flex justify-content-around m-2 flex-wrap align-items-start'>
+  <!--div class='d-flex justify-center flex-wrap mt-2' style='flex-basis: 10%;'>
+  <div class='mb-3'>
+    <small class='mt-1 text-secondary'>Количество вакансий, процент вакансий без опыта, соотношение резюме к вакансиям.</small>
+  </div -->
   <table class='table-sm table-dark table-striped table-bordered'>
-    <tr>
-      <th class='px-2'>lang</th>
-      <th class='px-2'>val</th>
-    </tr>
+    <caption style='caption-side: top'><small>Количество вакансий, процент вакансий без опыта, соотношение резюме к вакансиям.</small></caption>
     {% for lang in langs %}
       <tr>
         {% if lang.name == 'C%23' %}
@@ -29,34 +30,15 @@
         <td>
           {{ lang.val }}
         </td>
-      </tr>
-    {% endfor %}
-  </table>
-  <table class='table-sm table-dark table-striped table-bordered'>
-    <tr>
-      <th class='px-2'>lang</th>
-      <th class='px-2'>val</th>
-    </tr>
-    {% for lang in langs_noexp %}
-      <tr>
-        {% if lang.name == 'C%23' %}
-          <td>
-          {{ 'C#' }}
-          </td>
-        {% elif lang.name == 'c%2B%2B' %}
-          <td>
-          {{ 'C++' }}
-          </td>
-        {% else %}
-          <td>
-          {{ lang.name }}
-          </td>
-        {% endif %}
         <td>
-          {{ lang.val }}
+          {{ lang.val_noexp }}
+        </td>
+        <td>
+          {{ lang.res_vac }}
         </td>
       </tr>
     {% endfor %}
   </table>
   {% endblock content %}
+</div>
 </div>

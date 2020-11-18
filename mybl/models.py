@@ -27,12 +27,14 @@ class Lang(models.Model):
     name = models.CharField(max_length=50)
     val = models.IntegerField()
     val_noexp = models.IntegerField()
+    res_vac = models.IntegerField()
     date_added = models.DateField(auto_now_add=True)
     
     def __str__(self):
       return self.name
       return self.val
       return self.val_noexp
+      return self.res_vac
       return self.date_added
 	
 
