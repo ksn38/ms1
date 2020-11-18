@@ -179,12 +179,13 @@ def hh(request):
         vacs_noexp = apivac(noexp)
         res = parservac()
 
-        for k, v in vacs_noexp.items():
+        for k, v, i in zip(vacs_noexp.keys(), vacs_noexp.values(), range(len(res))):
             vacs_noexp[k] = round(v*100/vacs[k])
+            res[i] = round(res[i]/v)
 
         for k, v, vne, i in zip(vacs.keys(), vacs.values(), vacs_noexp.values(), res):
             new_values = {'name': k,
-             'val': v, 'val_noexp': vne, 'res_vac': round(i/v)}
+             'val': v, 'val_noexp': vne, 'res_vac': i}
             obj = Lang(**new_values)
             obj.save()
         
