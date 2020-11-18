@@ -180,8 +180,8 @@ def hh(request):
         vacs_noexp = apivac(noexp)
         res = parservac()
 
-        for k, k2 in zip(vacs_noexp.keys(), res.keys()):
-            res[k2] = round(res[k2] / vacs_noexp[k])
+        for k, k2 in zip(vacs.keys(), res.keys()):
+            res[k2] = round(res[k2] / vacs[k])
             vacs_noexp[k] = round(vacs_noexp[k] * 100 / vacs[k])
 
         for k, v, vne, vrv in zip(vacs.keys(), vacs.values(), vacs_noexp.values(), res.values()):
