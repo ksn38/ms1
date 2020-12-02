@@ -223,7 +223,7 @@ def tickers(request):
         sp = parsed_html.find('td', {'data-test': 'PREV_CLOSE-value'}).text.replace(',', '')
         return {'sp500': sp}'''
     
-    date_today = (date.today() - timedelta(1)).strftime("%Y-%m-%d")
+    date_today = date.today().strftime("%Y-%m-%d")
     date10 = (date.today() - timedelta(10)).strftime("%Y-%m-%d")
     tickers = Ticker.objects.extra(where=["date_added='" + date_today + "'"])
     context = {'tickers': tickers}
