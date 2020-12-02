@@ -31,10 +31,22 @@ class Lang(models.Model):
     date_added = models.DateField(auto_now_add=True)
     
     def __str__(self):
-      return self.name
-      return self.val
-      return self.val_noexp
-      return self.res_vac
-      return self.date_added
+        return self.name
+        return self.val
+        return self.val_noexp
+        return self.res_vac
+        return self.date_added
+      
+class Ticker(models.Model):
+    date_added = models.DateField(auto_now_add=True)
+    GSPC = models.FloatField()
+    VIX = models.FloatField()
+    TNX = models.FloatField()
+    
+    def __str__(self):
+        return self.date_added
+        return self.GSPC
+        return self.VIX
+        return self.TNX
 	
 

@@ -9,4 +9,5 @@ urlpatterns = [
     path('new_bpost/', views.new_bpost, name='new_bpost'),
     path('edit_bpost/<bpost_id>', views.edit_bpost, name='edit_bpost'),
     path('hh/', views.hh, name='hh'),
+    path('tickers', views.tickers, name='tickers'),
 ]

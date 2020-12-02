@@ -1,0 +1,28 @@
+{% extends "mybl/base.html" %}
+{% block content %}
+{% load static %}
+<div class='d-flex justify-content-around m-2 flex-wrap align-items-start'>
+  <table class='table-sm table-dark table-striped table-bordered'>
+    <caption style='caption-side: top'><small></small></caption>
+    <tr>
+      <th class='px-2'>S&P500</th>
+      <th class='px-2'>VIX</th>
+      <th class='px-2'>TR10</th>
+    </tr>
+    {% for ticker in tickers %}
+      <tr>
+        <td>
+          {{ ticker.GSPC }}
+        </td>
+        <td>
+          {{ ticker.VIX }}
+        </td>
+        <td>
+          {{ ticker.TNX }}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+  {% endblock content %}
+</div>
+</div>
