@@ -173,7 +173,7 @@ def hh(request):
         return res
 
     date_today = date.today().strftime("%Y-%m-%d")
-    langs = Lang.objects.extra(where=["date_added='" + date_today + "'"])
+    langs = Lang.objects.extra(where=["date_added='" + date_today + "'"]).order_by('res_vac')
     
     if len(langs) == 0:
         noexp = 'experience=noExperience&'
@@ -191,10 +191,10 @@ def hh(request):
             obj = Lang(**new_values)
             obj.save()
         
-        langs = Lang.objects.extra(where=["date_added='" + date_today + "'"])
+        langs = Lang.objects.extra(where=["date_added='" + date_today + "'"]).order_by('res_vac')
         context = {'langs': langs}
     else:
-        langs = Lang.objects.extra(where=["date_added='" + date_today + "'"])
+        langs = Lang.objects.extra(where=["date_added='" + date_today + "'"]).order_by('res_vac')
         context = {'langs': langs}
         
     charts = Lang.objects.raw('select * from chart')
