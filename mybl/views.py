@@ -209,7 +209,7 @@ def tickers(request):
             response = requests.get(url, headers=headers).text
             response = requests.get(url, headers=headers).text
             parsed_html = bs(response, 'lxml')
-            t = parsed_html.find('td', {'data-test': 'PREV_CLOSE-value'}).text.replace(',', '')
+            t = parsed_html.find('span', {'data-reactid': '32'}).text.replace(',', '')
             t_dict[i] = float(t)
 
         return t_dict
