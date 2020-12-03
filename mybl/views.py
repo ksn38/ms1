@@ -210,34 +210,25 @@ def tickers(request):
             response = requests.get(url, headers=headers).text
             parsed_html = bs(response, 'lxml')
             t = parsed_html.find('td', {'data-test': 'PREV_CLOSE-value'}).text.replace(',', '')
-            t_dict[i] = t
+            t_dict[i] = float(t)
 
         return t_dict
     
-    '''def sp500():
-        headers = {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'}
-        url = 'https://finance.yahoo.com/quote/%5EGSPC'
-        response = requests.get(url, headers=headers).text
-        parsed_html = bs(response, 'lxml')
-        sp = parsed_html.find('td', {'data-test': 'PREV_CLOSE-value'}).text.replace(',', '')
-        return {'sp500': sp}'''
-    
     date_today = date.today().strftime("%Y-%m-%d")
     date10 = (date.today() - timedelta(10)).strftime("%Y-%m-%d")
-    tickers = Ticker.objects.extra(where=["date_added='" + date_today + "'"])
+    tickers = Ticker.objects.extra(where=["date_added ='" + date_today + "'"])
     context = {'tickers': tickers}
     
     if len(tickers) == 0:
         t = ticks()
-        if Ticker.objects.extra(where=["date_added>'" + date10 + "'"]).order_by('-date_added')[0].GSPC != t['GSPC']:
+        if Ticker.objects.extra(where=["date_added >'" + date10 + "'"]).order_by('-date_added')[0].GSPC != t['GSPC']:
             obj = Ticker(**t)
             obj.save()
-            tickers = Ticker.objects.extra(where=["date_added='" + date_today + "'"])
+            tickers = Ticker.objects.extra(where=["date_added ='" + date_today + "'"])
             context = {'tickers': tickers}
         else:
-            date_last = Ticker.objects.extra(where=["date_added>'" + date10 + "'"]).order_by('-date_added')[0].date_added
-            tickers = Ticker.objects.extra(where=["date_added='" + date_last + "'"])
+            date_last = Ticker.objects.extra(where=["date_added>'" + date10 + "'"]).order_by('-date_added')[0].date_added.strftime("%Y-%m-%d")
+            tickers = Ticker.objects.extra(where=["date_added ='" + date_last + "'"])
             context = {'tickers': tickers}
             
     return render(request, 'mybl/tickers.html', context)
