@@ -35,6 +35,35 @@
       </tr>
     {% endfor %}
   </table>
+  <table class='table-sm table-dark table-striped table-bordered mt-5'>
+    <caption style='caption-side: top'><small>Изменение от 20.11.20 в %.</small></caption>
+    {% for chart in charts %}
+      <tr>
+        {% if chart.name == 'C%23' %}
+          <td>
+          {{ 'C#' }}
+          </td>
+        {% elif chart.name == 'c%2B%2B' %}
+          <td>
+          {{ 'C++' }}
+          </td>
+        {% else %}
+          <td>
+          {{ chart.name }}
+          </td>
+        {% endif %}
+        <td>
+          {{ chart.cnd_val }}
+        </td>
+        <td>
+          {{ chart.cnd_vn }}
+        </td>
+        <td>
+          {{ chart.cnd_rv }}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
   {% endblock content %}
 </div>
 </div>

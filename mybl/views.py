@@ -44,10 +44,11 @@ def index(request):
     order_dif = {}
 
     for key in now.keys():
-        try:
-            order_dif[key] = round((now[key] / delta[key] - 1) * 100, 2)
-        except KeyError:
-            pass
+        if key not in {'AZN', 'AMD', 'BYN', 'BGN', 'HUF', 'KGS', 'MDL', 'TMT', 'RON', 'TJS', 'UZS'}:
+            try:
+                order_dif[key] = round((now[key] / delta[key] - 1) * 100, 2)
+            except KeyError:
+                pass
 
     order_dif_plus = OrderedDict(sorted(order_dif.items(), key=lambda item: item[1], reverse=True))
     dif_plus = []
@@ -196,6 +197,9 @@ def hh(request):
         langs = Lang.objects.extra(where=["date_added='" + date_today + "'"])
         context = {'langs': langs}
         
+    charts = Lang.objects.raw('select * from chart')
+    context['charts'] = charts
+    
     return render(request, 'mybl/hh.html', context)
   
 def tickers(request):
