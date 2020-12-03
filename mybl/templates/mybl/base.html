@@ -12,34 +12,36 @@
   </head>
   <body>
   <!-- Статическая навигационная панель -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="{% url 'index' %}">ksn52</a>
-        <div class="navbar-nav">
+        <div class="navbar-nav mx-1">
           <a class="nav-link" href="{% url 'blog' %}">Блог</a>
         </div>
-        <div class="navbar-nav">
+        <div class="navbar-nav mx-1">
           <a class="nav-link" href="{% url 'hh' %}">hh</a>
         </div>
-        <div class="navbar-nav">
+        <div class="navbar-nav mx-1">
           <a class="nav-link" href="{% url 'tickers' %}">Tickers</a>
         </div>
-      <ul class="navbar-nav">
         {% if user.is_authenticated %}
-        <li class="navbar-text">
-          <a> {{ user.username }} </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
-        </li>
+        <div class='d-flex flex-nowrap ml-auto'>
+          <div class="navbar-nav mx-2 navbar-text ml-auto">
+            <a> {{ user.username }} </a>
+          </div>
+          <div class="navbar-nav">
+            <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+          </div>
+        </div>
         {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
-        </li>
-        <li class="nav-item">
-           <a class="nav-link" href="{% url 'login' %}">Логин</a>
-        </li>
+        <div class='d-flex flex-nowrap ml-auto'>
+          <div class="navbar-nav mx-2">
+            <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+          </div>
+          <div class="navbar-nav">
+             <a class="nav-link" href="{% url 'login' %}">Логин</a>
+          </div>
+        </div>
         {% endif %}
-      </ul>
     </nav>
     <div class="container">
       <div>

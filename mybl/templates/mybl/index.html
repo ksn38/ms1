@@ -3,7 +3,7 @@
 {% load static %}
 <body>
   <div class='d-flex justify-content-around m-2 flex-wrap align-items-start'>
-    <div class='d-flex justify-center flex-wrap mt-2' style='flex-basis: 30%;'>
+    <div class='d-flex justify-center mt-2 flex-wrap' style='flex-basis: 30%;'>
       <div class='mb-3'>
         <small class='d-flex justify-center mt-1 text-secondary'>Изменение валюты относительно рубля<br> за период</small>
         <form action="#" method="get" class='d-flex justify-start'>
@@ -11,39 +11,41 @@
           <input type="submit" class="button" value="дней" name="mybtn">
         </form>
       </div>
-      <table class='table-sm table-striped table-bordered bg-danger'>
-        <tr>
-          <th class='px-2'>Валюта</th>
-          <th class='px-2'>%</th>
-        </tr>
-        {% for key, value in dif_plus %}
+      <div class='d-flex flex-nowrap'>
+        <table class='table-sm table-striped table-bordered bg-danger'>
           <tr>
-            <td>
-              {{ key }}
-            </td>
-            <td>
-              {{ value }}
-            </td>
+            <th class='px-2'>Валюта</th>
+            <th class='px-2'>%</th>
           </tr>
-        {% endfor %}
-      </table>
-      <table class='table-sm table-striped table-bordered bg-success'>
-        <tr>
-          <th class='px-2'>Валюта</th>
-          <th class='px-2'>%</th>
-        </tr>
-        {% for name, value in dif_minus %}
+          {% for key, value in dif_plus %}
+            <tr>
+              <td>
+                {{ key }}
+              </td>
+              <td>
+                {{ value }}
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+        <table class='table-sm table-striped table-bordered bg-success'>
           <tr>
-            <td>
-              {{ name }}
-            </td>
-            <td>
-              {{ value }}
-            </td>
+            <th class='px-2'>Валюта</th>
+            <th class='px-2'>%</th>
           </tr>
-        {% endfor %}
-      </table>
+          {% for name, value in dif_minus %}
+            <tr>
+              <td>
+                {{ name }}
+              </td>
+              <td>
+                {{ value }}
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
       </div>
+    </div>
     
     <table class='table-sm table-dark table-striped table-bordered'>
       <caption style='caption-side: top'>
