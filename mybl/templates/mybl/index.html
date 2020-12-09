@@ -1,6 +1,6 @@
 {% extends "mybl/base.html" %}
-{% block content %}
 {% load static %}
+{% block content %}
 <body>
   <div class='d-flex justify-content-around m-2 flex-wrap align-items-start'>
     <div class='d-flex justify-center mt-2 flex-wrap' style='flex-basis: 30%;'>
@@ -246,7 +246,8 @@
       </tr>
     </table>
   </div>
-  <script src='static/mybl/script.js'></script>
+  <!--script src='static/mybl/script.js'></script-->
+  <script src="{% static 'mybl/script.js' %}"></script>
 </body>
 </html>
 {% endblock content %}

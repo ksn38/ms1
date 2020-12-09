@@ -2,7 +2,7 @@ let namesHigh = document.querySelectorAll('.name-high');
 let namesLow = document.querySelectorAll('.name-low');
 let changesHigh = document.querySelectorAll('.change-high');
 let changesLow = document.querySelectorAll('.change-low');
-let button = document.querySelector('.button');
+let button = document.getElementById('stocks');
 let text = document.querySelector('p');
 let days = document.getElementById('days');
 
@@ -27,7 +27,8 @@ let dict = function (dif) {
     success: function (data) {
       let rows = data.history.data;
       for (let row = 0; row < rows.length; row++) {
-        day.set(rows[row][2], rows[row][9]);
+        /*day.set('<a href="https://www.moex.com/ru/issue.aspx?board=TQBR&code=' + rows[row][3] + '">' + rows[row][2] + '</a>', rows[row][9]);*/
+        day.set(rows[row][2] + ' (' + rows[row][3] + ')', rows[row][9]);
       };
     }});
   };
@@ -39,7 +40,9 @@ button.onclick = function () {
   let date = new Date();
   if (date.getDay() == 1 && parseInt(days.value) < 4) {
     days.value = 4;
-  } 
+  } else if (date.getDay() == 0 && parseInt(days.value) < 3) {
+    days.value = 3;
+  };
   let dict1 = dict(1);
   dict1 = new Map([...dict1.entries()]);
   let dict2 = new Map([...dict(days.value).entries()]);

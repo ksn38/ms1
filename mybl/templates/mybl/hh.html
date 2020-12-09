@@ -1,10 +1,6 @@
 {% extends "mybl/base.html" %}
-{% block content %}
 {% load static %}
-<!--form action="#" method="get" class='d-flex justify-start'>
-  <input type="text" value="1" name="mytextbox" size="1"/>
-  <input type="submit" class="button" value="дней" name="mybtn">
-</form-->
+{% block content %}
 <div class='d-flex justify-content-around m-2 flex-wrap align-items-start'>
   <table class='table-sm table-dark table-striped table-bordered'>
     <caption style='caption-side: top'><small>Количество вакансий, процент вакансий без опыта, соотношение резюме к вакансиям за сегодня.</small></caption>
@@ -52,18 +48,19 @@
           {{ chart.name }}
           </td>
         {% endif %}
-        <td>
+        <td class='color'>
           {{ chart.cnd_val }}
         </td>
-        <td>
+        <td class='color'>
           {{ chart.cnd_vn }}
         </td>
-        <td>
+        <td class='color'>
           {{ chart.cnd_rv }}
         </td>
       </tr>
     {% endfor %}
   </table>
-  {% endblock content %}
+<script src="{% static 'mybl/script_color.js' %}"></script>
+{% endblock content %}
 </div>
 </div>
