@@ -2,7 +2,7 @@
 {% block content %}
 {% load static %}
 <div class='d-flex justify-content-around m-2 flex-wrap align-items-start'>
-  <table class='table-sm table-dark table-striped table-bordered'>
+  <!--table class='table-sm table-dark table-striped table-bordered'>
     <caption style='caption-side: top'><small></small></caption>
     <tr>
       <th class='px-2'>S&P500</th>
@@ -22,7 +22,15 @@
         </td>
       </tr>
     {% endfor %}
-  </table>
+  </table-->
+
+  <div class='d-flex'>
+    <canvas id="line-chart" width="800" height="450"></canvas>
+  </div>
+  <script type="text/javascript">
+    var received_data  = {{ tickers10|safe }};
+  </script>
+  <script src="{% static 'mybl/graph.js' %}"></script>
   {% endblock content %}
 </div>
 </div>

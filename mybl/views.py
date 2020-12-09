@@ -10,6 +10,7 @@ from datetime import timedelta
 from collections import OrderedDict
 import json
 from bs4 import BeautifulSoup as bs
+from django.core import serializers
 
 
 def index(request):
@@ -219,25 +220,29 @@ def tickers(request):
         return t_dict
     
     date_today = date.today().strftime("%Y-%m-%d")
-    date7 = (date.today() - timedelta(7)).strftime("%Y-%m-%d")
+    date10 = (date.today() - timedelta(10)).strftime("%Y-%m-%d")
     tickers = Ticker.objects.extra(where=["date_added ='" + date_today + "'"])
     context = {'tickers': tickers}
     
     if len(tickers) == 0:
         if date.today().weekday() not in {0, 6}:
             t = ticks()
-            if Ticker.objects.extra(where=["date_added >'" + date7 + "'"]).order_by('-date_added')[0].gspc != t['gspc']:
+            if Ticker.objects.extra(where=["date_added >'" + date10 + "'"]).order_by('-date_added')[0].gspc != t['gspc']:
                 obj = Ticker(**t)
                 obj.save()
                 tickers = Ticker.objects.extra(where=["date_added ='" + date_today + "'"])
                 context = {'tickers': tickers}
             else:
-                date_last = Ticker.objects.extra(where=["date_added>'" + date7 + "'"]).order_by('-date_added')[0].date_added.strftime("%Y-%m-%d")
+                date_last = Ticker.objects.extra(where=["date_added>'" + date10 + "'"]).order_by('-date_added')[0].date_added.strftime("%Y-%m-%d")
                 tickers = Ticker.objects.extra(where=["date_added ='" + date_last + "'"])
                 context = {'tickers': tickers}
         else:
-            date_last = Ticker.objects.extra(where=["date_added>'" + date7 + "'"]).order_by('-date_added')[0].date_added.strftime("%Y-%m-%d")
+            date_last = Ticker.objects.extra(where=["date_added>'" + date10 + "'"]).order_by('-date_added')[0].date_added.strftime("%Y-%m-%d")
             tickers = Ticker.objects.extra(where=["date_added ='" + date_last + "'"])
             context = {'tickers': tickers}
+    
+    tickers10 = Ticker.objects.extra(where=["date_added >='" + date10 + "'"])
+    #context['tickers10'] = tickers10
+    context['tickers10'] = serializers.serialize('json', tickers10)
             
     return render(request, 'mybl/tickers.html', context)
