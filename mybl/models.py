@@ -39,14 +39,14 @@ class Lang(models.Model):
       
 class Ticker(models.Model):
     date_added = models.DateField(auto_now_add=True)
-    GSPC = models.FloatField()
-    VIX = models.FloatField()
-    TNX = models.FloatField()
+    gspc = models.FloatField()
+    vix = models.FloatField()
+    tnx = models.FloatField()
     
     def __str__(self):
         return self.date_added
-        return self.GSPC
-        return self.VIX
-        return self.TNX
+        return self.gspc
+        return self.vix
+        return self.tnx
 	
 

@@ -208,7 +208,7 @@ def tickers(request):
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'}
         t_dict = OrderedDict()
 
-        for i in ('GSPC', 'VIX', 'TNX'):
+        for i in ('gspc', 'vix', 'tnx'):
             url = 'https://finance.yahoo.com/quote/^' + i
             response = requests.get(url, headers=headers).text
             response = requests.get(url, headers=headers).text
@@ -226,7 +226,7 @@ def tickers(request):
     if len(tickers) == 0:
         if date.today().weekday() not in {0, 6}:
             t = ticks()
-            if Ticker.objects.extra(where=["date_added >'" + date7 + "'"]).order_by('-date_added')[0].GSPC != t['GSPC']:
+            if Ticker.objects.extra(where=["date_added >'" + date7 + "'"]).order_by('-date_added')[0].gspc != t['gspc']:
                 obj = Ticker(**t)
                 obj.save()
                 tickers = Ticker.objects.extra(where=["date_added ='" + date_today + "'"])
