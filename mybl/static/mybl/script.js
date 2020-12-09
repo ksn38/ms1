@@ -70,3 +70,7 @@ button.onclick = function () {
   };
 };
 
+window.onload = function(){
+  button.click();
+}
+
