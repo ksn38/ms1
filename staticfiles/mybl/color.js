@@ -7,7 +7,7 @@ for (let i of tr) {
   }
   else if (parseInt(i.textContent) > 0) {
     i.classList.add('bg-success')
-  }
+  }else {i.classList.add('bg-secondary')}
 }
 
 for (let i of tri) {
@@ -16,5 +16,5 @@ for (let i of tri) {
   }
   else if (parseInt(i.textContent) < 0) {
     i.classList.add('bg-success')
-  }
+  }else {i.classList.add('bg-secondary')}
 }
