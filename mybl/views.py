@@ -183,7 +183,7 @@ def hh(request):
         res = parservac()
 
         for k, k2 in zip(vacs.keys(), res.keys()):
-            res[k2] = round(res[k2] / vacs[k])
+            res[k2] = round(res[k2] / vacs[k], 1)
             vacs_noexp[k] = round(vacs_noexp[k] * 100 / vacs[k])
 
         for k, v, vne, vrv in zip(vacs.keys(), vacs.values(), vacs_noexp.values(), res.values()):

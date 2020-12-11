@@ -27,7 +27,7 @@ class Lang(models.Model):
     name = models.CharField(max_length=50)
     val = models.IntegerField()
     val_noexp = models.IntegerField()
-    res_vac = models.IntegerField()
+    res_vac = models.FloatField()
     date_added = models.DateField(auto_now_add=True)
     
     def __str__(self):
