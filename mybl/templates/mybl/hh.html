@@ -60,6 +60,12 @@
       </tr>
     {% endfor %}
   </table>
+  <div class='d-flex'>
+    <canvas id="line-chart" width="800" height="450"></canvas>
+  </div>
+  <script type="text/javascript">
+    var received_data  = {{ graphs|safe }};
+  </script>
 <script src="{% static 'mybl/color.js' %}"></script>
 {% endblock content %}
 </div>

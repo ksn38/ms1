@@ -11,6 +11,7 @@ from collections import OrderedDict
 import json
 from bs4 import BeautifulSoup as bs
 from django.core import serializers
+from django.db.models import Q
 
 
 def index(request):
@@ -146,7 +147,6 @@ def hh(request):
 
         for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Go', '1c', 'Data scientist', 'Scala', 'Swift']:
             url = 'https://api.hh.ru/vacancies?&' + expir + 'search_field=name&text=' + i
-            # url = 'https://api.hh.ru/vacancies?&search_field=name&text=' + i
             response = requests.get(url)
             val = json.loads(response.content.decode("utf-8"))
             vac[i] = val['found']
@@ -168,14 +168,14 @@ def hh(request):
                 bloko = ''.join(map(str, bloko[:2]))
             else:
                 bloko = ''.join(map(str, bloko[:1]))
-            #res.append(int(bloko))
             res[i] = int(bloko)
 
         return res
 
     date_today = date.today().strftime("%Y-%m-%d")
-    langs = Lang.objects.extra(where=["date_added='" + date_today + "'"]).order_by('res_vac')
-    
+    #langs = Lang.objects.extra(where=["date_added='" + date_today + "'"]).order_by('res_vac')
+    langs = Lang.objects.filter(Q(date_added = date_today)).order_by('res_vac')
+
     if len(langs) == 0:
         noexp = 'experience=noExperience&'
         vacs = apivac('')
@@ -192,14 +192,17 @@ def hh(request):
             obj = Lang(**new_values)
             obj.save()
         
-        langs = Lang.objects.extra(where=["date_added='" + date_today + "'"]).order_by('res_vac')
+        langs = Lang.objects.filter(Q(date_added = date_today)).order_by('res_vac')
         context = {'langs': langs}
     else:
-        langs = Lang.objects.extra(where=["date_added='" + date_today + "'"]).order_by('res_vac')
+        langs = Lang.objects.filter(Q(date_added = date_today)).order_by('res_vac')
         context = {'langs': langs}
         
     charts = Lang.objects.raw('select * from chart')
     context['charts'] = charts
+    #graphs = Lang.objects.filter(Q(name = 'Python') | Q(name = 'c%2B%2B') | Q(name = 'Java') | Q(name = 'Javascript') | Q(name = 'php'))
+    graphs = Lang.objects.raw("""select * from mybl_lang ml where name = 'Python' or name = 'Java' or name = 'Javascript' or name = 'php' order by date_added, name""")
+    context['graphs'] = serializers.serialize('json', graphs)
     
     return render(request, 'mybl/hh.html', context)
   
@@ -221,28 +224,28 @@ def tickers(request):
     
     date_today = date.today().strftime("%Y-%m-%d")
     date7 = (date.today() - timedelta(7)).strftime("%Y-%m-%d")
-    tickers = Ticker.objects.extra(where=["date_added ='" + date_today + "'"])
+    tickers = Ticker.objects.filter(Q(date_added = date_today))
     context = {'tickers': tickers}
     
     if len(tickers) == 0:
         if date.today().weekday() not in {0, 6}:
             t = ticks()
-            if Ticker.objects.extra(where=["date_added >'" + date7 + "'"]).order_by('-date_added')[0].gspc != t['gspc']:
+            if Ticker.objects.filter(Q(date_added__gt= date7)).order_by('-date_added')[0].gspc != t['gspc']:
                 obj = Ticker(**t)
                 obj.save()
-                tickers = Ticker.objects.extra(where=["date_added ='" + date_today + "'"])
+                tickers = Ticker.objects.filter(Q(date_added = date_today))
                 context = {'tickers': tickers}
             else:
-                date_last = Ticker.objects.extra(where=["date_added>'" + date7 + "'"]).order_by('-date_added')[0].date_added.strftime("%Y-%m-%d")
-                tickers = Ticker.objects.extra(where=["date_added ='" + date_last + "'"])
+                date_last = Ticker.objects.filter(Q(date_added__gt= date7)).order_by('-date_added')[0].date_added.strftime("%Y-%m-%d")
+                tickers = Ticker.objects.filter(Q(date_added = date_last))
                 context = {'tickers': tickers}
         else:
-            date_last = Ticker.objects.extra(where=["date_added>'" + date7 + "'"]).order_by('-date_added')[0].date_added.strftime("%Y-%m-%d")
-            tickers = Ticker.objects.extra(where=["date_added ='" + date_last + "'"])
+            date_last = Ticker.objects.filter(Q(date_added__gt= date7)).order_by('-date_added')[0].date_added.strftime("%Y-%m-%d")
+            tickers = Ticker.objects.filter(Q(date_added = date_last))
             context = {'tickers': tickers}
     
     date50 = (date.today() - timedelta(50)).strftime("%Y-%m-%d")
-    tickers50 = Ticker.objects.extra(where=["date_added >='" + date50 + "'"])
+    tickers50 = Ticker.objects.filter(Q(date_added__gte= date50))
     context['tickers50'] = serializers.serialize('json', tickers50)
             
     return render(request, 'mybl/tickers.html', context)
