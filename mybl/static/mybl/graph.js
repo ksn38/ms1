@@ -8,6 +8,7 @@ let chart1 = document.getElementById("line-chart");
 let chart2 = document.getElementById("line-chart2");
 let chart3 = document.getElementById("line-chart3");
 let onload = true;
+let lengthRD = received_data.length;
 
 
 let lineChart = function(x, y, xLabel, yLabel, chart) {
@@ -54,7 +55,7 @@ let lineChart = function(x, y, xLabel, yLabel, chart) {
 };
 
 
-for (let i = 0; i < 20; i++) {
+for (let i = lengthRD - 20; i < lengthRD; i++) {
   date.push(received_data[i]['fields']['date_added']);
   vix.push(received_data[i]['fields']['vix']);
   tnx.push(received_data[i]['fields']['tnx']);
@@ -70,7 +71,7 @@ for(let i = 0; i < radio.length; i++){
   radio[i].addEventListener("change", function(){
     item = radio[i].value;
     console.log(item);
-    for (let i = 0; i < item; i++) {
+    for (let i = lengthRD - item; i < lengthRD; i++) {
       date.push(received_data[i]['fields']['date_added']);
       vix.push(received_data[i]['fields']['vix']);
       tnx.push(received_data[i]['fields']['tnx']);
