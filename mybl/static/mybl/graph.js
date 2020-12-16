@@ -40,7 +40,7 @@ let lineChart = function(x, y, xLabel, yLabel, chart) {
     options: {
       title: {
         display: true,
-        text: xLabel + ' ' + yLabel
+        text: ''
       },
       scales: {
         yAxes: [{

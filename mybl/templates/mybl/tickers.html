@@ -2,27 +2,27 @@
 {% block content %}
 {% load static %}
 <div class='d-flex justify-content-around m-2 flex-wrap align-items-start'>
-  <!--table class='table-sm table-dark table-striped table-bordered'>
+  <table class='table-sm table-dark table-striped table-bordered'>
     <caption style='caption-side: top'><small></small></caption>
     <tr>
       <th class='px-2'>S&P500</th>
       <th class='px-2'>VIX</th>
       <th class='px-2'>TR10</th>
     </tr>
-    {% for ticker in tickers %}
+    {% for ticker in chart_tickers %}
       <tr>
         <td>
-          {{ ticker.gspc }}
+          {{ ticker.dif_gspc }}
         </td>
         <td>
-          {{ ticker.vix }}
+          {{ ticker.dif_vix }}
         </td>
         <td>
-          {{ ticker.tnx }}
+          {{ ticker.dif_tnx }}
         </td>
       </tr>
     {% endfor %}
-  </table-->
+  </table>
 
   <div class='d-flex'>
     <canvas id="line-chart" width="800" height="450"></canvas>
