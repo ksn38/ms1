@@ -1,4 +1,4 @@
-let radio = document.querySelectorAll('input[name="period"]');
+let radio = document.querySelector('form');
 let item = 20;
 let date = [];
 let vix = [];
@@ -55,7 +55,7 @@ let lineChart = function(x, y, xLabel, yLabel, chart) {
 };
 
 
-for (let i = lengthRD - 20; i < lengthRD; i++) {
+for (let i = lengthRD - 50; i < lengthRD; i++) {
   date.push(received_data[i]['fields']['date_added']);
   vix.push(received_data[i]['fields']['vix']);
   tnx.push(received_data[i]['fields']['tnx']);
@@ -66,29 +66,29 @@ lineChart(vix, tnx, 'VIX', 'TR10', chart1);
 lineChart(vix, gspc, 'VIX', 'S&P500', chart2);
 lineChart(tnx, gspc, 'TR10', 'S&P500', chart3);
 
+if (radio) {
+  for(let i = 0; i < radio.length; i++){
+    radio[i].addEventListener("change", function(){
+      item = radio[i].value;
+      console.log(item);
+      for (let i = lengthRD - item; i < lengthRD; i++) {
+        date.push(received_data[i]['fields']['date_added']);
+        vix.push(received_data[i]['fields']['vix']);
+        tnx.push(received_data[i]['fields']['tnx']);
+        gspc.push(received_data[i]['fields']['gspc']);
+      }
 
-for(let i = 0; i < radio.length; i++){
-  radio[i].addEventListener("change", function(){
-    item = radio[i].value;
-    console.log(item);
-    for (let i = lengthRD - item; i < lengthRD; i++) {
-      date.push(received_data[i]['fields']['date_added']);
-      vix.push(received_data[i]['fields']['vix']);
-      tnx.push(received_data[i]['fields']['tnx']);
-      gspc.push(received_data[i]['fields']['gspc']);
-    }
-
-    lineChart(vix, tnx, 'VIX', 'TR10', chart1);
-    lineChart(vix, gspc, 'VIX', 'S&P500', chart2);
-    lineChart(tnx, gspc, 'TR10', 'S&P500', chart3);
-    item = 20;
-    date = [];
-    vix = [];
-    tnx = [];
-    gspc = [];
-  });
+      lineChart(vix, tnx, 'VIX', 'TR10', chart1);
+      lineChart(vix, gspc, 'VIX', 'S&P500', chart2);
+      lineChart(tnx, gspc, 'TR10', 'S&P500', chart3);
+      item = 20;
+      date = [];
+      vix = [];
+      tnx = [];
+      gspc = [];
+    });
+  }
 }
-
 
 /*window.onload = function(){
   
