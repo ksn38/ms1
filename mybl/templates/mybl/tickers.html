@@ -23,6 +23,30 @@
       </tr>
     {% endfor %}
   </table>
+  <table class='table-sm table-dark table-striped table-bordered'>
+    <caption style='caption-side: top'><small></small></caption>
+      <!--tr>
+      <th class='px-2'> </th>
+      </tr-->
+      <tr>
+        <td><input type='radio' id='r20' name='period' value="20" checked="checked">20</td>
+      </tr>
+      <tr>
+        <td><input type='radio' id='r50' name='period' value="50">50</td>
+      </tr>
+      <tr>
+        <td><input type='radio' id='r100' name='period' value="100">100</td>
+      </tr>
+      <tr>
+        <td><input type='radio' id='r249' name='period' value="249">250</td>
+      </tr>
+    <!--form>
+      <input type='radio' id='r20' name='period' value="20">20</td>
+      <input type='radio' id='r50' name='period' value="50">50</td>
+      <input type='radio' id='r100' name='period' value="100">100</td>
+      <input type='radio' id='r250' name='period' value="250">250</td>
+    </form-->
+  </table>
 
   <div class='d-flex'>
     <canvas id="line-chart" width="800" height="450"></canvas>

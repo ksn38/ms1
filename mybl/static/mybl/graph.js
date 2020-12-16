@@ -1,18 +1,13 @@
+let radio = document.querySelectorAll('input[name="period"]');
+let item = 20;
 let date = [];
 let vix = [];
 let tnx = [];
 let gspc = [];
-
-for (let i of received_data) {
-  date.push(i['fields']['date_added']);
-  vix.push(i['fields']['vix']);
-  tnx.push(i['fields']['tnx']);
-  gspc.push(i['fields']['gspc']);
-}
-
 let chart1 = document.getElementById("line-chart");
 let chart2 = document.getElementById("line-chart2");
 let chart3 = document.getElementById("line-chart3");
+let onload = true;
 
 
 let lineChart = function(x, y, xLabel, yLabel, chart) {
@@ -58,7 +53,44 @@ let lineChart = function(x, y, xLabel, yLabel, chart) {
   });
 };
 
+
+for (let i = 0; i < 20; i++) {
+  date.push(received_data[i]['fields']['date_added']);
+  vix.push(received_data[i]['fields']['vix']);
+  tnx.push(received_data[i]['fields']['tnx']);
+  gspc.push(received_data[i]['fields']['gspc']);
+}
+
 lineChart(vix, tnx, 'VIX', 'TR10', chart1);
 lineChart(vix, gspc, 'VIX', 'S&P500', chart2);
 lineChart(tnx, gspc, 'TR10', 'S&P500', chart3);
+
+
+for(let i = 0; i < radio.length; i++){
+  radio[i].addEventListener("change", function(){
+    item = radio[i].value;
+    console.log(item);
+    for (let i = 0; i < item; i++) {
+      date.push(received_data[i]['fields']['date_added']);
+      vix.push(received_data[i]['fields']['vix']);
+      tnx.push(received_data[i]['fields']['tnx']);
+      gspc.push(received_data[i]['fields']['gspc']);
+    }
+
+    lineChart(vix, tnx, 'VIX', 'TR10', chart1);
+    lineChart(vix, gspc, 'VIX', 'S&P500', chart2);
+    lineChart(tnx, gspc, 'TR10', 'S&P500', chart3);
+    item = 20;
+    date = [];
+    vix = [];
+    tnx = [];
+    gspc = [];
+  });
+}
+
+
+/*window.onload = function(){
+  
+}*/
+
 
