@@ -245,8 +245,9 @@ def tickers(request):
             context = {'tickers': tickers}
     
     date50 = (date.today() - timedelta(50)).strftime("%Y-%m-%d")
-    tickers50 = Ticker.objects.filter(Q(date_added__gte= date50))
-    context['chart_tickers'] = Lang.objects.raw("select * from chart_tickers")
+    #tickers50 = Ticker.objects.filter(Q(date_added__gte= date50))
+    tickers50 = Ticker.objects.raw("select * from mybl_ticker")
+    context['chart_tickers'] = Ticker.objects.raw("select * from chart_tickers")
     context['tickers50'] = serializers.serialize('json', tickers50)
             
     return render(request, 'mybl/tickers.html', context)
