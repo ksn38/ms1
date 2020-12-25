@@ -1,5 +1,5 @@
 let tr = document.querySelectorAll('.color');
-let tri = document.querySelectorAll('.color_inv');
+let tri = document.querySelectorAll('.color-inv');
 
 for (let i of tr) {
   if (parseInt(i.textContent) < 0) {
@@ -35,8 +35,6 @@ for (let i = 0; i < received_data.length; i += 4) {
   py.push(received_data[i + 3]['fields']['val']);
 }
 
-console.log(date);
-
 let chart = document.getElementById("line-chart");
 
 new Chart(document.getElementById("line-chart"), {
@@ -47,26 +45,31 @@ new Chart(document.getElementById("line-chart"), {
         data: java,
         label: "Java",
         borderColor: "#3e95cd",
-        fill: false
+        fill: false,
+        pointRadius: 0,
       }, { 
         data: js,
         label: "Javascript",
         borderColor: "#3cba9f",
-        fill: false
+        fill: false,
+        pointRadius: 0,
       }, { 
         data: php,
         label: "php",
         borderColor: "#e8c3b9",
-        fill: false
+        fill: false,
+        pointRadius: 0,
       }, { 
         data: py,
         label: "Python",
         borderColor: "#c45850",
-        fill: false
+        fill: false,
+        pointRadius: 0,
       }
     ]
   },
   options: {
+    events: [],
     title: {
       display: true,
       text: ''

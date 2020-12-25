@@ -2,51 +2,49 @@
 {% block content %}
 {% load static %}
 <div class='d-flex justify-content-around flex-wrap align-items-center'>
-  <table class='table-sm table-dark table-striped table-bordered'>
-    <caption style='caption-side: top'><small></small></caption>
-    <tr>
-      <th class='px-2'>S&P500</th>
-      <th class='px-2'>VIX</th>
-      <th class='px-2'>TR10</th>
-    </tr>
-    {% for ticker in chart_tickers %}
+  <div class='d-flex justify-center mt-2 flex-wrap align-items-end' style='flex-basis: 30%;'>
+    <table class='table-sm table-dark table-striped table-bordered'>
+      <form>
+      <caption style='caption-side: top'><small></small></caption>
+        <tr>
+        <th class='text-center'>1</th>
+        </tr>
+        <tr>
+          <td><input type='radio' id='r20' name='period' value="20" checked="checked">20</td>
+        </tr>
+        <tr>
+          <td><input type='radio' id='r50' name='period' value="50">50</td>
+        </tr>
+        <tr>
+          <td><input type='radio' id='r100' name='period' value="100">100</td>
+        </tr>
+        <tr>
+          <td><input type='radio' id='r250' name='period' value="250">250</td>
+        </tr>
+      </form>
+    </table>
+    <table class='table-sm table-dark table-striped table-bordered'>
+      <caption style='caption-side: top'><small></small></caption>
       <tr>
-        <td>
-          {{ ticker.dif_gspc }}
-        </td>
-        <td>
-          {{ ticker.dif_vix }}
-        </td>
-        <td>
-          {{ ticker.dif_tnx }}
-        </td>
+        <th class='px-2'>S&P500</th>
+        <th class='px-2'>VIX</th>
+        <th class='px-2'>TR10</th>
       </tr>
-    {% endfor %}
-  </table>
-  <!--table class='table-sm table-dark table-striped table-bordered'>
-    <caption style='caption-side: top'><small></small></caption>
-      <!tr>
-      <th class='px-2'> </th>
-      </tr>
-      <tr>
-        <td><input type='radio' id='r20' name='period' value="20" checked="checked">20</td>
-      </tr>
-      <tr>
-        <td><input type='radio' id='r50' name='period' value="50">50</td>
-      </tr>
-      <tr>
-        <td><input type='radio' id='r100' name='period' value="100">100</td>
-      </tr>
-      <tr>
-        <td><input type='radio' id='r250' name='period' value="250">250</td>
-      </tr-->
-    <!--form>
-      <input type='radio' id='r20' name='period' value="20">20</td>
-      <input type='radio' id='r50' name='period' value="50">50</td>
-      <input type='radio' id='r100' name='period' value="100">100</td>
-      <input type='radio' id='r250' name='period' value="250">250</td>
-    </form-->
-  </table>
+      {% for ticker in chart_tickers %}
+        <tr>
+          <td class='change'>
+            {{ ticker.dif_gspc }}
+          </td>
+          <td class='change-invert'>
+            {{ ticker.dif_vix }}
+          </td>
+          <td class='change'>
+            {{ ticker.dif_tnx }}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
 
   <div class='d-flex'>
     <canvas id="line-chart" width="800" height="450"></canvas>

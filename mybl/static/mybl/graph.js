@@ -23,6 +23,7 @@ let lineChart = function(x, y, xLabel, yLabel, chart) {
           fill: false,
           label: xLabel,
           yAxisID: xLabel,
+          pointRadius: 0,
         }, { 
           data: y,
           label: yLabel,
@@ -30,10 +31,12 @@ let lineChart = function(x, y, xLabel, yLabel, chart) {
           fill: false,
           label: yLabel,
           yAxisID: yLabel,
+          pointRadius: 0,
         }
       ]
     },
     options: {
+      events: [],
       title: {
         display: true,
         text: ''
@@ -90,8 +93,25 @@ if (radio) {
   }
 }
 
-/*window.onload = function(){
-  
-}*/
+let tr = document.querySelectorAll('.change');
+let tri = document.querySelectorAll('.change-invert');
+
+for (let i of tr) {
+  if (parseInt(i.textContent) < 0) {
+    i.classList.add('bg-danger')
+  }
+  else if (parseInt(i.textContent) > 0) {
+    i.classList.add('bg-success')
+  }else {i.classList.add('bg-secondary')}
+}
+
+for (let i of tri) {
+  if (parseInt(i.textContent) > 0) {
+    i.classList.add('bg-danger')
+  }
+  else if (parseInt(i.textContent) < 0) {
+    i.classList.add('bg-success')
+  }else {i.classList.add('bg-secondary')}
+}
 
 
