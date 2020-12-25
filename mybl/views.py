@@ -46,7 +46,7 @@ def index(request):
     order_dif = {}
 
     for key in now.keys():
-        if key not in {'BYN', 'HUF', 'KGS', 'MDL', 'TJS', 'UZS', 'HKD', 'AZN', 'AMD', 'TMT', 'CZK', 'DKK', 'BGN'}:
+        if key not in {'BYN', 'HUF', 'KGS', 'MDL', 'TJS', 'UZS', 'HKD', 'AZN', 'AMD', 'TMT', 'CZK', 'DKK', 'BGN', 'RON'}:
             try:
                 order_dif[key] = round((now[key] / delta[key] - 1) * 100, 2)
             except KeyError:
