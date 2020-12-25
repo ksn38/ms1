@@ -23,7 +23,6 @@ let lineChart = function(x, y, xLabel, yLabel, chart) {
           fill: false,
           label: xLabel,
           yAxisID: xLabel,
-          pointRadius: 0,
         }, { 
           data: y,
           label: yLabel,
@@ -31,7 +30,6 @@ let lineChart = function(x, y, xLabel, yLabel, chart) {
           fill: false,
           label: yLabel,
           yAxisID: yLabel,
-          pointRadius: 0,
         }
       ]
     },
