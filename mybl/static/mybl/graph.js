@@ -34,6 +34,9 @@ let lineChart = function(x, y, xLabel, yLabel, chart) {
       ]
     },
     options: {
+      animation: {
+        duration: 0
+      },
       events: [],
       title: {
         display: true,

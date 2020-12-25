@@ -26,19 +26,19 @@
     <table class='table-sm table-dark table-striped table-bordered'>
       <caption style='caption-side: top'><small></small></caption>
       <tr>
-        <th class='px-2'>S&P500</th>
-        <th class='px-2'>VIX</th>
-        <th class='px-2'>TR10</th>
+        <th class='px-2 text-center'>S&P500</th>
+        <th class='px-2 text-center'>VIX</th>
+        <th class='px-2 text-center'>TR10</th>
       </tr>
       {% for ticker in chart_tickers %}
         <tr>
-          <td class='change'>
+          <td class='change text-right'>
             {{ ticker.dif_gspc }}
           </td>
-          <td class='change-invert'>
+          <td class='change-invert text-right'>
             {{ ticker.dif_vix }}
           </td>
-          <td class='change'>
+          <td class='change text-right'>
             {{ ticker.dif_tnx }}
           </td>
         </tr>

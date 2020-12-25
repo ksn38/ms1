@@ -69,6 +69,9 @@ new Chart(document.getElementById("line-chart"), {
     ]
   },
   options: {
+    animation: {
+        duration: 0
+    },
     events: [],
     title: {
       display: true,
