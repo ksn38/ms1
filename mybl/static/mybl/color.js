@@ -19,8 +19,6 @@ for (let i of tri) {
   }else {i.classList.add('bg-secondary')}
 }
 
-console.log(received_data);
-
 let date = [];
 let java = [];
 let js = [];
