@@ -64,9 +64,9 @@ for (let i = lengthRD - 50; i < lengthRD; i++) {
   gspc.push(received_data[i]['fields']['gspc']);
 }
 
-lineChart(vix, tnx, 'VIX', 'TR10', '#ff0000', "#c000ff", chart1);
-lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart2);
-lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart3);
+lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1);
+lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart2);
+lineChart(vix, tnx, 'VIX', 'TR10', '#ff0000', "#c000ff", chart3);
 
 
 for(let i = 0; i < radio.length; i++){
@@ -84,9 +84,9 @@ for(let i = 0; i < radio.length; i++){
       gspc.push(received_data[i]['fields']['gspc']);
     }
 
-    lineChart(vix, tnx, 'VIX', 'TR10', '#ff0000', "#c000ff", chart1);
-    lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart2);
-    lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart3);
+    lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1);
+    lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart2);
+    lineChart(vix, tnx, 'VIX', 'TR10', '#ff0000', "#c000ff", chart3);
     item = 50;
     date = [];
     vix = [];
