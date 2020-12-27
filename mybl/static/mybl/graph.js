@@ -11,22 +11,20 @@ let onload = true;
 let lengthRD = received_data.length;
 
 
-let lineChart = function(x, y, xLabel, yLabel, chart) {
+let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
   new Chart(chart, {
     type: 'line',
     data: {
       labels: date,
       datasets: [{ 
           data: x,
-          label: xLabel,
-          borderColor: "#039000",
+          borderColor: xColor,
           fill: false,
           label: xLabel,
           yAxisID: xLabel,
         }, { 
           data: y,
-          label: yLabel,
-          borderColor: "#8e5ea2",
+          borderColor: yColor,
           fill: false,
           label: yLabel,
           yAxisID: yLabel,
@@ -66,9 +64,9 @@ for (let i = lengthRD - 50; i < lengthRD; i++) {
   gspc.push(received_data[i]['fields']['gspc']);
 }
 
-lineChart(vix, tnx, 'VIX', 'TR10', chart1);
-lineChart(vix, gspc, 'VIX', 'S&P500', chart2);
-lineChart(tnx, gspc, 'TR10', 'S&P500', chart3);
+lineChart(vix, tnx, 'VIX', 'TR10', '#ff0000', "#c000ff", chart1);
+lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart2);
+lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart3);
 
 
 for(let i = 0; i < radio.length; i++){
@@ -86,9 +84,9 @@ for(let i = 0; i < radio.length; i++){
       gspc.push(received_data[i]['fields']['gspc']);
     }
 
-    lineChart(vix, tnx, 'VIX', 'TR10', chart1);
-    lineChart(vix, gspc, 'VIX', 'S&P500', chart2);
-    lineChart(tnx, gspc, 'TR10', 'S&P500', chart3);
+    lineChart(vix, tnx, 'VIX', 'TR10', '#ff0000', "#c000ff", chart1);
+    lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart2);
+    lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart3);
     item = 50;
     date = [];
     vix = [];
