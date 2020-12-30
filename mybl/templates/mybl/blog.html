@@ -3,26 +3,25 @@
   <!--h1>Посты</h1 -->
 {% endblock header %}
 {% block content %}
-<ul>
-  {% for bpost in blog %}
-  <div class="card card-body border-dark my-2 bg-dark text-white">
-    <div>
-      <h5>
-        <span class="d-flex justify-content-between">
-          <a class="text-light" href="{% url 'bpost' bpost.id %}">{{ bpost.header }}</a>
-          <small>{{ bpost.date_added|date:'M d, Y H:i' }}</small>
-        </span>
-      </h5>
-    </div>
-    <div class="card card-body bg-light text-dark">
-      {{bpost.main}}
-    </div>
-    <a class="text-secondary text-left" href="{% url 'bpost' bpost.id %}#new_comment">Добавить комментарий</a>
-  </div> 
-  {% empty %}
-    <li>Ни одной записи еще не было добавлено</li>
-  {% endfor %}
-</ul>
+
+{% for bpost in blog %}
+<div class="card card-body border-dark my-2 bg-dark text-white">
+  <div>
+    <h5>
+      <span class="d-flex justify-content-between">
+        <a class="text-light" href="{% url 'bpost' bpost.id %}">{{ bpost.header }}</a>
+        <small>{{ bpost.date_added|date:'M d, Y H:i' }}</small>
+      </span>
+    </h5>
+  </div>
+  <div class="card card-body bg-light text-dark">
+    {{ bpost.main|linebreaksbr }}
+  </div>
+  <a class="text-secondary text-left" href="{% url 'bpost' bpost.id %}#new_comment">Добавить комментарий</a>
+</div> 
+{% empty %}
+  <li>Ни одной записи еще не было добавлено</li>
+{% endfor %}
 <div class="text-center">
   <h5><a class="text-secondary" href="{% url 'new_bpost' %}">Добавить новую запись</h5>
 </div>

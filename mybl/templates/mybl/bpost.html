@@ -10,7 +10,7 @@
       </span>
     </h5>
   <div class="card card-body text-dark">
-    <main>{{ bpost.main }}</main>
+    <main>{{ bpost.main|linebreaksbr }}</main>
   </div>
   <a class="text-right text-secondary" href="{% url 'edit_bpost' bpost.id %}">Редактировать пост</a>
 </div>
@@ -22,8 +22,8 @@
   <span class="d-flex justify-content-end">
     {{ comment.date_added|date:'M d, Y H:i' }}
   </span>
-  <div class="card card-body text-dark">
-    {{ comment.text}}
+  <div class="card card-body text-dark field-__str__">
+    {{ comment.text|linebreaksbr }}
   </div>
 </div> 
 {% empty %}
