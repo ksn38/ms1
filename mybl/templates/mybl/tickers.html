@@ -2,7 +2,7 @@
 {% block content %}
 {% load static %}
 <div class='d-flex justify-content-around flex-wrap align-items-center'>
-  <div class='d-flex justify-center mt-2 flex-wrap align-items-end' style='flex-basis: 30%;'>
+  <div class='d-flex justify-center mt-2 flex-nowrap align-items-end' style='flex-basis: 30%;'>
     <table class='table-sm table-dark table-striped table-bordered'>
       <form>
       <caption style='caption-side: top'><small></small></caption>
@@ -10,16 +10,16 @@
         <th class='text-center'>1</th>
         </tr>
         <tr>
-          <td><input type='radio' id='r20' name='period' value="20">20</td>
+          <td nowrap><input type='radio' id='r20' name='period' value="20">20</td>
         </tr>
         <tr>
-          <td><input type='radio' id='r50' name='period' value="50" checked="checked">50</td>
+          <td nowrap><input type='radio' id='r50' name='period' value="50" checked="checked">50</td>
         </tr>
         <tr>
-          <td><input type='radio' id='r100' name='period' value="100">100</td>
+          <td nowrap><input type='radio' id='r100' name='period' value="100">100</td>
         </tr>
         <tr>
-          <td><input type='radio' id='r250' name='period' value="250">250</td>
+          <td nowrap><input type='radio' id='r250' name='period' value="250">250</td>
         </tr>
         <tr>
           <th class='text-center'>500</th>
