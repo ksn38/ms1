@@ -16,13 +16,13 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="{% url 'index' %}">ksn52</a>
         <div class="navbar-nav mx-1">
-          <a class="nav-link" href="{% url 'blog' %}">Блог</a>
-        </div>
-        <div class="navbar-nav mx-1">
           <a class="nav-link" href="{% url 'hh' %}">hh</a>
         </div>
         <div class="navbar-nav mx-1">
           <a class="nav-link" href="{% url 'tickers' %}">Tickers</a>
+        </div>
+        <div class="navbar-nav mx-1">
+          <a class="nav-link" href="{% url 'blog' %}">Блог</a>
         </div>
         {% if user.is_authenticated %}
         <div class='d-flex flex-nowrap ml-auto'>

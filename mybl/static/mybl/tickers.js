@@ -66,6 +66,7 @@ let lineChart = function(x, y, corr, xLabel, yLabel, corrLabel, xColor, yColor, 
           label: corrLabel,
           yAxisID: corrLabel,
           pointRadius: 0,
+          borderWidth: 1,
         }
       ]
     },
