@@ -110,7 +110,7 @@ for (let i = lengthRD - 50; i < lengthRD; i++) {
   gspc.push(received_data[i]['fields']['gspc']);
 }
 
-console.log(cor(vix, gspc));
+/*console.log(cor(vix, gspc));*/
 
 for (let i = 0; i <= vix.length - 5; i++) {
   rcsv.push(cor(gspc.slice(i, i+ 5), vix.slice(i, i+ 5)));
@@ -127,7 +127,6 @@ for (let i = 0; i <= vix.length - 5; i++) {
 lineChart(vix, gspc, rcsv, 'VIX', 'S&P500', 'Rolling correlation', '#ff0000', "#0000ff", chart1);
 lineChart(tnx, gspc, rcst, 'TR10', 'S&P500', 'Rolling correlation', '#c000ff', "#0000ff", chart2);
 lineChart(vix, tnx, rctv, 'VIX', 'TR10', 'Rolling correlation', '#ff0000', "#c000ff", chart3);
-
 
 for(let i = 0; i < radio.length; i++){
   radio[i].addEventListener("change", function(){
@@ -173,7 +172,6 @@ for(let i = 0; i < radio.length; i++){
     gspc = [];
   });
 }
-
 
 let tr = document.querySelectorAll('.change');
 let tri = document.querySelectorAll('.change-invert');
