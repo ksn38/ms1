@@ -32,6 +32,10 @@
         <th class='px-2 text-center'>S&P500</th>
         <th class='px-2 text-center'>VIX</th>
         <th class='px-2 text-center'>TR10</th>
+        <th class='px-2 text-center'>Nasdaq</th>
+        <th class='px-2 text-center'>Russell</th>
+        <th class='px-2 text-center'>WTI</th>
+        <th class='px-2 text-center'>Gold</th>
       </tr>
       {% for ticker in chart_tickers %}
         <tr>
@@ -55,8 +59,20 @@
   <div class='d-flex'>
     <canvas id="line-chart2" width="800" height="450"></canvas>
   </div>
-    <div class='d-flex'>
+  <div class='d-flex'>
     <canvas id="line-chart3" width="800" height="450"></canvas>
+  </div>
+    <div class='d-flex'>
+    <canvas id="line-chart4" width="800" height="450"></canvas>
+  </div>
+  <div class='d-flex'>
+    <canvas id="line-chart5" width="800" height="450"></canvas>
+  </div>
+  <div class='d-flex'>
+    <canvas id="line-chart6" width="800" height="450"></canvas>
+  </div>
+  <div class='d-flex'>
+    <canvas id="line-chart7" width="800" height="450"></canvas>
   </div>
   <script type="text/javascript">
     var received_data  = {{ tickers50|safe }};

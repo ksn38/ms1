@@ -4,14 +4,26 @@ let date = [];
 let vix = [];
 let tnx = [];
 let gspc = [];
+let ixic = [];
+let rut = [];
+let wti = [];
+let gold = [];
 let chart1 = document.getElementById("line-chart");
 let chart2 = document.getElementById("line-chart2");
 let chart3 = document.getElementById("line-chart3");
+let chart4 = document.getElementById("line-chart4");
+let chart5 = document.getElementById("line-chart5");
+let chart6 = document.getElementById("line-chart6");
+let chart7 = document.getElementById("line-chart7");
 let onload = true;
 let lengthRD = received_data.length;
 let rcsv = [0, 0, 0, 0];
 let rcst = [0, 0, 0, 0];
 let rctv = [0, 0, 0, 0];
+let rcsn = [0, 0, 0, 0];
+let rcsr = [0, 0, 0, 0];
+let rcgt = [0, 0, 0, 0];
+let rcws = [0, 0, 0, 0];
 
 
 let cor = (list1, list2) => {
@@ -109,6 +121,10 @@ for (let i = lengthRD - 50; i < lengthRD; i++) {
   vix.push(received_data[i]['fields']['vix']);
   tnx.push(received_data[i]['fields']['tnx']);
   gspc.push(received_data[i]['fields']['gspc']);
+  ixic.push(received_data[i]['fields']['ixic']);
+  rut.push(received_data[i]['fields']['rut']);
+  wti.push(received_data[i]['fields']['wti']);
+  gold.push(received_data[i]['fields']['gold']);
 }
 
 /*console.log(cor(vix, gspc));*/
@@ -125,9 +141,29 @@ for (let i = 0; i <= vix.length - 5; i++) {
   rctv.push(cor(tnx.slice(i, i+ 5), vix.slice(i, i+ 5)));
 };
 
+for (let i = 0; i <= item - 5; i++) {
+  rcsn.push(cor(gspc.slice(i, i+ 5), ixic.slice(i, i+ 5)));
+};
+
+for (let i = 0; i <= item - 5; i++) {
+  rcsr.push(cor(gspc.slice(i, i+ 5), rut.slice(i, i+ 5)));
+};
+
+for (let i = 0; i <= item - 5; i++) {
+  rcgt.push(cor(gold.slice(i, i+ 5), tnx.slice(i, i+ 5)));
+};
+
+for (let i = 0; i <= item - 5; i++) {
+  rcws.push(cor(wti.slice(i, i+ 5), gspc.slice(i, i+ 5)));
+};
+
 lineChart(vix, gspc, rcsv, 'VIX', 'S&P500', 'Rolling correlation', '#ff0000', "#0000ff", chart1);
 lineChart(tnx, gspc, rcst, 'TR10', 'S&P500', 'Rolling correlation', '#c000ff', "#0000ff", chart2);
 lineChart(vix, tnx, rctv, 'VIX', 'TR10', 'Rolling correlation', '#ff0000', "#c000ff", chart3);
+lineChart(ixic, gspc, rcsn, 'Nasdaq', 'S&P500', 'Rolling correlation', '#36ff00', "#0000ff", chart4);
+lineChart(rut, gspc, rcsr, 'russell', 'S&P500', 'Rolling correlation', '#ff6600', "#0000ff", chart5);
+lineChart(gold, tnx, rcgt, 'Gold', 'TR10', 'Rolling correlation', '#ffd800', "#c000ff", chart6);
+lineChart(wti, tnx, rcws, 'WTI', 'S&P500', 'Rolling correlation', '#000000', "#0000ff", chart7);
 
 for(let i = 0; i < radio.length; i++){
   radio[i].addEventListener("change", function(){
@@ -138,14 +174,26 @@ for(let i = 0; i < radio.length; i++){
     vix = [];
     tnx = [];
     gspc = [];
-    let rcsv = [0, 0, 0, 0];
-    let rcst = [0, 0, 0, 0];
-    let rctv = [0, 0, 0, 0];
+    ixic = [];
+    rut = [];
+    wti = [];
+    gold = [];
+    rcsv = [0, 0, 0, 0];
+    rcst = [0, 0, 0, 0];
+    rctv = [0, 0, 0, 0];
+    rcsn = [0, 0, 0, 0];
+    rcsr = [0, 0, 0, 0];
+    rcgt = [0, 0, 0, 0];
+    rcws = [0, 0, 0, 0];
     for (let i = lengthRD - item; i < lengthRD; i++) {
       date.push(received_data[i]['fields']['date_added']);
       vix.push(received_data[i]['fields']['vix']);
       tnx.push(received_data[i]['fields']['tnx']);
       gspc.push(received_data[i]['fields']['gspc']);
+      ixic.push(received_data[i]['fields']['ixic']);
+      rut.push(received_data[i]['fields']['rut']);
+      wti.push(received_data[i]['fields']['wti']);
+      gold.push(received_data[i]['fields']['gold']);
     }
     
     /*while (rollcorr.length < 5 - 1) {
@@ -162,15 +210,39 @@ for(let i = 0; i < radio.length; i++){
     for (let i = 0; i <= item - 5; i++) {
       rctv.push(cor(tnx.slice(i, i+ 5), vix.slice(i, i+ 5)));
     };
+    
+    for (let i = 0; i <= item - 5; i++) {
+      rcsn.push(cor(gspc.slice(i, i+ 5), ixic.slice(i, i+ 5)));
+    };
+    
+    for (let i = 0; i <= item - 5; i++) {
+      rcsr.push(cor(gspc.slice(i, i+ 5), rut.slice(i, i+ 5)));
+    };
+
+    for (let i = 0; i <= item - 5; i++) {
+      rcgt.push(cor(gold.slice(i, i+ 5), tnx.slice(i, i+ 5)));
+    };
+
+    for (let i = 0; i <= item - 5; i++) {
+      rcws.push(cor(wti.slice(i, i+ 5), gspc.slice(i, i+ 5)));
+    };
 
     lineChart(vix, gspc, rcsv, 'VIX', 'S&P500', 'Rolling correlation', '#ff0000', "#0000ff", chart1);
     lineChart(tnx, gspc, rcst, 'TR10', 'S&P500', 'Rolling correlation', '#c000ff', "#0000ff", chart2);
     lineChart(vix, tnx, rctv, 'VIX', 'TR10', 'Rolling correlation', '#ff0000', "#c000ff", chart3);
+    lineChart(ixic, gspc, rcsn, 'Nasdaq', 'S&P500', 'Rolling correlation', '#36ff00', "#0000ff", chart4);
+    lineChart(rut, gspc, rcsr, 'russell', 'S&P500', 'Rolling correlation', '#ff6600', "#0000ff", chart5);
+    lineChart(gold, tnx, rcgt, 'Gold', 'TR10', 'Rolling correlation', '#ffd800', "#c000ff", chart6);
+    lineChart(wti, tnx, rcws, 'WTI', 'S&P500', 'Rolling correlation', '#000000', "#0000ff", chart7);
     item = 50;
     date = [];
     vix = [];
     tnx = [];
     gspc = [];
+    ixic = [];
+    rut = [];
+    wti = [];
+    gold = [];
   });
 }
 

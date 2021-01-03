@@ -212,12 +212,19 @@ def tickers(request):
         t_dict = OrderedDict()
 
         for i in (args):
-            url = 'https://finance.yahoo.com/quote/^' + i
-            response = requests.get(url, headers=headers).text
-            response = requests.get(url, headers=headers).text
-            parsed_html = bs(response, 'lxml')
-            t = parsed_html.find('span', {'data-reactid': '32'}).text.replace(',', '')
-            t_dict[i] = float(t)
+            if i not in {'wti', 'gold'}:
+                url = 'https://finance.yahoo.com/quote/^' + i
+                response = requests.get(url, headers=headers).text
+                parsed_html = bs(response, 'lxml')
+                t = parsed_html.find('span', {'data-reactid': '32'}).text.replace(',', '')
+                t_dict[i] = float(t)
+            else:
+                commodities = {'wti': 'CL=F', 'gold': 'GC=F'}
+                url = 'https://finance.yahoo.com/quote/' + commodities[i]
+                response = requests.get(url, headers=headers).text
+                parsed_html = bs(response, 'lxml')
+                t = parsed_html.find('span', {'data-reactid': '65'}).text.replace(',', '')
+                t_dict[i] = float(t)
 
         return t_dict
     
@@ -230,7 +237,7 @@ def tickers(request):
         if date.today().weekday() not in {0, 6}:
             t = ticks('gspc')
             if Ticker.objects.filter(Q(date_added__gt= date7)).order_by('-date_added')[0].gspc != t['gspc']:
-                t.update(ticks('vix', 'tnx'))
+                t.update(ticks('vix', 'tnx', 'ixic', 'rut', 'wti', 'gold'))
                 obj = Ticker(**t)
                 obj.save()
                 tickers = Ticker.objects.filter(Q(date_added = date_today))
