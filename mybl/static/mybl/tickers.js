@@ -162,7 +162,7 @@ lineChart(tnx, gspc, rcst, 'TR10', 'S&P500', 'Rolling correlation', '#c000ff', "
 lineChart(vix, tnx, rctv, 'VIX', 'TR10', 'Rolling correlation', '#ff0000', "#c000ff", chart3);
 lineChart(ixic, gspc, rcsn, 'Nasdaq', 'S&P500', 'Rolling correlation', '#36ff00', "#0000ff", chart4);
 lineChart(rut, gspc, rcsr, 'Russell', 'S&P500', 'Rolling correlation', '#ff6600', "#0000ff", chart5);
-lineChart(gold, tnx, rcgv, 'Gold', 'VIX', 'Rolling correlation', '#ffd800', "#ff0000", chart6);
+lineChart(gold, vix, rcgv, 'Gold', 'VIX', 'Rolling correlation', '#ffd800', "#ff0000", chart6);
 lineChart(wti, tnx, rcws, 'WTI', 'S&P500', 'Rolling correlation', '#000000', "#0000ff", chart7);
 
 for(let i = 0; i < radio.length; i++){
@@ -232,7 +232,7 @@ for(let i = 0; i < radio.length; i++){
     lineChart(vix, tnx, rctv, 'VIX', 'TR10', 'Rolling correlation', '#ff0000', "#c000ff", chart3);
     lineChart(ixic, gspc, rcsn, 'Nasdaq', 'S&P500', 'Rolling correlation', '#36ff00', "#0000ff", chart4);
     lineChart(rut, gspc, rcsr, 'Russell', 'S&P500', 'Rolling correlation', '#ff6600', "#0000ff", chart5);
-    lineChart(gold, tnx, rcgv, 'Gold', 'VIX', 'Rolling correlation', '#ffd800', "#ff0000", chart6);
+    lineChart(gold, vix, rcgv, 'Gold', 'VIX', 'Rolling correlation', '#ffd800', "#ff0000", chart6);
     lineChart(wti, tnx, rcws, 'WTI', 'S&P500', 'Rolling correlation', '#000000', "#0000ff", chart7);
     item = 50;
     date = [];
