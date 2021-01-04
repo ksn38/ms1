@@ -17,13 +17,7 @@ let chart6 = document.getElementById("line-chart6");
 let chart7 = document.getElementById("line-chart7");
 let onload = true;
 let lengthRD = received_data.length;
-let rcsv = [0, 0, 0, 0];
-let rcst = [0, 0, 0, 0];
-let rctv = [0, 0, 0, 0];
-let rcsn = [0, 0, 0, 0];
-let rcsr = [0, 0, 0, 0];
-let rcgv = [0, 0, 0, 0];
-let rcws = [0, 0, 0, 0];
+let rcor = [0, 0, 0, 0];
 
 
 let cor = (list1, list2) => {
@@ -54,7 +48,11 @@ let cor = (list1, list2) => {
   return (sum(cov(list1, avgList1, list2, avgList2)))/Math.sqrt(dif2(list1, avgList1)*dif2(list2, avgList2));
 };
 
-let lineChart = function(x, y, corr, xLabel, yLabel, corrLabel, xColor, yColor, chart) {
+let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
+  rcor = [0, 0, 0, 0];
+  for (let i = 0; i <= item - 5; i++) {
+      rcor.push(cor(x.slice(i, i+ 5), y.slice(i, i+ 5)));
+  };
   new Chart(chart, {
     type: 'line',
     data: {
@@ -72,11 +70,11 @@ let lineChart = function(x, y, corr, xLabel, yLabel, corrLabel, xColor, yColor, 
           label: yLabel,
           yAxisID: yLabel,
         }, { 
-          data: corr,
+          data: rcor,
           borderColor: '#777777',
           fill: true,
-          label: corrLabel,
-          yAxisID: corrLabel,
+          label: 'Rolling correlation',
+          yAxisID: 'Rolling correlation',
           pointRadius: 0,
           borderWidth: 1,
         }
@@ -102,7 +100,7 @@ let lineChart = function(x, y, corr, xLabel, yLabel, corrLabel, xColor, yColor, 
           position: 'right',
           
         }, {
-          id: corrLabel,
+          id: 'Rolling correlation',
           type: 'linear',
           position: 'right',
           ticks : {
@@ -129,41 +127,13 @@ for (let i = lengthRD - 50; i < lengthRD; i++) {
 
 /*console.log(cor(vix, gspc));*/
 
-for (let i = 0; i <= vix.length - 5; i++) {
-  rcsv.push(cor(gspc.slice(i, i+ 5), vix.slice(i, i+ 5)));
-};
-
-for (let i = 0; i <= vix.length - 5; i++) {
-  rcst.push(cor(gspc.slice(i, i+ 5), tnx.slice(i, i+ 5)));
-};
-
-for (let i = 0; i <= vix.length - 5; i++) {
-  rctv.push(cor(tnx.slice(i, i+ 5), vix.slice(i, i+ 5)));
-};
-
-for (let i = 0; i <= item - 5; i++) {
-  rcsn.push(cor(gspc.slice(i, i+ 5), ixic.slice(i, i+ 5)));
-};
-
-for (let i = 0; i <= item - 5; i++) {
-  rcsr.push(cor(gspc.slice(i, i+ 5), rut.slice(i, i+ 5)));
-};
-
-for (let i = 0; i <= item - 5; i++) {
-  rcgv.push(cor(gold.slice(i, i+ 5), vix.slice(i, i+ 5)));
-};
-
-for (let i = 0; i <= item - 5; i++) {
-  rcws.push(cor(wti.slice(i, i+ 5), gspc.slice(i, i+ 5)));
-};
-
-lineChart(vix, gspc, rcsv, 'VIX', 'S&P500', 'Rolling correlation', '#ff0000', "#0000ff", chart1);
-lineChart(tnx, gspc, rcst, 'TR10', 'S&P500', 'Rolling correlation', '#c000ff', "#0000ff", chart2);
-lineChart(vix, tnx, rctv, 'VIX', 'TR10', 'Rolling correlation', '#ff0000', "#c000ff", chart3);
-lineChart(ixic, gspc, rcsn, 'Nasdaq', 'S&P500', 'Rolling correlation', '#36ff00', "#0000ff", chart4);
-lineChart(rut, gspc, rcsr, 'Russell', 'S&P500', 'Rolling correlation', '#ff6600', "#0000ff", chart5);
-lineChart(gold, vix, rcgv, 'Gold', 'VIX', 'Rolling correlation', '#ffd800', "#ff0000", chart6);
-lineChart(wti, gspc, rcws, 'WTI', 'S&P500', 'Rolling correlation', '#000000', "#0000ff", chart7);
+lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1);
+lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart2);
+lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart3);
+lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart4);
+lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart5);
+lineChart(gold, tnx, 'Gold', 'TR10', '#ffd800', "#c000ff", chart6);
+lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart7);
 
 for(let i = 0; i < radio.length; i++){
   radio[i].addEventListener("change", function(){
@@ -178,13 +148,6 @@ for(let i = 0; i < radio.length; i++){
     rut = [];
     wti = [];
     gold = [];
-    rcsv = [0, 0, 0, 0];
-    rcst = [0, 0, 0, 0];
-    rctv = [0, 0, 0, 0];
-    rcsn = [0, 0, 0, 0];
-    rcsr = [0, 0, 0, 0];
-    rcgv = [0, 0, 0, 0];
-    rcws = [0, 0, 0, 0];
     for (let i = lengthRD - item; i < lengthRD; i++) {
       date.push(received_data[i]['fields']['date_added']);
       vix.push(received_data[i]['fields']['vix']);
@@ -199,41 +162,14 @@ for(let i = 0; i < radio.length; i++){
     /*while (rollcorr.length < 5 - 1) {
       rollcorr.push(0);
     };*/
-    for (let i = 0; i <= item - 5; i++) {
-      rcsv.push(cor(gspc.slice(i, i+ 5), vix.slice(i, i+ 5)));
-    };
     
-    for (let i = 0; i <= item - 5; i++) {
-      rcst.push(cor(gspc.slice(i, i+ 5), tnx.slice(i, i+ 5)));
-    };
-    
-    for (let i = 0; i <= item - 5; i++) {
-      rctv.push(cor(tnx.slice(i, i+ 5), vix.slice(i, i+ 5)));
-    };
-    
-    for (let i = 0; i <= item - 5; i++) {
-      rcsn.push(cor(gspc.slice(i, i+ 5), ixic.slice(i, i+ 5)));
-    };
-    
-    for (let i = 0; i <= item - 5; i++) {
-      rcsr.push(cor(gspc.slice(i, i+ 5), rut.slice(i, i+ 5)));
-    };
-
-    for (let i = 0; i <= item - 5; i++) {
-      rcgv.push(cor(gold.slice(i, i+ 5), vix.slice(i, i+ 5)));
-    };
-
-    for (let i = 0; i <= item - 5; i++) {
-      rcws.push(cor(wti.slice(i, i+ 5), gspc.slice(i, i+ 5)));
-    };
-
-    lineChart(vix, gspc, rcsv, 'VIX', 'S&P500', 'Rolling correlation', '#ff0000', "#0000ff", chart1);
-    lineChart(tnx, gspc, rcst, 'TR10', 'S&P500', 'Rolling correlation', '#c000ff', "#0000ff", chart2);
-    lineChart(vix, tnx, rctv, 'VIX', 'TR10', 'Rolling correlation', '#ff0000', "#c000ff", chart3);
-    lineChart(ixic, gspc, rcsn, 'Nasdaq', 'S&P500', 'Rolling correlation', '#36ff00', "#0000ff", chart4);
-    lineChart(rut, gspc, rcsr, 'Russell', 'S&P500', 'Rolling correlation', '#ff6600', "#0000ff", chart5);
-    lineChart(gold, vix, rcgv, 'Gold', 'VIX', 'Rolling correlation', '#ffd800', "#ff0000", chart6);
-    lineChart(wti, gspc, rcws, 'WTI', 'S&P500', 'Rolling correlation', '#000000', "#0000ff", chart7);
+    lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1);
+    lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart2);
+    lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart3);
+    lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart4);
+    lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart5);
+    lineChart(gold, tnx, 'Gold', 'TR10', '#ffd800', "#c000ff", chart6);
+    lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart7);    
     item = 50;
     date = [];
     vix = [];
