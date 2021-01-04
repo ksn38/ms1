@@ -214,17 +214,14 @@ def tickers(request):
         for i in (args):
             if i not in {'wti', 'gold'}:
                 url = 'https://finance.yahoo.com/quote/^' + i
-                response = requests.get(url, headers=headers).text
-                parsed_html = bs(response, 'lxml')
-                t = parsed_html.find('span', {'data-reactid': '32'}).text.replace(',', '')
-                t_dict[i] = float(t)
             else:
                 commodities = {'wti': 'CL=F', 'gold': 'GC=F'}
                 url = 'https://finance.yahoo.com/quote/' + commodities[i]
-                response = requests.get(url, headers=headers).text
-                parsed_html = bs(response, 'lxml')
-                t = parsed_html.find('span', {'data-reactid': '65'}).text.replace(',', '')
-                t_dict[i] = float(t)
+                
+            response = requests.get(url, headers=headers).text
+            parsed_html = bs(response, 'lxml')
+            t = parsed_html.find('span', {'data-reactid': '32'}).text.replace(',', '')
+            t_dict[i] = float(t)
 
         return t_dict
     
