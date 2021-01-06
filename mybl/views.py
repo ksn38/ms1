@@ -250,7 +250,7 @@ def tickers(request):
     
     date50 = (date.today() - timedelta(50)).strftime("%Y-%m-%d")
     #tickers50 = Ticker.objects.filter(Q(date_added__gte= date50))
-    tickers50 = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 300")
+    tickers50 = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 1050")
     context['chart_tickers'] = Ticker.objects.raw("select * from chart_tickers")
     context['tickers50'] = serializers.serialize('json', tickers50)
             

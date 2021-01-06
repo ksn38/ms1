@@ -15,9 +15,7 @@ let chart4 = document.getElementById("line-chart4");
 let chart5 = document.getElementById("line-chart5");
 let chart6 = document.getElementById("line-chart6");
 let chart7 = document.getElementById("line-chart7");
-let onload = true;
 let lengthRD = received_data.length;
-let rcor = [];
 let win = 5;
 let radWin = document.getElementsByName('win');
 
@@ -51,9 +49,13 @@ let cor = (list1, list2) => {
 };
 
 let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
-  rcor = [];
+  let rcor = [];
   for (let i = 0; i < item; i++) {
       rcor.push(cor(x.slice(i, i + win), y.slice(i, i + win)));
+  };
+  let radPoint = 3;
+  if (item > 50) {
+    radPoint = 0;
   };
   new Chart(chart, {
     type: 'line',
@@ -65,12 +67,14 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
           fill: false,
           label: xLabel,
           yAxisID: xLabel,
+          pointRadius: radPoint,
         }, { 
           data: y.slice(win),
           borderColor: yColor,
           fill: false,
           label: yLabel,
           yAxisID: yLabel,
+          pointRadius: radPoint,
         }, { 
           data: rcor,
           borderColor: '#777777',
