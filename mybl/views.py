@@ -12,6 +12,7 @@ import json
 from bs4 import BeautifulSoup as bs
 from django.core import serializers
 from django.db.models import Q
+from mybl.psql_req import chart_langs, chart_tickers
 
 
 def index(request):
@@ -197,7 +198,7 @@ def hh(request):
         langs = Lang.objects.filter(Q(date_added = date_today)).order_by('res_vac')
         context = {'langs': langs}
         
-    charts = Lang.objects.raw('select * from chart')
+    charts = Lang.objects.raw(chart_langs)
     context['charts'] = charts
     #graphs = Lang.objects.filter(Q(name = 'Python') | Q(name = 'c%2B%2B') | Q(name = 'Java') | Q(name = 'Javascript') | Q(name = 'php'))
     graphs = Lang.objects.raw("""select * from mybl_lang ml where name = 'Python' or name = 'Java' or name = 'Javascript' or name = 'php' order by date_added, name""")
@@ -251,7 +252,7 @@ def tickers(request):
     date50 = (date.today() - timedelta(50)).strftime("%Y-%m-%d")
     #tickers50 = Ticker.objects.filter(Q(date_added__gte= date50))
     tickers50 = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 1050")
-    context['chart_tickers'] = Ticker.objects.raw("select * from chart_tickers")
+    context['chart_tickers'] = Ticker.objects.raw(chart_tickers)#"select * from chart_tickers")
     context['tickers50'] = serializers.serialize('json', tickers50)
             
     return render(request, 'mybl/tickers.html', context)
