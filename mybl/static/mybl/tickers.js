@@ -17,7 +17,9 @@ let chart6 = document.getElementById("line-chart6");
 let chart7 = document.getElementById("line-chart7");
 let onload = true;
 let lengthRD = received_data.length;
-let rcor = [0, 0, 0, 0];
+let rcor = [];
+let win = 5;
+let radWin = document.getElementsByName('win');
 
 
 let cor = (list1, list2) => {
@@ -49,22 +51,22 @@ let cor = (list1, list2) => {
 };
 
 let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
-  rcor = [0, 0, 0, 0];
-  for (let i = 0; i <= item - 5; i++) {
-      rcor.push(cor(x.slice(i, i+ 5), y.slice(i, i+ 5)));
+  rcor = [];
+  for (let i = 0; i < item; i++) {
+      rcor.push(cor(x.slice(i, i + win), y.slice(i, i + win)));
   };
   new Chart(chart, {
     type: 'line',
     data: {
-      labels: date,
+      labels: date.slice(win),
       datasets: [{ 
-          data: x,
+          data: x.slice(win),
           borderColor: xColor,
           fill: false,
           label: xLabel,
           yAxisID: xLabel,
         }, { 
-          data: y,
+          data: y.slice(win),
           borderColor: yColor,
           fill: false,
           label: yLabel,
@@ -114,7 +116,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
 };
 
 
-for (let i = lengthRD - 50; i < lengthRD; i++) {
+for (let i = lengthRD - 50 - win; i < lengthRD; i++) {
   date.push(received_data[i]['fields']['date_added']);
   vix.push(received_data[i]['fields']['vix']);
   tnx.push(received_data[i]['fields']['tnx']);
@@ -124,8 +126,6 @@ for (let i = lengthRD - 50; i < lengthRD; i++) {
   wti.push(received_data[i]['fields']['wti']);
   gold.push(received_data[i]['fields']['gold']);
 }
-
-/*console.log(cor(vix, gspc));*/
 
 lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1);
 lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart2);
@@ -137,9 +137,7 @@ lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart7);
 
 for(let i = 0; i < radio.length; i++){
   radio[i].addEventListener("change", function(){
-    item = radio[i].value;
-    console.log(item);
-    console.log(item);
+    item = parseInt(radio[i].value);
     date = [];
     vix = [];
     tnx = [];
@@ -148,7 +146,7 @@ for(let i = 0; i < radio.length; i++){
     rut = [];
     wti = [];
     gold = [];
-    for (let i = lengthRD - item; i < lengthRD; i++) {
+    for (let i = lengthRD - item - win; i < lengthRD; i++) {
       date.push(received_data[i]['fields']['date_added']);
       vix.push(received_data[i]['fields']['vix']);
       tnx.push(received_data[i]['fields']['tnx']);
@@ -159,10 +157,6 @@ for(let i = 0; i < radio.length; i++){
       gold.push(received_data[i]['fields']['gold']);
     }
     
-    /*while (rollcorr.length < 5 - 1) {
-      rollcorr.push(0);
-    };*/
-    
     lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1);
     lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart2);
     lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart3);
@@ -170,7 +164,6 @@ for(let i = 0; i < radio.length; i++){
     lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart5);
     lineChart(gold, tnx, 'Gold', 'TR10', '#ffd800', "#c000ff", chart6);
     lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart7);    
-    item = 50;
     date = [];
     vix = [];
     tnx = [];
@@ -181,6 +174,48 @@ for(let i = 0; i < radio.length; i++){
     gold = [];
   });
 }
+
+for(let i = 0; i < radWin.length; i++){
+  radWin[i].addEventListener("change", function(){
+    console.log(radWin[i].value);
+    win = parseInt(radWin[i].value);
+    date = [];
+    vix = [];
+    tnx = [];
+    gspc = [];
+    ixic = [];
+    rut = [];
+    wti = [];
+    gold = [];
+    for (let i = lengthRD - item - win; i < lengthRD; i++) {
+      date.push(received_data[i]['fields']['date_added']);
+      vix.push(received_data[i]['fields']['vix']);
+      tnx.push(received_data[i]['fields']['tnx']);
+      gspc.push(received_data[i]['fields']['gspc']);
+      ixic.push(received_data[i]['fields']['ixic']);
+      rut.push(received_data[i]['fields']['rut']);
+      wti.push(received_data[i]['fields']['wti']);
+      gold.push(received_data[i]['fields']['gold']);
+    }
+    
+    lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1);
+    lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart2);
+    lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart3);
+    lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart4);
+    lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart5);
+    lineChart(gold, tnx, 'Gold', 'TR10', '#ffd800', "#c000ff", chart6);
+    lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart7);    
+    date = [];
+    vix = [];
+    tnx = [];
+    gspc = [];
+    ixic = [];
+    rut = [];
+    wti = [];
+    gold = [];
+  });
+}
+
 
 let tr = document.querySelectorAll('.change');
 let tri = document.querySelectorAll('.change-invert');

@@ -64,9 +64,17 @@
       {% endfor %}
     </table>
   </div>
-
-  <div class='d-flex'>
-    <canvas id="line-chart" width="800" height="450"></canvas>
+  
+  <div class='flex-wrap mt-3'>
+    <div class='radWin d-flex justify-content-around'>
+      <div>
+        <label>Window of rolling correlation: <input type='radio' id='w5' name='win' value="5" checked="checked">5</label>
+        <label><input type='radio' id='w15' name='win' value="15">15</label>
+        <label><input type='radio' id='w30' name='win' value="30">30</label>
+        <label><input type='radio' id='w50' name='win' value="50">50</label>
+      </div>
+    </div>
+    <div><canvas id="line-chart" width="800" height="450"></canvas></div>
   </div>
   <div class='d-flex'>
     <canvas id="line-chart2" width="800" height="450"></canvas>
