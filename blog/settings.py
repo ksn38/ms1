@@ -25,7 +25,7 @@ SECRET_KEY = 'd2rdb!o_9_vu)0fa3nr^-vgk-3-%-ur(nahi7$diq4cqc--+_k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ksn38.herokuapp.com', '127.0.0.1', 'ksn52.herokuapp.com']
+ALLOWED_HOSTS = ['130.193.57.192', '127.0.0.1', 'ksn52.herokuapp.com']
 
 
 # Application definition
