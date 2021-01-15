@@ -18,6 +18,27 @@ let chart7 = document.getElementById("line-chart7");
 let lengthRD = received_data.length;
 let win = 5;
 let radWin = document.getElementsByName('win');
+let tr = document.querySelectorAll('.change');
+let tri = document.querySelectorAll('.change-invert');
+
+
+for (let i of tr) {
+  if (parseInt(i.textContent) < 0) {
+    i.classList.add('bg-danger')
+  }
+  else if (parseInt(i.textContent) > 0) {
+    i.classList.add('bg-success')
+  }else {i.classList.add('bg-secondary')}
+}
+
+for (let i of tri) {
+  if (parseInt(i.textContent) > 0) {
+    i.classList.add('bg-danger')
+  }
+  else if (parseInt(i.textContent) < 0) {
+    i.classList.add('bg-success')
+  }else {i.classList.add('bg-secondary')}
+}
 
 
 let cor = (list1, list2) => {
@@ -220,27 +241,6 @@ for(let i = 0; i < radWin.length; i++){
   });
 }
 
-
-let tr = document.querySelectorAll('.change');
-let tri = document.querySelectorAll('.change-invert');
-
-for (let i of tr) {
-  if (parseInt(i.textContent) < 0) {
-    i.classList.add('bg-danger')
-  }
-  else if (parseInt(i.textContent) > 0) {
-    i.classList.add('bg-success')
-  }else {i.classList.add('bg-secondary')}
-}
-
-for (let i of tri) {
-  if (parseInt(i.textContent) > 0) {
-    i.classList.add('bg-danger')
-  }
-  else if (parseInt(i.textContent) < 0) {
-    i.classList.add('bg-success')
-  }else {i.classList.add('bg-secondary')}
-}
 
 
 
