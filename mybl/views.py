@@ -207,7 +207,7 @@ def hh(request):
     return render(request, 'mybl/hh.html', context)
   
 def tickers(request):
-    def ticks(*args):
+    '''def ticks(*args):
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'}
         t_dict = OrderedDict()
@@ -247,12 +247,11 @@ def tickers(request):
         else:
             date_last = Ticker.objects.filter(Q(date_added__gt= date7)).order_by('-date_added')[0].date_added.strftime("%Y-%m-%d")
             tickers = Ticker.objects.filter(Q(date_added = date_last))
-            context = {'tickers': tickers}
+            context = {'tickers': tickers}'''
     
-    date50 = (date.today() - timedelta(50)).strftime("%Y-%m-%d")
-    #tickers50 = Ticker.objects.filter(Q(date_added__gte= date50))
-    tickers50 = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 1050")
+    context = {'tickers': tickers}
+    tickers1050 = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 1050")
     context['chart_tickers'] = Ticker.objects.raw(chart_tickers)#"select * from chart_tickers")
-    context['tickers50'] = serializers.serialize('json', tickers50)
+    context['tickers1050'] = serializers.serialize('json', tickers1050)
             
     return render(request, 'mybl/tickers.html', context)
