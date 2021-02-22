@@ -207,48 +207,6 @@ def hh(request):
     return render(request, 'mybl/hh.html', context)
   
 def tickers(request):
-    '''def ticks(*args):
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'}
-        t_dict = OrderedDict()
-
-        for i in (args):
-            if i not in {'wti', 'gold'}:
-                url = 'https://finance.yahoo.com/quote/^' + i
-            else:
-                commodities = {'wti': 'CL=F', 'gold': 'GC=F'}
-                url = 'https://finance.yahoo.com/quote/' + commodities[i]
-                
-            response = requests.get(url, headers=headers).text
-            parsed_html = bs(response, 'lxml')
-            t = parsed_html.find('span', {'data-reactid': '32'}).text.replace(',', '')
-            t_dict[i] = float(t)
-
-        return t_dict
-    
-    date_today = date.today().strftime("%Y-%m-%d")
-    date7 = (date.today() - timedelta(7)).strftime("%Y-%m-%d")
-    tickers = Ticker.objects.filter(Q(date_added = date_today))
-    context = {'tickers': tickers}
-    
-    if len(tickers) == 0:
-        if date.today().weekday() not in {0, 6}:
-            t = ticks('gspc')
-            if Ticker.objects.filter(Q(date_added__gt= date7)).order_by('-date_added')[0].gspc != t['gspc']:
-                t.update(ticks('vix', 'tnx', 'ixic', 'rut', 'wti', 'gold'))
-                obj = Ticker(**t)
-                obj.save()
-                tickers = Ticker.objects.filter(Q(date_added = date_today))
-                context = {'tickers': tickers}
-            else:
-                date_last = Ticker.objects.filter(Q(date_added__gt= date7)).order_by('-date_added')[0].date_added.strftime("%Y-%m-%d")
-                tickers = Ticker.objects.filter(Q(date_added = date_last))
-                context = {'tickers': tickers}
-        else:
-            date_last = Ticker.objects.filter(Q(date_added__gt= date7)).order_by('-date_added')[0].date_added.strftime("%Y-%m-%d")
-            tickers = Ticker.objects.filter(Q(date_added = date_last))
-            context = {'tickers': tickers}'''
-    
     context = {'tickers': tickers}
     tickers1050 = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 1050")
     context['chart_tickers'] = Ticker.objects.raw(chart_tickers)#"select * from chart_tickers")
