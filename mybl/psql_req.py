@@ -2,7 +2,7 @@ chart_langs = '''select distinct b.id, a."name", ((b.val - a.aval)*100/a.aval) a
 ((b.res_vac - a.ares_vac)*100/a.ares_vac)::integer as cnd_rv 
 from mean a
 left join  mybl_lang b on a."name"  = b."name" 
-where b.date_added = current_date order by cnd_val desc;'''
+where b.date_added = current_date order by cnd_rv;'''
 
 chart_tickers = '''(select mt2.id, round((mt.gspc/mt2.gspc - 1) * 10000)/100 as dif_gspc,
 round((mt.vix/mt2.vix - 1) * 10000)/100 as dif_vix, 
