@@ -27,10 +27,10 @@ let py = [];
 
 for (let i = 0; i < received_data.length; i += 4) {
   date.push(received_data[i]['fields']['date_added']);
-  java.push(received_data[i]['fields']['val']);
-  js.push(received_data[i + 1]['fields']['val']);
-  php.push(received_data[i + 2]['fields']['val']);
-  py.push(received_data[i + 3]['fields']['val']);
+  java.push(received_data[i]['fields']['res_vac']);
+  js.push(received_data[i + 1]['fields']['res_vac']);
+  php.push(received_data[i + 2]['fields']['res_vac']);
+  py.push(received_data[i + 3]['fields']['res_vac']);
 }
 
 let chart = document.getElementById("line-chart");
