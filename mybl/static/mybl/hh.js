@@ -91,6 +91,10 @@ new Chart(document.getElementById("line-chart"), {
     title: {
       display: true,
       text: ''
-    }
+    },
+    title: {
+        display: true,
+        text: 'Количество резюме на вакансию'
+      }
   }
 });
