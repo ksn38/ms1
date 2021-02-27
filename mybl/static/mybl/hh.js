@@ -42,11 +42,14 @@ let average = (list) => {
 };
 
 let rollAvg = (list) => {
+  let result = list.slice(0, win);
   for (let i = 0; i < list.length - win; i++) {
-    list[i + win] = average(list.slice(i, i + win - 1));
+    result[i + win] = average(list.slice(i, i + win - 1));
   };
-  return list;
+  return result;
 };
+
+//console.log(rollAvg(py).length);
 
 let chart = document.getElementById("line-chart");
 
