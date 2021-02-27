@@ -24,14 +24,16 @@ let java = [];
 let js = [];
 let php = [];
 let py = [];
+let cpp = [];
 let win = 7;
 
-for (let i = 0; i < received_data.length; i += 4) {
+for (let i = 0; i < received_data.length; i += 5) {
   date.push(received_data[i]['fields']['date_added']);
-  java.push(received_data[i]['fields']['res_vac']);
-  js.push(received_data[i + 1]['fields']['res_vac']);
-  php.push(received_data[i + 2]['fields']['res_vac']);
-  py.push(received_data[i + 3]['fields']['res_vac']);
+  cpp.push(received_data[i]['fields']['res_vac']);
+  java.push(received_data[i + 1]['fields']['res_vac']);
+  js.push(received_data[i + 2]['fields']['res_vac']);
+  php.push(received_data[i + 3]['fields']['res_vac']);
+  py.push(received_data[i + 4]['fields']['res_vac']);
 };
 
 date = date.slice(win);
@@ -62,24 +64,35 @@ new Chart(document.getElementById("line-chart"), {
         borderColor: "#3e95cd",
         fill: false,
         pointRadius: 0,
+        yAxisID: 'yLabel',
       }, { 
         data: rollAvg(js),
         label: "Javascript",
         borderColor: "#3cba9f",
         fill: false,
         pointRadius: 0,
+        yAxisID: 'yLabel',
       }, { 
         data: rollAvg(php),
         label: "php",
         borderColor: "#e8c3b9",
         fill: false,
         pointRadius: 0,
+        yAxisID: 'yLabel',
       }, { 
         data: rollAvg(py),
         label: "Python",
         borderColor: "#c45850",
         fill: false,
         pointRadius: 0,
+        yAxisID: 'xLabel',
+      }, { 
+        data: rollAvg(cpp),
+        label: "C++",
+        borderColor: "#c350c4",
+        fill: false,
+        pointRadius: 0,
+        yAxisID: 'xLabel',
       }
     ]
   },
@@ -95,6 +108,17 @@ new Chart(document.getElementById("line-chart"), {
     title: {
         display: true,
         text: 'Количество резюме на вакансию'
-      }
+    },
+    scales: {
+      yAxes: [{
+        id: 'xLabel',
+        type: 'linear',
+        position: 'left',
+      }, {
+        id: 'yLabel',
+        type: 'linear',
+        position: 'right',
+        }]
+     }
   }
 });

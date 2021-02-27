@@ -187,6 +187,8 @@ def hh(request):
             vacs_noexp[k] = round(vacs_noexp[k] * 100 / vacs[k])
 
         for k, v, vne, vrv in zip(vacs.keys(), vacs.values(), vacs_noexp.values(), res.values()):
+            if k == 'c%2B%2B':
+              k = 'cpp'
             new_values = {'name': k,
              'val': v, 'val_noexp': vne, 'res_vac': vrv}
             obj = Lang(**new_values)
@@ -201,7 +203,7 @@ def hh(request):
     charts = Lang.objects.raw(chart_langs)
     context['charts'] = charts
     #graphs = Lang.objects.filter(Q(name = 'Python') | Q(name = 'c%2B%2B') | Q(name = 'Java') | Q(name = 'Javascript') | Q(name = 'php'))
-    graphs = Lang.objects.raw("""select * from mybl_lang ml where name = 'Python' or name = 'Java' or name = 'Javascript' or name = 'php' order by date_added, name""")
+    graphs = Lang.objects.raw("""select * from mybl_lang ml where name = 'Python' or name = 'Java' or name = 'Javascript' or name = 'php' or name = 'cpp' order by date_added, name""")
     context['graphs'] = serializers.serialize('json', graphs)
     
     return render(request, 'mybl/hh.html', context)
