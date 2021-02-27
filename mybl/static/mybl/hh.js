@@ -19,114 +19,125 @@ for (let i of tri) {
   }else {i.classList.add('bg-secondary')}
 }
 
-let date = [];
-let java = [];
-let js = [];
-let php = [];
-let py = [];
-let cpp = [];
-let win = 7;
+let graph = (win) => {
+  let date = [];
+  let java = [];
+  let js = [];
+  let php = [];
+  let py = [];
+  let cpp = [];
 
-for (let i = 0; i < received_data.length; i += 5) {
-  date.push(received_data[i]['fields']['date_added']);
-  cpp.push(received_data[i]['fields']['res_vac']);
-  java.push(received_data[i + 1]['fields']['res_vac']);
-  js.push(received_data[i + 2]['fields']['res_vac']);
-  php.push(received_data[i + 3]['fields']['res_vac']);
-  py.push(received_data[i + 4]['fields']['res_vac']);
-};
-
-date = date.slice(win);
-
-let average = (list) => {
-  return list.reduce((accum, curr) => accum + curr) / list.length;
-};
-
-let rollAvg = (list) => {
-  let result = [];
-  for (let i = 0; i < list.length - win; i++) {
-    result.push(average(list.slice(i, i + win - 1)));
+  for (let i = 0; i < received_data.length; i += 5) {
+    date.push(received_data[i]['fields']['date_added']);
+    cpp.push(received_data[i]['fields']['res_vac']);
+    java.push(received_data[i + 1]['fields']['res_vac']);
+    js.push(received_data[i + 2]['fields']['res_vac']);
+    php.push(received_data[i + 3]['fields']['res_vac']);
+    py.push(received_data[i + 4]['fields']['res_vac']);
   };
-  return result;
+
+  date = date.slice(win);
+
+  let average = (list) => {
+    return list.reduce((accum, curr) => accum + curr) / list.length;
+  };
+
+  let rollAvg = (list) => {
+    let result = [];
+    for (let i = 0; i < list.length - win; i++) {
+      result.push(average(list.slice(i, i + win - 1)));
+    };
+    return result;
+  };
+
+  //console.log(rollAvg(py).length);
+
+  new Chart(document.getElementById("line-chart"), {
+    type: 'line',
+    data: {
+      labels: date,
+      datasets: [{ 
+          data: rollAvg(java),
+          label: "Java",
+          borderColor: "#c53535",
+          fill: false,
+          pointRadius: 0,
+          yAxisID: 'yLabel',
+        }, { 
+          data: rollAvg(js),
+          label: "Javascript",
+          borderColor: "#d9df32",
+          fill: false,
+          pointRadius: 0,
+          yAxisID: 'yLabel',
+        }, { 
+          data: rollAvg(php),
+          label: "php",
+          borderColor: "#df9c32",
+          fill: false,
+          pointRadius: 0,
+          yAxisID: 'yLabel',
+        }, { 
+          data: rollAvg(py),
+          label: "Python",
+          borderColor: "#3579c5",
+          fill: false,
+          pointRadius: 0,
+          yAxisID: 'xLabel',
+        }, { 
+          data: rollAvg(cpp),
+          label: "C++",
+          borderColor: "#5435c5",
+          fill: false,
+          pointRadius: 0,
+          yAxisID: 'xLabel',
+        }
+      ]
+    },
+    options: {
+      animation: {
+          duration: 0
+      },
+      events: [],
+      title: {
+        display: true,
+        text: ''
+      },
+      title: {
+          display: true,
+          text: 'Количество резюме на вакансию'
+      },
+      scales: {
+        yAxes: [{
+          id: 'xLabel',
+          type: 'linear',
+          position: 'left',
+          scaleLabel: {
+              display: true,
+              labelString: "C++, Python"
+            }
+        }, {
+          id: 'yLabel',
+          type: 'linear',
+          position: 'right',
+          scaleLabel: {
+              display: true,
+              labelString: "Javascript, Java, php"
+            }
+          }]
+       }
+    }
+  });
 };
 
-//console.log(rollAvg(py).length);
+let win = 7;
+let radWin = document.getElementsByName('win');
 
-let chart = document.getElementById("line-chart");
+graph(win);
 
-new Chart(document.getElementById("line-chart"), {
-  type: 'line',
-  data: {
-    labels: date,
-    datasets: [{ 
-        data: rollAvg(java),
-        label: "Java",
-        borderColor: "#c53535",
-        fill: false,
-        pointRadius: 0,
-        yAxisID: 'yLabel',
-      }, { 
-        data: rollAvg(js),
-        label: "Javascript",
-        borderColor: "#d9df32",
-        fill: false,
-        pointRadius: 0,
-        yAxisID: 'yLabel',
-      }, { 
-        data: rollAvg(php),
-        label: "php",
-        borderColor: "#df9c32",
-        fill: false,
-        pointRadius: 0,
-        yAxisID: 'yLabel',
-      }, { 
-        data: rollAvg(py),
-        label: "Python",
-        borderColor: "#3579c5",
-        fill: false,
-        pointRadius: 0,
-        yAxisID: 'xLabel',
-      }, { 
-        data: rollAvg(cpp),
-        label: "C++",
-        borderColor: "#5435c5",
-        fill: false,
-        pointRadius: 0,
-        yAxisID: 'xLabel',
-      }
-    ]
-  },
-  options: {
-    animation: {
-        duration: 0
-    },
-    events: [],
-    title: {
-      display: true,
-      text: ''
-    },
-    title: {
-        display: true,
-        text: 'Количество резюме на вакансию'
-    },
-    scales: {
-      yAxes: [{
-        id: 'xLabel',
-        type: 'linear',
-        position: 'left',
-        scaleLabel: {
-            display: true,
-            labelString: "C++, Python"
-          }
-      }, {
-        id: 'yLabel',
-        type: 'linear',
-        position: 'right',
-        scaleLabel: {
-            display: true,
-            labelString: "Javascript, Java, php"
-          }
-        }]
-     }
-  }
-});
+for(let i = 0; i < radWin.length; i++){
+  radWin[i].addEventListener("change", function(){
+    win = parseInt(radWin[i].value);
+    graph(win);
+  })
+}
