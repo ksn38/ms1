@@ -24,14 +24,29 @@ let java = [];
 let js = [];
 let php = [];
 let py = [];
+let win = 7;
 
 for (let i = 0; i < received_data.length; i += 4) {
+  /*if (i > win) {
+    date.push(received_data[i]['fields']['date_added']);
+  };*/
   date.push(received_data[i]['fields']['date_added']);
   java.push(received_data[i]['fields']['res_vac']);
   js.push(received_data[i + 1]['fields']['res_vac']);
   php.push(received_data[i + 2]['fields']['res_vac']);
   py.push(received_data[i + 3]['fields']['res_vac']);
-}
+};
+
+let average = (list) => {
+  return list.reduce((accum, curr) => accum + curr) / list.length;
+};
+
+let rollAvg = (list) => {
+  for (let i = 0; i < list.length - win; i++) {
+    list[i + win] = average(list.slice(i, i + win - 1));
+  };
+  return list;
+};
 
 let chart = document.getElementById("line-chart");
 
@@ -40,25 +55,25 @@ new Chart(document.getElementById("line-chart"), {
   data: {
     labels: date,
     datasets: [{ 
-        data: java,
+        data: rollAvg(java),
         label: "Java",
         borderColor: "#3e95cd",
         fill: false,
         pointRadius: 0,
       }, { 
-        data: js,
+        data: rollAvg(js),
         label: "Javascript",
         borderColor: "#3cba9f",
         fill: false,
         pointRadius: 0,
       }, { 
-        data: php,
+        data: rollAvg(php),
         label: "php",
         borderColor: "#e8c3b9",
         fill: false,
         pointRadius: 0,
       }, { 
-        data: py,
+        data: rollAvg(py),
         label: "Python",
         borderColor: "#c45850",
         fill: false,
