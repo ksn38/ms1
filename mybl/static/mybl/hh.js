@@ -27,9 +27,6 @@ let py = [];
 let win = 7;
 
 for (let i = 0; i < received_data.length; i += 4) {
-  /*if (i > win) {
-    date.push(received_data[i]['fields']['date_added']);
-  };*/
   date.push(received_data[i]['fields']['date_added']);
   java.push(received_data[i]['fields']['res_vac']);
   js.push(received_data[i + 1]['fields']['res_vac']);
@@ -37,14 +34,16 @@ for (let i = 0; i < received_data.length; i += 4) {
   py.push(received_data[i + 3]['fields']['res_vac']);
 };
 
+date = date.slice(win);
+
 let average = (list) => {
   return list.reduce((accum, curr) => accum + curr) / list.length;
 };
 
 let rollAvg = (list) => {
-  let result = list.slice(0, win);
+  let result = [];
   for (let i = 0; i < list.length - win; i++) {
-    result[i + win] = average(list.slice(i, i + win - 1));
+    result.push(average(list.slice(i, i + win - 1)));
   };
   return result;
 };
