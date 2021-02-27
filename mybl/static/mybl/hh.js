@@ -61,35 +61,35 @@ new Chart(document.getElementById("line-chart"), {
     datasets: [{ 
         data: rollAvg(java),
         label: "Java",
-        borderColor: "#3e95cd",
+        borderColor: "#c53535",
         fill: false,
         pointRadius: 0,
         yAxisID: 'yLabel',
       }, { 
         data: rollAvg(js),
         label: "Javascript",
-        borderColor: "#3cba9f",
+        borderColor: "#d9df32",
         fill: false,
         pointRadius: 0,
         yAxisID: 'yLabel',
       }, { 
         data: rollAvg(php),
         label: "php",
-        borderColor: "#e8c3b9",
+        borderColor: "#df9c32",
         fill: false,
         pointRadius: 0,
         yAxisID: 'yLabel',
       }, { 
         data: rollAvg(py),
         label: "Python",
-        borderColor: "#c45850",
+        borderColor: "#3579c5",
         fill: false,
         pointRadius: 0,
         yAxisID: 'xLabel',
       }, { 
         data: rollAvg(cpp),
         label: "C++",
-        borderColor: "#c350c4",
+        borderColor: "#5435c5",
         fill: false,
         pointRadius: 0,
         yAxisID: 'xLabel',
@@ -114,10 +114,18 @@ new Chart(document.getElementById("line-chart"), {
         id: 'xLabel',
         type: 'linear',
         position: 'left',
+        scaleLabel: {
+            display: true,
+            labelString: "C++, Python"
+          }
       }, {
         id: 'yLabel',
         type: 'linear',
         position: 'right',
+        scaleLabel: {
+            display: true,
+            labelString: "Javascript, Java, php"
+          }
         }]
      }
   }
