@@ -34,9 +34,15 @@ let dict = function (dif) {
   };
   return day;
 };
-  
+
 
 button.onclick = function () {
+  for (let i of namesLow) {
+    if (i.classList.length > 1){
+    i.classList.remove('bg-primary');
+    };
+  };
+  
   let date = new Date();
   if (date.getDay() == 1 && parseInt(days.value) < 4) {
     days.value = 4;
@@ -82,4 +88,5 @@ button.onclick = function () {
 window.onload = function(){
   button.click();
 }
+
 
