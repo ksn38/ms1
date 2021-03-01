@@ -17,7 +17,7 @@ let dict = function (dif) {
     dateLast.setDate(dateLast.getDate() - 2);
   };
   dateLast = dateLast.toISOString().slice(0, 10);
-  console.log(`dateLast slice ${dateLast}`);
+  //console.log(`dateLast slice ${dateLast}`);
   for (let i = 0; i < 201; i += 100) {
     let url = 'https://iss.moex.com/iss/history/engines/stock/markets/shares/boards/tqbr/securities.json?date=' + dateLast + '&start=' + i;
     $.ajax({
@@ -48,6 +48,7 @@ button.onclick = function () {
   let dict2 = new Map([...dict(days.value).entries()]);
   let listKeys = [...dict1.keys()];
   let outMap = new Map();
+  
   for (let key = 0; key < listKeys.length; key++) {
     let val = ((dict1.get(listKeys[key])/dict2.get(listKeys[key])) - 1) * 10000;
     if (!Number.isNaN(val)) {
@@ -56,16 +57,24 @@ button.onclick = function () {
       outMap.set(listKeys[key], val);
     };
   };
+  
   outMapRev = new Map([...outMap.entries()].sort((a,b) => a[1] - b[1]));
   outMap = new Map([...outMap.entries()].sort((a,b) => b[1] - a[1]));
   outMapKeys = [...outMap.keys()].slice(0, 30);
   outMapValues = [...outMap.values()].slice(0, 30);
   outMapRevKeys = [...outMapRev.keys()].slice(0, 30);
   outMapRevValues = [...outMapRev.values()].slice(0, 30);
+  let blue = new Set(['(SBER', '(GAZP', '(LKOH', '(YNDX', '(GMKN', '(NVTK', '(POLY', '(ROSN', '(PLZL', '(MGNT', '(MTSS', '(TATN', '(MAIL', '(FIVE', '(SNGS']);
+  let myRe = /[(]\w+/;
+  
   for (let i = 0; i < namesHigh.length; i++) {
     namesHigh[i].textContent = outMapKeys[i];
+    if (blue.has(myRe.exec(namesHigh[i].textContent)[0])){
+      namesHigh[i].classList.add('bg-primary')};
     changesHigh[i].textContent = outMapValues[i];
     namesLow[i].textContent = outMapRevKeys[i];
+    if (blue.has(myRe.exec(namesLow[i].textContent)[0])){
+      namesLow[i].classList.add('bg-primary')};
     changesLow[i].textContent = outMapRevValues[i];
   };
 };
