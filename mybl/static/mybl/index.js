@@ -37,7 +37,13 @@ let dict = function (dif) {
 
 
 button.onclick = function () {
-  for (let i of namesLow) {
+  for (let i of namesHigh) {
+    if (i.classList.length > 1){
+    i.classList.remove('bg-primary');
+    };
+  };
+  
+    for (let i of namesLow) {
     if (i.classList.length > 1){
     i.classList.remove('bg-primary');
     };
