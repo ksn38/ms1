@@ -15,6 +15,7 @@ let chart4 = document.getElementById("line-chart4");
 let chart5 = document.getElementById("line-chart5");
 let chart6 = document.getElementById("line-chart6");
 let chart7 = document.getElementById("line-chart7");
+let chart8 = document.getElementById("line-chart8");
 let lengthRD = received_data.length;
 let win = 5;
 let radWin = document.getElementsByName('win');
@@ -158,11 +159,14 @@ for (let i = lengthRD - 50 - win; i < lengthRD; i++) {
 
 lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1);
 lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart2);
-lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart5);
-lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart6);
-lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart7);
+lineChart(wti, tnx, 'WTI', 'TR10', '#000000', "#c000ff", chart3);
 lineChart(gold, tnx, 'Gold', 'TR10', '#ffd800', "#c000ff", chart4);
-lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart3);
+lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart5);
+lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart6);
+lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart7);
+lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart8);
+
+ 
 
 for(let i = 0; i < radio.length; i++){
   radio[i].addEventListener("change", function(){
@@ -189,11 +193,12 @@ for(let i = 0; i < radio.length; i++){
     
     lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1);
     lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart2);
-    lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart5);
-    lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart6);
-    lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart7);
+    lineChart(wti, tnx, 'WTI', 'TR10', '#000000', "#c000ff", chart3);
     lineChart(gold, tnx, 'Gold', 'TR10', '#ffd800', "#c000ff", chart4);
-    lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart3);   
+    lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart5);
+    lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart6);
+    lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart7);
+    lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart8);  
     date = [];
     vix = [];
     tnx = [];
@@ -230,11 +235,12 @@ for(let i = 0; i < radWin.length; i++){
     
     lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1);
     lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart2);
-    lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart5);
-    lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart6);
-    lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart7);
+    lineChart(wti, tnx, 'WTI', 'TR10', '#000000', "#c000ff", chart3);
     lineChart(gold, tnx, 'Gold', 'TR10', '#ffd800', "#c000ff", chart4);
-    lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart3);   
+    lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart5);
+    lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart6);
+    lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart7);
+    lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart8);   
     date = [];
     vix = [];
     tnx = [];
