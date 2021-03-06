@@ -69,4 +69,15 @@ round((mt.gold/mt2.gold - 1) * 10000)/100 as dif_gold
 from mybl_ticker mt
 left join mybl_ticker mt2 on mt2.id = mt.id - 1000 
 where mt.id = (select max(mt.id) from mybl_ticker mt))
+union
+(select mt2.id, round((mt.gspc/mt2.gspc - 1) * 10000)/100 as dif_gspc,
+round((mt.vix/mt2.vix - 1) * 10000)/100 as dif_vix, 
+round((mt.tnx/mt2.tnx - 1) * 10000)/100 as dif_tnx,
+round((mt.ixic/mt2.ixic - 1) * 10000)/100 as dif_ixic,
+round((mt.rut/mt2.rut - 1) * 10000)/100 as dif_rut, 
+round((mt.wti/mt2.wti - 1) * 10000)/100 as dif_wti,
+round((mt.gold/mt2.gold - 1) * 10000)/100 as dif_gold
+from mybl_ticker mt
+left join mybl_ticker mt2 on mt2.id = mt.id - 4950 
+where mt.id = (select max(mt.id) from mybl_ticker mt))
 order by id desc;'''

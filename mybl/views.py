@@ -210,7 +210,7 @@ def hh(request):
   
 def tickers(request):
     context = {'tickers': tickers}
-    tickers1050 = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 1050")
+    tickers1050 = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 5000")
     context['chart_tickers'] = Ticker.objects.raw(chart_tickers)#"select * from chart_tickers")
     context['tickers1050'] = serializers.serialize('json', tickers1050)
             

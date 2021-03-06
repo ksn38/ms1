@@ -75,8 +75,10 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
       rcor.push(cor(x.slice(i, i + win), y.slice(i, i + win)));
   };
   let radPoint = 3;
+  let bordWidth = 3;
   if (item > 50) {
     radPoint = 0;
+    bordWidth = 2;
   };
   new Chart(chart, {
     type: 'line',
@@ -89,6 +91,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
           label: xLabel,
           yAxisID: xLabel,
           pointRadius: radPoint,
+          borderWidth: bordWidth,
         }, { 
           data: y.slice(win),
           borderColor: yColor,
@@ -96,6 +99,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
           label: yLabel,
           yAxisID: yLabel,
           pointRadius: radPoint,
+          borderWidth: bordWidth,
         }, { 
           data: rcor,
           borderColor: '#777777',
@@ -154,15 +158,16 @@ for (let i = lengthRD - 50 - win; i < lengthRD; i++) {
 
 lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1);
 lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart2);
-lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart3);
-lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart4);
-lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart5);
-lineChart(gold, tnx, 'Gold', 'TR10', '#ffd800', "#c000ff", chart6);
-lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart7);
+lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart5);
+lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart6);
+lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart7);
+lineChart(gold, tnx, 'Gold', 'TR10', '#ffd800', "#c000ff", chart4);
+lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart3);
 
 for(let i = 0; i < radio.length; i++){
   radio[i].addEventListener("change", function(){
     item = parseInt(radio[i].value);
+    //console.log(item);
     date = [];
     vix = [];
     tnx = [];
@@ -184,11 +189,11 @@ for(let i = 0; i < radio.length; i++){
     
     lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1);
     lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart2);
-    lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart3);
-    lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart4);
-    lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart5);
-    lineChart(gold, tnx, 'Gold', 'TR10', '#ffd800', "#c000ff", chart6);
-    lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart7);    
+    lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart5);
+    lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart6);
+    lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart7);
+    lineChart(gold, tnx, 'Gold', 'TR10', '#ffd800', "#c000ff", chart4);
+    lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart3);   
     date = [];
     vix = [];
     tnx = [];
@@ -202,7 +207,7 @@ for(let i = 0; i < radio.length; i++){
 
 for(let i = 0; i < radWin.length; i++){
   radWin[i].addEventListener("change", function(){
-    console.log(radWin[i].value);
+    //console.log(radWin[i].value);
     win = parseInt(radWin[i].value);
     date = [];
     vix = [];
@@ -225,11 +230,11 @@ for(let i = 0; i < radWin.length; i++){
     
     lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1);
     lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart2);
-    lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart3);
-    lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart4);
-    lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart5);
-    lineChart(gold, tnx, 'Gold', 'TR10', '#ffd800', "#c000ff", chart6);
-    lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart7);    
+    lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart5);
+    lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart6);
+    lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart7);
+    lineChart(gold, tnx, 'Gold', 'TR10', '#ffd800', "#c000ff", chart4);
+    lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart3);   
     date = [];
     vix = [];
     tnx = [];
