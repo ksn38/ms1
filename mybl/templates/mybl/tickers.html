@@ -67,7 +67,7 @@
       {% endfor %}
     </table>
   </div>
-  
+    
   <div class='flex-wrap mt-3'>
     <div class='radWin d-flex justify-content-around'>
       <div>
@@ -79,36 +79,54 @@
         <label><input type='radio' id='w200' name='win' value="200">200</label>
       </div>
     </div>
-    <div><canvas id="line-chart" width="800" height="450"></canvas></div>
-  </div>
-  <div class='d-flex'>
-    <canvas id="line-chart2" width="800" height="450"></canvas>
-  </div>
-  <div class='d-flex'>
-    <canvas id="line-chart3" width="800" height="450"></canvas>
-  </div>
+    <div class='d-flex justify-content-center flex-wrap'>
+      <input type="number" id="offset-input">
+      <input type="submit" class="button" id="offset" value="offset">
+    </div>
     <div class='d-flex'>
-    <canvas id="line-chart4" width="800" height="450"></canvas>
+      <div class='d-flex'>
+        <canvas id="line-chart" width="800" height="450"></canvas>
+      </div>
+      <div class='d-flex'>
+        <canvas id="line-chart2" width="800" height="450"></canvas>
+      </div>
+    </div>
+    <div class='d-flex'>
+      <div class='d-flex'>
+        <canvas id="line-chart3" width="800" height="450"></canvas>
+      </div>
+      <div class='d-flex'>
+        <canvas id="line-chart4" width="800" height="450"></canvas>
+      </div>
+    </div>
+    <div class='d-flex'>
+      <div class='d-flex'>
+        <canvas id="line-chart5" width="800" height="450"></canvas>
+      </div>
+      <div class='d-flex'>
+        <canvas id="line-chart6" width="800" height="450"></canvas>
+      </div>
+    </div>
+    <div class='d-flex'>
+      <div class='d-flex'>
+        <canvas id="line-chart7" width="800" height="450"></canvas>
+      </div>
+      <div class='d-flex'>
+        <canvas id="line-chart8" width="800" height="450"></canvas>
+      </div>
+    </div>
+    <div class='d-flex'>
+      <div class='d-flex'>
+        <canvas id="line-chart9" width="800" height="450"></canvas>
+      </div>
+      <div class='d-flex'>
+        <canvas id="line-chart10" width="800" height="450"></canvas>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var received_data = {{ tickers1050|safe }};
+    </script>
+    <script src="{% static 'mybl/tickers.js' %}"></script>
+    {% endblock content %}
   </div>
-  <div class='d-flex'>
-    <canvas id="line-chart5" width="800" height="450"></canvas>
-  </div>
-  <div class='d-flex'>
-    <canvas id="line-chart6" width="800" height="450"></canvas>
-  </div>
-  <div class='d-flex'>
-    <canvas id="line-chart7" width="800" height="450"></canvas>
-  </div>
-  <div class='d-flex'>
-    <canvas id="line-chart8" width="800" height="450"></canvas>
-  </div>
-  <div class='d-flex'>
-    <canvas id="line-chart9" width="800" height="450"></canvas>
-  </div>
-  <script type="text/javascript">
-    var received_data  = {{ tickers1050|safe }};
-  </script>
-  <script src="{% static 'mybl/tickers.js' %}"></script>
-  {% endblock content %}
-</div>
 </div>
