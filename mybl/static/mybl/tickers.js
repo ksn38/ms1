@@ -179,7 +179,7 @@ let createCharts = (offset) => {
   lineChart(gold, tnx, 'Gold', 'TR10', '#ffd800', "#c000ff", chart4);
   lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart5);
   lineChart(gold, gspc, 'Gold', 'S&P500', '#ffd800', "#0000ff", chart6);
-  lineChart(wtiGold, tnx, 'Wti/Gold', 'TR10', '#848043', "#c000ff", chart7);
+  lineChart(wtiGold, tnx, 'Wti/Gold', 'TR10', '#a4a260', "#c000ff", chart7);
   lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart8);
   lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart9);
   lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart10);
