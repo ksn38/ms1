@@ -26,7 +26,15 @@ let tri = document.querySelectorAll('.change-invert');
 let offsetInput = document.getElementById('offset-input');
 let button = document.getElementById('offset');
 let offset = 0;
+let dateOffset = [];
+let dateOffsetOutput = document.getElementById('dateOffsetOutput');
+dateOffsetOutput.innerHTML = received_data[lengthRD - 1]['fields']['date_added'];
 
+
+for (let i = lengthRD - 1; i >= 0; i--) {
+    dateOffset.push(received_data[i]['fields']['date_added']);
+    //console.log(i);
+  }
 
 for (let i of tr) {
   if (parseInt(i.textContent) < 0) {
@@ -45,7 +53,6 @@ for (let i of tri) {
     i.classList.add('bg-success')
   }else {i.classList.add('bg-secondary')}
 }
-
 
 let cor = (list1, list2) => {
   let average = (list) => {
@@ -152,7 +159,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
 
 
 let createCharts = (offset) => {
-  //console.log(`offset0 ${offset}`);
+  //console.log(dateOffset[offset]);
   if (lengthRD - item - win - offset < 0) {
     offset = 0;
     offsetInput.value = 0;
@@ -216,5 +223,12 @@ button.onclick = function () {
   //console.log(offset);
 }
 
-
+offsetInput.oninput = function() {
+  offset = parseInt(offsetInput.value);
+  if (offset < lengthRD - win - item + 1) {
+    dateOffsetOutput.innerHTML = dateOffset[offset];
+  } else {
+    dateOffsetOutput.innerHTML = received_data[lengthRD - 1]['fields']['date_added'];;
+  }
+};
 
