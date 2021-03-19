@@ -3,7 +3,8 @@
 {% block content %}
 <div class='d-flex justify-content-around m-2 flex-wrap align-items-start'>
   <table class='table-sm table-dark table-striped table-bordered'>
-    <caption style='caption-side: top'><small>Количество вакансий, процент вакансий без опыта, соотношение резюме к вакансиям за сегодня.</small></caption>
+    <caption style='caption-side: top'><small>Количество вакансий, процент вакансий без опыта, 
+    соотношение резюме к вакансиям за сегодня, суммарное место в этой таблице полученное по 3м сортировкам.</small></caption>
     {% for lang in langs %}
       <tr>
         {% if lang.name == 'C%23' %}
@@ -28,11 +29,15 @@
         <td class='text-right'>
           {{ lang.res_vac }}
         </td>
+        <td class='text-right'>
+          {{ lang.rate }}
+        </td>
       </tr>
     {% endfor %}
   </table>
   <table class='table-sm table-dark table-striped table-bordered mt-4'>
-    <caption style='caption-side: top'><small>Изменение от среднего за декабрь 2020 в %.</small></caption>
+    <caption style='caption-side: top'><small>Изменение от среднего за декабрь 2020 в %, 
+    суммарное место в этой таблице полученное по 3м сортировкам.</small></caption>
     {% for chart in charts %}
       <tr>
         {% if chart.name == 'C%23' %}
@@ -56,6 +61,9 @@
         </td>
         <td class='color-inv text-right'>
           {{ chart.cnd_rv }}
+        </td>
+        <td class='text-right'>
+          {{ chart.rate }}
         </td>
       </tr>
     {% endfor %}

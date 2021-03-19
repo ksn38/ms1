@@ -12,7 +12,7 @@ import json
 from bs4 import BeautifulSoup as bs
 from django.core import serializers
 from django.db.models import Q
-from mybl.psql_req import chart_langs, chart_tickers
+from mybl.psql_req import chart_langs, chart_tickers, langs_today
 
 
 def index(request):
@@ -174,7 +174,7 @@ def hh(request):
         return res
 
     date_today = date.today().strftime("%Y-%m-%d")
-    langs = Lang.objects.filter(Q(date_added = date_today)).order_by('res_vac')
+    langs = Lang.objects.filter(Q(date_added = date_today))
 
     if len(langs) == 0:
         noexp = 'experience=noExperience&'
@@ -194,10 +194,10 @@ def hh(request):
             obj = Lang(**new_values)
             obj.save()
         
-        langs = Lang.objects.filter(Q(date_added = date_today)).order_by('res_vac')
+        langs = Lang.objects.raw(langs_today)
         context = {'langs': langs}
     else:
-        langs = Lang.objects.filter(Q(date_added = date_today)).order_by('res_vac')
+        langs = Lang.objects.raw(langs_today)
         context = {'langs': langs}
         
     charts = Lang.objects.raw(chart_langs)
@@ -207,7 +207,8 @@ def hh(request):
     context['graphs'] = serializers.serialize('json', graphs)
     
     return render(request, 'mybl/hh.html', context)
-  
+
+
 def tickers(request):
     context = {'tickers': tickers}
     tickers1050 = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 5000")

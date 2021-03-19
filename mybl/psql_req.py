@@ -1,8 +1,15 @@
+langs_today = '''select distinct id, name, val, val_noexp, res_vac, 
+(row_number() over(order by val desc) + row_number() over(order by val_noexp desc) + row_number() over(order by res_vac)) as rate
+from mybl_lang ml where ml.date_added = current_date order by rate;'''
+
 chart_langs = '''select distinct b.id, a."name", ((b.val - a.aval)*100/a.aval) as cnd_val, ((b.val_noexp - a.aval_noexp)*100/a.aval_noexp) as cnd_vn, 
-((b.res_vac - a.ares_vac)*100/a.ares_vac)::integer as cnd_rv 
+((b.res_vac - a.ares_vac)*100/a.ares_vac)::integer as cnd_rv,
+(row_number() over(order by  ((b.val - a.aval)*100/a.aval) desc) + 
+row_number() over(order by ((b.val_noexp - a.aval_noexp)*100/a.aval_noexp) desc) + 
+row_number() over(order by ((b.res_vac - a.ares_vac)*100/a.ares_vac)::integer)) as rate
 from mean a
 left join  mybl_lang b on a."name"  = b."name" 
-where b.date_added = current_date order by cnd_rv;'''
+where b.date_added = current_date order by rate;'''
 
 chart_tickers = '''(select mt2.id, round((mt.gspc/mt2.gspc - 1) * 10000)/100 as dif_gspc,
 round((mt.vix/mt2.vix - 1) * 10000)/100 as dif_vix, 
