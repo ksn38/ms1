@@ -19,6 +19,42 @@ for (let i of tri) {
   }else {i.classList.add('bg-secondary')}
 }
 
+
+let valNowNod = document.querySelectorAll('.val-now'); 
+let valNoexpNowNod = document.querySelectorAll('.val_noexp-now');
+let resVacNowNod = document.querySelectorAll('.res_vac-now');
+
+valNow = Array.from(valNowNod);
+valNowSort = valNow.map((i) => parseInt(i.textContent)).sort((a,b) => a - b);
+
+valNoexpNow = Array.from(valNoexpNowNod);
+valNoexpNowSort = valNoexpNow.map((i) => parseInt(i.textContent)).sort((a,b) => a - b);
+
+resVacNow = Array.from(resVacNowNod);
+resVacNowSort = resVacNow.map((i) => parseFloat(i.textContent)).sort((a,b) => b - a);
+
+let colorText = (nodeList, listSort) => {
+  for (let i of nodeList) {
+    if (parseInt(i.textContent) >= listSort[10]) {
+      i.classList.add('text-success')
+    } else if (parseInt(i.textContent) < listSort[5]) {
+      i.classList.add('text-danger')
+    }
+  }
+};
+
+colorText(valNowNod, valNowSort);
+colorText(valNoexpNowNod, valNoexpNowSort);
+
+for (let i of resVacNow) {
+  if (parseFloat(i.textContent) <= resVacNowSort[10]) {
+    i.classList.add('text-success')
+  } else if (parseFloat(i.textContent) > resVacNowSort[5]) {
+    i.classList.add('text-danger')
+  }
+}
+
+
 let graph = (win) => {
   let date = [];
   let java = [];
