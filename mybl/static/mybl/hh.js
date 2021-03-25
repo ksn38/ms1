@@ -35,7 +35,7 @@ resVacNowSort = resVacNow.map((i) => parseFloat(i.textContent)).sort((a,b) => b 
 
 let colorText = (nodeList, listSort) => {
   for (let i of nodeList) {
-    if (parseInt(i.textContent) >= listSort[10]) {
+    if (parseInt(i.textContent) >= listSort[11]) {
       i.classList.add('text-success')
     } else if (parseInt(i.textContent) < listSort[5]) {
       i.classList.add('text-danger')
@@ -47,7 +47,7 @@ colorText(valNowNod, valNowSort);
 colorText(valNoexpNowNod, valNoexpNowSort);
 
 for (let i of resVacNow) {
-  if (parseFloat(i.textContent) <= resVacNowSort[10]) {
+  if (parseFloat(i.textContent) <= resVacNowSort[11]) {
     i.classList.add('text-success')
   } else if (parseFloat(i.textContent) > resVacNowSort[5]) {
     i.classList.add('text-danger')
