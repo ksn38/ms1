@@ -55,6 +55,14 @@ for (let i of resVacNow) {
 }
 
 
+let cavas = document.getElementById("line-chart");
+
+if (cavas.width > window.innerWidth) {
+  cavas.width = window.innerWidth;
+  cavas.height = window.innerWidth * 0.5625;
+}
+
+
 let graph = (win) => {
   let date = [];
   let java = [];
@@ -177,3 +185,4 @@ for(let i = 0; i < radWin.length; i++){
     graph(win);
   })
 }
+
