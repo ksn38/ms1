@@ -8,6 +8,8 @@ let ixic = [];
 let rut = [];
 let wti = [];
 let gold = [];
+let level = 30;
+let vix2 = [];
 let chart1 = document.getElementById("line-chart");
 let chart2 = document.getElementById("line-chart2");
 let chart3 = document.getElementById("line-chart3");
@@ -24,7 +26,9 @@ let radWin = document.getElementsByName('win');
 let tr = document.querySelectorAll('.change');
 let tri = document.querySelectorAll('.change-invert');
 let offsetInput = document.getElementById('offset-input');
-let button = document.getElementById('offset');
+let buttonOffset = document.getElementById('offset');
+let levelInput = document.getElementById('level-input');
+let buttonLevel = document.getElementById('level');
 let offset = 0;
 let dateOffset = [];
 let dateOffsetOutput = document.getElementById('dateOffsetOutput');
@@ -121,6 +125,16 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
           yAxisID: 'Rolling correlation',
           pointRadius: 0,
           borderWidth: 1,
+        }, { 
+          data: vix2.slice(win),
+          borderColor: '#ff0000',
+          backgroundColor: '#ff0000',
+          steppedLine: 'middle',
+          fill: true,
+          label: 'VIX',
+          yAxisID: 'VIX',
+          pointRadius: 0,
+          borderWidth: 0,
         }
       ]
     },
@@ -151,6 +165,14 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
             max : 1,    
             min : -1
           }
+        }, {
+          id: 'VIX',
+          type: 'linear',
+          position: 'left',
+          ticks : {
+            //max : 100,    
+            min : 0
+          }
         }]
       }
     }
@@ -158,7 +180,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
 };
 
 
-let createCharts = (offset) => {
+let createCharts = (offset, level) => {
   //console.log(dateOffset[offset]);
   if (lengthRD - item - win - offset < 0) {
     offset = 0;
@@ -173,6 +195,9 @@ let createCharts = (offset) => {
     rut.push(received_data[i]['fields']['rut']);
     wti.push(received_data[i]['fields']['wti']);
     gold.push(received_data[i]['fields']['gold']);
+    if (received_data[i]['fields']['vix'] > level) {
+      vix2.push(received_data[i]['fields']['vix'])
+    } else {vix2.push(0)};
   }
   
   let wtiGold = wti.map(function(n, i) {
@@ -193,6 +218,7 @@ let createCharts = (offset) => {
   
   date = [];
   vix = [];
+  vix2 = [];
   tnx = [];
   gspc = [];
   ixic = [];
@@ -201,25 +227,30 @@ let createCharts = (offset) => {
   gold = [];
 };
 
-createCharts(offset); 
+createCharts(offset, level); 
 
 for(let i = 0; i < radio.length; i++){
   radio[i].addEventListener("change", function(){
     item = parseInt(radio[i].value);
-    createCharts(offset); 
+    createCharts(offset, level); 
   });
 }
 
 for(let i = 0; i < radWin.length; i++){
   radWin[i].addEventListener("change", function(){
     win = parseInt(radWin[i].value);
-    createCharts(offset); 
+    createCharts(offset, level); 
   });
 }
 
-button.onclick = function () {
+buttonOffset.onclick = function () {
   offset = parseInt(offsetInput.value);
-  createCharts(offset); 
+  createCharts(offset, level); 
+}
+
+buttonLevel.onclick = function () {
+  level = parseInt(levelInput.value);
+  createCharts(offset, level); 
   //console.log(offset);
 }
 
