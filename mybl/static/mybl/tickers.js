@@ -128,7 +128,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
         }, { 
           data: vix2.slice(win),
           borderColor: '#ff0000',
-          backgroundColor: '#ff0000',
+          backgroundColor: '#feadad',
           steppedLine: 'middle',
           fill: true,
           label: 'VIX',
@@ -170,7 +170,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
           type: 'linear',
           position: 'left',
           ticks : {
-            //max : 100,    
+            max : 100,    
             min : 0
           }
         }]
