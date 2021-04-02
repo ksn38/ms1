@@ -170,7 +170,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
           type: 'linear',
           position: 'left',
           ticks : {
-            max : 100,    
+            //max : 100,    
             min : 0
           }
         }]
