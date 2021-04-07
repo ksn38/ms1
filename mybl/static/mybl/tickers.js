@@ -132,7 +132,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
           steppedLine: 'middle',
           fill: true,
           label: 'VIX',
-          yAxisID: 'VIX',
+          yAxisID: 'VIX2',
           pointRadius: 0,
           borderWidth: 0,
         }
@@ -166,11 +166,11 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
             min : -1
           }
         }, {
-          id: 'VIX',
+          id: 'VIX2',
           type: 'linear',
           position: 'left',
           ticks : {
-            //max : 100,    
+            max : 100,    
             min : 0
           }
         }]
