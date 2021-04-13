@@ -68,9 +68,39 @@
       </tr>
     {% endfor %}
   </table>
-  <!-- div class='d-flex mt-4'>
-    <canvas id="line-chart" width="800" height="450"></canvas>
-  </div -->
+  <table class='table-sm table-dark table-striped table-bordered mt-4'>
+    <caption style='caption-side: top'><small>Изменение от среднего за март <br> 2021 в %, 
+    суммарное место в этой таблице полученное по 3м сортировкам.</small></caption>
+    {% for chart in charts_march %}
+      <tr>
+        {% if chart.name == 'C%23' %}
+          <td>
+          {{ 'C#' }}
+          </td>
+        {% elif chart.name == 'cpp' %}
+          <td>
+          {{ 'C++' }}
+          </td>
+        {% else %}
+          <td>
+          {{ chart.name }}
+          </td>
+        {% endif %}
+        <td class='color text-right'>
+          {{ chart.cnd_val }}
+        </td>
+        <td class='color text-right'>
+          {{ chart.cnd_vn }}
+        </td>
+        <td class='color-inv text-right'>
+          {{ chart.cnd_rv }}
+        </td>
+        <td class='text-right text-secondary'>
+          {{ chart.rate }}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
     <div class='flex-wrap mt-4'>
     <div class='radWin d-flex justify-content-around'>
       <div>

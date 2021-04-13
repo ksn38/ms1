@@ -11,6 +11,15 @@ from mean a
 left join  mybl_lang b on a."name"  = b."name" 
 where b.date_added = current_date order by rate;'''
 
+chart_langs_march = '''select distinct b.id, a."name", ((b.val - a.aval)*100/a.aval) as cnd_val, ((b.val_noexp - a.aval_noexp)*100/a.aval_noexp) as cnd_vn, 
+((b.res_vac - a.ares_vac)*100/a.ares_vac)::integer as cnd_rv,
+(rank() over(order by  ((b.val - a.aval)*100/a.aval) desc) + 
+rank() over(order by ((b.val_noexp - a.aval_noexp)*100/a.aval_noexp) desc) + 
+rank() over(order by ((b.res_vac - a.ares_vac)*100/a.ares_vac)::integer)) as rate
+from mean_march a
+left join  mybl_lang b on a."name"  = b."name" 
+where b.date_added = current_date order by rate;'''
+
 chart_tickers = '''(select mt2.id, round((mt.gspc/mt2.gspc - 1) * 10000)/100 as dif_gspc,
 round((mt.vix/mt2.vix - 1) * 10000)/100 as dif_vix, 
 round((mt.tnx/mt2.tnx - 1) * 10000)/100 as dif_tnx,

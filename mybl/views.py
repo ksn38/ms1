@@ -12,7 +12,7 @@ import json
 from bs4 import BeautifulSoup as bs
 from django.core import serializers
 from django.db.models import Q
-from mybl.psql_req import chart_langs, chart_tickers, langs_today
+from mybl.psql_req import chart_langs, chart_tickers, langs_today, chart_langs_march
 
 
 def index(request):
@@ -202,6 +202,8 @@ def hh(request):
         
     charts = Lang.objects.raw(chart_langs)
     context['charts'] = charts
+    charts_march = Lang.objects.raw(chart_langs_march)
+    context['charts_march'] = charts_march
     #graphs = Lang.objects.filter(Q(name = 'Python') | Q(name = 'c%2B%2B') | Q(name = 'Java') | Q(name = 'Javascript') | Q(name = 'php'))
     graphs = Lang.objects.raw("""select * from mybl_lang ml where name = 'Python' or name = 'Java' or name = 'Javascript' or name = 'php' or name = 'cpp' order by date_added, name""")
     context['graphs'] = serializers.serialize('json', graphs)
