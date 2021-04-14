@@ -96,3 +96,12 @@ window.onload = function(){
 }
 
 
+let currency = document.querySelectorAll('.currency');
+let curRe = /[A-Z]\w+/
+
+let usdXdr = new Set(['USD', 'XDR']);
+for (let i of currency) {
+  if (usdXdr.has(curRe.exec(i.textContent)[0])) {
+    i.classList.add('bg-primary')}
+}
+
