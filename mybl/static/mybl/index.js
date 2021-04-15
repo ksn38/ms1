@@ -1,10 +1,30 @@
-let namesHigh = document.querySelectorAll('.name-high');
-let namesLow = document.querySelectorAll('.name-low');
-let changesHigh = document.querySelectorAll('.change-high');
-let changesLow = document.querySelectorAll('.change-low');
 let button = document.getElementById('stocks');
 let text = document.querySelector('p');
 let days = document.getElementById('days');
+let rowTable = document.querySelector('row-table');
+let maxValRows = 76;
+let minValRows = 21;
+
+
+function deleteRow(row) {
+  let moexTable = document.getElementById('moex');
+  let i = 0;
+  while (moexTable.rows.length > minValRows) {
+    moexTable.deleteRow(-1);
+  }
+}
+
+
+function insRow() {
+  let moexTable = document.getElementById('moex');
+  let i = 0;
+  while (i < maxValRows) {
+    let newRow = moexTable.rows[1].cloneNode(true);
+    moexTable.appendChild(newRow);
+    i += 1;
+  }
+  button.onclick();
+}
 
 
 let dict = function (dif) {
@@ -37,15 +57,31 @@ let dict = function (dif) {
 
 
 button.onclick = function () {
+  let namesHigh = document.querySelectorAll('.name-high');
+  let namesLow = document.querySelectorAll('.name-low');
+  let changesHigh = document.querySelectorAll('.change-high');
+  let changesLow = document.querySelectorAll('.change-low');
   for (let i of namesHigh) {
     if (i.classList.length > 1){
     i.classList.remove('bg-primary');
     };
   };
   
-    for (let i of namesLow) {
+  for (let i of namesLow) {
     if (i.classList.length > 1){
     i.classList.remove('bg-primary');
+    };
+  };
+  
+  for (let i of changesHigh) {
+    if (i.classList.length > 1){
+    i.classList.remove('bg-success');
+    };
+  };
+  
+  for (let i of changesLow) {
+    if (i.classList.length > 1){
+    i.classList.remove('bg-danger');
     };
   };
   
@@ -72,10 +108,10 @@ button.onclick = function () {
   
   outMapRev = new Map([...outMap.entries()].sort((a,b) => a[1] - b[1]));
   outMap = new Map([...outMap.entries()].sort((a,b) => b[1] - a[1]));
-  outMapKeys = [...outMap.keys()].slice(0, 30);
-  outMapValues = [...outMap.values()].slice(0, 30);
-  outMapRevKeys = [...outMapRev.keys()].slice(0, 30);
-  outMapRevValues = [...outMapRev.values()].slice(0, 30);
+  outMapKeys = [...outMap.keys()].slice(0, 100);
+  outMapValues = [...outMap.values()].slice(0, 100);
+  outMapRevKeys = [...outMapRev.keys()].slice(0, 100);
+  outMapRevValues = [...outMapRev.values()].slice(0, 100);
   let blue = new Set(['(SBER', '(GAZP', '(LKOH', '(YNDX', '(GMKN', '(NVTK', '(POLY', '(ROSN', '(PLZL', '(MGNT', '(MTSS', '(TATN', '(MAIL', '(FIVE', '(SNGS']);
   let myRe = /[(]\w+/;
   
@@ -88,6 +124,12 @@ button.onclick = function () {
     if (blue.has(myRe.exec(namesLow[i].textContent)[0])){
       namesLow[i].classList.add('bg-primary')};
     changesLow[i].textContent = outMapRevValues[i];
+    if (parseFloat(changesHigh[i].textContent) > 0.01) {
+	  changesHigh[i].classList.add('bg-success');
+	};
+	if (parseFloat(changesLow[i].textContent) < -0.01) {
+	  changesLow[i].classList.add('bg-danger');
+	};
   };
 };
 
