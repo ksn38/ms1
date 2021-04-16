@@ -28,7 +28,7 @@ def apivac(expir):
         parsed_html = bs(response, 'lxml')
         bloko = parsed_html.find('h1', {'class': 'bloko-header-1'}).text.split(' ')[0].split('\xa0')[0]
         vac[i] = int(bloko)
-        print(i, bloko)
+        #print(i, bloko)
         time.sleep(random.randint(1,60))
 
     return vac
@@ -50,7 +50,7 @@ def parservac():
         else:
             bloko = ''.join(map(str, bloko[:1]))
         res[i] = int(bloko)
-        print(i, bloko)
+        #print(i, bloko)
 
     return res
 
