@@ -6,7 +6,6 @@ from collections import OrderedDict
 from bs4 import BeautifulSoup as bs
 from django.db.models import Q
 import requests
-import json
 
 
 if __name__ == '__main__':
@@ -45,4 +44,3 @@ if len(tickers) == 0:
             t.update(ticks('vix', 'tnx', 'ixic', 'rut', 'wti', 'gold'))
             obj = Ticker(**t)
             obj.save()
-
