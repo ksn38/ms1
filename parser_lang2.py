@@ -24,7 +24,8 @@ def apivac(expir):
         response = requests.get(url)
         val = json.loads(response.content.decode("utf-8"))
         vac[i] = val['found']
-        #print(i, val['found'])
+        print(i, val['found'])
+        time.sleep(10)
 
     return vac
 
@@ -44,7 +45,7 @@ def parservac():
         else:
             bloko = ''.join(map(str, bloko[:1]))
         res[i] = int(bloko)
-        #print(i, bloko)
+        print(i, bloko)
 
     return res
 
@@ -54,7 +55,9 @@ langs = Lang.objects.filter(Q(date_added = date_today))
 if len(langs) == 0:
     noexp = 'experience=noExperience&'
     vacs = apivac('')
+    #time.sleep(600)
     vacs_noexp = apivac(noexp)
+    #time.sleep(600)
     res = parservac()
 
     for k, k2 in zip(vacs.keys(), res.keys()):
@@ -69,3 +72,16 @@ if len(langs) == 0:
         obj = Lang(**new_values)
         obj.save()
 
+
+'''def hh(request):
+    langs = Lang.objects.raw(langs_today)
+    context = {'langs': langs}
+    charts = Lang.objects.raw(chart_langs)
+    context['charts'] = charts
+    charts_march = Lang.objects.raw(chart_langs_march)
+    context['charts_march'] = charts_march
+    #graphs = Lang.objects.filter(Q(name = 'Python') | Q(name = 'c%2B%2B') | Q(name = 'Java') | Q(name = 'Javascript') | Q(name = 'php'))
+    graphs = Lang.objects.raw("""select * from mybl_lang ml where name = 'Python' or name = 'Java' or name = 'Javascript' or name = 'php' or name = 'cpp' order by date_added, name""")
+    context['graphs'] = serializers.serialize('json', graphs)
+    
+    return render(request, 'mybl/hh.html', context)'''
