@@ -29,7 +29,7 @@ def apivac(expir):
         bloko = parsed_html.find('h1', {'class': 'bloko-header-1'}).text.split(' ')[0].split('\xa0')[0]
         vac[i] = int(bloko)
         #print(i, bloko)
-        time.sleep(random.randint(1,60))
+        time.sleep(random.randint(1,10))
 
     return vac
 
@@ -38,7 +38,7 @@ def parservac():
     res = {}
 
     for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Go', '1c', 'Data scientist', 'Scala', 'iOS', 'Frontend', 'DevOps', 'ABAP', 'Android']:
-        time.sleep(random.randint(1,60))
+        time.sleep(random.randint(1,10))
         url = 'https://hh.ru/search/resume?clusters=true&exp_period=all_time&logic=normal&no_magic=false&order_by=relevance&pos=position&text=' + i
         headers = {
             'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:87.0) Gecko/20100101 Firefox/87.0'}
@@ -60,8 +60,9 @@ langs = Lang.objects.filter(Q(date_added = date_today))
 if len(langs) == 0:
     noexp = '&experience=noExperience'
     vacs = apivac('')
+    time.sleep(random.randint(1,10))
     vacs_noexp = apivac(noexp)
-    time.sleep(random.randint(1,60))
+    time.sleep(random.randint(1,10))
     res = parservac()
 
     for k, k2 in zip(vacs.keys(), res.keys()):

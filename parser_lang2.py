@@ -25,7 +25,7 @@ def apivac(expir):
         val = json.loads(response.content.decode("utf-8"))
         vac[i] = val['found']
         print(i, val['found'])
-        time.sleep(10)
+        time.sleep(5)
 
     return vac
 
@@ -46,6 +46,7 @@ def parservac():
             bloko = ''.join(map(str, bloko[:1]))
         res[i] = int(bloko)
         print(i, bloko)
+        time.sleep(5)
 
     return res
 
@@ -55,9 +56,7 @@ langs = Lang.objects.filter(Q(date_added = date_today))
 if len(langs) == 0:
     noexp = 'experience=noExperience&'
     vacs = apivac('')
-    #time.sleep(600)
     vacs_noexp = apivac(noexp)
-    #time.sleep(600)
     res = parservac()
 
     for k, k2 in zip(vacs.keys(), res.keys()):
