@@ -5,10 +5,11 @@
   <div class='d-flex justify-content-around m-2 flex-wrap align-items-start'>
     <div class='d-flex justify-center mt-2 flex-wrap' style='flex-basis: 30%;'>
       <div class='mb-3'>
-        <small class='d-flex justify-center mt-1 text-secondary'>Изменение валюты относительно рубля<br> за период</small>
+        <small class='d-flex justify-center mt-1 text-secondary'>Изменение валюты относительно рубля<br> за период</small> 
         <form action="#" method="get" class='mr-auto'>
-          <input type="number" value="1" name="mytextbox" size='3' min='1'>
-          <input type="submit" class="button" value="дней" name="mybtn">
+          <input type="number" value="1" name="mytextbox" size='3' min='1' id='mytextbox'>
+          <input type="submit" class="button" value="дней" name="mybtn" id='mybtn'>
+          <span>(от {{ date_delta }})</span>
         </form>
       </div>
       <div class='d-flex flex-nowrap'>

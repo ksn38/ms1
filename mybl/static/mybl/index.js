@@ -147,3 +147,13 @@ for (let i of currency) {
     i.classList.add('bg-primary')}
 }
 
+
+/*let mybtn = document.getElementById("mybtn");
+
+mytextbox.onchange = function () {
+  let number = document.getElementsByName("mytextbox")[0].value;
+  console.log(number);
+  // Do whatever you want with the value here.
+}*/
+
+
