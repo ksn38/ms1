@@ -9,7 +9,7 @@
         <form action="#" method="get" class='mr-auto'>
           <input type="number" value="1" name="mytextbox" size='3' min='1' id='mytextbox'>
           <input type="submit" class="button" value="дней" name="mybtn" id='mybtn'>
-          <span>(от {{ date_delta }})</span>
+          <div>(от {{ date_delta }})</div>
         </form>
       </div>
       <div class='d-flex flex-nowrap'>
@@ -49,7 +49,7 @@
     </div>
     
     <table class='table-sm table-dark table-striped table-bordered' id='moex'>
-      <caption style='caption-side: top' class='mb-1'>
+      <caption style='caption-side: top' class='mb-4'>
         <span class='d-flex justify-content-start'>
           <small>Акции-лидеры и аутсайдеры Мосбиржи. <br>Разница между последней сессией и числом</small>
         </span>
