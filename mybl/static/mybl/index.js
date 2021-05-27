@@ -52,7 +52,8 @@ let dict = function (dif) {
       };
     }});
   };
-  return day;
+  //console.log(day);
+  return [day, dateLast];
 };
 
 
@@ -61,6 +62,8 @@ button.onclick = function () {
   let namesLow = document.querySelectorAll('.name-low');
   let changesHigh = document.querySelectorAll('.change-high');
   let changesLow = document.querySelectorAll('.change-low');
+  let dateDict2 = document.querySelector('.date-dict2');
+  
   for (let i of namesHigh) {
     if (i.classList.length > 1){
     i.classList.remove('bg-primary');
@@ -86,14 +89,17 @@ button.onclick = function () {
   };
   
   let date = new Date();
+  
   if (date.getDay() == 1 && parseInt(days.value) < 4) {
     days.value = 4;
   } else if (date.getDay() == 0 && parseInt(days.value) < 3) {
     days.value = 3;
   };
-  let dict1 = dict(1);
-  dict1 = new Map([...dict1.entries()]);
-  let dict2 = new Map([...dict(days.value).entries()]);
+  
+  let dict1 = dict(1)[0];
+  let dict2 = dict(days.value)[0];
+  dateDict2.textContent = `(от ${dict(days.value)[1]})`;
+  //console.log(dateDict2);
   let listKeys = [...dict1.keys()];
   let outMap = new Map();
   
@@ -112,24 +118,28 @@ button.onclick = function () {
   outMapValues = [...outMap.values()].slice(0, 100);
   outMapRevKeys = [...outMapRev.keys()].slice(0, 100);
   outMapRevValues = [...outMapRev.values()].slice(0, 100);
+  
   let blue = new Set(['(SBER', '(GAZP', '(LKOH', '(YNDX', '(GMKN', '(NVTK', '(POLY', '(ROSN', '(PLZL', '(MGNT', '(MTSS', '(TATN', '(MAIL', '(FIVE', '(SNGS']);
   let myRe = /[(]\w+/;
   
   for (let i = 0; i < namesHigh.length; i++) {
     namesHigh[i].textContent = outMapKeys[i];
     if (blue.has(myRe.exec(namesHigh[i].textContent)[0])){
-      namesHigh[i].classList.add('bg-primary')};
+      namesHigh[i].classList.add('bg-primary')
+    };
     changesHigh[i].textContent = outMapValues[i];
     namesLow[i].textContent = outMapRevKeys[i];
     if (blue.has(myRe.exec(namesLow[i].textContent)[0])){
-      namesLow[i].classList.add('bg-primary')};
+      namesLow[i].classList.add('bg-primary')
+    };
     changesLow[i].textContent = outMapRevValues[i];
     if (parseFloat(changesHigh[i].textContent) > 0.01) {
 	  changesHigh[i].classList.add('bg-success');
-	};
+	  };
+  
 	if (parseFloat(changesLow[i].textContent) < -0.01) {
 	  changesLow[i].classList.add('bg-danger');
-	};
+  };
   };
 };
 
@@ -140,8 +150,8 @@ window.onload = function(){
 
 let currency = document.querySelectorAll('.currency');
 let curRe = /[A-Z]\w+/
-
 let usdXdr = new Set(['USD', 'XDR']);
+
 for (let i of currency) {
   if (usdXdr.has(curRe.exec(i.textContent)[0])) {
     i.classList.add('bg-primary')}
