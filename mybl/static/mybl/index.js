@@ -19,7 +19,7 @@ function insRow() {
   let moexTable = document.getElementById('moex');
   let i = 0;
   while (i < maxValRows) {
-    let newRow = moexTable.rows[1].cloneNode(true);
+    let newRow = moexTable.rows[19].cloneNode(true);
     moexTable.appendChild(newRow);
     i += 1;
   }
@@ -128,18 +128,15 @@ button.onclick = function () {
       namesHigh[i].classList.add('bg-primary')
     };
     changesHigh[i].textContent = outMapValues[i];
+    
     namesLow[i].textContent = outMapRevKeys[i];
     if (blue.has(myRe.exec(namesLow[i].textContent)[0])){
       namesLow[i].classList.add('bg-primary')
     };
     changesLow[i].textContent = outMapRevValues[i];
-    if (parseFloat(changesHigh[i].textContent) > 0.01) {
-	  changesHigh[i].classList.add('bg-success');
-	  };
-  
-	if (parseFloat(changesLow[i].textContent) < -0.01) {
-	  changesLow[i].classList.add('bg-danger');
-  };
+    
+    changesHigh[i].style.backgroundColor = 'rgba(0, 255, 0,'  + (parseFloat(changesHigh[i].textContent)/parseFloat(changesHigh[0].textContent)) + ')';
+    changesLow[i].style.backgroundColor = 'rgba(255, 0, 0,'  + (parseFloat(changesLow[i].textContent)/parseFloat(changesLow[0].textContent)) + ')';
   };
 };
 
@@ -149,12 +146,17 @@ window.onload = function(){
 
 
 let currency = document.querySelectorAll('.currency');
+let value = document.querySelectorAll('.value');
 let curRe = /[A-Z]\w+/
 let usdXdr = new Set(['USD', 'XDR']);
 
-for (let i of currency) {
-  if (usdXdr.has(curRe.exec(i.textContent)[0])) {
-    i.classList.add('bg-primary')}
+for (let i = 0; i < currency.length; i++) {
+  /*if (parseFloat(value[i].textContent) >= 0) {
+  value[i].style.backgroundColor = 'rgba(255, 255, 255,'  + (1 - parseFloat(value[i].textContent)/parseFloat(value[0].textContent)) + ')';
+  };
+  console.log(value[currency.length - 1].textContent);*/
+  if (usdXdr.has(curRe.exec(currency[i].textContent)[0])) {
+    currency[i].classList.add('bg-primary')}
 }
 
 
