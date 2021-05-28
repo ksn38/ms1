@@ -135,7 +135,11 @@ button.onclick = function () {
     };
     changesLow[i].textContent = outMapRevValues[i];
     
-    changesHigh[i].style.backgroundColor = 'rgba(0, 255, 0,'  + (parseFloat(changesHigh[i].textContent)/parseFloat(changesHigh[0].textContent)) + ')';
+    if (changesHigh[0].textContent != 'Infinity') {
+      changesHigh[i].style.backgroundColor = 'rgba(0, 255, 0,'  + (parseFloat(changesHigh[i].textContent)/parseFloat(changesHigh[0].textContent)) + ')';
+    } else{
+      changesHigh[i].style.backgroundColor = 'rgba(0, 255, 0,'  + (parseFloat(changesHigh[i].textContent)/parseFloat(changesHigh[1].textContent)) + ')';
+    };
     changesLow[i].style.backgroundColor = 'rgba(255, 0, 0,'  + (parseFloat(changesLow[i].textContent)/parseFloat(changesLow[0].textContent)) + ')';
   };
 };
