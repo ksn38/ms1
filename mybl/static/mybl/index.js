@@ -136,11 +136,11 @@ button.onclick = function () {
     changesLow[i].textContent = outMapRevValues[i];
     
     if (changesHigh[0].textContent != 'Infinity') {
-      changesHigh[i].style.backgroundColor = 'rgba(0, 255, 0,'  + (parseFloat(changesHigh[i].textContent)/parseFloat(changesHigh[0].textContent)) + ')';
+      changesHigh[i].style.backgroundColor = 'rgba(40, 167, 69,'  + (parseFloat(changesHigh[i].textContent)/parseFloat(changesHigh[0].textContent)) + ')';
     } else{
-      changesHigh[i].style.backgroundColor = 'rgba(0, 255, 0,'  + (parseFloat(changesHigh[i].textContent)/parseFloat(changesHigh[1].textContent)) + ')';
+      changesHigh[i].style.backgroundColor = 'rgba(40, 167, 69,'  + (parseFloat(changesHigh[i].textContent)/parseFloat(changesHigh[1].textContent)) + ')';
     };
-    changesLow[i].style.backgroundColor = 'rgba(255, 0, 0,'  + (parseFloat(changesLow[i].textContent)/parseFloat(changesLow[0].textContent)) + ')';
+    changesLow[i].style.backgroundColor = 'rgba(220, 53, 69,'  + (parseFloat(changesLow[i].textContent)/parseFloat(changesLow[0].textContent)) + ')';
   };
 };
 
@@ -150,26 +150,23 @@ window.onload = function(){
 
 
 let currency = document.querySelectorAll('.currency');
-let value = document.querySelectorAll('.value');
+let value_plus = document.querySelectorAll('.value_plus');
+let value_minus = document.querySelectorAll('.value_minus');
 let curRe = /[A-Z]\w+/
 let usdXdr = new Set(['USD', 'XDR']);
 
-for (let i = 0; i < currency.length; i++) {
-  /*if (parseFloat(value[i].textContent) >= 0) {
-  value[i].style.backgroundColor = 'rgba(255, 255, 255,'  + (1 - parseFloat(value[i].textContent)/parseFloat(value[0].textContent)) + ')';
-  };
-  console.log(value[currency.length - 1].textContent);*/
+for (let i = 0; i < value_plus.length; i++) {
+  value_plus[i].style.backgroundColor = 'rgba(255, 255, 255,'  + (1 - parseFloat(value_plus[i].textContent)/parseFloat(value_plus[0].textContent)) + ')';
+  console.log(value_plus);
   if (usdXdr.has(curRe.exec(currency[i].textContent)[0])) {
     currency[i].classList.add('bg-primary')}
-}
+};
 
-
-/*let mybtn = document.getElementById("mybtn");
-
-mytextbox.onchange = function () {
-  let number = document.getElementsByName("mytextbox")[0].value;
-  console.log(number);
-  // Do whatever you want with the value here.
-}*/
+for (let i = 0; i < value_minus.length; i++) {
+  value_minus[i].style.backgroundColor = 'rgba(255, 255, 255,'  + (1 - parseFloat(value_minus[i].textContent)/parseFloat(value_minus[0].textContent)) + ')';
+  console.log(value_minus);
+  if (usdXdr.has(curRe.exec(currency[i].textContent)[0])) {
+    currency[i].classList.add('bg-primary')}
+};
 
 
