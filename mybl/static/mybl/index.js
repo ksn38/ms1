@@ -157,14 +157,12 @@ let usdXdr = new Set(['USD', 'XDR']);
 
 for (let i = 0; i < value_plus.length; i++) {
   value_plus[i].style.backgroundColor = 'rgba(255, 255, 255,'  + (1 - parseFloat(value_plus[i].textContent)/parseFloat(value_plus[0].textContent)) + ')';
-  console.log(value_plus);
   if (usdXdr.has(curRe.exec(currency[i].textContent)[0])) {
     currency[i].classList.add('bg-primary')}
 };
 
 for (let i = 0; i < value_minus.length; i++) {
   value_minus[i].style.backgroundColor = 'rgba(255, 255, 255,'  + (1 - parseFloat(value_minus[i].textContent)/parseFloat(value_minus[0].textContent)) + ')';
-  console.log(value_minus);
   if (usdXdr.has(curRe.exec(currency[i].textContent)[0])) {
     currency[i].classList.add('bg-primary')}
 };

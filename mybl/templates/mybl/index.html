@@ -13,7 +13,7 @@
         </form>
       </div>
       <div class='d-flex flex-nowrap'>
-        <table class='table-sm table-striped table-bordered bg-danger' style='height: 0px'>
+        <table class='table-sm table-striped table-bordered bg-success' style='height: 0px'>
           <tr>
             <th class='px-2'>Валюта</th>
             <th class='px-2'>%</th>
@@ -23,13 +23,13 @@
               <td class='currency'>
                 {{ name }}
               </td>
-              <td class='value_minus'>
+              <td class='value_plus'>
                 {{ value }}
               </td>
             </tr>
           {% endfor %}
         </table>
-        <table class='table-sm table-striped table-bordered bg-success' style='height: 0px'>
+        <table class='table-sm table-striped table-bordered bg-danger' style='height: 0px'>
           <tr>
             <th class='px-2'>Валюта</th>
             <th class='px-2'>%</th>
@@ -39,7 +39,7 @@
               <td class='currency'>
                 {{ name }}
               </td>
-              <td class='value_plus'>
+              <td class='value_minus'>
                 {{ value }}
               </td>
             </tr>
