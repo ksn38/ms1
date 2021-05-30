@@ -1,23 +1,34 @@
-let tr = document.querySelectorAll('.color');
-let tri = document.querySelectorAll('.color-inv');
+let valChng2020 = document.querySelectorAll('.val-cndg-2020');
+let val_noexpChng2020 = document.querySelectorAll('.val_noexp-cndg-2020');
+let res_vacChng2020 = document.querySelectorAll('.res_vac-cndg-2020');
+let valChng2021 = document.querySelectorAll('.val-cndg-2021');
+let val_noexpChng2021 = document.querySelectorAll('.val_noexp-cndg-2021');
+let res_vacChng2021 = document.querySelectorAll('.res_vac-cndg-2021');
 
-for (let i of tr) {
-  if (parseInt(i.textContent) < 0) {
-    i.classList.add('bg-danger')
+
+let colorCol = (arr) => {
+  let arrInt = [];
+  for (let i = 0; i < arr.length; i++) {
+    arrInt.push(parseInt(arr[i].textContent));
   }
-  else if (parseInt(i.textContent) > 0) {
-    i.classList.add('bg-success')
-  }else {i.classList.add('bg-secondary')}
+  let maxArr = Math.max.apply(null, arrInt);
+  let minArr = Math.min.apply(null, arrInt);
+  for (let i = 0; i < arrInt.length; i++) {
+    if (arrInt[i] > 0) {
+      arr[i].style.backgroundColor = 'rgba(40, 167, 69,'  + arrInt[i]/maxArr + ')';
+    }
+    else if (arrInt[i] < 0) {
+      arr[i].style.backgroundColor = 'rgba(220, 53, 69,'  + arrInt[i]/minArr + ')';
+    }
+  }
 }
 
-for (let i of tri) {
-  if (parseInt(i.textContent) > 0) {
-    i.classList.add('bg-danger')
-  }
-  else if (parseInt(i.textContent) < 0) {
-    i.classList.add('bg-success')
-  }else {i.classList.add('bg-secondary')}
-}
+colorCol(valChng2020);
+colorCol(val_noexpChng2020);
+colorCol(res_vacChng2020);
+colorCol(valChng2021);
+colorCol(val_noexpChng2021);
+colorCol(res_vacChng2021);
 
 
 let valNowNod = document.querySelectorAll('.val-now'); 
