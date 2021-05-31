@@ -7,10 +7,8 @@ let res_vacChng2021 = document.querySelectorAll('.res_vac-cndg-2021');
 
 
 let colorCol = (arr) => {
-  let arrInt = [];
-  for (let i = 0; i < arr.length; i++) {
-    arrInt.push(parseInt(arr[i].textContent));
-  }
+  arr = Array.from(arr);
+  let arrInt = arr.map((i) => parseInt(i.textContent));
   let maxArr = Math.max.apply(null, arrInt);
   let minArr = Math.min.apply(null, arrInt);
   for (let i = 0; i < arrInt.length; i++) {
@@ -24,10 +22,8 @@ let colorCol = (arr) => {
 }
 
 let colorColInv = (arr) => {
-  let arrInt = [];
-  for (let i = 0; i < arr.length; i++) {
-    arrInt.push(parseInt(arr[i].textContent));
-  }
+  arr = Array.from(arr);
+  let arrInt = arr.map((i) => parseInt(i.textContent));
   let maxArr = Math.max.apply(null, arrInt);
   let minArr = Math.min.apply(null, arrInt);
   for (let i = 0; i < arrInt.length; i++) {
@@ -40,6 +36,7 @@ let colorColInv = (arr) => {
   }
 }
 
+//let start = performance.now();
 colorCol(valChng2020);
 colorCol(val_noexpChng2020);
 colorColInv(res_vacChng2020);
@@ -52,35 +49,55 @@ let valNowNod = document.querySelectorAll('.val-now');
 let valNoexpNowNod = document.querySelectorAll('.val_noexp-now');
 let resVacNowNod = document.querySelectorAll('.res_vac-now');
 
-valNow = Array.from(valNowNod);
-valNowSort = valNow.map((i) => parseInt(i.textContent)).sort((a,b) => a - b);
+let median = (values) => {
+  values.sort((a,b) => a - b);
+  let half = Math.floor(values.length / 2);
 
-valNoexpNow = Array.from(valNoexpNowNod);
-valNoexpNowSort = valNoexpNow.map((i) => parseInt(i.textContent)).sort((a,b) => a - b);
+  if (values.length % 2)
+    return values[half];
 
-resVacNow = Array.from(resVacNowNod);
-resVacNowSort = resVacNow.map((i) => parseFloat(i.textContent)).sort((a,b) => b - a);
+  return (values[half - 1] + values[half]) / 2.0;
+}
 
-let colorText = (nodeList, listSort) => {
-  for (let i of nodeList) {
-    if (parseInt(i.textContent) >= listSort[11]) {
-      i.classList.add('text-success')
-    } else if (parseInt(i.textContent) < listSort[5]) {
-      i.classList.add('text-danger')
+let colorColNow = (arr) => {
+  arr = Array.from(arr);
+  let arrInt = arr.map((i) => parseInt(i.textContent));
+  let maxArr = Math.max.apply(null, arrInt);
+  let minArr = Math.min.apply(null, arrInt);
+  let medianArr = median(arrInt);
+  arrInt = arr.map((i) => parseInt(i.textContent));
+  for (let i = 0; i < arrInt.length; i++) {
+    if (arrInt[i] > medianArr) {
+      arr[i].style.backgroundColor = 'rgba(40, 167, 69,'  + arrInt[i]/maxArr + ')';
+    }
+    else if (arrInt[i] < medianArr) {
+      arr[i].style.backgroundColor = 'rgba(220, 53, 69,'  + (1 - arrInt[i]/medianArr) + ')';
     }
   }
-};
+}
 
-colorText(valNowNod, valNowSort);
-colorText(valNoexpNowNod, valNoexpNowSort);
-
-for (let i of resVacNow) {
-  if (parseFloat(i.textContent) <= resVacNowSort[11]) {
-    i.classList.add('text-success')
-  } else if (parseFloat(i.textContent) > resVacNowSort[5]) {
-    i.classList.add('text-danger')
+let colorColNowInv = (arr) => {
+  arr = Array.from(arr);
+  let arrInt = arr.map((i) => parseInt(i.textContent));
+  let maxArr = Math.max.apply(null, arrInt);
+  let minArr = Math.min.apply(null, arrInt);
+  let medianArr = median(arrInt);
+  arrInt = arr.map((i) => parseInt(i.textContent));
+  for (let i = 0; i < arrInt.length; i++) {
+    if (arrInt[i] > medianArr) {
+      arr[i].style.backgroundColor = 'rgba(220, 53, 69,'  + arrInt[i]/maxArr + ')';
+    }
+    else if (arrInt[i] < medianArr) {
+      arr[i].style.backgroundColor = 'rgba(40, 167, 69,'  + (1 - arrInt[i]/medianArr) + ')';
+    }
   }
 }
+
+colorColNow(valNowNod);
+colorColNow(valNoexpNowNod);
+colorColNowInv(resVacNowNod);
+//let duration = performance.now() - start;
+//console.log(duration);
 
 
 let cavas = document.getElementById("line-chart");

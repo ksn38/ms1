@@ -2,21 +2,21 @@
 {% load static %}
 {% block content %}
 <div class='d-flex justify-content-around m-2 flex-wrap align-items-start'>
-  <table class='table-sm table-dark table-striped table-bordered'>
+  <table class='table-sm table-dark table-bordered'>
     <caption style='caption-side: top'><small>Количество вакансий, процент вакансий без опыта, 
     соотношение резюме к вакансиям за сегодня, суммарное место полученное по 3м сортировкам.</small></caption>
     {% for lang in langs %}
       <tr>
         {% if lang.name == 'C%23' %}
-          <td>
+          <td class='bg-dark text-light'>
           {{ 'C#' }}
           </td>
         {% elif lang.name == 'cpp' %}
-          <td>
+          <td class='bg-dark text-light'>
           {{ 'C++' }}
           </td>
         {% else %}
-          <td>
+          <td class='bg-dark text-light'>
           {{ lang.name }}
           </td>
         {% endif %}
@@ -29,27 +29,27 @@
         <td class='text-right res_vac-now'>
           {{ lang.res_vac }}
         </td>
-        <td class='text-right text-secondary'>
+        <td class='text-right text-secondary bg-dark'>
           {{ lang.rate }}
         </td>
       </tr>
     {% endfor %}
   </table>
-  <table class='table-sm table-dark table-striped table-bordered mt-4'>
+  <table class='table-sm mt-4 table-dark table-bordered'>
     <caption style='caption-side: top'><small>Изменение от среднего за декабрь 2020 в %, 
     суммарное место полученное по 3м сортировкам.</small></caption>
     {% for chart in charts %}
       <tr>
         {% if chart.name == 'C%23' %}
-          <td>
+          <td class='bg-dark text-light'>
           {{ 'C#' }}
           </td>
         {% elif chart.name == 'cpp' %}
-          <td>
+          <td class='bg-dark text-light'>
           {{ 'C++' }}
           </td>
         {% else %}
-          <td>
+          <td class='bg-dark text-light'>
           {{ chart.name }}
           </td>
         {% endif %}
@@ -62,27 +62,27 @@
         <td class='res_vac-cndg-2020 text-right'>
           {{ chart.cnd_rv }}
         </td>
-        <td class='text-right text-secondary'>
+        <td class='text-right text-secondary bg-dark'>
           {{ chart.rate }}
         </td>
       </tr>
     {% endfor %}
   </table>
-  <table class='table-sm table-dark table-striped table-bordered mt-4'>
+  <table class='table-sm mt-4 table-dark table-bordered'>
     <caption style='caption-side: top'><small>Изменение от среднего за март 2021 в %, 
     суммарное место полученное по 3м сортировкам.</small></caption>
     {% for chart in charts_march %}
       <tr>
         {% if chart.name == 'C%23' %}
-          <td>
+          <td class='bg-dark text-light'>
           {{ 'C#' }}
           </td>
         {% elif chart.name == 'cpp' %}
-          <td>
+          <td class='bg-dark text-light'>
           {{ 'C++' }}
           </td>
         {% else %}
-          <td>
+          <td class='bg-dark text-light'>
           {{ chart.name }}
           </td>
         {% endif %}
@@ -95,7 +95,7 @@
         <td class='res_vac-cndg-2021 text-right'>
           {{ chart.cnd_rv }}
         </td>
-        <td class='text-right text-secondary'>
+        <td class='text-right text-secondary bg-dark'>
           {{ chart.rate }}
         </td>
       </tr>
