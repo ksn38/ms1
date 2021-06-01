@@ -71,7 +71,8 @@ let colorColNow = (arr) => {
       arr[i].style.backgroundColor = 'rgba(40, 167, 69,'  + arrInt[i]/maxArr + ')';
     }
     else if (arrInt[i] < medianArr) {
-      arr[i].style.backgroundColor = 'rgba(220, 53, 69,'  + (1 - arrInt[i]/medianArr) + ')';
+      arr[i].style.backgroundColor = 'rgba(220, 53, 69,'  + minArr/arrInt[i] + ')';
+      //console.log(minArr/arrInt[i]);
     }
   }
 }
@@ -88,7 +89,7 @@ let colorColNowInv = (arr) => {
       arr[i].style.backgroundColor = 'rgba(220, 53, 69,'  + arrInt[i]/maxArr + ')';
     }
     else if (arrInt[i] < medianArr) {
-      arr[i].style.backgroundColor = 'rgba(40, 167, 69,'  + (1 - arrInt[i]/medianArr) + ')';
+      arr[i].style.backgroundColor = 'rgba(40, 167, 69,'  + minArr/arrInt[i] + ')';
     }
   }
 }
