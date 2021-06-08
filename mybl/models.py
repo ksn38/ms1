@@ -22,6 +22,7 @@ class Comment(models.Model):
 	
     def __str__(self):
         return self.text[:50] + '...'
+
         
 class Lang(models.Model):
     name = models.CharField(max_length=50)
@@ -36,6 +37,18 @@ class Lang(models.Model):
         return self.val_noexp
         return self.res_vac
         return self.date_added
+
+        
+class Lang_avg(models.Model):
+    avg_vn = models.FloatField()
+    avg_rv = models.FloatField()
+    date_added = models.DateField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.avg_vn
+        return self.avg_rv
+        return self.date_added
+
       
 class Ticker(models.Model):
     date_added = models.DateField(auto_now_add=True)

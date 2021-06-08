@@ -110,9 +110,12 @@
       </div>
     </div>
     <div><canvas id="line-chart" width="800" height="450"></canvas></div>
+    <div><canvas id="line-chart2" width="800" height="450"></canvas></div>
   </div>
   <script type="text/javascript">
     var received_data  = {{ graphs|safe }};
+    var received_data2  = {{ graphs2|safe }};
+    //console.log(received_data2);
     //console.log(received_data);
   </script>
 <script src="{% static 'mybl/hh.js' %}"></script>

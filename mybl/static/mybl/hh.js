@@ -220,15 +220,111 @@ let graph = (win) => {
   });
 };
 
+let cavas2 = document.getElementById("line-chart2");
+
+if (cavas2.width > window.innerWidth) {
+  cavas2.width = window.innerWidth;
+  cavas2.height = window.innerWidth * 0.5625;
+}
+
+let graph2 = (win) => {
+  let date2 = [];
+  let avgVn = [];
+  let avgRv = [];
+
+  for (let i = 0; i < received_data2.length; i++) {
+    date2.push(received_data2[i]['fields']['date_added']);
+    avgVn.push(parseFloat(received_data2[i]['fields']['avg_vn']));
+    avgRv.push(parseFloat(received_data2[i]['fields']['avg_rv']));
+  };
+
+  date2 = date2.slice(win);
+
+  let average = (list) => {
+    return list.reduce((accum, curr) => accum + curr) / list.length;
+  };
+
+  let rollAvg = (list) => {
+    let result = [];
+    for (let i = 0; i < list.length - win; i++) {
+      result.push(average(list.slice(i, i + win - 1)));
+    };
+    return result;
+  };
+
+  new Chart(document.getElementById("line-chart2"), {
+    type: 'line',
+    data: {
+      labels: date2,
+      datasets: [{ 
+          data: rollAvg(avgVn),
+          label: "Среднее количество вакансий без опыта за день",
+          borderColor: "#00af00",
+          fill: false,
+          pointRadius: 0,
+          yAxisID: 'xLabel',
+        }, { 
+          data: rollAvg(avgRv),
+          label: "Среднее соотношение резюме к вакансиям за день",
+          borderColor: "#434343",
+          fill: false,
+          pointRadius: 0,
+          yAxisID: 'yLabel',
+        }
+      ]
+    },
+    options: {
+      animation: {
+          duration: 0
+      },
+      events: [],
+      title: {
+        display: true,
+        text: ''
+      },
+      title: {
+          display: true,
+      },
+      scales: {
+        yAxes: [{
+          id: 'xLabel',
+          type: 'linear',
+          position: 'left',
+          scaleLabel: {
+              display: true,
+              labelString: ""
+            }
+        }, {
+          id: 'yLabel',
+          type: 'linear',
+          position: 'right',
+          scaleLabel: {
+              display: true,
+              labelString: ""
+            }
+          }]
+       }
+    }
+  });
+};
+
 let win = 7;
 let radWin = document.getElementsByName('win');
 
 graph(win);
+graph2(win);
 
 for(let i = 0; i < radWin.length; i++){
   radWin[i].addEventListener("change", function(){
     win = parseInt(radWin[i].value);
     graph(win);
+    graph2(win);
   })
 }
+
+
+
+
+
+
 
