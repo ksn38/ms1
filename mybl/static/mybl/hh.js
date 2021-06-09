@@ -117,13 +117,13 @@ let graph = (win) => {
   let py = [];
   let cpp = [];
 
-  for (let i = 0; i < received_data.length; i += 5) {
-    date.push(received_data[i]['fields']['date_added']);
-    cpp.push(received_data[i]['fields']['res_vac']);
-    java.push(received_data[i + 1]['fields']['res_vac']);
-    js.push(received_data[i + 2]['fields']['res_vac']);
-    php.push(received_data[i + 3]['fields']['res_vac']);
-    py.push(received_data[i + 4]['fields']['res_vac']);
+  for (let i = 0; i < receivedData.length; i += 5) {
+    date.push(receivedData[i]['fields']['date_added']);
+    cpp.push(receivedData[i]['fields']['res_vac']);
+    java.push(receivedData[i + 1]['fields']['res_vac']);
+    js.push(receivedData[i + 2]['fields']['res_vac']);
+    php.push(receivedData[i + 3]['fields']['res_vac']);
+    py.push(receivedData[i + 4]['fields']['res_vac']);
   };
 
   date = date.slice(win);
@@ -220,25 +220,25 @@ let graph = (win) => {
   });
 };
 
-let cavas2 = document.getElementById("line-chart2");
+let cavasAvg = document.getElementById("line-chart-avg");
 
-if (cavas2.width > window.innerWidth) {
-  cavas2.width = window.innerWidth;
-  cavas2.height = window.innerWidth * 0.5625;
+if (cavasAvg.width > window.innerWidth) {
+  cavasAvg.width = window.innerWidth;
+  cavasAvg.height = window.innerWidth * 0.5625;
 }
 
-let graph2 = (win) => {
-  let date2 = [];
+let graphAvg = (win) => {
+  let dateAvg = [];
   let avgVn = [];
   let avgRv = [];
 
-  for (let i = 0; i < received_data2.length; i++) {
-    date2.push(received_data2[i]['fields']['date_added']);
-    avgVn.push(parseFloat(received_data2[i]['fields']['avg_vn']));
-    avgRv.push(parseFloat(received_data2[i]['fields']['avg_rv']));
+  for (let i = 0; i < receivedDataAvg.length; i++) {
+    dateAvg.push(receivedDataAvg[i]['fields']['date_added']);
+    avgVn.push(parseFloat(receivedDataAvg[i]['fields']['avg_vn']));
+    avgRv.push(parseFloat(receivedDataAvg[i]['fields']['avg_rv']));
   };
 
-  date2 = date2.slice(win);
+  dateAvg = dateAvg.slice(win);
 
   let average = (list) => {
     return list.reduce((accum, curr) => accum + curr) / list.length;
@@ -252,13 +252,13 @@ let graph2 = (win) => {
     return result;
   };
 
-  new Chart(document.getElementById("line-chart2"), {
+  new Chart(document.getElementById("line-chart-avg"), {
     type: 'line',
     data: {
-      labels: date2,
+      labels: dateAvg,
       datasets: [{ 
           data: rollAvg(avgVn),
-          label: "Среднее количество вакансий без опыта за день",
+          label: "Средний процент вакансий без опыта за день",
           borderColor: "#00af00",
           fill: false,
           pointRadius: 0,
@@ -312,13 +312,13 @@ let win = 7;
 let radWin = document.getElementsByName('win');
 
 graph(win);
-graph2(win);
+graphAvg(win);
 
 for(let i = 0; i < radWin.length; i++){
   radWin[i].addEventListener("change", function(){
     win = parseInt(radWin[i].value);
     graph(win);
-    graph2(win);
+    graphAvg(win);
   })
 }
 
