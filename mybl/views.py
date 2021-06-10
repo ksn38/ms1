@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from mybl.models import Bpost, Comment, Lang, Ticker, Lang_avg
+from mybl.models import Bpost, Comment, Lang, Ticker, Lang_avg, Lang_graphs
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from mybl.forms import BpostForm, CommentForm

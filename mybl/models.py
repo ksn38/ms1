@@ -33,9 +33,15 @@ class Lang(models.Model):
     
     def __str__(self):
         return self.name
+    
+    def __int__(self):
         return self.val
         return self.val_noexp
+    
+    def __float__(self):
         return self.res_vac
+
+    def __str__(self):
         return self.date_added
 
         
@@ -44,9 +50,31 @@ class Lang_avg(models.Model):
     avg_rv = models.FloatField()
     date_added = models.DateField(auto_now_add=True)
     
-    def __str__(self):
+    def __float__(self):
         return self.avg_vn
         return self.avg_rv
+        return self.date_added
+    
+    def __str__(self):
+        return self.date_added
+        
+
+class Lang_graphs(models.Model):
+    Java = models.FloatField()
+    Javascript = models.FloatField()
+    php = models.FloatField()
+    Python = models.FloatField()
+    cpp = models.FloatField()
+    date_added = models.DateField(auto_now_add=True)
+    
+    def __float__(self):
+        return self.Java
+        return self.Javascript
+        return self.php
+        return self.Python
+        return self.cpp
+        
+    def __str__(self):
         return self.date_added
 
       
@@ -60,9 +88,7 @@ class Ticker(models.Model):
     wti = models.FloatField()
     gold = models.FloatField()
     
-    
-    def __str__(self):
-        return self.date_added
+    def __float__(self):
         return self.gspc
         return self.vix
         return self.tnx
@@ -70,5 +96,8 @@ class Ticker(models.Model):
         return self.rut
         return self.wti
         return self.gold
+    
+    def __str__(self):
+        return self.date_added
 	
 
