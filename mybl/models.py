@@ -33,6 +33,7 @@ class Lang(models.Model):
     
     def __str__(self):
         return self.name
+        return self.date_added
     
     def __int__(self):
         return self.val
@@ -40,9 +41,6 @@ class Lang(models.Model):
     
     def __float__(self):
         return self.res_vac
-
-    def __str__(self):
-        return self.date_added
 
         
 class Lang_avg(models.Model):
@@ -60,22 +58,16 @@ class Lang_avg(models.Model):
         
 
 class Lang_graphs(models.Model):
-    Java = models.FloatField()
-    Javascript = models.FloatField()
-    php = models.FloatField()
-    Python = models.FloatField()
-    cpp = models.FloatField()
+    name = models.CharField(max_length=50)
+    res_vac = models.FloatField()
     date_added = models.DateField(auto_now_add=True)
     
-    def __float__(self):
-        return self.Java
-        return self.Javascript
-        return self.php
-        return self.Python
-        return self.cpp
-        
     def __str__(self):
+        return self.name
         return self.date_added
+    
+    def __float__(self):
+        return self.res_vac
 
       
 class Ticker(models.Model):
