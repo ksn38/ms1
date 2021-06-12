@@ -228,15 +228,9 @@ if (cavasAvg.width > window.innerWidth) {
 }
 
 let graphAvg = (win) => {
-  let dateAvg = [];
-  let avgVn = [];
-  let avgRv = [];
-
-  for (let i = 0; i < receivedDataAvg.length; i++) {
-    dateAvg.push(receivedDataAvg[i]['fields']['date_added']);
-    avgVn.push(parseFloat(receivedDataAvg[i]['fields']['avg_vn']));
-    avgRv.push(parseFloat(receivedDataAvg[i]['fields']['avg_rv']));
-  };
+  let dateAvg = Object.keys(receivedDataAvg).map((key) => receivedDataAvg[key]['fields']['date_added']);
+  let avgVn = Object.keys(receivedDataAvg).map((key) => parseFloat(receivedDataAvg[key]['fields']['avg_vn']));
+  let avgRv = Object.keys(receivedDataAvg).map((key) => receivedDataAvg[key]['fields']['avg_rv']);
 
   dateAvg = dateAvg.slice(win);
 
