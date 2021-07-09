@@ -181,7 +181,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
 };
 
 
-let createCharts = (offset, level) => {
+let createCharts = function* (offset, level) {
   //console.log(dateOffset[offset]);
   if (lengthRD - item - win - offset < 0) {
     offset = 0;
@@ -206,52 +206,52 @@ let createCharts = (offset, level) => {
     }
   );
 
-  lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1);
-  lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart2);
-  lineChart(wti, tnx, 'WTI', 'TR10', '#000000', "#c000ff", chart3);
-  lineChart(gold, tnx, 'Gold', 'TR10', '#ffd800', "#c000ff", chart4);
-  lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart5);
-  lineChart(gold, gspc, 'Gold', 'S&P500', '#ffd800', "#0000ff", chart6);
-  lineChart(wtiGold, tnx, 'Wti/Gold', 'TR10', '#a4a260', "#c000ff", chart7);
-  lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart8);
-  lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart9);
-  lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart10);
+  yield (lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1),
+  lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart2),
+  lineChart(wti, tnx, 'WTI', 'TR10', '#000000', "#c000ff", chart3),
+  lineChart(gold, tnx, 'Gold', 'TR10', '#ffd800', "#c000ff", chart4),
+  lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart5),
+  lineChart(gold, gspc, 'Gold', 'S&P500', '#ffd800', "#0000ff", chart6),
+  lineChart(wtiGold, tnx, 'Wti/Gold', 'TR10', '#a4a260', "#c000ff", chart7),
+  lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart8),
+  lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart9),
+  lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart10),
   
-  date = [];
-  vix = [];
-  vix2 = [];
-  tnx = [];
-  gspc = [];
-  ixic = [];
-  rut = [];
-  wti = [];
-  gold = [];
+  date = [],
+  vix = [],
+  vix2 = [],
+  tnx = [],
+  gspc = [],
+  ixic = [],
+  rut = [],
+  wti = [],
+  gold = []);
 };
 
-createCharts(offset, level); 
+createCharts(offset, level).next(); 
 
 for(let i = 0; i < radio.length; i++){
   radio[i].addEventListener("change", function(){
     item = parseInt(radio[i].value);
-    createCharts(offset, level); 
+    createCharts(offset, level).next(); 
   });
 }
 
 for(let i = 0; i < radWin.length; i++){
   radWin[i].addEventListener("change", function(){
     win = parseInt(radWin[i].value);
-    createCharts(offset, level); 
+    createCharts(offset, level).next(); 
   });
 }
 
 buttonOffset.onclick = function () {
   offset = parseInt(offsetInput.value);
-  createCharts(offset, level); 
+  createCharts(offset, level).next(); 
 }
 
 buttonLevel.onclick = function () {
   level = parseInt(levelInput.value);
-  createCharts(offset, level); 
+  createCharts(offset, level).next(); 
   //console.log(offset);
 }
 
@@ -265,8 +265,8 @@ offsetInput.oninput = function() {
 };
 
 period.onchange = () => {
-  console.log(period.step);
+  //console.log(period.step);
   item = period.value;
   period.step = Math.floor(period.value/10);
-  createCharts(offset, level); 
+  createCharts(offset, level).next(); 
 }
