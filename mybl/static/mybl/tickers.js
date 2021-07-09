@@ -1,5 +1,5 @@
 let radio = document.querySelector('form');
-let item = 50;
+let item = 250;
 let date = [];
 let vix = [];
 let tnx = [];
@@ -21,7 +21,7 @@ let chart8 = document.getElementById("line-chart8");
 let chart9 = document.getElementById("line-chart9");
 let chart10 = document.getElementById("line-chart10");
 let lengthRD = received_data.length;
-let win = 5;
+let win = 30;
 let radWin = document.getElementsByName('win');
 let tr = document.querySelectorAll('.change');
 let tri = document.querySelectorAll('.change-invert');
