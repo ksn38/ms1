@@ -4,7 +4,8 @@ let res_vacChng2020 = document.querySelectorAll('.res_vac-cndg-2020');
 let valChng2021 = document.querySelectorAll('.val-cndg-2021');
 let val_noexpChng2021 = document.querySelectorAll('.val_noexp-cndg-2021');
 let res_vacChng2021 = document.querySelectorAll('.res_vac-cndg-2021');
-
+let rateToday = document.querySelectorAll('.rate-today');
+let rateToMarch = document.querySelectorAll('.rate-to-march');
 
 let colorCol = (arr) => {
   arr = Array.from(arr);
@@ -45,9 +46,29 @@ colorCol(val_noexpChng2021);
 colorColInv(res_vacChng2021);
 
 
-let valNowNod = document.querySelectorAll('.val-now'); 
+/*let colorText = (arr) => {
+  arr = Array.from(arr);
+  let arrInt = arr.map((i) => parseInt(i.textContent));
+  let maxArr = Math.max.apply(null, arrInt);
+  let minArr = Math.min.apply(null, arrInt);
+  for (let i = 0; i < arrInt.length; i++) {
+    if (arrInt[i] > 0) {
+      arr[i].style.color = 'rgba(40, 167, 69,'  + arrInt[i]/maxArr + ')';
+    }
+    else if (arrInt[i] < 0) {
+      arr[i].style.color = 'rgba(220, 53, 69,'  + arrInt[i]/minArr + ')';
+    }
+  }
+}
+
+colorText(rateToday);
+colorText(rateToMarch);*/
+
+
+let valNowNod = document.querySelectorAll('.val-now');
 let valNoexpNowNod = document.querySelectorAll('.val_noexp-now');
 let resVacNowNod = document.querySelectorAll('.res_vac-now');
+
 
 let median = (values) => {
   values.sort((a,b) => a - b);
@@ -315,6 +336,103 @@ for(let i = 0; i < radWin.length; i++){
     graphAvg(win);
   })
 }
+
+
+/*let cavasMeanChart = document.getElementById("line-mean-rating");
+
+if (cavasMeanChart.width > window.innerWidth) {
+  cavasAvg.width = window.innerWidth;
+  cavasAvg.height = window.innerWidth * 0.5625;
+}
+
+let graphMean = (win) => {
+  let dateAvg = Object.keys(receivedDataAvg).map((key) => receivedDataAvg[key]['fields']['date_added']);
+  let meanToday = Object.keys(receivedDataMeanToday).map((key) => parseFloat(receivedDataAvg[key]['fields']['rating']));
+  let meanToMarch = Object.keys(receivedDataMeanChange).map((key) => receivedDataAvg[key]['fields']['rating']);
+
+  dateAvg = dateAvg.slice(win);
+
+  let average = (list) => {
+    return list.reduce((accum, curr) => accum + curr) / list.length;
+  };
+
+  let rollAvg = (list) => {
+    let result = [];
+    for (let i = 0; i < list.length - win; i++) {
+      result.push(average(list.slice(i, i + win - 1)));
+    };
+    return result;
+  };
+
+  new Chart(document.getElementById("line-mean-rating"), {
+    type: 'line',
+    data: {
+      labels: dateAvg,
+      datasets: [{
+          data: rollAvg(meanToday),
+          label: "Средний процент вакансий без опыта за день",
+          borderColor: "#00af00",
+          fill: false,
+          pointRadius: 0,
+          yAxisID: 'xLabel',
+        }, {
+          data: rollAvg(meanToMarch),
+          label: "Среднее соотношение резюме к вакансиям за день",
+          borderColor: "#434343",
+          fill: false,
+          pointRadius: 0,
+          yAxisID: 'yLabel',
+        }
+      ]
+    },
+    options: {
+      animation: {
+          duration: 0
+      },
+      events: [],
+      title: {
+        display: true,
+        text: ''
+      },
+      title: {
+          display: true,
+      },
+      scales: {
+        yAxes: [{
+          id: 'xLabel',
+          type: 'linear',
+          position: 'left',
+          scaleLabel: {
+              display: true,
+              labelString: ""
+            }
+        }, {
+          id: 'yLabel',
+          type: 'linear',
+          position: 'right',
+          scaleLabel: {
+              display: true,
+              labelString: ""
+            }
+          }]
+       }
+    }
+  });
+};
+
+//let win = 7;
+//let radWin = document.getElementsByName('win');
+
+//graph(win);
+graphMean(win);
+
+for(let i = 0; i < radWin.length; i++){
+  radWin[i].addEventListener("change", function(){
+    win = parseInt(radWin[i].value);
+    graph(win);
+    graphAvg(win);
+  })
+}*/
 
 
 

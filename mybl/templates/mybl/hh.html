@@ -29,7 +29,7 @@
         <td class='text-right res_vac-now'>
           {{ lang.res_vac }}
         </td>
-        <td class='text-right text-secondary bg-dark'>
+        <td class='text-right rate-today text-secondary bg-dark'>
           {{ lang.rate }}
         </td>
       </tr>
@@ -95,7 +95,7 @@
         <td class='res_vac-cndg-2021 text-right'>
           {{ chart.cnd_rv }}
         </td>
-        <td class='text-right text-secondary bg-dark'>
+        <td class='text-right rate-to-march text-secondary bg-dark'>
           {{ chart.rate }}
         </td>
       </tr>
@@ -111,10 +111,13 @@
     </div>
     <div><canvas id="line-chart" width="800" height="450"></canvas></div>
     <div><canvas id="line-chart-avg" width="800" height="450"></canvas></div>
+    <!-- div><canvas id="line-mean-rating" width="800" height="450"></canvas></div -->
   </div>
   <script type="text/javascript">
     var receivedData  = {{ graphs|safe }};
     var receivedDataAvg  = {{ graphs_avg|safe }};
+    //var receivedDataMeanToday  = {{ graphs_mean_today|safe }};
+    //var receivedDataMeanChange  = {{ graphs_mean_change|safe }};
     //console.log(receivedData);
   </script>
 <script src="{% static 'mybl/hh.js' %}"></script>
