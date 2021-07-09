@@ -33,6 +33,7 @@ let offset = 0;
 let dateOffset = [];
 let dateOffsetOutput = document.getElementById('dateOffsetOutput');
 dateOffsetOutput.innerHTML = received_data[lengthRD - 1]['fields']['date_added'];
+let period = document.getElementById("period");
 
 
 for (let i = lengthRD - 1; i >= 0; i--) {
@@ -263,3 +264,9 @@ offsetInput.oninput = function() {
   }
 };
 
+period.onchange = () => {
+  console.log(period.step);
+  item = period.value;
+  period.step = Math.floor(period.value/10);
+  createCharts(offset, level); 
+}
