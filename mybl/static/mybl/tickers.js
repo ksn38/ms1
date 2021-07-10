@@ -87,7 +87,7 @@ let cor = (list1, list2) => {
   return (sum(cov(list1, avgList1, list2, avgList2)))/Math.sqrt(dif2(list1, avgList1)*dif2(list2, avgList2));
 };
 
-let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
+let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item) {
   let rcor = [];
   for (let i = 0; i < item; i++) {
       rcor.push(cor(x.slice(i, i + win), y.slice(i, i + win)));
@@ -181,7 +181,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart) {
 };
 
 
-let createCharts = function* (offset, level) {
+let createCharts = function* (offset, level, win, item) {
   //console.log(dateOffset[offset]);
   if (lengthRD - item - win - offset < 0) {
     offset = 0;
@@ -206,16 +206,16 @@ let createCharts = function* (offset, level) {
     }
   );
 
-  yield (lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1),
-  lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart2),
-  lineChart(wti, tnx, 'WTI', 'TR10', '#000000', "#c000ff", chart3),
-  lineChart(gold, tnx, 'Gold', 'TR10', '#ffd800', "#c000ff", chart4),
-  lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart5),
-  lineChart(gold, gspc, 'Gold', 'S&P500', '#ffd800', "#0000ff", chart6),
-  lineChart(wtiGold, tnx, 'Wti/Gold', 'TR10', '#a4a260', "#c000ff", chart7),
-  lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart8),
-  lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart9),
-  lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart10),
+  yield (lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1, win, item),
+  lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart2, win, item),
+  lineChart(wti, tnx, 'WTI', 'TR10', '#000000', "#c000ff", chart3, win, item),
+  lineChart(gold, tnx, 'Gold', 'TR10', '#ffd800', "#c000ff", chart4, win, item),
+  lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart5, win, item),
+  lineChart(gold, gspc, 'Gold', 'S&P500', '#ffd800', "#0000ff", chart6, win, item),
+  lineChart(wtiGold, tnx, 'Wti/Gold', 'TR10', '#a4a260', "#c000ff", chart7, win, item),
+  lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart8, win, item),
+  lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart9, win, item),
+  lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart10, win, item),
   
   date = [],
   vix = [],
@@ -228,30 +228,30 @@ let createCharts = function* (offset, level) {
   gold = []);
 };
 
-createCharts(offset, level).next(); 
+createCharts(offset, level, win, item).next(); 
 
 for(let i = 0; i < radio.length; i++){
   radio[i].addEventListener("change", function(){
     item = parseInt(radio[i].value);
-    createCharts(offset, level).next(); 
+    createCharts(offset, level, win, item).next(); 
   });
 }
 
 for(let i = 0; i < radWin.length; i++){
   radWin[i].addEventListener("change", function(){
     win = parseInt(radWin[i].value);
-    createCharts(offset, level).next(); 
+    createCharts(offset, level, win, item).next(); 
   });
 }
 
 buttonOffset.onclick = function () {
   offset = parseInt(offsetInput.value);
-  createCharts(offset, level).next(); 
+  createCharts(offset, level, win, item).next(); 
 }
 
 buttonLevel.onclick = function () {
   level = parseInt(levelInput.value);
-  createCharts(offset, level).next(); 
+  createCharts(offset, level, win, item).next(); 
   //console.log(offset);
 }
 
@@ -265,8 +265,8 @@ offsetInput.oninput = function() {
 };
 
 period.onchange = () => {
-  //console.log(period.step);
   item = period.value;
-  period.step = Math.floor(period.value/10);
-  createCharts(offset, level).next(); 
+  period.step = Math.ceil(period.value/10);
+  console.log(Math.ceil(period.value/10));
+  createCharts(offset, level, win, item).next(); 
 }
