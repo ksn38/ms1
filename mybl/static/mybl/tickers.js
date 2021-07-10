@@ -33,7 +33,7 @@ let offset = 0;
 let dateOffset = [];
 let dateOffsetOutput = document.getElementById('dateOffsetOutput');
 dateOffsetOutput.innerHTML = received_data[lengthRD - 1]['fields']['date_added'];
-let period = document.getElementById("period");
+let periodNum = document.getElementById("periodNum");
 
 
 for (let i = lengthRD - 1; i >= 0; i--) {
@@ -234,6 +234,7 @@ for(let i = 0; i < radio.length; i++){
   radio[i].addEventListener("change", function(){
     item = parseInt(radio[i].value);
     createCharts(offset, level, win, item).next(); 
+    periodNum.value = item;
   });
 }
 
@@ -264,9 +265,9 @@ offsetInput.oninput = function() {
   }
 };
 
-period.onchange = () => {
-  item = period.value;
-  period.step = Math.ceil(period.value/10);
-  console.log(Math.ceil(period.value/10));
+periodNum.onchange = () => {
+  item = periodNum.value;
+  //periodNum.step = Math.floor(periodNum.value/10);
+  //console.log(Math.ceil(period.value/10));
   createCharts(offset, level, win, item).next(); 
 }
