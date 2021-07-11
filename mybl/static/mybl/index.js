@@ -56,8 +56,7 @@ let dict = function (dif) {
   return [day, dateLast];
 };
 
-
-button.onclick = function () {
+button.onclick = async function () {
   let namesHigh = document.querySelectorAll('.name-high');
   let namesLow = document.querySelectorAll('.name-low');
   let changesHigh = document.querySelectorAll('.change-high');
@@ -96,9 +95,11 @@ button.onclick = function () {
     days.value = 3;
   };
   
-  let dict1 = dict(1)[0];
-  let dict2 = dict(days.value)[0];
-  dateDict2.textContent = `(от ${dict(days.value)[1]})`;
+  let dict1 = await dict(1)[0];
+  //console.log(dict1);
+  let dict2 = await dict(days.value)[0];
+  //console.log(dict2);
+  dateDict2.textContent = await `(от ${dict(days.value)[1]})`;
   //console.log(dateDict2);
   let listKeys = [...dict1.keys()];
   let outMap = new Map();

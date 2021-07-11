@@ -68,28 +68,27 @@
     </table>
   </div>
   
-  <div class='flex-wrap mt-3'>
-    <div class='d-flex justify-content-around mb-2'>
-      <input type="number" id="periodNum" name="periodNum" value="250" min="2" max="4800" step='1'>
-    <!--label for="volume">period</label-->
-    </div>
-    <div class='radWin d-flex justify-content-around'>
-      <div>
+  <div class='flex-wrap'>
+    <div class='radWin d-flex justify-content-center m-1'>
+      <div class='border border-primary rounded p-1'>
         <label>Window of rolling correlation: <input type='radio' id='w5' name='win' value="5" checked="checked">5</label>
         <label><input type='radio' id='w15' name='win' value="15">15</label>
         <label><input type='radio' id='w30' name='win' value="30" checked="checked">30</label>
         <label><input type='radio' id='w50' name='win' value="50">50</label>
         <label><input type='radio' id='w100' name='win' value="100">100</label>
         <label><input type='radio' id='w200' name='win' value="200">200</label>
+        <input type="number" id="correlation-input" value='30' min="5" max='200' class='ml-2'>
       </div>
     </div>
     <div class='d-flex justify-content-center flex-wrap align-items-center'>
-      
-      <input type="number" id="offset-input" value='0' min="0">
-      <input type="submit" class="button" id="offset" value="offset to">
-      <div  class='m-3' id="dateOffsetOutput"></div>
-      <input type="number" id="level-input" value='30' min="0" max='100'>
-      <input type="submit" class="button" id="level" value="level of VIX">
+      <span class='border border-primary rounded p-1'>Range
+      <input type="number" id="period-input" name="periodNum" value="250" min="2" max="4800" step='1'></span>
+      <span class='ml-1 border border-primary rounded p-1' class='mr-2'>Offset
+      <input type="number" id="offset-input" value='0' min="0" max="5000">
+      <span class='ml-1'>to </span>
+      <span id="dateOffsetOutput"></span></span>
+      <span class='ml-1 border border-primary rounded p-1'>Level of VIX
+      <input type="number" id="level-input" value='30' min="0" max='100'></span>
     </div>
     <div class='d-flex'>
       <div class='d-flex'>

@@ -26,14 +26,13 @@ let radWin = document.getElementsByName('win');
 let tr = document.querySelectorAll('.change');
 let tri = document.querySelectorAll('.change-invert');
 let offsetInput = document.getElementById('offset-input');
-let buttonOffset = document.getElementById('offset');
 let levelInput = document.getElementById('level-input');
-let buttonLevel = document.getElementById('level');
+let correlationInput = document.getElementById('correlation-input');
 let offset = 0;
 let dateOffset = [];
 let dateOffsetOutput = document.getElementById('dateOffsetOutput');
 dateOffsetOutput.innerHTML = received_data[lengthRD - 1]['fields']['date_added'];
-let periodNum = document.getElementById("periodNum");
+let periodInput = document.getElementById("period-input");
 
 
 for (let i = lengthRD - 1; i >= 0; i--) {
@@ -98,7 +97,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
     radPoint = 0;
     bordWidth = 2;
   };
-  new Chart(chart, {
+  return new Chart(chart, {
     type: 'line',
     data: {
       labels: date.slice(win),
@@ -234,7 +233,7 @@ for(let i = 0; i < radio.length; i++){
   radio[i].addEventListener("change", function(){
     item = parseInt(radio[i].value);
     createCharts(offset, level, win, item).next(); 
-    periodNum.value = item;
+    periodInput.value = item;
   });
 }
 
@@ -242,15 +241,21 @@ for(let i = 0; i < radWin.length; i++){
   radWin[i].addEventListener("change", function(){
     win = parseInt(radWin[i].value);
     createCharts(offset, level, win, item).next(); 
+    correlationInput.value = win;
   });
 }
 
-buttonOffset.onclick = function () {
+correlationInput.onchange = function () {
+  win = parseInt(correlationInput.value);
+  createCharts(offset, level, win, item).next(); 
+}
+
+offsetInput.onchange = function () {
   offset = parseInt(offsetInput.value);
   createCharts(offset, level, win, item).next(); 
 }
 
-buttonLevel.onclick = function () {
+levelInput.onchange = function () {
   level = parseInt(levelInput.value);
   createCharts(offset, level, win, item).next(); 
   //console.log(offset);
@@ -265,9 +270,9 @@ offsetInput.oninput = function() {
   }
 };
 
-periodNum.onchange = () => {
-  item = periodNum.value;
-  //periodNum.step = Math.floor(periodNum.value/10);
+periodInput.onchange = () => {
+  item = periodInput.value;
+  //periodInput.step = Math.floor(periodInput.value/10);
   //console.log(Math.ceil(period.value/10));
   createCharts(offset, level, win, item).next(); 
 }
