@@ -25,7 +25,7 @@
           <td nowrap><input type='radio' id='r1000' name='period' value="1000">1000</td>
         </tr>
         <tr>
-          <td nowrap><input type='radio' id='r5000' name='period' value="4800">5000</td>
+          <td nowrap><input type='radio' id='r5000' name='period' value="4500">5000</td>
         </tr>
       </form>
     </table>
@@ -72,19 +72,18 @@
     <div class='radWin d-flex justify-content-center m-1'>
       <div class='border border-primary rounded p-1'>
         <label>Window of rolling correlation: <input type='radio' id='w5' name='win' value="5" checked="checked">5</label>
-        <label><input type='radio' id='w15' name='win' value="15">15</label>
         <label><input type='radio' id='w30' name='win' value="30" checked="checked">30</label>
-        <label><input type='radio' id='w50' name='win' value="50">50</label>
         <label><input type='radio' id='w100' name='win' value="100">100</label>
         <label><input type='radio' id='w200' name='win' value="200">200</label>
-        <input type="number" id="correlation-input" value='30' min="5" max='200' class='ml-2'>
+                <label><input type='radio' id='w50' name='win' value="500">500</label>
+        <input type="number" id="correlation-input" value='30' min="5" max='500' class='ml-2'>
       </div>
     </div>
     <div class='d-flex justify-content-center flex-wrap align-items-center'>
       <span class='border border-primary rounded p-1'>Range
-      <input type="number" id="period-input" name="periodNum" value="250" min="2" max="4800" step='1'></span>
+      <input type="number" id="period-input" name="periodNum" value="250" min="2" max="4500" step='1'></span>
       <span class='ml-1 border border-primary rounded p-1' class='mr-2'>Offset
-      <input type="number" id="offset-input" value='0' min="0" max="5000">
+      <input type="number" id="offset-input" value='0' min="0" max="4500">
       <span class='ml-1'>to </span>
       <span id="dateOffsetOutput"></span></span>
       <span class='ml-1 border border-primary rounded p-1'>Level of VIX

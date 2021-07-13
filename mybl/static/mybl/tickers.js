@@ -21,6 +21,7 @@ let chart8 = document.getElementById("line-chart8");
 let chart9 = document.getElementById("line-chart9");
 let chart10 = document.getElementById("line-chart10");
 let lengthRD = received_data.length;
+//console.log(lengthRD);
 let win = 30;
 let radWin = document.getElementsByName('win');
 let tr = document.querySelectorAll('.change');
