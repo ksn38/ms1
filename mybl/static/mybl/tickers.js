@@ -149,18 +149,29 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
         text: ''
       },
       scales: {
+        xAxes: [{
+          gridLines: {
+          drawOnChartArea: false
+          }
+        }],
         yAxes: [{
           id: xLabel,
           type: 'linear',
           position: 'left',
+          gridLines: {
+            drawOnChartArea: false
+          }
         }, {
           id: yLabel,
           type: 'linear',
           position: 'right',
-          
+          gridLines: {
+            drawOnChartArea: false
+          }          
         }, {
           id: 'Rolling correlation',
           type: 'linear',
+          display: false,
           position: 'right',
           ticks : {
             max : 1,    
@@ -169,6 +180,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
         }, {
           id: 'VIX2',
           type: 'linear',
+          display: false,
           position: 'left',
           ticks : {
             max : 100,    

@@ -277,7 +277,7 @@ let graphAvg = (win) => {
           borderColor: "#00af00",
           fill: false,
           pointRadius: 0,
-          yAxisID: 'xLabel',
+          yAxisID: 'yLabel',
         }, { 
           data: rollAvg(avgRv),
           label: "Среднее соотношение резюме к вакансиям за день",
@@ -302,17 +302,9 @@ let graphAvg = (win) => {
       },
       scales: {
         yAxes: [{
-          id: 'xLabel',
-          type: 'linear',
-          position: 'left',
-          scaleLabel: {
-              display: true,
-              labelString: ""
-            }
-        }, {
           id: 'yLabel',
           type: 'linear',
-          position: 'right',
+          position: 'left',
           scaleLabel: {
               display: true,
               labelString: ""
