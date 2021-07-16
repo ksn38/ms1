@@ -89,15 +89,19 @@ let cor = (list1, list2) => {
 
 let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item) {
   let rcor = [];
+  
   for (let i = 0; i < item; i++) {
       rcor.push(cor(x.slice(i, i + win), y.slice(i, i + win)));
   };
+  
   let radPoint = 3;
   let bordWidth = 3;
+  
   if (item > 50) {
     radPoint = 0;
     bordWidth = 2;
   };
+  
   return new Chart(chart, {
     type: 'line',
     data: {
