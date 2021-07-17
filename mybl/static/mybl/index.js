@@ -158,7 +158,7 @@ let curRe = /[A-Z]\w+/
 let usdXdr = new Set(['USD', 'XDR']);
 let EM = new Set(['TRY', 'ZAR', 'UAH', 'BRL', 'KZT', 'INR']);
 let com = new Set(['NOK', 'ZAR', 'AUD', 'CAD', 'KZT', 'BRL']);
-let asia = new Set(['CNY', 'JPY', 'KRW', 'INR', 'KZT', 'SGD']);
+let mid = new Set(['CNY', 'KRW', 'PLN']);
 
 for (let i = 0; i < value_plus.length; i++) {
   value_plus[i].style.backgroundColor = 'rgba(255, 255, 255,'  + (1 - parseFloat(value_plus[i].textContent)/parseFloat(value_plus[0].textContent)) + ')';
@@ -168,8 +168,8 @@ for (let i = 0; i < value_plus.length; i++) {
     currency_plus[i].classList.add('text-white')}
   if (com.has(curRe.exec(currency_plus[i].textContent)[0])) {
     currency_plus[i].classList.add('font-weight-bold')}
-  if (asia.has(curRe.exec(currency_plus[i].textContent)[0])) {
-    currency_plus[i].classList.add('font-italic')}
+  if (mid.has(curRe.exec(currency_plus[i].textContent)[0])) {
+    currency_plus[i].classList.add('text-secondary')}
 };
 
 for (let i = 0; i < value_minus.length; i++) {
@@ -180,8 +180,8 @@ for (let i = 0; i < value_minus.length; i++) {
     currency_minus[i].classList.add('text-white')}
   if (com.has(curRe.exec(currency_minus[i].textContent)[0])) {
     currency_minus[i].classList.add('font-weight-bold')}
-  if (asia.has(curRe.exec(currency_minus[i].textContent)[0])) {
-    currency_minus[i].classList.add('font-italic')}
+  if (mid.has(curRe.exec(currency_minus[i].textContent)[0])) {
+    currency_minus[i].classList.add('text-secondary')}
 };
 
 
