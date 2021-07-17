@@ -28,13 +28,14 @@ def ticks(*args):
             
         response = requests.get(url, headers=headers).text
         parsed_html = bs(response, 'lxml')
-        t = parsed_html.find('span', {'data-reactid': '32'}).text.replace(',', '')
+        t = parsed_html.find('span', {'class': 'Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)'}).text.replace(',', '')
+        print(t)
         t_dict[i] = float(t)
 
     return t_dict
     
 date_today = date.today().strftime("%Y-%m-%d")
-date7 = (date.today() - timedelta(7)).strftime("%Y-%m-%d")
+date7 = (date.today() - timedelta(70)).strftime("%Y-%m-%d")
 tickers = Ticker.objects.filter(Q(date_added = date_today))
 
 if len(tickers) == 0:
