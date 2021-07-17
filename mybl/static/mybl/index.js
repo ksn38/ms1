@@ -156,17 +156,32 @@ let value_plus = document.querySelectorAll('.value_plus');
 let value_minus = document.querySelectorAll('.value_minus');
 let curRe = /[A-Z]\w+/
 let usdXdr = new Set(['USD', 'XDR']);
+let EM = new Set(['TRY', 'ZAR', 'UAH', 'BRL', 'KZT', 'INR']);
+let com = new Set(['NOK', 'ZAR', 'AUD', 'CAD', 'KZT', 'BRL']);
+let asia = new Set(['CNY', 'JPY', 'KRW', 'INR', 'KZT', 'SGD']);
 
 for (let i = 0; i < value_plus.length; i++) {
   value_plus[i].style.backgroundColor = 'rgba(255, 255, 255,'  + (1 - parseFloat(value_plus[i].textContent)/parseFloat(value_plus[0].textContent)) + ')';
   if (usdXdr.has(curRe.exec(currency_plus[i].textContent)[0])) {
     currency_plus[i].classList.add('bg-primary')}
+  if (EM.has(curRe.exec(currency_plus[i].textContent)[0])) {
+    currency_plus[i].classList.add('text-white')}
+  if (com.has(curRe.exec(currency_plus[i].textContent)[0])) {
+    currency_plus[i].classList.add('font-weight-bold')}
+  if (asia.has(curRe.exec(currency_plus[i].textContent)[0])) {
+    currency_plus[i].classList.add('font-italic')}
 };
 
 for (let i = 0; i < value_minus.length; i++) {
   value_minus[i].style.backgroundColor = 'rgba(255, 255, 255,'  + (1 - parseFloat(value_minus[i].textContent)/parseFloat(value_minus[0].textContent)) + ')';
   if (usdXdr.has(curRe.exec(currency_minus[i].textContent)[0])) {
     currency_minus[i].classList.add('bg-primary')}
+  if (EM.has(curRe.exec(currency_minus[i].textContent)[0])) {
+    currency_minus[i].classList.add('text-white')}
+  if (com.has(curRe.exec(currency_minus[i].textContent)[0])) {
+    currency_minus[i].classList.add('font-weight-bold')}
+  if (asia.has(curRe.exec(currency_minus[i].textContent)[0])) {
+    currency_minus[i].classList.add('font-italic')}
 };
 
 
