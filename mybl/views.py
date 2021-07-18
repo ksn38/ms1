@@ -37,8 +37,8 @@ def index(request):
 
     today = date.today().weekday()
     delta0 = 1
-    delta1 = 500
-    delta2 = 2000
+    delta1 = 100
+    delta2 = 1000
     delta3 = 4000
 
     if today == 6:
