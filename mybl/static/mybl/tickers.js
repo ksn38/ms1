@@ -293,3 +293,5 @@ periodInput.onchange = () => {
   //console.log(Math.ceil(period.value/10));
   createCharts(offset, level, win, item).next(); 
 }
+
+

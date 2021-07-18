@@ -69,7 +69,7 @@
   </div>
   
   <div class='flex-wrap'>
-    <div class='d-flex justify-content-center flex-wrap align-items-center mt-1'>
+    <!--div class='d-flex justify-content-center flex-wrap align-items-center mt-1'>
       <span class='border border-primary rounded p-1'>Range
       <input type="number" id="period-input" name="periodNum" value="250" min="2" max="4500" step='1' size='3'></span>
       <span class='ml-1 border border-primary rounded p-1' class='mr-2'>Offset
@@ -89,7 +89,7 @@
         <label><input type='radio' id='w500' name='win' value="500">2 years</label>
         <input type="number" id="correlation-input" value='20' min="5" max='500' class='ml-2' size='3'>
       </div>
-    </div>
+    </div-->
     <div class='d-flex'>
       <div class='d-flex'>
         <canvas id="line-chart" width="800" height="450"></canvas>
@@ -128,6 +128,33 @@
       </div>
       <div class='d-flex'>
         <canvas id="line-chart10" width="800" height="450"></canvas>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center fixed-bottom">
+      <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" style='max-width: 1150px; flex-basis: 1150px;'>
+        <div class="toast-body">
+            <div class='radWin d-flex justify-content-center'>
+              <div class='d-flex justify-content-center flex-nowrap align-items-center'>
+              <span class='border border-primary rounded p-1'>Range
+              <input type="number" id="period-input" name="periodNum" value="250" min="2" max="4500" step='1' size='3'></span>
+              <span class='ml-1 border border-primary rounded p-1' class='mr-2'>Offset 
+              <input type="number" id="offset-input" value='0' min="0" max="4500" size='3'>
+              <span> to </span>
+              <span id="dateOffsetOutput"></span></span>
+              <span class='mx-1 border border-primary rounded p-1'>Level of VIX
+              <input type="number" id="level-input" value='30' min="0" max='100' size='3'></span>
+            </div>
+            <div class='border border-primary rounded p-1'>
+              <label>Window of rolling correlation: <input type='radio' id='w5' name='win' value="5">week</label>
+              <label><input type='radio' id='w20' name='win' value="20" checked="checked">month</label>
+              <label><input type='radio' id='w60' name='win' value="60">quarter</label>
+              <label><input type='radio' id='w125' name='win' value="125">half-year</label>
+              <label><input type='radio' id='w250' name='win' value="250">year</label>
+              <label><input type='radio' id='w500' name='win' value="500">2 years</label>
+              <input type="number" id="correlation-input" value='20' min="5" max='500' class='ml-2' size='3'>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <script type="text/javascript">
