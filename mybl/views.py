@@ -36,18 +36,18 @@ def index(request):
         return dict_curr, date_delta
 
     today = date.today().weekday()
-    delta0 = 1
+    delta = 1
     delta1 = 100
     delta2 = 1000
     delta3 = 4000
 
     if today == 6:
-        delta0 = 2
+        delta = 2
     elif today == 0:
-        delta0 = 3
+        delta = 3
     
     if(request.GET.get('mybtn')):
-        delta0 = (int(request.GET.get('mytextbox')))
+        delta = (int(request.GET.get('mytextbox')))
         delta1 = (int(request.GET.get('mytextbox1')))
         delta2 = (int(request.GET.get('mytextbox2')))
         delta3 = (int(request.GET.get('mytextbox3')))
@@ -68,10 +68,10 @@ def index(request):
 
         return order_dif_plus.items(), delta[1]
 
-    context = {'dif_plus': ordered_array(delta0)[0], 'date_delta': ordered_array(delta0)[1],\
-                'dif_plus1': ordered_array(delta1)[0], 'date_delta1': ordered_array(delta1)[1],\
-                'dif_plus2': ordered_array(delta2)[0], 'date_delta2': ordered_array(delta2)[1],\
-                'dif_plus3': ordered_array(delta3)[0], 'date_delta3': ordered_array(delta3)[1]}
+    context = {'dif_plus': ordered_array(delta)[0], 'date_delta': ordered_array(delta)[1], 'delta': delta,\
+                'dif_plus1': ordered_array(delta1)[0], 'date_delta1': ordered_array(delta1)[1], 'delta1': delta1,\
+                'dif_plus2': ordered_array(delta2)[0], 'date_delta2': ordered_array(delta2)[1], 'delta2': delta2,\
+                'dif_plus3': ordered_array(delta3)[0], 'date_delta3': ordered_array(delta3)[1], 'delta3': delta3}
     return render(request, 'mybl/index.html', context)
 
 def blog(request):
@@ -224,8 +224,8 @@ def hh(request):
 
 def tickers(request):
     context = {'tickers': tickers}
-    tickers1050 = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 5000")
+    tickers5000 = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 5000")
     context['chart_tickers'] = Ticker.objects.raw(chart_tickers)#"select * from chart_tickers")
-    context['tickers1050'] = serializers.serialize('json', tickers1050)
+    context['tickers5000'] = serializers.serialize('json', tickers5000)
             
     return render(request, 'mybl/tickers.html', context)

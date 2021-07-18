@@ -156,7 +156,7 @@ let valuePlus1 = document.querySelectorAll('.value-plus1');
 let valuePlus2 = document.querySelectorAll('.value-plus2');
 let valuePlus3 = document.querySelectorAll('.value-plus3');
 let curRe = /[A-Z]\w+/
-let usdXdr = new Set(['USD', 'XDR']);
+let usdXdr = new Set(['USD', 'XDR', 'EUR']);
 let EM = new Set(['TRY', 'ZAR', 'UAH', 'BRL', 'KZT', 'INR']);
 let com = new Set(['NOK', 'ZAR', 'AUD', 'CAD', 'KZT', 'BRL']);
 let mid = new Set(['CNY', 'KRW', 'PLN']);
@@ -186,8 +186,18 @@ for (let i = 0; i < currencyPlus.length; i++) {
     currencyPlus[i].classList.add('text-info');
     currencyPlus[i].classList.add('font-weight-bold')}
   if (mid.has(curRe.exec(currencyPlus[i].textContent)[0])) {
-    currencyPlus[i].classList.add('bg-secondary')}
+    currencyPlus[i].classList.add('bg-secondary');
+    currencyPlus[i].classList.add('text-warning')}
 };
 
+
+let inputDelta = document.getElementById('mytextbox');
+let inputDelta1 = document.getElementById('mytextbox1');
+let inputDelta2 = document.getElementById('mytextbox2');
+let inputDelta3 = document.getElementById('mytextbox3');
+inputDelta.value = delta;
+inputDelta1.value = delta1;
+inputDelta2.value = delta2;
+inputDelta3.value = delta3;
 
 
