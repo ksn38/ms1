@@ -3,53 +3,85 @@
 {% block content %}
 <body>
   <div class='d-flex justify-content-around m-2 flex-wrap align-items-start'>
-    <div class='d-flex justify-center mt-2 flex-wrap' style='flex-basis: 30%;'>
-      <div class='mb-3'>
-        <small class='d-flex justify-center mt-1 text-secondary'>Изменение валюты относительно рубля<br> за период</small> 
-        <form action="#" method="get" class='mr-auto'>
-          <input type="number" value="1" name="mytextbox" size='3' min='1' id='mytextbox'>
-          <input type="submit" class="button" value="дней" name="mybtn" id='mybtn'>
-          <div>(от {{ date_delta }})</div>
-        </form>
-      </div>
+    <div class='flex-column justify-content-center mt-4'>
+      <small class='d-flex justify-content-around mt-2 text-secondary'>Изменение валют относительно рубля за периоды:</small> 
+      <form class='d-flex justify-content-center mb-3' action="#" method="get" class='ml-auto'>
+        <input type="number" value="4000" name="mytextbox3" size='3' min='1' max='20000' id='mytextbox3'>
+        <input type="number" value="2000" name="mytextbox2" size='3' min='1' max='20000' id='mytextbox2'>
+        <input type="number" value="500" name="mytextbox1" size='3' min='1' max='20000' id='mytextbox1'>
+        <input type="number" value="1" name="mytextbox" size='3' min='1' max='20000' id='mytextbox'>
+        <input type="submit" class="button" value="дней" name="mybtn" id='mybtn'>
+      </form>
       <div class='d-flex flex-nowrap'>
-        <table class='table-sm table-bordered bg-success' style='height: 0px'>
-          <tr>
-            <th class='px-2'>Валюта</th>
-            <th class='px-2'>%</th>
-          </tr>
-          {% for name, value in dif_plus %}
-            <tr>
-              <td class='currency_plus'>
-                {{ name }}
-              </td>
-              <td class='value_plus'>
-                {{ value }}
-              </td>
-            </tr>
-          {% endfor %}
-        </table>
-        <table class='table-sm table-bordered bg-danger' style='height: 0px'>
-          <tr>
-            <th class='px-2'>Валюта</th>
-            <th class='px-2'>%</th>
-          </tr>
-          {% for name, value in dif_minus %}
-            <tr>
-              <td class='currency_minus'>
-                {{ name }}
-              </td>
-              <td class='value_minus'>
-                {{ value }}
-              </td>
-            </tr>
-          {% endfor %}
-        </table>
+        <div  class='flex-column'>
+          <div>({{ date_delta3 }})</div>
+          <table class='table-sm table-bordered table-dark' style='height: 0px'>
+            {% for name, value in dif_plus3 %}
+              <tr>
+                <td class='currency-plus'>
+                  {{ name }}
+                </td>
+                <td class='value-plus3'>
+                  {{ value }}
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <div  class='flex-column'>
+          <div>({{ date_delta2 }})</div>
+          <table class='table-sm table-bordered table-dark' style='height: 0px'>
+            {% for name, value in dif_plus2 %}
+              <tr>
+                <td class='currency-plus'>
+                  {{ name }}
+                </td>
+                <td class='value-plus2'>
+                  {{ value }}
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <div  class='flex-column'>
+          <div>({{ date_delta1 }})</div>
+          <table class='table-sm table-bordered table-dark' style='height: 0px'>
+            {% for name, value in dif_plus1 %}
+              <tr>
+                <td class='currency-plus'>
+                  {{ name }}
+                </td>
+                <td class='value-plus1'>
+                  {{ value }}
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <div class='mb-3'>
+          <div class='flex-column justify-content-around'>
+            <div>({{ date_delta }})</div>
+          </div>
+          <div class='flex-column'>
+            <table class='table-sm table-bordered table-dark' style='height: 0px'>
+              {% for name, value in dif_plus %}
+                <tr>
+                  <td class='currency-plus'>
+                    {{ name }}
+                  </td>
+                  <td class='value-plus'>
+                    {{ value }}
+                  </td>
+                </tr>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
       </div>
     </div>
     
     <table class='table-sm table-dark table-bordered' id='moex'>
-      <caption style='caption-side: top' class='mb-1'>
+      <caption style='caption-side: top'>
         <span class='d-flex justify-content-start'>
           <small>Акции-лидеры и аутсайдеры Мосбиржи. <br>Разница между последней сессией и числом</small>
         </span>

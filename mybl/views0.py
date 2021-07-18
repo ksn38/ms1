@@ -35,43 +35,44 @@ def index(request):
 
         return dict_curr, date_delta
 
+    now = parser(0, now=True)
+    
     today = date.today().weekday()
-    delta0 = 1
-    delta1 = 500
-    delta2 = 2000
-    delta3 = 4000
+    delta = 1
 
     if today == 6:
-        delta0 = 2
+        delta = 2
     elif today == 0:
-        delta0 = 3
+        delta = 3
     
     if(request.GET.get('mybtn')):
-        delta0 = (int(request.GET.get('mytextbox')))
-        delta1 = (int(request.GET.get('mytextbox1')))
-        delta2 = (int(request.GET.get('mytextbox2')))
-        delta3 = (int(request.GET.get('mytextbox3')))
-  
-    def ordered_array(delta_val):
-        now = parser(0, now=True)
-        delta = parser(delta_val, now=False)
-        order_dif = {}
+        delta = (int(request.GET.get('mytextbox')))
         
-        for key in now[0].keys():
-            if key not in {'BYN', 'HUF', 'KGS', 'MDL', 'TJS', 'UZS', 'HKD', 'AZN', 'AMD', 'TMT', 'CZK', 'DKK', 'BGN', 'RON'}:
-                try:
-                    order_dif[key] = round((now[0][key] / delta[0][key] - 1) * 100, 2)
-                except KeyError:
-                    pass
-        
-        order_dif_plus = OrderedDict(sorted(order_dif.items(), key=lambda item: item[1], reverse=True))
+    delta = parser(delta, now=False)
+    order_dif = {}
 
-        return order_dif_plus.items(), delta[1]
+    for key in now[0].keys():
+        if key not in {'BYN', 'HUF', 'KGS', 'MDL', 'TJS', 'UZS', 'HKD', 'AZN', 'AMD', 'TMT', 'CZK', 'DKK', 'BGN', 'RON'}:
+            try:
+                order_dif[key] = round((now[0][key] / delta[0][key] - 1) * 100, 2)
+            except KeyError:
+                pass
+    
+    order_dif_plus = OrderedDict(sorted(order_dif.items(), key=lambda item: item[1], reverse=True))
+    dif_plus = []
 
-    context = {'dif_plus': ordered_array(delta0)[0], 'date_delta': ordered_array(delta0)[1],\
-                'dif_plus1': ordered_array(delta1)[0], 'date_delta1': ordered_array(delta1)[1],\
-                'dif_plus2': ordered_array(delta2)[0], 'date_delta2': ordered_array(delta2)[1],\
-                'dif_plus3': ordered_array(delta3)[0], 'date_delta3': ordered_array(delta3)[1]}
+    for i in order_dif_plus.items():
+        if i[1] >= 0:
+            dif_plus.append(i)
+
+    order_dif_minus = OrderedDict(sorted(order_dif.items(), key=lambda item: item[1]))
+    dif_minus = []
+
+    for i in order_dif_minus.items():
+        if i[1] < 0:
+            dif_minus.append(i)
+
+    context = {'dif_plus': dif_plus, 'dif_minus': dif_minus, 'date_delta': delta[1]}
     return render(request, 'mybl/index.html', context)
 
 def blog(request):

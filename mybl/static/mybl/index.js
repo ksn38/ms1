@@ -150,38 +150,44 @@ window.onload = function(){
 }
 
 
-let currency_plus = document.querySelectorAll('.currency_plus');
-let currency_minus = document.querySelectorAll('.currency_minus');
-let value_plus = document.querySelectorAll('.value_plus');
-let value_minus = document.querySelectorAll('.value_minus');
+let currencyPlus = document.querySelectorAll('.currency-plus');
+let valuePlus = document.querySelectorAll('.value-plus');
+let valuePlus1 = document.querySelectorAll('.value-plus1');
+let valuePlus2 = document.querySelectorAll('.value-plus2');
+let valuePlus3 = document.querySelectorAll('.value-plus3');
 let curRe = /[A-Z]\w+/
 let usdXdr = new Set(['USD', 'XDR']);
 let EM = new Set(['TRY', 'ZAR', 'UAH', 'BRL', 'KZT', 'INR']);
 let com = new Set(['NOK', 'ZAR', 'AUD', 'CAD', 'KZT', 'BRL']);
 let mid = new Set(['CNY', 'KRW', 'PLN']);
 
-for (let i = 0; i < value_plus.length; i++) {
-  value_plus[i].style.backgroundColor = 'rgba(255, 255, 255,'  + (1 - parseFloat(value_plus[i].textContent)/parseFloat(value_plus[0].textContent)) + ')';
-  if (usdXdr.has(curRe.exec(currency_plus[i].textContent)[0])) {
-    currency_plus[i].classList.add('bg-primary')}
-  if (EM.has(curRe.exec(currency_plus[i].textContent)[0])) {
-    currency_plus[i].classList.add('text-white')}
-  if (com.has(curRe.exec(currency_plus[i].textContent)[0])) {
-    currency_plus[i].classList.add('font-weight-bold')}
-  if (mid.has(curRe.exec(currency_plus[i].textContent)[0])) {
-    currency_plus[i].classList.add('text-secondary')}
+let colorVal = (values) => {
+  for (let i = 0; i < values.length; i++) {
+    let val = parseFloat(values[i].textContent);
+    if (val >= 0) {
+      values[i].style.backgroundColor = 'rgba(40, 167, 69,'  + (val/parseFloat(values[0].textContent)) + ')';
+    } else {
+      values[i].style.backgroundColor = 'rgba(220, 53, 69,'  + (val/parseFloat(values[values.length - 1].textContent)) + ')'
+    }
+  }
+}
+
+colorVal(valuePlus);
+colorVal(valuePlus1);
+colorVal(valuePlus2);
+colorVal(valuePlus3);
+
+for (let i = 0; i < currencyPlus.length; i++) {
+  if (usdXdr.has(curRe.exec(currencyPlus[i].textContent)[0])) {
+    currencyPlus[i].classList.add('bg-primary')}
+  if (EM.has(curRe.exec(currencyPlus[i].textContent)[0])) {
+    currencyPlus[i].classList.add('bg-warning');}
+  if (com.has(curRe.exec(currencyPlus[i].textContent)[0])) {
+    currencyPlus[i].classList.add('text-info');
+    currencyPlus[i].classList.add('font-weight-bold')}
+  if (mid.has(curRe.exec(currencyPlus[i].textContent)[0])) {
+    currencyPlus[i].classList.add('bg-secondary')}
 };
 
-for (let i = 0; i < value_minus.length; i++) {
-  value_minus[i].style.backgroundColor = 'rgba(255, 255, 255,'  + (1 - parseFloat(value_minus[i].textContent)/parseFloat(value_minus[0].textContent)) + ')';
-  if (usdXdr.has(curRe.exec(currency_minus[i].textContent)[0])) {
-    currency_minus[i].classList.add('bg-primary')}
-  if (EM.has(curRe.exec(currency_minus[i].textContent)[0])) {
-    currency_minus[i].classList.add('text-white')}
-  if (com.has(curRe.exec(currency_minus[i].textContent)[0])) {
-    currency_minus[i].classList.add('font-weight-bold')}
-  if (mid.has(curRe.exec(currency_minus[i].textContent)[0])) {
-    currency_minus[i].classList.add('text-secondary')}
-};
 
 
