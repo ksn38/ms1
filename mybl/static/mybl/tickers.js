@@ -136,7 +136,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
           data: vix2.slice(win),
           borderColor: '#ff0000',
           backgroundColor: '#feadad',
-          stepped: true,
+          steppedLine: 'middle',
           fill: true,
           label: 'VIX',
           yAxisID: 'VIX2',
@@ -154,7 +154,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
         display: true,
         text: ''
       },
-      scales: {
+      /*scales: {
         xAxes: {
           gridLines: {
           drawOnChartArea: false
@@ -188,6 +188,30 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
           max : 100,    
           min : 0
         }
+      }*/
+      scales: {
+        yAxes: [
+          {id: 'yLabel',
+          type: 'linear',
+          position: 'left'
+          },
+          {id: 'yLabel1',
+          type: 'linear',
+          position: 'right'
+          }, 
+          {id: 'VIX2',
+          type: 'linear',
+          display: false,
+          position: 'left',
+          ticks : {max : 100, min : 0}
+          }, 
+          {id: 'RollingCorrelation',
+          type: 'linear',
+          display: false,
+          position: 'right',
+          ticks : {max : 1, min : -1}
+          }
+        ]
       }
     }
   });
