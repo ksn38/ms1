@@ -97,7 +97,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
   let radPoint = 3;
   let bordWidth = 3;
   
-  if (item > 50) {
+  if (item > 60) {
     radPoint = 0;
     bordWidth = 2;
   };
