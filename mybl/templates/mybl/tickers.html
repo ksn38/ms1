@@ -68,7 +68,33 @@
     </table>
   </div>
   
-  <div class='flex-wrap'>
+  <div class='flex-wrap mt-2'>
+    <span class="d-flex justify-content-center">
+      <select id="data1" class='mr-1'>
+        <option value="S&P500">S&P500</option>
+        <option value="Nasdaq">Nasdaq</option>
+        <option value="Russell">Russell</option>
+        <option value="VIX">VIX</option>
+        <option value="TR10">TR10</option>
+        <option selected value="WTI">WTI</option>
+        <option value="Gold">Gold</option>
+        <option value="Wti/Gold">Wti/Gold</option>
+      </select>
+      <select id="data2" class='mr-1'>
+        <option value="S&P500">S&P500</option>
+        <option value="Nasdaq">Nasdaq</option>
+        <option value="Russell">Russell</option>
+        <option value="VIX">VIX</option>
+        <option value="TR10">TR10</option>
+        <option value="WTI">WTI</option>
+        <option selected value="Gold">Gold</option>
+        <option value="Wti/Gold">Wti/Gold</option>
+      </select>
+      <input type="submit" value="Show" id='button0'>
+    </span>
+    <canvas id="line-chart0" width="800" height="450"></canvas>
+  </div>
+
     <!--div class='d-flex justify-content-center flex-wrap align-items-center mt-1'>
       <span class='border border-primary rounded p-1'>Range
       <input type="number" id="period-input" name="periodNum" value="250" min="2" max="4500" step='1' size='3'></span>
@@ -92,7 +118,7 @@
     </div-->
     <div class='d-flex'>
       <div class='d-flex'>
-        <canvas id="line-chart" width="800" height="450"></canvas>
+        <canvas id="line-chart1" width="800" height="450"></canvas>
       </div>
       <div class='d-flex'>
         <canvas id="line-chart2" width="800" height="450"></canvas>
@@ -120,14 +146,6 @@
       </div>
       <div class='d-flex'>
         <canvas id="line-chart6" width="800" height="450"></canvas>
-      </div>
-    </div>
-    <div class='d-flex'>
-      <div class='d-flex'>
-        <canvas id="line-chart9" width="800" height="450"></canvas>
-      </div>
-      <div class='d-flex'>
-        <canvas id="line-chart10" width="800" height="450"></canvas>
       </div>
     </div>
     <div class="d-flex justify-content-center fixed-bottom">
@@ -160,6 +178,7 @@
       var received_data = {{ tickers5000|safe }};
     </script>
     <script src="{% static 'mybl/tickers.js' %}"></script>
-    {% endblock content %}
   </div>
 </div>
+{% endblock content %}
+

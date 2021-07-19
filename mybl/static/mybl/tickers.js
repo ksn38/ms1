@@ -10,7 +10,8 @@ let wti = [];
 let gold = [];
 let level = 30;
 let vix2 = [];
-let chart1 = document.getElementById("line-chart");
+let chart0 = document.getElementById("line-chart0");
+let chart1 = document.getElementById("line-chart1");
 let chart2 = document.getElementById("line-chart2");
 let chart3 = document.getElementById("line-chart3");
 let chart4 = document.getElementById("line-chart4");
@@ -18,8 +19,6 @@ let chart5 = document.getElementById("line-chart5");
 let chart6 = document.getElementById("line-chart6");
 let chart7 = document.getElementById("line-chart7");
 let chart8 = document.getElementById("line-chart8");
-let chart9 = document.getElementById("line-chart9");
-let chart10 = document.getElementById("line-chart10");
 let lengthRD = received_data.length;
 //console.log(lengthRD);
 let win = 30;
@@ -34,6 +33,9 @@ let dateOffset = [];
 let dateOffsetOutput = document.getElementById('dateOffsetOutput');
 dateOffsetOutput.innerHTML = received_data[lengthRD - 1]['fields']['date_added'];
 let periodInput = document.getElementById("period-input");
+let data1 = document.getElementById('data1');
+let data2 = document.getElementById('data2');
+let button0 = document.getElementById('button0');
 
 
 for (let i = lengthRD - 1; i >= 0; i--) {
@@ -111,7 +113,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
           borderColor: xColor,
           fill: false,
           label: xLabel,
-          yAxisID: xLabel,
+          yAxisID: 'yLabel',
           pointRadius: radPoint,
           borderWidth: bordWidth,
         }, { 
@@ -119,7 +121,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
           borderColor: yColor,
           fill: false,
           label: yLabel,
-          yAxisID: yLabel,
+          yAxisID: 'yLabel1',
           pointRadius: radPoint,
           borderWidth: bordWidth,
         }, { 
@@ -127,14 +129,14 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
           borderColor: '#777777',
           fill: true,
           label: 'Rolling correlation',
-          yAxisID: 'Rolling correlation',
+          yAxisID: 'RollingCorrelation',
           pointRadius: 0,
           borderWidth: 1,
         }, { 
           data: vix2.slice(win),
           borderColor: '#ff0000',
           backgroundColor: '#feadad',
-          steppedLine: 'middle',
+          stepped: true,
           fill: true,
           label: 'VIX',
           yAxisID: 'VIX2',
@@ -153,51 +155,46 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
         text: ''
       },
       scales: {
-        xAxes: [{
+        xAxes: {
           gridLines: {
           drawOnChartArea: false
           }
-        }],
-        yAxes: [{
-          id: xLabel,
+        },
+        yLabel: {
           type: 'linear',
           position: 'left',
           gridLines: {
             drawOnChartArea: false
           }
-        }, {
-          id: yLabel,
+        }, 
+        yLabel1: {
           type: 'linear',
           position: 'right',
           gridLines: {
             drawOnChartArea: false
           }          
-        }, {
-          id: 'Rolling correlation',
+        }, 
+        RollingCorrelation: {
           type: 'linear',
           display: false,
           position: 'right',
-          ticks : {
-            max : 1,    
-            min : -1
-          }
-        }, {
-          id: 'VIX2',
+          max : 1,    
+          min : -1
+        }, 
+        VIX2: {
           type: 'linear',
           display: false,
           position: 'left',
-          ticks : {
-            max : 100,    
-            min : 0
-          }
-        }]
+          max : 100,    
+          min : 0
+        }
       }
     }
   });
 };
 
 
-let createCharts = function* (offset, level, win, item) {
+let createCharts = function (offset, level, win, item) {
   //console.log(dateOffset[offset]);
   if (lengthRD - item - win - offset < 0) {
     offset = 0;
@@ -221,19 +218,21 @@ let createCharts = function* (offset, level, win, item) {
      return n / gold[i];
     }
   );
+  
+  let tickersDict = {'VIX': [vix, '#ff0000'], 'WTI': [wti, '#000000'], 'Gold': [gold, '#ffd800'],
+     'TR10': [tnx, '#c000ff'], 'S&P500': [gspc, "#0000ff"], 'Nasdaq': [ixic, '#36ff00'], 'Russell': [rut, "#ff6600"], 'Wti/Gold': [wtiGold, '#a4a260']};
 
-  yield (lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1, win, item),
+  return [[lineChart(tickersDict[data1.value][0], tickersDict[data2.value][0], data1.value, data2.value, tickersDict[data1.value][1], tickersDict[data2.value][1], chart0, win, item), 
+  lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1, win, item),
   lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart2, win, item),
   lineChart(wti, tnx, 'WTI', 'TR10', '#000000', "#c000ff", chart3, win, item),
   lineChart(gold, tnx, 'Gold', 'TR10', '#ffd800', "#c000ff", chart4, win, item),
   lineChart(wti, gspc, 'WTI', 'S&P500', '#000000', "#0000ff", chart5, win, item),
   lineChart(gold, gspc, 'Gold', 'S&P500', '#ffd800', "#0000ff", chart6, win, item),
   lineChart(wtiGold, tnx, 'Wti/Gold', 'TR10', '#a4a260', "#c000ff", chart7, win, item),
-  lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart8, win, item),
-  lineChart(ixic, gspc, 'Nasdaq', 'S&P500', '#36ff00', "#0000ff", chart9, win, item),
-  lineChart(rut, gspc, 'Russell', 'S&P500', '#ff6600', "#0000ff", chart10, win, item),
+  lineChart(ixic, rut, 'Nasdaq', 'Russell', '#36ff00', "#ff6600", chart8, win, item)],
   
-  date = [],
+  [date = [],
   vix = [],
   vix2 = [],
   tnx = [],
@@ -241,15 +240,17 @@ let createCharts = function* (offset, level, win, item) {
   ixic = [],
   rut = [],
   wti = [],
-  gold = []);
+  gold = []]];
 };
 
-createCharts(offset, level, win, item).next(); 
+
+let charts = createCharts(offset, level, win, item); 
 
 for(let i = 0; i < radio.length; i++){
   radio[i].addEventListener("change", function(){
     item = parseInt(radio[i].value);
-    createCharts(offset, level, win, item).next(); 
+    charts[0].map((chart) => chart.destroy());
+    charts = createCharts(offset, level, win, item); 
     periodInput.value = item;
   });
 }
@@ -257,25 +258,28 @@ for(let i = 0; i < radio.length; i++){
 for(let i = 0; i < radWin.length; i++){
   radWin[i].addEventListener("change", function(){
     win = parseInt(radWin[i].value);
-    createCharts(offset, level, win, item).next(); 
+    charts[0].map((chart) => chart.destroy());
+    charts = createCharts(offset, level, win, item); 
     correlationInput.value = win;
   });
 }
 
 correlationInput.onchange = function () {
   win = parseInt(correlationInput.value);
-  createCharts(offset, level, win, item).next(); 
+  charts[0].map((chart) => chart.destroy());
+  charts = createCharts(offset, level, win, item); 
 }
 
 offsetInput.onchange = function () {
   offset = parseInt(offsetInput.value);
-  createCharts(offset, level, win, item).next(); 
+  charts[0].map((chart) => chart.destroy());
+  charts = createCharts(offset, level, win, item); 
 }
 
 levelInput.onchange = function () {
   level = parseInt(levelInput.value);
-  createCharts(offset, level, win, item).next(); 
-  //console.log(offset);
+  charts[0].map((chart) => chart.destroy());
+  charts = createCharts(offset, level, win, item); 
 }
 
 offsetInput.oninput = function() {
@@ -289,9 +293,12 @@ offsetInput.oninput = function() {
 
 periodInput.onchange = () => {
   item = periodInput.value;
-  //periodInput.step = Math.floor(periodInput.value/10);
-  //console.log(Math.ceil(period.value/10));
-  createCharts(offset, level, win, item).next(); 
+  charts[0].map((chart) => chart.destroy());
+  charts = createCharts(offset, level, win, item); 
 }
 
+button0.onclick = () => {
+  charts[0].map((chart) => chart.destroy());
+  charts = createCharts(offset, level, win, item); 
+}
 

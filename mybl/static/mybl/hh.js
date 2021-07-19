@@ -143,7 +143,7 @@ let graph = (win) => {
 
   //console.log(rollAvg(py).length);
 
-  new Chart(document.getElementById("line-chart"), {
+  return new Chart(document.getElementById("line-chart"), {
     type: 'line',
     data: {
       labels: date,
@@ -174,20 +174,20 @@ let graph = (win) => {
           borderColor: "#3579c5",
           fill: false,
           pointRadius: 0,
-          yAxisID: 'xLabel',
+          yAxisID: 'yLabel1',
         }, { 
           data: rollAvg(cpp),
           label: "C++",
           borderColor: "#5435c5",
           fill: false,
           pointRadius: 0,
-          yAxisID: 'xLabel',
+          yAxisID: 'yLabel1',
         }
       ]
     },
     options: {
       animation: {
-          duration: 0
+        duration: 0
       },
       events: [],
       title: {
@@ -195,27 +195,18 @@ let graph = (win) => {
         text: ''
       },
       title: {
-          display: true,
-          text: 'Количество резюме на вакансию'
+        display: true,
+        text: 'Количество резюме на вакансию'
       },
       scales: {
-        yAxes: [{
-          id: 'xLabel',
+        yLabel: {
           type: 'linear',
           position: 'left',
-          scaleLabel: {
-              display: true,
-              labelString: "C++, Python"
-            }
-        }, {
-          id: 'yLabel',
+        }, 
+        yLabel1: {
           type: 'linear',
           position: 'right',
-          scaleLabel: {
-              display: true,
-              labelString: "Javascript, Java, php"
-            }
-          }]
+          }
        }
     }
   });
@@ -254,7 +245,7 @@ let graphAvg = (win) => {
     return result;
   };
 
-  new Chart(document.getElementById("line-chart-avg"), {
+  return new Chart(document.getElementById("line-chart-avg"), {
     type: 'line',
     data: {
       labels: dateAvg,
@@ -277,7 +268,7 @@ let graphAvg = (win) => {
           borderColor: '#777777',
           fill: true,
           label: 'Скользящая корреляция',
-          yAxisID: 'Rolling correlation',
+          yAxisID: 'RollingCorrelation',
           pointRadius: 0,
           borderWidth: 1,
         }
@@ -296,7 +287,7 @@ let graphAvg = (win) => {
           display: true,
       },
       scales: {
-        yAxes: [{
+        yLabel: {
           id: 'yLabel',
           type: 'linear',
           position: 'left',
@@ -304,8 +295,8 @@ let graphAvg = (win) => {
               display: true,
               labelString: ""
             }
-          }, {
-          id: 'Rolling correlation',
+          },
+        RollingCorrelation: {
           type: 'linear',
           display: false,
           position: 'right',
@@ -313,7 +304,7 @@ let graphAvg = (win) => {
             max : 1,    
             min : -1
           }
-          }]
+          }
        }
     }
   });
@@ -348,13 +339,17 @@ let cor = (list1, list2) => {
 };
 
 
+let gr = graph(win);
+let grAvg = graphAvg(win);
+//console.log(gr);
+
 for(let i = 0; i < radWin.length; i++){
   radWin[i].addEventListener("change", function(){
     win = parseInt(radWin[i].value);
-    graph(win);
-    graphAvg(win);
+    gr.destroy();
+    grAvg.destroy();
+    gr = graph(win);
+    grAvg = graphAvg(win);
   })
 }
 
-graph(win);
-graphAvg(win);
