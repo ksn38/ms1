@@ -36,8 +36,6 @@ let periodInput = document.getElementById("period-input");
 let data1 = document.getElementById('data1');
 let data2 = document.getElementById('data2');
 let button0 = document.getElementById('button0');
-let tickersDict = {'VIX': [vix, '#ff0000'], 'WTI': [wti, '#000000'], 'Gold': [gold, '#ffd800'],
-     'TR10': [tnx, '#c000ff'], 'S&P500': [gspc, "#0000ff"], 'Nasdaq': [ixic, '#36ff00'], 'Russell': [rut, "#ff6600"]};
 
 
 for (let i = lengthRD - 1; i >= 0; i--) {
@@ -245,8 +243,9 @@ let createCharts = function (offset, level, win, item) {
     }
   );
   
-  tickersDict['Wti/Gold'] = [wtiGold, '#a4a260']
-  
+  let tickersDict = {'VIX': [vix, '#ff0000'], 'WTI': [wti, '#000000'], 'Gold': [gold, '#ffd800'],
+     'TR10': [tnx, '#c000ff'], 'S&P500': [gspc, "#0000ff"], 'Nasdaq': [ixic, '#36ff00'], 'Russell': [rut, "#ff6600"], 'Wti/Gold': [wtiGold, '#a4a260']};
+
   return [[lineChart(tickersDict[data1.value][0], tickersDict[data2.value][0], data1.value, data2.value, tickersDict[data1.value][1], tickersDict[data2.value][1], chart0, win, item), 
   lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1, win, item),
   lineChart(tnx, gspc, 'TR10', 'S&P500', '#c000ff', "#0000ff", chart2, win, item),
