@@ -24,22 +24,25 @@
         <div class="navbar-nav mx-1">
           <a class="nav-link" href="{% url 'blog' %}">Blog</a>
         </div>
+        <div class="navbar-nav mx-1">
+          <a class="nav-link" href="{% url 'about' %}">about</a>
+        </div>
         {% if user.is_authenticated %}
         <div class='d-flex flex-nowrap ml-auto'>
           <div class="navbar-nav mx-2 navbar-text ml-auto">
             <a> {{ user.username }} </a>
           </div>
           <div class="navbar-nav">
-            <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+            <a class="nav-link" href="{% url 'logout' %}">Exit</a>
           </div>
         </div>
         {% else %}
         <div class='d-flex flex-nowrap ml-auto'>
           <div class="navbar-nav mx-2">
-            <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+            <a class="nav-link" href="{% url 'register' %}">Sign up</a>
           </div>
           <div class="navbar-nav">
-             <a class="nav-link" href="{% url 'login' %}">Логин</a>
+             <a class="nav-link" href="{% url 'login' %}">Sign in</a>
           </div>
         </div>
         {% endif %}

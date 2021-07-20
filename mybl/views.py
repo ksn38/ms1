@@ -229,3 +229,7 @@ def tickers(request):
     context['tickers5000'] = serializers.serialize('json', tickers5000)
             
     return render(request, 'mybl/tickers.html', context)
+    
+    
+def about(request):
+    return render(request, 'mybl/about.html')
