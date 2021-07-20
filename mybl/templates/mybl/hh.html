@@ -2,9 +2,8 @@
 {% load static %}
 {% block content %}
 <div class='d-flex justify-content-around m-2 flex-wrap align-items-start'>
-  <table class='table-sm table-dark table-bordered'>
-    <caption style='caption-side: top'><small>Количество вакансий, процент вакансий без опыта, 
-    соотношение резюме к вакансиям за сегодня, суммарное место полученное по 3м сортировкам.</small></caption>
+  <table class='table-sm table-dark table-bordered mt-2'>
+    <caption style='caption-side: down'><small>Number of vacances, percent without expierence, ratio resume to vacances.</small></caption>
     {% for lang in langs %}
       <tr>
         {% if lang.name == 'C%23' %}
@@ -35,9 +34,8 @@
       </tr>
     {% endfor %}
   </table>
-  <table class='table-sm mt-4 table-dark table-bordered'>
-    <caption style='caption-side: top'><small>Изменение от среднего за декабрь 2020 в %, 
-    суммарное место полученное по 3м сортировкам.</small></caption>
+  <table class='table-sm mt-2 table-dark table-bordered'>
+    <caption style='caption-side: down'><small>Changing from december 2020 in %.</small></caption>
     {% for chart in charts %}
       <tr>
         {% if chart.name == 'C%23' %}
@@ -68,9 +66,8 @@
       </tr>
     {% endfor %}
   </table>
-  <table class='table-sm mt-4 table-dark table-bordered'>
-    <caption style='caption-side: top'><small>Изменение от среднего за март-апрель 2021 в %, 
-    суммарное место полученное по 3м сортировкам.</small></caption>
+  <table class='table-sm mt-2 table-dark table-bordered'>
+    <caption style='caption-side: down'><small>Changing from march-april 2021 in %.</small></caption>
     {% for chart in charts_march %}
       <tr>
         {% if chart.name == 'C%23' %}
@@ -105,7 +102,7 @@
     <div class='mb-3'><canvas id="line-chart" width="800" height="450"></canvas></div>
     <div class='radWin d-flex justify-content-around'>
       <div>
-        <label>Окно скользящего среднего: <input type='radio' id='w7' name='win' value="7">7</label>
+        <label>Window of rolling mean: <input type='radio' id='w7' name='win' value="7">7</label>
         <label><input type='radio' id='w14' name='win' value="14" checked="checked">14</label>
         <label><input type='radio' id='w28' name='win' value="28">28</label>
       </div>

@@ -196,7 +196,7 @@ let graph = (win) => {
       },
       title: {
           display: true,
-          text: 'Количество резюме на вакансию'
+          text: 'Ratio resume to vacances'
       },
       scales: {
         yAxes: [{
