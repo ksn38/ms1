@@ -99,7 +99,7 @@ button.onclick = async function () {
   //console.log(dict1);
   let dict2 = await dict(days.value)[0];
   //console.log(dict2);
-  dateDict2.textContent = await `(от ${dict(days.value)[1]})`;
+  dateDict2.textContent = await `(from ${dict(days.value)[1]})`;
   //console.log(dateDict2);
   let listKeys = [...dict1.keys()];
   let outMap = new Map();
