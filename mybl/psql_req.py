@@ -26,7 +26,13 @@ round((mt.tnx/mt2.tnx - 1) * 10000)/100 as dif_tnx,
 round((mt.ixic/mt2.ixic - 1) * 10000)/100 as dif_ixic,
 round((mt.rut/mt2.rut - 1) * 10000)/100 as dif_rut, 
 round((mt.wti/mt2.wti - 1) * 10000)/100 as dif_wti,
-round((mt.gold/mt2.gold - 1) * 10000)/100 as dif_gold
+round((mt.gold/mt2.gold - 1) * 10000)/100 as dif_gold,
+round((mt.sz/mt2.sz - 1) * 10000)/100 as dif_sz, 
+round((mt.bvsp/mt2.bvsp - 1) * 10000)/100 as dif_bvsp,
+round((mt.gdaxi/mt2.gdaxi - 1) * 10000)/100 as dif_gdaxi,
+round((mt.wheat/mt2.wheat - 1) * 10000)/100 as dif_wheat, 
+round((mt.ss/mt2.ss - 1) * 10000)/100 as dif_ss,
+round((mt.bsesn/mt2.bsesn - 1) * 10000)/100 as dif_bsesn
 from mybl_ticker mt
 left join mybl_ticker mt2 on mt2.id = mt.id - 1 
 where mt.id = (select max(mt.id) from mybl_ticker mt))
@@ -37,7 +43,13 @@ round((mt.tnx/mt2.tnx - 1) * 10000)/100 as dif_tnx,
 round((mt.ixic/mt2.ixic - 1) * 10000)/100 as dif_ixic,
 round((mt.rut/mt2.rut - 1) * 10000)/100 as dif_rut, 
 round((mt.wti/mt2.wti - 1) * 10000)/100 as dif_wti,
-round((mt.gold/mt2.gold - 1) * 10000)/100 as dif_gold
+round((mt.gold/mt2.gold - 1) * 10000)/100 as dif_gold,
+round((mt.sz/mt2.sz - 1) * 10000)/100 as dif_sz, 
+round((mt.bvsp/mt2.bvsp - 1) * 10000)/100 as dif_bvsp,
+round((mt.gdaxi/mt2.gdaxi - 1) * 10000)/100 as dif_gdaxi,
+round((mt.wheat/mt2.wheat - 1) * 10000)/100 as dif_wheat, 
+round((mt.ss/mt2.ss - 1) * 10000)/100 as dif_ss,
+round((mt.bsesn/mt2.bsesn - 1) * 10000)/100 as dif_bsesn
 from mybl_ticker mt
 left join mybl_ticker mt2 on mt2.id = mt.id - 20
 where mt.id = (select max(mt.id) from mybl_ticker mt))
@@ -48,7 +60,13 @@ round((mt.tnx/mt2.tnx - 1) * 10000)/100 as dif_tnx,
 round((mt.ixic/mt2.ixic - 1) * 10000)/100 as dif_ixic,
 round((mt.rut/mt2.rut - 1) * 10000)/100 as dif_rut, 
 round((mt.wti/mt2.wti - 1) * 10000)/100 as dif_wti,
-round((mt.gold/mt2.gold - 1) * 10000)/100 as dif_gold
+round((mt.gold/mt2.gold - 1) * 10000)/100 as dif_gold,
+round((mt.sz/mt2.sz - 1) * 10000)/100 as dif_sz, 
+round((mt.bvsp/mt2.bvsp - 1) * 10000)/100 as dif_bvsp,
+round((mt.gdaxi/mt2.gdaxi - 1) * 10000)/100 as dif_gdaxi,
+round((mt.wheat/mt2.wheat - 1) * 10000)/100 as dif_wheat, 
+round((mt.ss/mt2.ss - 1) * 10000)/100 as dif_ss,
+round((mt.bsesn/mt2.bsesn - 1) * 10000)/100 as dif_bsesn
 from mybl_ticker mt
 left join mybl_ticker mt2 on mt2.id = mt.id - 50 
 where mt.id = (select max(mt.id) from mybl_ticker mt))
@@ -59,7 +77,13 @@ round((mt.tnx/mt2.tnx - 1) * 10000)/100 as dif_tnx,
 round((mt.ixic/mt2.ixic - 1) * 10000)/100 as dif_ixic,
 round((mt.rut/mt2.rut - 1) * 10000)/100 as dif_rut, 
 round((mt.wti/mt2.wti - 1) * 10000)/100 as dif_wti,
-round((mt.gold/mt2.gold - 1) * 10000)/100 as dif_gold
+round((mt.gold/mt2.gold - 1) * 10000)/100 as dif_gold,
+round((mt.sz/mt2.sz - 1) * 10000)/100 as dif_sz, 
+round((mt.bvsp/mt2.bvsp - 1) * 10000)/100 as dif_bvsp,
+round((mt.gdaxi/mt2.gdaxi - 1) * 10000)/100 as dif_gdaxi,
+round((mt.wheat/mt2.wheat - 1) * 10000)/100 as dif_wheat, 
+round((mt.ss/mt2.ss - 1) * 10000)/100 as dif_ss,
+round((mt.bsesn/mt2.bsesn - 1) * 10000)/100 as dif_bsesn
 from mybl_ticker mt
 left join mybl_ticker mt2 on mt2.id = mt.id - 100 
 where mt.id = (select max(mt.id) from mybl_ticker mt))
@@ -70,7 +94,13 @@ round((mt.tnx/mt2.tnx - 1) * 10000)/100 as dif_tnx,
 round((mt.ixic/mt2.ixic - 1) * 10000)/100 as dif_ixic,
 round((mt.rut/mt2.rut - 1) * 10000)/100 as dif_rut, 
 round((mt.wti/mt2.wti - 1) * 10000)/100 as dif_wti,
-round((mt.gold/mt2.gold - 1) * 10000)/100 as dif_gold
+round((mt.gold/mt2.gold - 1) * 10000)/100 as dif_gold,
+round((mt.sz/mt2.sz - 1) * 10000)/100 as dif_sz, 
+round((mt.bvsp/mt2.bvsp - 1) * 10000)/100 as dif_bvsp,
+round((mt.gdaxi/mt2.gdaxi - 1) * 10000)/100 as dif_gdaxi,
+round((mt.wheat/mt2.wheat - 1) * 10000)/100 as dif_wheat, 
+round((mt.ss/mt2.ss - 1) * 10000)/100 as dif_ss,
+round((mt.bsesn/mt2.bsesn - 1) * 10000)/100 as dif_bsesn
 from mybl_ticker mt
 left join mybl_ticker mt2 on mt2.id = mt.id - 250 
 where mt.id = (select max(mt.id) from mybl_ticker mt))
@@ -81,7 +111,13 @@ round((mt.tnx/mt2.tnx - 1) * 10000)/100 as dif_tnx,
 round((mt.ixic/mt2.ixic - 1) * 10000)/100 as dif_ixic,
 round((mt.rut/mt2.rut - 1) * 10000)/100 as dif_rut, 
 round((mt.wti/mt2.wti - 1) * 10000)/100 as dif_wti,
-round((mt.gold/mt2.gold - 1) * 10000)/100 as dif_gold
+round((mt.gold/mt2.gold - 1) * 10000)/100 as dif_gold,
+round((mt.sz/mt2.sz - 1) * 10000)/100 as dif_sz, 
+round((mt.bvsp/mt2.bvsp - 1) * 10000)/100 as dif_bvsp,
+round((mt.gdaxi/mt2.gdaxi - 1) * 10000)/100 as dif_gdaxi,
+round((mt.wheat/mt2.wheat - 1) * 10000)/100 as dif_wheat, 
+round((mt.ss/mt2.ss - 1) * 10000)/100 as dif_ss,
+round((mt.bsesn/mt2.bsesn - 1) * 10000)/100 as dif_bsesn
 from mybl_ticker mt
 left join mybl_ticker mt2 on mt2.id = mt.id - 1000 
 where mt.id = (select max(mt.id) from mybl_ticker mt))
@@ -92,7 +128,13 @@ round((mt.tnx/mt2.tnx - 1) * 10000)/100 as dif_tnx,
 round((mt.ixic/mt2.ixic - 1) * 10000)/100 as dif_ixic,
 round((mt.rut/mt2.rut - 1) * 10000)/100 as dif_rut, 
 round((mt.wti/mt2.wti - 1) * 10000)/100 as dif_wti,
-round((mt.gold/mt2.gold - 1) * 10000)/100 as dif_gold
+round((mt.gold/mt2.gold - 1) * 10000)/100 as dif_gold,
+round((mt.sz/mt2.sz - 1) * 10000)/100 as dif_sz, 
+round((mt.bvsp/mt2.bvsp - 1) * 10000)/100 as dif_bvsp,
+round((mt.gdaxi/mt2.gdaxi - 1) * 10000)/100 as dif_gdaxi,
+round((mt.wheat/mt2.wheat - 1) * 10000)/100 as dif_wheat, 
+round((mt.ss/mt2.ss - 1) * 10000)/100 as dif_ss,
+round((mt.bsesn/mt2.bsesn - 1) * 10000)/100 as dif_bsesn
 from mybl_ticker mt
 left join mybl_ticker mt2 on mt2.id = mt.id - 4950 
 where mt.id = (select max(mt.id) from mybl_ticker mt))

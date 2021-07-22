@@ -42,6 +42,6 @@ if len(tickers) == 0:
     if date.today().weekday() not in {0, 6}:
         t = ticks('gspc')
         if Ticker.objects.filter(Q(date_added__gt= date7)).order_by('-date_added')[0].gspc != t['gspc']:
-            t.update(ticks('vix', 'tnx', 'ixic', 'rut', 'wti', 'gold', 'sz', 'bvsp', 'gdaxi', 'wheat', 'ss'))
+            t.update(ticks('vix', 'tnx', 'ixic', 'rut', 'wti', 'gold', 'sz', 'bvsp', 'gdaxi', 'wheat', 'ss', 'bsesn'))
             obj = Ticker(**t)
             obj.save()

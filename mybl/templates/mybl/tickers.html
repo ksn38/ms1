@@ -33,12 +33,18 @@
       <caption style='caption-side: top'><small></small></caption>
       <tr>
         <th class='px-2 text-center'>S&P500</th>
-        <th class='px-2 text-center'>Nasdaq</th>
-        <th class='px-2 text-center'>Russell</th>
-        <th class='px-2 text-center'>VIX</th>
+        <th class='px-2 text-center'>IXIC</th>
+        <th class='px-2 text-center'>RUT</th>
+        <th class='px-2 text-center'>DAX</th>
+        <th class='px-2 text-center'>SSE</th>
+        <th class='px-2 text-center'>SZSE </th>
+        <th class='px-2 text-center'>IBOV</th>
+        <th class='px-2 text-center'>BSE</th>
         <th class='px-2 text-center'>TR10</th>
+        <th class='px-2 text-center'>Wheat</th>
         <th class='px-2 text-center'>WTI</th>
         <th class='px-2 text-center'>Gold</th>
+        <th class='px-2 text-center'>VIX</th>
       </tr>
       {% for ticker in chart_tickers %}
         <tr>
@@ -51,17 +57,35 @@
           <td class='change text-right'>
             {{ ticker.dif_rut }}
           </td>
-          <td class='change-invert text-right'>
-            {{ ticker.dif_vix }}
+          <td class='change text-right'>
+            {{ ticker.dif_gdaxi }}
+          </td>
+          <td class='change text-right'>
+            {{ ticker.dif_ss }}
+          </td>
+          <td class='change text-right'>
+            {{ ticker.dif_sz }}
+          </td>
+          <td class='change text-right'>
+            {{ ticker.dif_bvsp }}
+          </td>
+          <td class='change text-right'>
+            {{ ticker.dif_bsesn }}
           </td>
           <td class='change text-right'>
             {{ ticker.dif_tnx }}
+          </td>
+          <td class='change text-right'>
+            {{ ticker.dif_wheat }}
           </td>
           <td class='change text-right'>
             {{ ticker.dif_wti }}
           </td>
           <td class='change-invert text-right'>
             {{ ticker.dif_gold }}
+          </td>
+          <td class='change-invert text-right'>
+            {{ ticker.dif_vix }}
           </td>
         </tr>
       {% endfor %}
@@ -84,6 +108,8 @@
         <option value="DAX">DAX</option>
         <option value="Wheat">Wheat</option>
         <option value="SSE Composite">SSE Composite</option>
+        <option value="S&P BSE SENSEX">S&P BSE SENSEX</option>
+        <option value="Wheat/Gold">Wheat/Gold</option>
       </select>
       <select id="data2" class='mr-1'>
         <option value="S&P500">S&P500</option>
@@ -99,10 +125,12 @@
         <option value="DAX">DAX</option>
         <option value="Wheat">Wheat</option>
         <option value="SSE Composite">SSE Composite</option>
+        <option value="S&P BSE SENSEX">S&P BSE SENSEX</option>
+        <option value="Wheat/Gold">Wheat/Gold</option>
       </select>
       <input type="submit" value="Show" id='button0'>
     </span>
-    <canvas id="line-chart0" width="800" height="450"></canvas>
+    <canvas id="line-chart0" width="1600" height="600"></canvas>
   </div>
 
     <!--div class='d-flex justify-content-center flex-wrap align-items-center mt-1'>
@@ -140,22 +168,6 @@
       </div>
       <div class='d-flex'>
         <canvas id="line-chart8" width="800" height="450"></canvas>
-      </div>
-    </div>
-    <div class='d-flex'>
-      <div class='d-flex'>
-        <canvas id="line-chart3" width="800" height="450"></canvas>
-      </div>
-      <div class='d-flex'>
-        <canvas id="line-chart4" width="800" height="450"></canvas>
-      </div>
-    </div>
-    <div class='d-flex'>
-      <div class='d-flex'>
-        <canvas id="line-chart5" width="800" height="450"></canvas>
-      </div>
-      <div class='d-flex'>
-        <canvas id="line-chart6" width="800" height="450"></canvas>
       </div>
     </div>
     <div class="d-flex justify-content-center fixed-bottom">

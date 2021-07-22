@@ -84,6 +84,7 @@ class Ticker(models.Model):
     gdaxi = models.FloatField()
     wheat = models.FloatField()
     ss = models.FloatField()
+    bsesn = models.FloatField()
     
     def __float__(self):
         return self.gspc
@@ -98,6 +99,7 @@ class Ticker(models.Model):
         return self.gdaxi
         return self.wheat
         return self.ss
+        return self.bsesn
     
     def __str__(self):
         return self.date_added
