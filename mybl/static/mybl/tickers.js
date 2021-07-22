@@ -119,7 +119,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
           borderColor: xColor,
           fill: false,
           label: xLabel,
-          yAxisID: 'yLabel',
+          yAxisID: 'xLabel',
           pointRadius: radPoint,
           borderWidth: bordWidth,
         }, { 
@@ -127,7 +127,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
           borderColor: yColor,
           fill: false,
           label: yLabel,
-          yAxisID: 'yLabel1',
+          yAxisID: 'yLabel',
           pointRadius: radPoint,
           borderWidth: bordWidth,
         }, { 
@@ -160,48 +160,13 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
         display: true,
         text: ''
       },
-      /*scales: {
-        xAxes: {
-          gridLines: {
-          drawOnChartArea: false
-          }
-        },
-        yLabel: {
-          type: 'linear',
-          position: 'left',
-          gridLines: {
-            drawOnChartArea: false
-          }
-        }, 
-        yLabel1: {
-          type: 'linear',
-          position: 'right',
-          gridLines: {
-            drawOnChartArea: false
-          }          
-        }, 
-        RollingCorrelation: {
-          type: 'linear',
-          display: false,
-          position: 'right',
-          max : 1,    
-          min : -1
-        }, 
-        VIX2: {
-          type: 'linear',
-          display: false,
-          position: 'left',
-          max : 100,    
-          min : 0
-        }
-      }*/
       scales: {
         yAxes: [
-          {id: 'yLabel',
+          {id: 'xLabel',
           type: 'linear',
           position: 'left'
           },
-          {id: 'yLabel1',
+          {id: 'yLabel',
           type: 'linear',
           position: 'right'
           }, 
