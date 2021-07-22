@@ -12,6 +12,7 @@ let sz = [];
 let bvsp = [];
 let gdaxi = [];
 let wheat = [];
+let ss = [];
 let level = 30;
 let vix2 = [];
 let chart0 = document.getElementById("line-chart0");
@@ -241,6 +242,7 @@ let createCharts = function (offset, level, win, item) {
     bvsp.push(received_data[i]['fields']['bvsp']);
     gdaxi.push(received_data[i]['fields']['gdaxi']);
     wheat.push(received_data[i]['fields']['wheat']);
+    ss.push(received_data[i]['fields']['ss']);
     if (received_data[i]['fields']['vix'] > level) {
       vix2.push(received_data[i]['fields']['vix'])
     } else {vix2.push(0)};
@@ -253,8 +255,8 @@ let createCharts = function (offset, level, win, item) {
   
   let tickersDict = {'VIX': [vix, '#ff0000'], 'WTI': [wti, '#000000'], 'Gold': [gold, '#ffd800'],
      'TR10': [tnx, '#c000ff'], 'S&P500': [gspc, "#0000ff"], 'Nasdaq': [ixic, '#807dff'],
-     'Russell': [rut, "#03007d"], 'Wti/Gold': [wtiGold, '#a4a260'], 'Shenzhen Component': [sz, "#858585"], 'IBOVESPA': [bvsp, '#ff9f09'],
-     'DAX': [gdaxi, "#017f81"], 'Wheat': [wheat, '#30ff00']};
+     'Russell': [rut, "#03007d"], 'Wti/Gold': [wtiGold, '#a4a260'], 'Shenzhen Component': [sz, "#ff6464"], 'IBOVESPA': [bvsp, '#ff9f09'],
+     'DAX': [gdaxi, "#017f81"], 'Wheat': [wheat, '#30ff00'], 'SSE Composite': [ss, '#7b0000']};
 
   return [[lineChart(tickersDict[data1.value][0], tickersDict[data2.value][0], data1.value, data2.value, tickersDict[data1.value][1], tickersDict[data2.value][1], chart0, win, item), 
   lineChart(vix, gspc, 'VIX', 'S&P500', '#ff0000', "#0000ff", chart1, win, item),
@@ -278,7 +280,8 @@ let createCharts = function (offset, level, win, item) {
   sz = [],
   bvsp = [],
   gdaxi = [],
-  wheat = []]];
+  wheat = [],
+  ss = []]];
 };
 
 
