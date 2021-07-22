@@ -75,19 +75,27 @@ class Ticker(models.Model):
     gspc = models.FloatField()
     vix = models.FloatField()
     tnx = models.FloatField()
-    ixic = models.FloatField()
-    rut = models.FloatField()
     wti = models.FloatField()
     gold = models.FloatField()
+    ixic = models.FloatField()
+    rut = models.FloatField()
+    sz = models.FloatField()
+    bvsp = models.FloatField()
+    gdaxi = models.FloatField()
+    wheat = models.FloatField()
     
     def __float__(self):
         return self.gspc
         return self.vix
         return self.tnx
-        return self.ixic
-        return self.rut
         return self.wti
         return self.gold
+        return self.ixic
+        return self.rut
+        return self.sz
+        return self.bvsp
+        return self.gdaxi
+        return self.wheat
     
     def __str__(self):
         return self.date_added
