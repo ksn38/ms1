@@ -209,7 +209,7 @@ let createCharts = function (offset, level, win, item) {
     gdaxi.push(received_data[i]['fields']['gdaxi']);
     wheat.push(received_data[i]['fields']['wheat']);
     ss.push(received_data[i]['fields']['ss']);
-    bsesn.push(received_data[i]['fields']['ss']);
+    bsesn.push(received_data[i]['fields']['bsesn']);
     if (received_data[i]['fields']['vix'] > level) {
       vix2.push(received_data[i]['fields']['vix'])
     } else {vix2.push(0)};
