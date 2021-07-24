@@ -3,51 +3,54 @@
 {% load static %}
 <div class='d-flex justify-content-around flex-wrap align-items-center'>
   <div class='d-flex justify-center mt-2 flex-nowrap align-items-end' style='flex-basis: 30%;'>
-    <table class='table-sm table-dark table-striped table-bordered'>
+    <table class='table-sm table-bordered'>
       <form>
       <caption style='caption-side: top'><small></small></caption>
         <tr>
-          <td class='text-center'>day</td>
+          <td class='text-center bg-dark text-light'>day</td>
         </tr>
         <tr>
-          <td nowrap><input type='radio' id='r20' name='period' value="20">month</td>
+          <td class='bg-dark text-light' nowrap><input type='radio' id='r20' name='period' value="20">month</td>
         </tr>
         <tr>
-          <td nowrap><input type='radio' id='r60' name='period' value="60">quarter</td>
+          <td class='bg-dark text-light' nowrap><input type='radio' id='r60' name='period' value="60">quarter</td>
         </tr>
         <tr>
-          <td nowrap><input type='radio' id='r125' name='period' value="125">half-year</td>
+          <td class='bg-dark text-light' nowrap><input type='radio' id='r125' name='period' value="125">half-year</td>
         </tr>
         <tr>
-          <td nowrap><input type='radio' id='r250' name='period' value="250" checked="checked">year</td>
+          <td class='bg-dark text-light' nowrap><input type='radio' id='r250' name='period' value="250" checked="checked">year</td>
         </tr>
         <tr>
-          <td nowrap><input type='radio' id='r1000' name='period' value="1000">4 years</td>
+          <td class='bg-dark text-light' nowrap><input type='radio' id='r1000' name='period' value="1000">4 years</td>
         </tr>
         <tr>
-          <td nowrap><input type='radio' id='r4500' name='period' value="4500">18 years</td>
+          <td class='bg-dark text-light' nowrap><input type='radio' id='r4500' name='period' value="4500">18 years</td>
         </tr>
       </form>
     </table>
-    <table class='table-sm table-dark table-striped table-bordered'>
+    <table class='table-sm table-bordered'>
       <caption style='caption-side: top'><small></small></caption>
       <tr>
-        <th class='px-2 text-center'>S&P500</th>
-        <th class='px-2 text-center'>IXIC</th>
-        <th class='px-2 text-center'>RUT</th>
-        <th class='px-2 text-center'>DAX</th>
-        <th class='px-2 text-center'>SSE</th>
-        <th class='px-2 text-center'>SZSE </th>
-        <th class='px-2 text-center'>IBOV</th>
-        <th class='px-2 text-center'>BSE</th>
-        <th class='px-2 text-center'>TR10</th>
-        <th class='px-2 text-center'>Wheat</th>
-        <th class='px-2 text-center'>WTI</th>
-        <th class='px-2 text-center'>Gold</th>
-        <th class='px-2 text-center'>VIX</th>
+        <th class='px-2 text-center bg-dark text-light'>TR10</th>
+        <th class='px-2 text-center bg-primary text-light'>S&P500</th>
+        <th class='px-2 text-center bg-primary text-light'>IXIC</th>
+        <th class='px-2 text-center bg-primary text-light'>RUT</th>
+        <th class='px-2 text-center bg-primary text-light'>DAX</th>
+        <th class='px-2 text-center bg-secondary text-warning'>SSE</th>
+        <th class='px-2 text-center bg-secondary text-warning'>SZSE </th>
+        <th class='px-2 text-center bg-warning text-light'>IBOV</th>
+        <th class='px-2 text-center bg-warning text-light'>BSE</th>
+        <th class='px-2 text-center bg-dark text-info font-weight-bold'>Wheat</th>
+        <th class='px-2 text-center bg-dark text-info font-weight-bold'>WTI</th>
+        <th class='px-2 text-center bg-dark text-light'>Gold</th>
+        <th class='px-2 text-center bg-dark text-light'>VIX</th>
       </tr>
       {% for ticker in chart_tickers %}
         <tr>
+          <td class='change-tnx text-right'>
+            {{ ticker.dif_tnx }}
+          </td>
           <td class='change text-right'>
             {{ ticker.dif_gspc }}
           </td>
@@ -73,15 +76,12 @@
             {{ ticker.dif_bsesn }}
           </td>
           <td class='change text-right'>
-            {{ ticker.dif_tnx }}
-          </td>
-          <td class='change text-right'>
             {{ ticker.dif_wheat }}
           </td>
           <td class='change text-right'>
             {{ ticker.dif_wti }}
           </td>
-          <td class='change-invert text-right'>
+          <td class='change text-right'>
             {{ ticker.dif_gold }}
           </td>
           <td class='change-invert text-right'>
@@ -103,11 +103,11 @@
         <option value="Shenzhen Component">Shenzhen Component</option>
         <option value="IBOVESPA">IBOVESPA</option>
         <option value="S&P BSE SENSEX">S&P BSE SENSEX</option>
-        <option value="TR10">TR10</option>
+        <option value="TR10">Treasury Yield 10 Years</option>
         <option value="Wheat">Wheat</option>
-        <option selected value="WTI">WTI</option>
+        <option value="WTI">WTI</option>
         <option value="Gold">Gold</option>
-        <option value="Wti/Gold">Wti/Gold</option>
+        <option selected value="Wti/Gold">Wti/Gold</option>
         <option value="Wheat/Gold">Wheat/Gold</option>
         <option value="VIX">VIX</option>
       </select>
@@ -120,12 +120,12 @@
         <option value="Shenzhen Component">Shenzhen Component</option>
         <option value="IBOVESPA">IBOVESPA</option>
         <option value="S&P BSE SENSEX">S&P BSE SENSEX</option>
-        <option value="TR10">TR10</option>
-        <option selected value="Wheat">Wheat</option>
+        <option value="TR10">Treasury Yield 10 Years</option>
+        <option value="Wheat">Wheat</option>
         <option value="WTI">WTI</option>
         <option value="Gold">Gold</option>
         <option value="Wti/Gold">Wti/Gold</option>
-        <option value="Wheat/Gold">Wheat/Gold</option>
+        <option selected value="Wheat/Gold">Wheat/Gold</option>
         <option value="VIX">VIX</option>
       </select>
       <input type="submit" value="Show" id='button0'>

@@ -30,7 +30,8 @@ let lengthRD = received_data.length;
 let win = 30;
 let radWin = document.getElementsByName('win');
 let tr = document.querySelectorAll('.change');
-let tri = document.querySelectorAll('.change-invert');
+let trTnx = document.querySelectorAll('.change-tnx');
+let trInv = document.querySelectorAll('.change-invert');
 let offsetInput = document.getElementById('offset-input');
 let levelInput = document.getElementById('level-input');
 let correlationInput = document.getElementById('correlation-input');
@@ -43,29 +44,69 @@ let data1 = document.getElementById('data1');
 let data2 = document.getElementById('data2');
 let button0 = document.getElementById('button0');
 
+//console.log(tr[12].textContent);
 
 for (let i = lengthRD - 1; i >= 0; i--) {
     dateOffset.push(received_data[i]['fields']['date_added']);
     //console.log(i);
   }
 
-for (let i of tr) {
-  if (parseInt(i.textContent) < 0) {
-    i.classList.add('bg-danger')
+let colorVal = (arr) => {
+  //arr = Array.from(arr);
+  let arrInt = arr.map((i) => parseFloat(i.innerText));
+  let maxArr = Math.max.apply(null, arrInt);
+  let minArr = Math.min.apply(null, arrInt);
+  for (let i = 0; i < arrInt.length; i++) {
+    if (arrInt[i] > 0) {
+      arr[i].style.backgroundColor = 'rgba(40, 167, 69,'  + arrInt[i]/maxArr + ')';
+    }
+    else if (arrInt[i] < 0) {
+      arr[i].style.backgroundColor = 'rgba(220, 53, 69,'  + arrInt[i]/minArr+ ')';
+    }
   }
-  else if (parseInt(i.textContent) > 0) {
-    i.classList.add('bg-success')
-  }else {i.classList.add('bg-secondary')}
 }
 
-for (let i of tri) {
-  if (parseInt(i.textContent) > 0) {
-    i.classList.add('bg-danger')
-  }
-  else if (parseInt(i.textContent) < 0) {
-    i.classList.add('bg-success')
-  }else {i.classList.add('bg-secondary')}
+arrTr = Array.from(tr)
+
+for (let i = 0; i <= arrTr.length; i += 11) {
+  //console.log(i);
+  colorVal(arrTr.slice(i, i + 11));
 }
+
+let colorTnx = (arr) => {
+  arr = Array.from(arr);
+  let arrInt = arr.map((i) => parseFloat(i.innerText));
+  let maxArr = Math.max.apply(null, arrInt);
+  let minArr = Math.min.apply(null, arrInt);
+  for (let i = 0; i < arrInt.length; i++) {
+    if (arrInt[i] > 0) {
+      arr[i].style.backgroundColor = 'rgba(0, 123, 255,'  + arrInt[i]/maxArr + ')';
+    }
+    else if (arrInt[i] < 0) {
+      arr[i].style.backgroundColor = 'rgba(255, 193, 7,'  + arrInt[i]/minArr+ ')';
+    }
+  }
+}
+
+colorTnx(trTnx);
+
+let colorInv = (arr) => {
+  arr = Array.from(arr);
+  let arrInt = arr.map((i) => parseFloat(i.innerText));
+  let maxArr = Math.max.apply(null, arrInt);
+  let minArr = Math.min.apply(null, arrInt);
+  for (let i = 0; i < arrInt.length; i++) {
+    if (arrInt[i] > 0) {
+      arr[i].style.backgroundColor = 'rgba(235, 123, 38,'  + arrInt[i]/maxArr + ')';
+    }
+    else if (arrInt[i] < 0) {
+      arr[i].style.backgroundColor = 'rgba(90, 20, 162,'  + arrInt[i]/minArr+ ')';
+    }
+  }
+}
+
+colorInv(trInv);
+
 
 let cor = (list1, list2) => {
   let average = (list) => {
@@ -219,9 +260,9 @@ let createCharts = function (offset, level, win, item) {
   let wheatGold = wheat.map((n, i) => n/gold[i]);
   
   let tickersDict = {'VIX': [vix, '#ff0000'], 'WTI': [wti, '#000000'], 'Gold': [gold, '#dfbd00'],
-     'TR10': [tnx, '#c000ff'], 'S&P500': [gspc, "#0000ff"], 'Nasdaq': [ixic, '#4343d6'],
-     'Russell': [rut, "#03007d"], 'Wti/Gold': [wtiGold, '#858344'], 'Shenzhen Component': [sz, "#9e4e4e"], 'IBOVESPA': [bvsp, '#cf7e00'],
-     'DAX': [gdaxi, "#016a81"], 'Wheat': [wheat, '#2bdf01'], 'SSE Composite': [ss, '#a30202'], 'S&P BSE SENSEX': [bsesn, '#c7df00'], 'Wheat/Gold': [wheatGold, '#156e00']};
+     'TR10': [tnx, '#c000ff'], 'S&P500': [gspc, "#0000ff"], 'Nasdaq': [ixic, '#1473b5'],
+     'Russell': [rut, "#03007d"], 'Wti/Gold': [wtiGold, '#858344'], 'Shenzhen Component': [sz, "#a42857"], 'IBOVESPA': [bvsp, '#cf7e00'],
+     'DAX': [gdaxi, "#016a81"], 'Wheat': [wheat, '#2bdf01'], 'SSE Composite': [ss, '#a30202'], 'S&P BSE SENSEX': [bsesn, '#9db001'], 'Wheat/Gold': [wheatGold, '#156e00']};
 
   return [[lineChart(tickersDict[data1.value][0], tickersDict[data2.value][0], data1.value, data2.value, tickersDict[data1.value][1], tickersDict[data2.value][1], chart0, win, item), 
   lineChart(vix, gspc, 'VIX', 'S&P500', tickersDict['VIX'][1], tickersDict['S&P500'][1], chart1, win, item),
