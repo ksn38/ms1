@@ -2,7 +2,7 @@
 {% block content %}
 {% load static %}
 <div class='d-flex justify-content-around flex-wrap align-items-center'>
-  <div class='d-flex justify-center mt-2 flex-nowrap align-items-end' style='flex-basis: 30%;'>
+  <div class='d-flex justify-center mt-2 flex-nowrap align-items-end' style='flex-basis: 30%'>
     <table class='table-sm table-bordered'>
       <form>
       <caption style='caption-side: top'><small></small></caption>
@@ -10,26 +10,29 @@
           <td class='text-center bg-dark text-light'>day</td>
         </tr>
         <tr>
-          <td class='bg-dark text-light' nowrap><input type='radio' id='r20' name='period' value="20">month</td>
+          <td class='text-center bg-dark text-light' style='border-top: 2px solid'>week</td>
         </tr>
         <tr>
-          <td class='bg-dark text-light' nowrap><input type='radio' id='r60' name='period' value="60">quarter</td>
+          <td class='bg-dark text-light' style='border-top: 2px solid' nowrap><input type='radio' id='r20' name='period' value="20">month</td>
         </tr>
         <tr>
-          <td class='bg-dark text-light' nowrap><input type='radio' id='r125' name='period' value="125">half-year</td>
+          <td class='bg-dark text-light' style='border-top: 2px solid' nowrap><input type='radio' id='r60' name='period' value="60">quarter</td>
         </tr>
         <tr>
-          <td class='bg-dark text-light' nowrap><input type='radio' id='r250' name='period' value="250" checked="checked">year</td>
+          <td class='bg-dark text-light' style='border-top: 2px solid' nowrap><input type='radio' id='r125' name='period' value="125">half-year</td>
         </tr>
         <tr>
-          <td class='bg-dark text-light' nowrap><input type='radio' id='r1000' name='period' value="1000">4 years</td>
+          <td class='bg-dark text-light' style='border-top: 2px solid' nowrap><input type='radio' id='r250' name='period' value="250" checked="checked">year</td>
         </tr>
         <tr>
-          <td class='bg-dark text-light' nowrap><input type='radio' id='r4500' name='period' value="4500">18 years</td>
+          <td class='bg-dark text-light' style='border-top: 2px solid' nowrap><input type='radio' id='r1000' name='period' value="1000">4 years</td>
+        </tr>
+        <tr>
+          <td class='bg-dark text-light' style='border-top: 2px solid' nowrap><input type='radio' id='r4500' name='period' value="4500">18 years</td>
         </tr>
       </form>
     </table>
-    <table class='table-sm table-bordered'>
+    <table class='table-sm'>
       <caption style='caption-side: top'><small></small></caption>
       <tr>
         <th class='px-2 text-center bg-dark text-light'>TR10</th>
@@ -48,40 +51,40 @@
       </tr>
       {% for ticker in chart_tickers %}
         <tr>
-          <td class='change-tnx text-right'>
+          <td class='change-tnx text-right' style='border-right: 2px solid black'>
             {{ ticker.dif_tnx }}
           </td>
-          <td class='change text-right'>
+          <td class='change text-right' style='border-top: 2px solid black'>
             {{ ticker.dif_gspc }}
           </td>
-          <td class='change text-right'>
+          <td class='change text-right' style='border-top: 2px solid black'>
             {{ ticker.dif_ixic }}
           </td>
-          <td class='change text-right'>
+          <td class='change text-right' style='border-top: 2px solid black'>
             {{ ticker.dif_rut }}
           </td>
-          <td class='change text-right'>
+          <td class='change text-right' style='border-top: 2px solid black'>
             {{ ticker.dif_gdaxi }}
           </td>
-          <td class='change text-right'>
+          <td class='change text-right' style='border-top: 2px solid black'>
             {{ ticker.dif_ss }}
           </td>
-          <td class='change text-right'>
+          <td class='change text-right' style='border-top: 2px solid black'>
             {{ ticker.dif_sz }}
           </td>
-          <td class='change text-right'>
+          <td class='change text-right' style='border-top: 2px solid black'>
             {{ ticker.dif_bvsp }}
           </td>
-          <td class='change text-right'>
+          <td class='change text-right' style='border-top: 2px solid black'>
             {{ ticker.dif_bsesn }}
           </td>
-          <td class='change text-right'>
+          <td class='change text-right' style='border-top: 2px solid black'>
             {{ ticker.dif_wheat }}
           </td>
-          <td class='change text-right'>
+          <td class='change text-right' style='border-top: 2px solid black'>
             {{ ticker.dif_wti }}
           </td>
-          <td class='change text-right'>
+          <td class='change text-right' style='border-top: 2px solid black; border-right: 2px solid black'>
             {{ ticker.dif_gold }}
           </td>
           <td class='change-invert text-right'>
@@ -163,6 +166,14 @@
       </div>
     </div>
     <div class='d-flex'>
+      <div class='d-flex'>
+        <canvas id="line-chart3" width="700" height="450"></canvas>
+      </div>
+      <div class='d-flex'>
+        <canvas id="line-chart4" width="700" height="450"></canvas>
+      </div>
+    </div>
+    <div class='d-flex' style='margin-bottom: 100px'>
       <div class='d-flex'>
         <canvas id="line-chart7" width="700" height="450"></canvas>
       </div>

@@ -21,8 +21,6 @@ let chart1 = document.getElementById("line-chart1");
 let chart2 = document.getElementById("line-chart2");
 let chart3 = document.getElementById("line-chart3");
 let chart4 = document.getElementById("line-chart4");
-let chart5 = document.getElementById("line-chart5");
-let chart6 = document.getElementById("line-chart6");
 let chart7 = document.getElementById("line-chart7");
 let chart8 = document.getElementById("line-chart8");
 let lengthRD = received_data.length;
@@ -73,14 +71,14 @@ for (let i = 0; i <= arrTr.length; i += 11) {
   colorVal(arrTr.slice(i, i + 11));
 }
 
-let colorTnx = (arr) => {
+/*let colorTnx = (arr) => {
   arr = Array.from(arr);
   let arrInt = arr.map((i) => parseFloat(i.innerText));
   let maxArr = Math.max.apply(null, arrInt);
   let minArr = Math.min.apply(null, arrInt);
   for (let i = 0; i < arrInt.length; i++) {
     if (arrInt[i] > 0) {
-      arr[i].style.backgroundColor = 'rgba(0, 123, 255,'  + arrInt[i]/maxArr + ')';
+      arr[i].style.backgroundColor = 'rgba(23, 162, 184,'  + arrInt[i]/maxArr + ')';
     }
     else if (arrInt[i] < 0) {
       arr[i].style.backgroundColor = 'rgba(255, 193, 7,'  + arrInt[i]/minArr+ ')';
@@ -88,7 +86,7 @@ let colorTnx = (arr) => {
   }
 }
 
-colorTnx(trTnx);
+colorTnx(trTnx);*/
 
 let colorInv = (arr) => {
   arr = Array.from(arr);
@@ -97,15 +95,16 @@ let colorInv = (arr) => {
   let minArr = Math.min.apply(null, arrInt);
   for (let i = 0; i < arrInt.length; i++) {
     if (arrInt[i] > 0) {
-      arr[i].style.backgroundColor = 'rgba(235, 123, 38,'  + arrInt[i]/maxArr + ')';
+      arr[i].style.backgroundColor = 'rgba(255, 193, 7,'  + arrInt[i]/maxArr + ')';
     }
     else if (arrInt[i] < 0) {
-      arr[i].style.backgroundColor = 'rgba(90, 20, 162,'  + arrInt[i]/minArr+ ')';
+      arr[i].style.backgroundColor = 'rgba(23, 162, 184,'  + arrInt[i]/minArr+ ')';
     }
   }
 }
 
 colorInv(trInv);
+colorInv(trTnx);
 
 
 let cor = (list1, list2) => {
@@ -267,8 +266,10 @@ let createCharts = function (offset, level, win, item) {
   return [[lineChart(tickersDict[data1.value][0], tickersDict[data2.value][0], data1.value, data2.value, tickersDict[data1.value][1], tickersDict[data2.value][1], chart0, win, item), 
   lineChart(vix, gspc, 'VIX', 'S&P500', tickersDict['VIX'][1], tickersDict['S&P500'][1], chart1, win, item),
   lineChart(tnx, gspc, 'TR10', 'S&P500', tickersDict['TR10'][1], tickersDict['S&P500'][1], chart2, win, item),
-  lineChart(wtiGold, tnx, 'Wti/Gold', 'TR10', tickersDict['Wti/Gold'][1], tickersDict['TR10'][1], chart7, win, item),
-  lineChart(ixic, rut, 'Nasdaq', 'Russell', tickersDict['Nasdaq'][1], tickersDict['Russell'][1], chart8, win, item)],
+  lineChart(wtiGold, tnx, 'Wti/Gold', 'TR10', tickersDict['Wti/Gold'][1], tickersDict['TR10'][1], chart3, win, item),
+  lineChart(ixic, rut, 'Nasdaq', 'Russell', tickersDict['Nasdaq'][1], tickersDict['Russell'][1], chart4, win, item),
+  lineChart(wheat, wti, 'Wheat', 'WTI', tickersDict['Wheat'][1], tickersDict['WTI'][1], chart7, win, item),
+  lineChart(tnx, gold, 'TR10', 'Gold', tickersDict['TR10'][1], tickersDict['Gold'][1], chart8, win, item)],
   
   [date = [],
   vix = [],
