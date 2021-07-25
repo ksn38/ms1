@@ -265,11 +265,11 @@ let createCharts = function (offset, level, win, item) {
 
   return [[lineChart(tickersDict[data1.value][0], tickersDict[data2.value][0], data1.value, data2.value, tickersDict[data1.value][1], tickersDict[data2.value][1], chart0, win, item), 
   lineChart(vix, gspc, 'VIX', 'S&P500', tickersDict['VIX'][1], tickersDict['S&P500'][1], chart1, win, item),
-  lineChart(tnx, gspc, 'TR10', 'S&P500', tickersDict['TR10'][1], tickersDict['S&P500'][1], chart2, win, item),
-  lineChart(wtiGold, tnx, 'Wti/Gold', 'TR10', tickersDict['Wti/Gold'][1], tickersDict['TR10'][1], chart3, win, item),
-  lineChart(ixic, rut, 'Nasdaq', 'Russell', tickersDict['Nasdaq'][1], tickersDict['Russell'][1], chart4, win, item),
-  lineChart(wheat, wti, 'Wheat', 'WTI', tickersDict['Wheat'][1], tickersDict['WTI'][1], chart7, win, item),
-  lineChart(tnx, gold, 'TR10', 'Gold', tickersDict['TR10'][1], tickersDict['Gold'][1], chart8, win, item)],
+  lineChart(tnx, gspc, 'TR10', 'S&P500 (-0.65)', tickersDict['TR10'][1], tickersDict['S&P500'][1], chart8, win, item),
+  lineChart(wtiGold, tnx, 'Wti/Gold', 'TR10 (0.83)', tickersDict['Wti/Gold'][1], tickersDict['TR10'][1], chart4, win, item),
+  lineChart(ixic, rut, 'Nasdaq', 'Russell', tickersDict['Nasdaq'][1], tickersDict['Russell'][1], chart2, win, item),
+  lineChart(wheat, wti, 'Wheat', 'WTI (0.82)', tickersDict['Wheat'][1], tickersDict['WTI'][1], chart7, win, item),
+  lineChart(tnx, gold, 'TR10', 'Gold (-0.90)', tickersDict['TR10'][1], tickersDict['Gold'][1], chart3, win, item)],
   
   [date = [],
   vix = [],
