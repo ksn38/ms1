@@ -108,14 +108,14 @@
         <option value="IBOVESPA">IBOVESPA</option>
         <option value="S&P BSE SENSEX">S&P BSE SENSEX</option>
         <option value="Wheat">Wheat</option>
-        <option selected value="WTI">WTI</option>
-        <option value="Gold">Gold</option>
+        <option value="WTI">WTI</option>
+        <option selected value="Gold">Gold</option>
         <option value="Wti/Gold">Wti/Gold</option>
         <option value="Wheat/Gold">Wheat/Gold</option>
         <option value="VIX">VIX</option>
       </select>
       <select id="data2" class='mr-1'>
-        <option value="TR10">Treasury Yield 10 Years</option>
+        <option selected value="TR10">Treasury Yield 10 Years</option>
         <option value="S&P500">S&P500</option>
         <option value="Nasdaq">Nasdaq</option>
         <option value="Russell">Russell</option>
@@ -126,7 +126,7 @@
         <option value="S&P BSE SENSEX">S&P BSE SENSEX</option>
         <option value="Wheat">Wheat</option>
         <option value="WTI">WTI</option>
-        <option selected value="Gold">Gold</option>
+        <option value="Gold">Gold</option>
         <option value="Wti/Gold">Wti/Gold</option>
         <option value="Wheat/Gold">Wheat/Gold</option>
         <option value="VIX">VIX</option>
@@ -134,6 +134,29 @@
       <input type="submit" value="Show" id='button0'>
     </span>
     <canvas id="line-chart0" width="1400" height="600"></canvas>
+  </div>
+  <div class='flex-wrap mt-2'>
+    <span class="d-flex justify-content-center">
+      <select id="data-avg" class='mr-1'>
+        <option value="TR10">Treasury Yield 10 Years</option>
+        <option value="S&P500">S&P500</option>
+        <option value="Nasdaq">Nasdaq</option>
+        <option value="Russell">Russell</option>
+        <option value="DAX">DAX</option>
+        <option value="SSE Composite">SSE Composite</option>
+        <option value="Shenzhen Component">Shenzhen Component</option>
+        <option value="IBOVESPA">IBOVESPA</option>
+        <option value="S&P BSE SENSEX">S&P BSE SENSEX</option>
+        <option value="Wheat">Wheat</option>
+        <option selected value="WTI">WTI</option>
+        <option value="Gold">Gold</option>
+        <option value="Wti/Gold">Wti/Gold</option>
+        <option value="Wheat/Gold">Wheat/Gold</option>
+        <option value="VIX">VIX</option>
+      </select>
+      <input type="submit" value="Show" id='buttonAvg'>
+    </span>
+    <canvas id="line-chart-avg" width="1400" height="600"></canvas>
   </div>
 
     <!--div class='d-flex justify-content-center flex-wrap align-items-center mt-1'>
@@ -165,7 +188,7 @@
         <canvas id="line-chart2" width="700" height="450"></canvas>
       </div>
     </div>
-    <div class='d-flex'>
+    <div class='d-flex' style='margin-bottom: 100px'>
       <div class='d-flex'>
         <canvas id="line-chart3" width="700" height="450"></canvas>
       </div>
@@ -173,36 +196,38 @@
         <canvas id="line-chart4" width="700" height="450"></canvas>
       </div>
     </div>
-    <div class='d-flex' style='margin-bottom: 100px'>
-      <div class='d-flex'>
-        <canvas id="line-chart7" width="700" height="450"></canvas>
-      </div>
-      <div class='d-flex'>
-        <canvas id="line-chart8" width="700" height="450"></canvas>
-      </div>
-    </div>
     <div class="d-flex justify-content-center fixed-bottom">
-      <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" style='max-width: 1200px; flex-basis: 1200px;'>
+      <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" style='max-width: 1400px; flex-basis: 1400px;'>
         <div class="toast-body">
           <div class='radWin d-flex justify-content-around'>
             <div class='d-flex flex-nowrap'>
-            <span class='border border-primary rounded p-1'>Range
-            <input type="number" id="period-input" name="periodNum" value="250" min="2" max="4500" step='1' size='4'></span>
-            <span class='ml-1 border border-primary rounded p-1' class='mr-2'>Offset 
-            <input type="number" id="offset-input" value='0' min="0" max="4500" size='4'>
-            <span> to </span>
-            <span id="dateOffsetOutput"></span></span>
-            <span class='mx-1 border border-primary rounded p-1'>Level of VIX
-            <input type="number" id="level-input" value='30' min="0" max='100' size='4'></span>
-          </div>
-          <div class='border border-primary rounded p-1'>
-            <label>Window of rolling correlation: <input type='radio' id='w5' name='win' value="5">week</label>
-            <label><input type='radio' id='w20' name='win' value="20" checked="checked">month</label>
-            <label><input type='radio' id='w60' name='win' value="60">quarter</label>
-            <label><input type='radio' id='w125' name='win' value="125">half-year</label>
-            <label><input type='radio' id='w250' name='win' value="250">year</label>
-            <label><input type='radio' id='w500' name='win' value="500">2 years</label>
-            <input type="number" id="correlation-input" value='20' min="5" max='500' class='ml-2' size='3'>
+              <span class='border border-primary rounded p-1'>Range
+                <input type="number" id="period-input" name="periodNum" value="250" min="2" max="4500" step='1' size='4'>
+                <label><input type='radio' id='r20' name='period' value="20">month</label>
+                <label><input type='radio' id='r60' name='period' value="60">quarter</label>
+                <label><input type='radio' id='r125' name='period' value="125">half-year</label>
+                <label><input type='radio' id='r250' name='period' value="250">year</label>
+                <label><input type='radio' id='r1000' name='period' value="1000">4 years</label>
+                <label><input type='radio' id='r4500' name='period' value="4500">18 years</label>
+              </span>
+              <span class='ml-1 border border-primary rounded p-1' class='mr-2'>Offset 
+                <input type="number" id="offset-input" value='0' min="0" max="4500" size='4'>
+                <span> to </span>
+                <span id="dateOffsetOutput"></span>
+              </span>
+              <span class='mx-1 border border-primary rounded p-1'>Level of VIX
+                <input type="number" id="level-input" value='30' min="0" max='100' size='4'>
+              </span>
+              <div class='border border-primary rounded p-1'>
+                <label>Correlation: <input type='radio' id='w5' name='win' value="5">week</label>
+                <label><input type='radio' id='w20' name='win' value="20" checked="checked">month</label>
+                <label><input type='radio' id='w60' name='win' value="60">quarter</label>
+                <label><input type='radio' id='w125' name='win' value="125">half-year</label>
+                <label><input type='radio' id='w250' name='win' value="250">year</label>
+                <label><input type='radio' id='w500' name='win' value="500">2 years</label>
+                <input type="number" id="correlation-input" value='20' min="5" max='500' class='ml-2' size='3'>
+              </div>
+            </div>
           </div>
         </div>
       </div>
