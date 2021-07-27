@@ -130,13 +130,16 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
       rcor.push(cor(x.slice(i, i + win), y.slice(i, i + win)));
   };
   
-  let radPoint = 3;
-  let bordWidth = 3;
+  let radPoint = 2;
+  let bordWidth = 2;
   
-  if (item > 60) {
-    radPoint = 0;
-    bordWidth = 2;
-  };
+  if (item > 125) {
+    radPoint = 0
+  }
+  
+  if (item > 1000) {
+    bordWidth = 1
+  }
   
   return new Chart(chart, {
     type: 'line',
@@ -150,6 +153,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
           yAxisID: 'xLabel',
           pointRadius: radPoint,
           borderWidth: bordWidth,
+          lineTension: 0
         }, { 
           data: y.slice(win),
           borderColor: yColor,
@@ -158,6 +162,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
           yAxisID: 'yLabel',
           pointRadius: radPoint,
           borderWidth: bordWidth,
+          lineTension: 0
         }, { 
           data: rcor,
           borderColor: '#777777',
@@ -384,6 +389,17 @@ let createAvgChart = function (offset, level, item, ticker) {
     data = wheat.map((n, i) => n/gold[i])
   }
   
+  let radPoint = 2;
+  let bordWidth = 2;
+  
+  if (item > 125) {
+    radPoint = 0
+  }
+  
+  if (item > 1000) {
+    bordWidth = 1
+  }
+  
   return [new Chart(chartAvg, {
     type: 'line',
     data: {
@@ -394,8 +410,9 @@ let createAvgChart = function (offset, level, item, ticker) {
           fill: false,
           label: tickersDictAvg[ticker][2],
           yAxisID: 'xLabel',
-          pointRadius: 0,
-          borderWidth: 2,
+          pointRadius: radPoint,
+          borderWidth: bordWidth,
+          lineTension: 0
         }, {          
           data: vix2.slice(maxWin),
           borderColor: '#ff0000',
@@ -408,7 +425,7 @@ let createAvgChart = function (offset, level, item, ticker) {
           borderWidth: 0,
         }, { 
           data: rollAvg(data, maxWin),
-          borderColor: '#333333',
+          borderColor: '#444444',
           fill: false,
           label: 'year',
           yAxisID: 'xLabel',
@@ -417,7 +434,7 @@ let createAvgChart = function (offset, level, item, ticker) {
           borderDash: [50, 10],
         }, {
           data: rollAvg(data, 125).slice(maxWin - 125),
-          borderColor: '#333333',
+          borderColor: '#444444',
           fill: false,
           label: 'half-year',
           yAxisID: 'xLabel',
@@ -426,7 +443,7 @@ let createAvgChart = function (offset, level, item, ticker) {
           borderDash: [25, 7],
         }, { 
           data: rollAvg(data, 60).slice(maxWin - 60),
-          borderColor: '#333333',
+          borderColor: '#444444',
           fill: false,
           label: 'quarter',
           yAxisID: 'xLabel',
@@ -435,7 +452,7 @@ let createAvgChart = function (offset, level, item, ticker) {
           borderDash: [10, 5],
         }, {
           data: rollAvg(data, 20).slice(maxWin - 20),
-          borderColor: '#333333',
+          borderColor: '#444444',
           fill: false,
           label: 'month',
           yAxisID: 'xLabel',
