@@ -137,7 +137,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
     radPoint = 0
   }
   
-  if (item > 1000) {
+  if (item > 2500) {
     bordWidth = 1
   }
   
@@ -396,7 +396,7 @@ let createAvgChart = function (offset, level, item, ticker) {
     radPoint = 0
   }
   
-  if (item > 1000) {
+  if (item > 2500) {
     bordWidth = 1
   }
   

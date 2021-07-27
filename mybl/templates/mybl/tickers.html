@@ -201,7 +201,7 @@
         <div class="toast-body">
           <div class='d-flex justify-content-around'>
             <span class='border border-primary rounded p-1'>Range
-              <input type="number" id="period-input" name="periodNum" value="250" min="2" max="4500" step='1' size='4'>
+              <input type="number" id="period-input" name="periodNum" value="250" min="2" max="4500" step='100' size='4'>
               <label><input type='radio' id='r20' name='period' value="20">month</label>
               <label><input type='radio' id='r60' name='period' value="60">quarter</label>
               <label><input type='radio' id='r125' name='period' value="125">half-year</label>
@@ -210,7 +210,7 @@
               <label><input type='radio' id='r4500' name='period' value="4500">18 years</label>
             </span>
             <span class='ml-1 border border-primary rounded p-1' class='mr-2'>Offset 
-              <input type="number" id="offset-input" value='0' min="0" max="4500" size='4'>
+              <input type="number" id="offset-input" value='0' min="0" max="4500" step='100' size='4'>
               <span> to </span>
               <span id="dateOffsetOutput"></span>
             </span>
