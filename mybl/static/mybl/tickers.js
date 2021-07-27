@@ -16,6 +16,9 @@ let ss = [];
 let bsesn = [];
 let level = 30;
 let vix2 = [];
+let data = [];
+let wtiGold = [];
+let wheatGold = [];
 let chart0 = document.getElementById("line-chart0");
 let chart1 = document.getElementById("line-chart1");
 let chart2 = document.getElementById("line-chart2");
@@ -240,8 +243,8 @@ let createCharts = function (offset, level, win, item) {
     } else {vix2.push(0)};
   }
   
-  let wtiGold = wti.map((n, i) => n/gold[i]);
-  let wheatGold = wheat.map((n, i) => n/gold[i]);
+  wtiGold = wti.map((n, i) => n/gold[i]);
+  wheatGold = wheat.map((n, i) => n/gold[i]);
   
   let tickersDict = {'VIX': [vix, '#ff0000'], 'WTI': [wti, '#000000'], 'Gold': [gold, '#dfbd00'],
      'TR10': [tnx, '#c000ff'], 'S&P500': [gspc, "#0000ff"], 'Nasdaq': [ixic, '#1473b5'],
@@ -268,6 +271,8 @@ let createCharts = function (offset, level, win, item) {
   gdaxi = [],
   wheat = [],
   ss = [],
+  wtiGold = [],
+  wheatGold = [],
   bsesn = []]];
 };
 
@@ -280,7 +285,7 @@ for(let i = 0; i < radio.length; i++){
     charts[0].map((chart) => chart.destroy());
     charts = createCharts(offset, level, win, item); 
     chartAvg2[0].destroy();
-    chartAvg2 = createAvgChart(offset, level, item);     
+    chartAvg2 = createAvgChart(offset, level, item, dataAvg.value);     
     periodInput.value = item;
   });
 }
@@ -305,7 +310,7 @@ offsetInput.onchange = function () {
   charts[0].map((chart) => chart.destroy());
   charts = createCharts(offset, level, win, item); 
   chartAvg2[0].destroy();
-  chartAvg2 = createAvgChart(offset, level, item); 
+  chartAvg2 = createAvgChart(offset, level, item, dataAvg.value); 
 }
 
 levelInput.onchange = function () {
@@ -313,7 +318,7 @@ levelInput.onchange = function () {
   charts[0].map((chart) => chart.destroy());
   charts = createCharts(offset, level, win, item); 
   chartAvg2[0].destroy();
-  chartAvg2 = createAvgChart(offset, level, item); 
+  chartAvg2 = createAvgChart(offset, level, item, dataAvg.value); 
 }
 
 offsetInput.oninput = function() {
@@ -330,7 +335,7 @@ periodInput.onchange = () => {
   charts[0].map((chart) => chart.destroy());
   charts = createCharts(offset, level, win, item); 
   chartAvg2[0].destroy();
-  chartAvg2 = createAvgChart(offset, level, item); 
+  chartAvg2 = createAvgChart(offset, level, item, dataAvg.value); 
 }
 
 button0.onclick = () => {
@@ -350,55 +355,44 @@ let rollAvg = (list, win) => {
   return result;
 };
 
-let createAvgChart = function (offset, level, item) {
+let createAvgChart = function (offset, level, item, ticker) {
   maxWin = 250;
   if (lengthRD - item - maxWin - offset < 0) {
     offset = 0;
     offsetInput.value = 0;
   };
+  
+  let tickersDictAvg = {'vix': [vix, '#ff0000', 'VIX'], 'wti': [wti, '#000000', 'WTI'], 'gold': [gold, '#dfbd00', 'Gold'],
+     'tnx': [tnx, '#c000ff', 'TR10'], 'gspc': [gspc, "#0000ff", 'S&P500'], 'ixic': [ixic, '#1473b5', 'Nasdaq'], 'rut': [rut, "#03007d", 'Russell'], 
+     'wtiGold': [wtiGold, '#858344', 'Wti/Gold'], 'sz': [sz, "#a42857", 'Shenzhen Component'], 'bvsp': [bvsp, '#cf7e00', 'IBOVESPA'],
+     'gdaxi': [gdaxi, "#016a81", 'DAX'], 'wheat': [wheat, '#2bdf01', 'Wheat'], 'ss': [ss, '#a30202', 'SSE Composite'], 'bsesn': [bsesn, '#9db001', 'S&P BSE SENSEX'], 'wheatGold': [wheatGold, '#156e00', 'Wheat/Gold']};
+
   for (let i = lengthRD - item - maxWin - offset; i < lengthRD - offset; i++) {
     date.push(received_data[i]['fields']['date_added']);
-    vix.push(received_data[i]['fields']['vix']);
-    tnx.push(received_data[i]['fields']['tnx']);
-    gspc.push(received_data[i]['fields']['gspc']);
-    ixic.push(received_data[i]['fields']['ixic']);
-    rut.push(received_data[i]['fields']['rut']);
+    data.push(received_data[i]['fields'][ticker]);
     wti.push(received_data[i]['fields']['wti']);
     gold.push(received_data[i]['fields']['gold']);
-    sz.push(received_data[i]['fields']['sz']);
-    bvsp.push(received_data[i]['fields']['bvsp']);
-    gdaxi.push(received_data[i]['fields']['gdaxi']);
     wheat.push(received_data[i]['fields']['wheat']);
-    ss.push(received_data[i]['fields']['ss']);
-    bsesn.push(received_data[i]['fields']['bsesn']);
     if (received_data[i]['fields']['vix'] > level) {
       vix2.push(received_data[i]['fields']['vix'])
     } else {vix2.push(0)};
   }
   
-  let wtiGold = wti.map((n, i) => n/gold[i]);
-  let wheatGold = wheat.map((n, i) => n/gold[i]);
-  
-  let tickersDict = {'VIX': [vix, '#ff0000'], 'WTI': [wti, '#000000'], 'Gold': [gold, '#dfbd00'],
-     'TR10': [tnx, '#c000ff'], 'S&P500': [gspc, "#0000ff"], 'Nasdaq': [ixic, '#1473b5'],
-     'Russell': [rut, "#03007d"], 'Wti/Gold': [wtiGold, '#858344'], 'Shenzhen Component': [sz, "#a42857"], 'IBOVESPA': [bvsp, '#cf7e00'],
-     'DAX': [gdaxi, "#016a81"], 'Wheat': [wheat, '#2bdf01'], 'SSE Composite': [ss, '#a30202'], 'S&P BSE SENSEX': [bsesn, '#9db001'], 'Wheat/Gold': [wheatGold, '#156e00']};
-
-  /*console.log(rollAvg(tickersDict[dataAvg.value][0], maxWin).length);
-  console.log(rollAvg(tickersDict[dataAvg.value][0], 125).length);
-  console.log(rollAvg(tickersDict[dataAvg.value][0], 60).length);
-  console.log(tickersDict[dataAvg.value][0].length);
-  console.log(date.length);*/
+  if (ticker == 'wtiGold') {
+    data = wti.map((n, i) => n/gold[i])
+  } else if (ticker == 'wheatGold') {
+    data = wheat.map((n, i) => n/gold[i])
+  }
   
   return [new Chart(chartAvg, {
     type: 'line',
     data: {
       labels: date.slice(maxWin),
       datasets: [{ 
-          data: tickersDict[dataAvg.value][0].slice(maxWin),
-          borderColor: tickersDict[dataAvg.value][1],
+          data: data.slice(maxWin),
+          borderColor: tickersDictAvg[dataAvg.value][1],
           fill: false,
-          label: dataAvg.value,
+          label: tickersDictAvg[ticker][2],
           yAxisID: 'xLabel',
           pointRadius: 0,
           borderWidth: 2,
@@ -413,7 +407,7 @@ let createAvgChart = function (offset, level, item) {
           pointRadius: 0,
           borderWidth: 0,
         }, { 
-          data: rollAvg(tickersDict[dataAvg.value][0], maxWin),
+          data: rollAvg(data, maxWin),
           borderColor: '#333333',
           fill: false,
           label: 'year',
@@ -422,7 +416,7 @@ let createAvgChart = function (offset, level, item) {
           borderWidth: 1,
           borderDash: [50, 10],
         }, {
-          data: rollAvg(tickersDict[dataAvg.value][0], 125).slice(maxWin - 125),
+          data: rollAvg(data, 125).slice(maxWin - 125),
           borderColor: '#333333',
           fill: false,
           label: 'half-year',
@@ -431,7 +425,7 @@ let createAvgChart = function (offset, level, item) {
           borderWidth: 1,
           borderDash: [25, 7],
         }, { 
-          data: rollAvg(tickersDict[dataAvg.value][0], 60).slice(maxWin - 60),
+          data: rollAvg(data, 60).slice(maxWin - 60),
           borderColor: '#333333',
           fill: false,
           label: 'quarter',
@@ -440,7 +434,7 @@ let createAvgChart = function (offset, level, item) {
           borderWidth: 1,
           borderDash: [10, 5],
         }, {
-          data: rollAvg(tickersDict[dataAvg.value][0], 20).slice(maxWin - 20),
+          data: rollAvg(data, 20).slice(maxWin - 20),
           borderColor: '#333333',
           fill: false,
           label: 'month',
@@ -483,25 +477,16 @@ let createAvgChart = function (offset, level, item) {
   }),
   
   [date = [],
-  vix = [],
   vix2 = [],
-  tnx = [],
-  gspc = [],
-  ixic = [],
-  rut = [],
-  wti = [],
   gold = [],
-  sz = [],
-  bvsp = [],
-  gdaxi = [],
+  wti = [],
   wheat = [],
-  ss = [],
-  bsesn = []]];
+  data = []]];
 };
 
-let chartAvg2 = createAvgChart(offset, level, item);
+let chartAvg2 = createAvgChart(offset, level, item, dataAvg.value);
 
 buttonAvg.onclick = () => {
   chartAvg2[0].destroy();
-  chartAvg2 = createAvgChart(offset, level, item); 
+  chartAvg2 = createAvgChart(offset, level, item, dataAvg.value); 
 }
