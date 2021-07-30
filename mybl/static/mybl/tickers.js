@@ -1,6 +1,6 @@
 let item = 250;
-let level = 30;
-let win = 30;
+let level = 23;
+let win = 20;
 let offset = 0;
 let date = [];
 let vix2 = [];
@@ -29,6 +29,8 @@ let data2 = document.getElementById('data2');
 let button0 = document.getElementById('button0');
 let dataAvg = document.getElementById('data-avg');
 let buttonAvg = document.getElementById('button-avg');
+let playerInput = document.getElementById("player-input");
+let maxWin = 250;
 
 
 for (let i = lengthRD - 1; i >= 0; i--) {
@@ -107,9 +109,18 @@ let cor = (list1, list2) => {
 let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item) {
   let rcor = [];
   
-  for (let i = 0; i < item; i++) {
+  if (item + win > lengthRD) {
+    rcor = new Array(win).fill(0);
+    for (let i = 0; i < item - win; i++) {
       rcor.push(cor(x.slice(i, i + win), y.slice(i, i + win)));
-  };
+    };
+    //console.log('1_' + rcor.length)
+  }else {  
+    for (let i = 0; i < item + win; i++) {
+      rcor.push(cor(x.slice(i, i + win), y.slice(i, i + win)));
+    };
+    //console.log('2_' + rcor.length)
+  }  
   
   let radPoint = 2;
   let bordWidth = 2;
@@ -125,9 +136,9 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
   return new Chart(chart, {
     type: 'line',
     data: {
-      labels: date.slice(win),
+      labels: date.slice(-item),
       datasets: [{ 
-          data: x.slice(win),
+          data: x.slice(-item),
           borderColor: xColor,
           fill: false,
           label: xLabel,
@@ -136,7 +147,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
           borderWidth: bordWidth,
           lineTension: 0
         }, { 
-          data: y.slice(win),
+          data: y.slice(-item),
           borderColor: yColor,
           fill: false,
           label: yLabel,
@@ -153,9 +164,9 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
           pointRadius: 0,
           borderWidth: 1,
         }, { 
-          data: vix2.slice(win),
+          data: vix2.slice(-item),
           borderColor: '#ff0000',
-          backgroundColor: '#feadad',
+          backgroundColor: '#fec6c6',
           steppedLine: 'middle',
           fill: true,
           label: 'VIX',
@@ -212,7 +223,13 @@ let createCharts = function (offset, level, win, item) {
     offset = 0;
     offsetInput.value = 0;
   };
-  for (let i = lengthRD - item - win - offset; i < lengthRD - offset; i++) {
+  
+  let i = lengthRD - item - offset - win;
+  if (item + win >  lengthRD) {
+    i = 0
+  }
+  
+  for (i; i < lengthRD - offset; i++) {
     date.push(received_data[i]['fields']['date_added']);
     tickersDict.vix[0].push(received_data[i]['fields']['vix']);
     tickersDict.tnx[0].push(received_data[i]['fields']['tnx']);
@@ -266,17 +283,28 @@ let createCharts = function (offset, level, win, item) {
 };
 
 
-let rollAvg = (list, win) => {
+let rollAvg = (list, meanWin, item) => {
   let average = (list) => {
     return list.reduce((accum, curr) => accum + curr) / list.length;
   };
   let result = [];
-  for (let i = 0; i < list.length - win; i++) {
-    result.push(average(list.slice(i, i + win - 1)));
-  };
+  
+  if (item + meanWin > lengthRD) {
+    //console.log('itemMeanWin ' + itemMeanWin);
+    result = new Array(meanWin).fill(0);
+    for (let i = 0; i < item - meanWin; i++) {
+      result.push(average(list.slice(i, i + meanWin)));
+    }
+    console.log('1_' + result.length);
+  }else {
+    for (let i = 0; i < item + maxWin - meanWin; i++) {
+      result.push(average(list.slice(i, i + meanWin)));
+    }
+    //console.log('2_' + result.length);
+    result = result.slice(-item);
+  }
   return result;
 };
-
 
 let tickersDictAvg = {'vix': [[], '#ff0000', 'VIX'], 'wti': [[], '#000000', 'WTI'], 'gold': [[], '#dfbd00', 'Gold'],
    'tnx': [[], '#c000ff', 'TR10'], 'gspc': [[], "#0000ff", 'S&P500'], 'ixic': [[], '#1473b5', 'Nasdaq'], 'rut': [[], "#03007d", 'Russell'], 
@@ -284,13 +312,17 @@ let tickersDictAvg = {'vix': [[], '#ff0000', 'VIX'], 'wti': [[], '#000000', 'WTI
    'gdaxi': [[], "#016a81", 'DAX'], 'wheat': [[], '#2bdf01', 'Wheat'], 'ss': [[], '#a30202', 'SSE Composite'], 'bsesn': [[], '#9db001', 'S&P BSE SENSEX'], 'wheatGold': [[], '#156e00', 'Wheat/Gold']};
 
 let createAvgChart = function (offset, level, item, ticker) {
-  maxWin = 250;
   if (lengthRD - item - maxWin - offset < 0) {
     offset = 0;
     offsetInput.value = 0;
   };
   
-  for (let i = lengthRD - item - maxWin - offset; i < lengthRD - offset; i++) {
+  let i = lengthRD - item - offset - maxWin;
+  if (item + maxWin >  lengthRD) {
+    i = 0
+  }
+  
+  for (i; i < lengthRD - offset; i++) {
     date.push(received_data[i]['fields']['date_added']);
     data.push(received_data[i]['fields'][ticker]);
     tickersDictAvg.wti[0].push(received_data[i]['fields']['wti']);
@@ -323,9 +355,9 @@ let createAvgChart = function (offset, level, item, ticker) {
   return [new Chart(chartAvg, {
     type: 'line',
     data: {
-      labels: date.slice(maxWin),
+      labels: date.slice(-item),
       datasets: [{ 
-          data: data.slice(maxWin),
+          data: data.slice(-item),
           borderColor: tickersDictAvg[dataAvg.value][1],
           fill: false,
           label: tickersDictAvg[ticker][2],
@@ -334,9 +366,9 @@ let createAvgChart = function (offset, level, item, ticker) {
           borderWidth: bordWidth,
           lineTension: 0
         }, {          
-          data: vix2.slice(maxWin),
+          data: vix2.slice(-item),
           borderColor: '#ff0000',
-          backgroundColor: '#feadad',
+          backgroundColor: '#fec6c6',
           steppedLine: 'middle',
           fill: true,
           label: 'VIX    Average:',
@@ -344,7 +376,7 @@ let createAvgChart = function (offset, level, item, ticker) {
           pointRadius: 0,
           borderWidth: 0,
         }, { 
-          data: rollAvg(data, maxWin),
+          data: rollAvg(data, maxWin, item),
           borderColor: '#444444',
           fill: false,
           label: 'year',
@@ -353,7 +385,7 @@ let createAvgChart = function (offset, level, item, ticker) {
           borderWidth: 1,
           borderDash: [50, 10],
         }, {
-          data: rollAvg(data, 125).slice(maxWin - 125),
+          data: rollAvg(data, 125, item),
           borderColor: '#444444',
           fill: false,
           label: 'half-year',
@@ -361,8 +393,8 @@ let createAvgChart = function (offset, level, item, ticker) {
           pointRadius: 0,
           borderWidth: 1,
           borderDash: [25, 7],
-        }, { 
-          data: rollAvg(data, 60).slice(maxWin - 60),
+        }, {
+          data: rollAvg(data, 60, item),
           borderColor: '#444444',
           fill: false,
           label: 'quarter',
@@ -371,7 +403,7 @@ let createAvgChart = function (offset, level, item, ticker) {
           borderWidth: 1,
           borderDash: [10, 5],
         }, {
-          data: rollAvg(data, 20).slice(maxWin - 20),
+          data: rollAvg(data, 20, item),
           borderColor: '#444444',
           fill: false,
           label: 'month',
@@ -482,14 +514,33 @@ offsetInput.oninput = function() {
 };
 
 periodInput.onchange = () => {
-  item = periodInput.value;
+  item = parseInt(periodInput.value);
   charts[0].map((chart) => chart.destroy());
   charts = createCharts(offset, level, win, item); 
   chartAvg2[0].destroy();
-  chartAvg2 = createAvgChart(offset, level, item, dataAvg.value); 
+  chartAvg2 = createAvgChart(offset, level, item, dataAvg.value);
 }
 
 button0.onclick = () => {
   charts[0].map((chart) => chart.destroy());
   charts = createCharts(offset, level, win, item); 
 }
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function logInc(days) {
+  return days;
+}
+
+playerInput.onclick = async function () {
+  let maxRangeCor = lengthRD;
+  for (let days = 5; days < maxRangeCor; days += Math.ceil(logInc(days)/10)) {
+    await sleep(200);
+    playerInput.value = days;
+    charts[0].map((chart) => chart.destroy());
+    charts = createCharts(offset, level, days, item); 
+  }
+}
+
