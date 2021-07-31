@@ -292,12 +292,11 @@ let rollAvg = (list, meanWin, item) => {
   let result = [];
   
   if (item + meanWin > lengthRD) {
-    //console.log('itemMeanWin ' + itemMeanWin);
     result = new Array(meanWin).fill(0);
     for (let i = 0; i < item - meanWin; i++) {
       result.push(average(list.slice(i, i + meanWin)));
     }
-    console.log('1_' + result.length);
+    //console.log('1_' + result.length);
   }else {
     for (let i = 0; i < item + maxWin - meanWin; i++) {
       result.push(average(list.slice(i, i + meanWin)));
@@ -529,7 +528,6 @@ button0.onclick = () => {
 }
 
 
-
 let animationChart = function (offset, level, win, item, ticker1, ticker2) {
   if (lengthRD - item - win - offset < 0) {
     offset = 0;
@@ -553,12 +551,20 @@ let animationChart = function (offset, level, win, item, ticker1, ticker2) {
     } else {vix2.push(0)};
   }
   
-  if (dataAnimation1.value == 'wtiGold' || dataAnimation2.value == 'wtiGold') {
-    tickersDict.wtiGold[0] = tickersDict.wti[0].map((n, i) => n/tickersDict.gold[0][i]);
+  if (ticker1 == 'wtiGold') {
+    dataAnimation1 = tickersDict.wti[0].map((n, i) => n/tickersDict.gold[0][i])
   }
   
-  if (dataAnimation1.value == 'wheatGold' || dataAnimation2.value == 'wheatGold') {
-    tickersDict.wheatGold[0] = tickersDict.wheat[0].map((n, i) => n/tickersDict.gold[0][i]);
+  if (ticker1 == 'wheatGold') {
+    dataAnimation1 = tickersDict.wheat[0].map((n, i) => n/tickersDict.gold[0][i])
+  }
+  
+  if (ticker2 == 'wtiGold') {
+    dataAnimation2 = tickersDict.wti[0].map((n, i) => n/tickersDict.gold[0][i])
+  }
+  
+  if (ticker2 == 'wheatGold') {
+    dataAnimation2 = tickersDict.wheat[0].map((n, i) => n/tickersDict.gold[0][i])
   }
   
   let radPoint = 2;
@@ -571,8 +577,6 @@ let animationChart = function (offset, level, win, item, ticker1, ticker2) {
   if (item > 2500) {
     bordWidth = 1
   }
-  
-  //console.log(dataAnimation1);
   
   return [lineChart(dataAnimation1, dataAnimation2, tickersDict[data1.value][2], tickersDict[data2.value][2], tickersDict[data1.value][1], tickersDict[data2.value][1], chart0, win, item),
   
@@ -589,13 +593,9 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function logInc(days) {
-  return days;
-}
-
 playerInput.onclick = async function () {
   let maxRangeCor = lengthRD;
-  for (let days = 5; days < maxRangeCor; days += Math.ceil(logInc(days)/10)) {
+  for (let days = 5; days < maxRangeCor; days += Math.ceil(days/10)) {
     await sleep(200);
     playerInput.value = days;
     charts[0][0].destroy();
@@ -603,5 +603,4 @@ playerInput.onclick = async function () {
   }
 }
 
-//animationChart(offset, level, win, item, data1.value, data2.value);
-//console.log(charts[0][0]);
+
