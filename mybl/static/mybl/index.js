@@ -183,7 +183,7 @@ for (let i = 0; i < currencyPlus.length; i++) {
   if (EM.has(curRe.exec(currencyPlus[i].textContent)[0])) {
     currencyPlus[i].classList.add('bg-warning');}
   if (com.has(curRe.exec(currencyPlus[i].textContent)[0])) {
-    //currencyPlus[i].classList.add('text-info');
+    currencyPlus[i].classList.add('text-info');
     currencyPlus[i].classList.add('font-weight-bold')}
   if (mid.has(curRe.exec(currencyPlus[i].textContent)[0])) {
     currencyPlus[i].classList.add('bg-secondary');

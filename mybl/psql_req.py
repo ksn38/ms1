@@ -152,6 +152,6 @@ round((mt.wheat/mt2.wheat - 1) * 10000)/100 as dif_wheat,
 round((mt.ss/mt2.ss - 1) * 10000)/100 as dif_ss,
 round((mt.bsesn/mt2.bsesn - 1) * 10000)/100 as dif_bsesn
 from mybl_ticker mt
-left join mybl_ticker mt2 on mt2.id = mt.id - 4950 
+left join mybl_ticker mt2 on mt2.id = mt.id - 5000 
 where mt.id = (select max(mt.id) from mybl_ticker mt))
 order by id desc;'''

@@ -31,6 +31,8 @@ let dataAvg = document.getElementById('data-avg');
 let buttonAvg = document.getElementById('button-avg');
 let playerInput = document.getElementById("player-input");
 let maxWin = 250;
+let dataAnimation1 = [];
+let dataAnimation2 = [];
 
 
 for (let i = lengthRD - 1; i >= 0; i--) {
@@ -526,6 +528,63 @@ button0.onclick = () => {
   charts = createCharts(offset, level, win, item); 
 }
 
+
+
+let animationChart = function (offset, level, win, item, ticker1, ticker2) {
+  if (lengthRD - item - win - offset < 0) {
+    offset = 0;
+    offsetInput.value = 0;
+  };
+  
+  let i = lengthRD - item - offset - win;
+  if (item + win >  lengthRD) {
+    i = 0
+  }
+  
+  for (i; i < lengthRD - offset; i++) {
+    date.push(received_data[i]['fields']['date_added']);
+    dataAnimation1.push(received_data[i]['fields'][ticker1]);
+    dataAnimation2.push(received_data[i]['fields'][ticker2]);
+    tickersDict.wti[0].push(received_data[i]['fields']['wti']);
+    tickersDict.gold[0].push(received_data[i]['fields']['gold']);
+    tickersDict.wheat[0].push(received_data[i]['fields']['wheat']);
+    if (received_data[i]['fields']['vix'] > level) {
+      vix2.push(received_data[i]['fields']['vix'])
+    } else {vix2.push(0)};
+  }
+  
+  if (dataAnimation1.value == 'wtiGold' || dataAnimation2.value == 'wtiGold') {
+    tickersDict.wtiGold[0] = tickersDict.wti[0].map((n, i) => n/tickersDict.gold[0][i]);
+  }
+  
+  if (dataAnimation1.value == 'wheatGold' || dataAnimation2.value == 'wheatGold') {
+    tickersDict.wheatGold[0] = tickersDict.wheat[0].map((n, i) => n/tickersDict.gold[0][i]);
+  }
+  
+  let radPoint = 2;
+  let bordWidth = 2;
+  
+  if (item > 125) {
+    radPoint = 0
+  }
+  
+  if (item > 2500) {
+    bordWidth = 1
+  }
+  
+  //console.log(dataAnimation1);
+  
+  return [lineChart(dataAnimation1, dataAnimation2, tickersDict[data1.value][2], tickersDict[data2.value][2], tickersDict[data1.value][1], tickersDict[data2.value][1], chart0, win, item),
+  
+  [date = [],
+  vix2 = [],
+  tickersDictAvg.wti[0] = [],
+  tickersDictAvg.gold[0] = [],
+  tickersDictAvg.wheat[0] = [],
+  dataAnimation1 = [],
+  dataAnimation2 = []]];
+};
+
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -539,8 +598,10 @@ playerInput.onclick = async function () {
   for (let days = 5; days < maxRangeCor; days += Math.ceil(logInc(days)/10)) {
     await sleep(200);
     playerInput.value = days;
-    charts[0].map((chart) => chart.destroy());
-    charts = createCharts(offset, level, days, item); 
+    charts[0][0].destroy();
+    charts[0][0] = animationChart(offset, level, days, item, data1.value, data2.value)[0]; 
   }
 }
 
+//animationChart(offset, level, win, item, data1.value, data2.value);
+//console.log(charts[0][0]);
