@@ -29,10 +29,14 @@ let data2 = document.getElementById('data2');
 let button0 = document.getElementById('button0');
 let dataAvg = document.getElementById('data-avg');
 let buttonAvg = document.getElementById('button-avg');
-let playerInput = document.getElementById("player-input");
+let animationButton = document.getElementById("animation-button");
 let maxWin = 250;
 let dataAnimation1 = [];
 let dataAnimation2 = [];
+let animationSpeed = document.getElementById("animation-speed");
+let run = false;
+let timeSleep = 200;
+let maxRangeCor = lengthRD - 200;
 
 
 for (let i = lengthRD - 1; i >= 0; i--) {
@@ -593,14 +597,23 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-playerInput.onclick = async function () {
-  let maxRangeCor = lengthRD;
+animationSpeed.onchange = () => {
+  timeSleep = parseInt(animationSpeed.value);
+};
+
+animationButton.onclick = async function () {
+  animationButton.value = 'Stop';
+  run = !run;
+  
   for (let days = 5; days < maxRangeCor; days += Math.ceil(days/10)) {
-    await sleep(200);
-    playerInput.value = days;
-    charts[0][0].destroy();
-    charts[0][0] = animationChart(offset, level, days, item, data1.value, data2.value)[0]; 
+    if (run) {
+      await sleep(timeSleep);
+      correlationInput.value = days;
+      charts[0][0].destroy();
+      charts[0][0] = animationChart(offset, level, days, item, data1.value, data2.value)[0];
+    } else {break}
   }
+  animationButton.value = 'Start';
 }
 
 

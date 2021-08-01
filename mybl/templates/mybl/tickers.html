@@ -97,42 +97,47 @@
   
   <div class='flex-wrap mt-2'>
     <span class="d-flex justify-content-center">
-      <select id="data1" class='mr-1'>
-        <option value="tnx">Treasury Yield 10 Years</option>
-        <option value="gspc">S&P500</option>
-        <option value="ixic">Nasdaq</option>
-        <option value="rut">Russell</option>
-        <option value="gdaxi">DAX</option>
-        <option value="ss">SSE Composite</option>
-        <option value="sz">Shenzhen Component</option>
-        <option value="bvsp">IBOVESPA</option>
-        <option value="bsesn">S&P BSE SENSEX</option>
-        <option value="wheat">Wheat</option>
-        <option value="wti">WTI</option>
-        <option selected value="gold">Gold</option>
-        <option value="wtiGold">Wti/Gold</option>
-        <option value="wheatGold">Wheat/Gold</option>
-        <option value="vix">VIX</option>
-      </select>
-      <select id="data2" class='mr-1'>
-        <option selected value="tnx">Treasury Yield 10 Years</option>
-        <option value="gspc">S&P500</option>
-        <option value="ixic">Nasdaq</option>
-        <option value="rut">Russell</option>
-        <option value="gdaxi">DAX</option>
-        <option value="ss">SSE Composite</option>
-        <option value="sz">Shenzhen Component</option>
-        <option value="bvsp">IBOVESPA</option>
-        <option value="bsesn">S&P BSE SENSEX</option>
-        <option value="wheat">Wheat</option>
-        <option value="wti">WTI</option>
-        <option value="gold">Gold</option>
-        <option value="wtiGold">Wti/Gold</option>
-        <option value="wheatGold">Wheat/Gold</option>
-        <option value="vix">VIX</option>
-      </select>
-      <input type="submit" value="Show" id='button0'>
-      <input type="button" id="player-input" value='run'class='ml-2'>
+      <span class='mx-1 border border-primary rounded p-1'>
+        <select id="data1" class='mr-1'>
+          <option value="tnx">Treasury Yield 10 Years</option>
+          <option value="gspc">S&P500</option>
+          <option value="ixic">Nasdaq</option>
+          <option value="rut">Russell</option>
+          <option value="gdaxi">DAX</option>
+          <option value="ss">SSE Composite</option>
+          <option value="sz">Shenzhen Component</option>
+          <option value="bvsp">IBOVESPA</option>
+          <option value="bsesn">S&P BSE SENSEX</option>
+          <option value="wheat">Wheat</option>
+          <option value="wti">WTI</option>
+          <option selected value="gold">Gold</option>
+          <option value="wtiGold">Wti/Gold</option>
+          <option value="wheatGold">Wheat/Gold</option>
+          <option value="vix">VIX</option>
+        </select>
+        <select id="data2" class='mr-1'>
+          <option selected value="tnx">Treasury Yield 10 Years</option>
+          <option value="gspc">S&P500</option>
+          <option value="ixic">Nasdaq</option>
+          <option value="rut">Russell</option>
+          <option value="gdaxi">DAX</option>
+          <option value="ss">SSE Composite</option>
+          <option value="sz">Shenzhen Component</option>
+          <option value="bvsp">IBOVESPA</option>
+          <option value="bsesn">S&P BSE SENSEX</option>
+          <option value="wheat">Wheat</option>
+          <option value="wti">WTI</option>
+          <option value="gold">Gold</option>
+          <option value="wtiGold">Wti/Gold</option>
+          <option value="wheatGold">Wheat/Gold</option>
+          <option value="vix">VIX</option>
+        </select>
+        <input type="submit" value="Show" id='button0'>
+      </span>
+      <span class='mx-1 border border-primary rounded p-1'>
+        <input type="button" id="animation-button" value='Start'>
+        <input type="range" id="animation-speed" value='300' min="100" max="1000" class='ml-1'>
+      </span>
     </span>
     <canvas id="line-chart0" width="1400" height="600"></canvas>
   </div>
