@@ -614,6 +614,7 @@ animationButton.onclick = async function () {
     } else {break}
   }
   animationButton.value = 'Start';
+  run = false;
 }
 
 
