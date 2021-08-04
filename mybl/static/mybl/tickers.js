@@ -603,13 +603,13 @@ animationSpeed.onchange = () => {
 };
 
 animationButton.onclick = async function () {
-  if (winAnimation > 4800) {
+  if (winAnimation >= item) {
     winAnimation = 5;
   }
   animationButton.value = 'Stop';
   run = !run;
   
-  for (winAnimation; winAnimation < maxRangeCor; winAnimation += Math.ceil(winAnimation/10)) {
+  for (winAnimation; winAnimation <= item; winAnimation += Math.ceil(winAnimation/10)) {
     if (run) {
       await sleep(timeSleep);
       correlationInput.value = winAnimation;
@@ -619,6 +619,7 @@ animationButton.onclick = async function () {
   }
   animationButton.value = 'Start';
   run = false;
+  win = winAnimation;
 }
 
 
