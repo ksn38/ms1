@@ -36,7 +36,8 @@ let dataAnimation2 = [];
 let animationSpeed = document.getElementById("animation-speed");
 let run = false;
 let timeSleep = 200;
-let maxRangeCor = lengthRD - 200;
+let maxRangeCor = lengthRD - 100;
+let winAnimation = 5;
 
 
 for (let i = lengthRD - 1; i >= 0; i--) {
@@ -605,12 +606,12 @@ animationButton.onclick = async function () {
   animationButton.value = 'Stop';
   run = !run;
   
-  for (let days = 5; days < maxRangeCor; days += Math.ceil(days/10)) {
+  for (winAnimation; winAnimation < maxRangeCor; winAnimation += Math.ceil(winAnimation/10)) {
     if (run) {
       await sleep(timeSleep);
-      correlationInput.value = days;
+      correlationInput.value = winAnimation;
       charts[0][0].destroy();
-      charts[0][0] = animationChart(offset, level, days, item, data1.value, data2.value)[0];
+      charts[0][0] = animationChart(offset, level, winAnimation, item, data1.value, data2.value)[0];
     } else {break}
   }
   animationButton.value = 'Start';
