@@ -603,6 +603,9 @@ animationSpeed.onchange = () => {
 };
 
 animationButton.onclick = async function () {
+  if (winAnimation > 4800) {
+    winAnimation = 5;
+  }
   animationButton.value = 'Stop';
   run = !run;
   
