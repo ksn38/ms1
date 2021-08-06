@@ -196,7 +196,7 @@ let graph = (win) => {
       },
       title: {
           display: true,
-          text: 'Ratio resume to vacances'
+          text: 'Number applicants on vacancy'
       },
       scales: {
         yAxes: [{
@@ -260,14 +260,14 @@ let graphAvg = (win) => {
       labels: dateAvg,
       datasets: [{ 
           data: rollAvg(avgVn),
-          label: "percent without expierence",
+          label: "percent without experience",
           borderColor: "#00af00",
           fill: false,
           pointRadius: 0,
           yAxisID: 'yLabel',
         }, { 
           data: rollAvg(avgRv),
-          label: "ratio resume to vacances",
+          label: "number applicants on vacancy",
           borderColor: "#434343",
           fill: false,
           pointRadius: 0,

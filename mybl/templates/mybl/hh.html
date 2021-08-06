@@ -3,7 +3,7 @@
 {% block content %}
 <div class='d-flex justify-content-around m-2 flex-wrap align-items-start'>
   <table class='table-sm table-dark table-bordered mt-2'>
-    <caption style='caption-side: down'><small>Number of vacancies, percent without experience, ratio applicants on vacancy (from hh.ru).</small></caption>
+    <caption style='caption-side: down'><small>Number of vacancies, percent without experience, number applicants on vacancy (from hh.ru).</small></caption>
     {% for lang in langs %}
       <tr>
         {% if lang.name == 'C%23' %}
