@@ -14,7 +14,12 @@ from django.core import serializers
 from django.db.models import Q
 from mybl.psql_req import chart_langs, chart_tickers, langs_today, chart_langs_march
 import re
+from django.core.cache import cache
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
 
+
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 def index(request):
     def parser(dif, now):
@@ -222,14 +227,44 @@ def hh(request):
     return render(request, 'mybl/hh.html', context)
 
 
-def tickers(request):
+'''def tickers(request):
     context = {'tickers': tickers}
     tickers5000 = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 5000")
     context['chart_tickers'] = Ticker.objects.raw(chart_tickers)#"select * from chart_tickers")
     context['tickers5000'] = serializers.serialize('json', tickers5000)
             
-    return render(request, 'mybl/tickers.html', context)
+    return render(request, 'mybl/tickers.html', context)'''
     
     
 def about(request):
     return render(request, 'mybl/about.html')
+    
+
+'''def tickers(request):
+    if 'chart_tickers_view' in cache:
+        chart_tickers_view = cache.get('chart_tickers_view')
+    else:
+        chart_tickers_raw = Ticker.objects.raw(chart_tickers)#"select * from chart_tickers")
+        cache.set('chart_tickers_view', chart_tickers_raw)
+        chart_tickers_view = cache.get('chart_tickers_view')
+    
+    if 'tickers5000' in cache:
+        tickers5000 = cache.get('tickers5000')
+    else:
+        tickers5000_raw = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 5000")
+        tickers5000_raw = serializers.serialize('json', tickers5000_raw)        
+        cache.set('tickers5000', tickers5000_raw)
+        tickers5000 = cache.get('tickers5000')
+        
+    context = {'chart_tickers': chart_tickers_view, 'tickers5000': tickers5000}
+            
+    return render(request, 'mybl/tickers.html', context)'''
+
+
+def tickers(request):
+    chart_tickers = cache.get('chart_tickers_view')
+    tickers5000 = cache.get('tickers5000')
+        
+    context = {'chart_tickers': chart_tickers, 'tickers5000': tickers5000}
+            
+    return render(request, 'mybl/tickers.html', context)

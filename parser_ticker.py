@@ -6,6 +6,11 @@ from collections import OrderedDict
 from bs4 import BeautifulSoup as bs
 from django.db.models import Q
 import requests
+from django.core.cache import cache
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from mybl.psql_req import chart_tickers
+from django.core import serializers
 
 
 if __name__ == '__main__':
@@ -13,6 +18,7 @@ if __name__ == '__main__':
     django.setup()
     from mybl.models import Ticker
 
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 def ticks(*args):
     headers = {
@@ -38,10 +44,17 @@ date_today = date.today().strftime("%Y-%m-%d")
 date7 = (date.today() - timedelta(7)).strftime("%Y-%m-%d")
 tickers = Ticker.objects.filter(Q(date_added = date_today))
 
-if len(tickers) == 0:
-    if date.today().weekday() not in {0, 6}:
-        t = ticks('gspc')
-        if Ticker.objects.filter(Q(date_added__gt= date7)).order_by('-date_added')[0].gspc != t['gspc']:
-            t.update(ticks('vix', 'tnx', 'ixic', 'rut', 'wti', 'gold', 'sz', 'bvsp', 'gdaxi', 'wheat', 'ss', 'bsesn'))
-            obj = Ticker(**t)
-            obj.save()
+#if len(tickers) == 0:
+if date.today().weekday() not in {0, 6}:
+    t = ticks('gspc')
+    if Ticker.objects.filter(Q(date_added__gt= date7)).order_by('-date_added')[0].gspc != t['gspc']:
+        t.update(ticks('vix', 'tnx', 'ixic', 'rut', 'wti', 'gold', 'sz', 'bvsp', 'gdaxi', 'wheat', 'ss', 'bsesn'))
+        obj = Ticker(**t)
+        obj.save()
+
+'''chart_tickers_raw = Ticker.objects.raw(chart_tickers)#"select * from chart_tickers")
+cache.set('chart_tickers_view', chart_tickers_raw)
+
+tickers5000_raw = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 5000")
+tickers5000_raw = serializers.serialize('json', tickers5000_raw)        
+cache.set('tickers5000', tickers5000_raw)'''
