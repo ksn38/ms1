@@ -44,17 +44,17 @@ date_today = date.today().strftime("%Y-%m-%d")
 date7 = (date.today() - timedelta(7)).strftime("%Y-%m-%d")
 tickers = Ticker.objects.filter(Q(date_added = date_today))
 
-#if len(tickers) == 0:
-if date.today().weekday() not in {0, 6}:
-    t = ticks('gspc')
-    if Ticker.objects.filter(Q(date_added__gt= date7)).order_by('-date_added')[0].gspc != t['gspc']:
-        t.update(ticks('vix', 'tnx', 'ixic', 'rut', 'wti', 'gold', 'sz', 'bvsp', 'gdaxi', 'wheat', 'ss', 'bsesn'))
-        obj = Ticker(**t)
-        obj.save()
+if len(tickers) == 0:
+    if date.today().weekday() not in {0, 6}:
+        t = ticks('gspc')
+        if Ticker.objects.filter(Q(date_added__gt= date7)).order_by('-date_added')[0].gspc != t['gspc']:
+            t.update(ticks('vix', 'tnx', 'ixic', 'rut', 'wti', 'gold', 'sz', 'bvsp', 'gdaxi', 'wheat', 'ss', 'bsesn'))
+            obj = Ticker(**t)
+            obj.save()
 
-'''chart_tickers_raw = Ticker.objects.raw(chart_tickers)#"select * from chart_tickers")
+chart_tickers_raw = Ticker.objects.raw(chart_tickers)#"select * from chart_tickers")
 cache.set('chart_tickers_view', chart_tickers_raw)
 
 tickers5000_raw = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 5000")
 tickers5000_raw = serializers.serialize('json', tickers5000_raw)        
-cache.set('tickers5000', tickers5000_raw)'''
+cache.set('tickers5000', tickers5000_raw)
