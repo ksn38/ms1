@@ -1,0 +1,229 @@
+{% extends "mybl/base.html" %}
+{% load static %}
+{% block content %}
+<body>
+  <div class='d-flex justify-content-around m-2 flex-wrap align-items-start'>
+    <div class='flex-column justify-content-center mt-2'>
+      <small class='d-flex justify-content-around mt-2 text-secondary'>Changes currencies relative to the ruble for periods:</small> 
+      <span>
+        <form class='d-flex justify-content-center mb-2' action="#" method="get" class='ml-auto'>
+          <input class='mr-1' type="number" value="4000" name="mytextbox3" size='3' min='1' max='11000' id='mytextbox3'>
+          <input class='mr-1' type="number" value="1000" name="mytextbox2" size='3' min='1' max='11000' id='mytextbox2'>
+          <input class='mr-1' type="number" value="100" name="mytextbox1" size='3' min='1' max='11000' id='mytextbox1'>
+          <input class='mr-1' type="number" value="1" name="mytextbox" size='3' min='1' max='11000' id='mytextbox'>
+          <input type="submit" class="button" value=" days ago" name="mybtn" id='mybtn'>
+        </form>
+      </span>
+      <div class='d-flex flex-nowrap'>
+        <div  class='flex-column'>
+          <div>({{ date_delta3 }})</div>
+          <table class='table-sm table-bordered table-dark' style='height: 0px'>
+            {% for name, value in dif_plus3 %}
+              <tr>
+                <td class='currency-plus'>
+                  {{ name }}
+                </td>
+                <td class='value-plus3'>
+                  {{ value }}
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <div  class='flex-column'>
+          <div>({{ date_delta2 }})</div>
+          <table class='table-sm table-bordered table-dark' style='height: 0px'>
+            {% for name, value in dif_plus2 %}
+              <tr>
+                <td class='currency-plus'>
+                  {{ name }}
+                </td>
+                <td class='value-plus2'>
+                  {{ value }}
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <div  class='flex-column'>
+          <div>({{ date_delta1 }})</div>
+          <table class='table-sm table-bordered table-dark' style='height: 0px'>
+            {% for name, value in dif_plus1 %}
+              <tr>
+                <td class='currency-plus'>
+                  {{ name }}
+                </td>
+                <td class='value-plus1'>
+                  {{ value }}
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <div class='mb-3'>
+          <div class='flex-column justify-content-around'>
+            <div>({{ date_delta }})</div>
+          </div>
+          <div class='flex-column'>
+            <table class='table-sm table-bordered table-dark' style='height: 0px'>
+              {% for name, value in dif_plus %}
+                <tr>
+                  <td class='currency-plus'>
+                    {{ name }}
+                  </td>
+                  <td class='value-plus'>
+                    {{ value }}
+                  </td>
+                </tr>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <table class='table-sm table-dark table-bordered' id='moex'>
+      <caption style='caption-side: top'>
+        <span class='d-flex justify-content-start'>
+          <small>Stocks moex. Number of</small>
+        </span>
+        <input type='number' id='days' value='2' size='3' min='2' max='3000'>
+        <input type='submit' class='button' id='stocks' value=' days ago'></input>
+        <span>20</span>
+        <input type="radio" name='lenRows' checked="checked" onchange="deleteRow()"/>
+        <span>75</span>
+		  <input type="radio" name='lenRows' onchange="insRow()"/>
+      <div class='date-dict2 text-dark'></div>
+      </caption>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+    </table>
+  </div>
+  <script>
+    let delta = {{ delta|safe }};
+    let delta1 = {{ delta1|safe }};
+    let delta2 = {{ delta2|safe }};
+    let delta3 = {{ delta3|safe }};
+  </script>
+  <script src="{% static 'mybl/currencies.js' %}"></script>
+</body>
+</html>
+{% endblock content %}

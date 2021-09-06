@@ -21,7 +21,7 @@ from django.core.cache.backends.base import DEFAULT_TIMEOUT
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
-def index(request):
+def currencies(request):
     def parser(dif, now):
         url = 'http://www.cbr.ru/scripts/XML_daily.asp'
         today = date.today() - timedelta(days=dif)
@@ -77,7 +77,7 @@ def index(request):
                 'dif_plus1': ordered_array(delta1)[0], 'date_delta1': ordered_array(delta1)[1], 'delta1': delta1,\
                 'dif_plus2': ordered_array(delta2)[0], 'date_delta2': ordered_array(delta2)[1], 'delta2': delta2,\
                 'dif_plus3': ordered_array(delta3)[0], 'date_delta3': ordered_array(delta3)[1], 'delta3': delta3}
-    return render(request, 'mybl/index.html', context)
+    return render(request, 'mybl/currencies.html', context)
 
 def blog(request):
     blog = Bpost.objects.order_by('date_added')
@@ -225,46 +225,16 @@ def hh(request):
     context['graphs_mean_change'] = serializers.serialize('json', graphs_mean_change)
     
     return render(request, 'mybl/hh.html', context)
-
-
-'''def tickers(request):
-    context = {'tickers': tickers}
-    tickers5000 = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 5000")
-    context['chart_tickers'] = Ticker.objects.raw(chart_tickers)#"select * from chart_tickers")
-    context['tickers5000'] = serializers.serialize('json', tickers5000)
-            
-    return render(request, 'mybl/tickers.html', context)'''
     
     
 def about(request):
     return render(request, 'mybl/about.html')
-    
-
-'''def tickers(request):
-    if 'chart_tickers_view' in cache:
-        chart_tickers_view = cache.get('chart_tickers_view')
-    else:
-        chart_tickers_raw = Ticker.objects.raw(chart_tickers)#"select * from chart_tickers")
-        cache.set('chart_tickers_view', chart_tickers_raw)
-        chart_tickers_view = cache.get('chart_tickers_view')
-    
-    if 'tickers5000' in cache:
-        tickers5000 = cache.get('tickers5000')
-    else:
-        tickers5000_raw = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 5000")
-        tickers5000_raw = serializers.serialize('json', tickers5000_raw)        
-        cache.set('tickers5000', tickers5000_raw)
-        tickers5000 = cache.get('tickers5000')
-        
-    context = {'chart_tickers': chart_tickers_view, 'tickers5000': tickers5000}
-            
-    return render(request, 'mybl/tickers.html', context)'''
 
 
-def tickers(request):
+def index(request):
     chart_tickers = cache.get('chart_tickers_view')
     tickers5000 = cache.get('tickers5000')
         
     context = {'chart_tickers': chart_tickers, 'tickers5000': tickers5000}
             
-    return render(request, 'mybl/tickers.html', context)
+    return render(request, 'mybl/index.html', context)

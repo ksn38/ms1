@@ -1,203 +1,625 @@
-let button = document.getElementById('stocks');
-let text = document.querySelector('p');
-let days = document.getElementById('days');
-let rowTable = document.querySelector('row-table');
-let maxValRows = 76;
-let minValRows = 21;
+let item = 250;
+let level = 23;
+let win = 20;
+let offset = 0;
+let date = [];
+let vix2 = [];
+let data = [];
+let chart0 = document.getElementById("line-chart0");
+let chart1 = document.getElementById("line-chart1");
+let chart2 = document.getElementById("line-chart2");
+let chart3 = document.getElementById("line-chart3");
+let chart4 = document.getElementById("line-chart4");
+let chartAvg = document.getElementById("line-chart-avg");
+let lengthRD = received_data.length;
+let radio = document.getElementsByName('period');
+let radWin = document.getElementsByName('win');
+let tr = document.querySelectorAll('.change');
+let trTnx = document.querySelectorAll('.change-tnx');
+let trVix = document.querySelectorAll('.change-invert');
+let offsetInput = document.getElementById('offset-input');
+let levelVix = document.getElementById('level-vix');
+let correlationInput = document.getElementById('correlation-input');
+let dateOffset = [];
+let dateOffsetOutput = document.getElementById('dateOffsetOutput');
+dateOffsetOutput.innerHTML = received_data[lengthRD - 1]['fields']['date_added'];
+let periodInput = document.getElementById("period-input");
+let data1 = document.getElementById('data1');
+let data2 = document.getElementById('data2');
+let button0 = document.getElementById('button0');
+let dataAvg = document.getElementById('data-avg');
+let buttonAvg = document.getElementById('button-avg');
+let animationButton = document.getElementById("animation-button");
+let maxWin = 250;
+let dataAnimation1 = [];
+let dataAnimation2 = [];
+let animationSpeed = document.getElementById("animation-speed");
+let run = false;
+let timeSleep = 200;
+let maxRangeCor = lengthRD - 100;
+let winAnimation = 5;
 
 
-function deleteRow(row) {
-  let moexTable = document.getElementById('moex');
-  let i = 0;
-  while (moexTable.rows.length > minValRows) {
-    moexTable.deleteRow(-1);
+for (let i = lengthRD - 1; i >= 0; i--) {
+    dateOffset.push(received_data[i]['fields']['date_added']);
+    //console.log(i);
   }
-}
 
-
-function insRow() {
-  let moexTable = document.getElementById('moex');
-  let i = 0;
-  while (i < maxValRows) {
-    let newRow = moexTable.rows[19].cloneNode(true);
-    moexTable.appendChild(newRow);
-    i += 1;
-  }
-  button.onclick();
-}
-
-
-let dict = function (dif) {
-  let day = new Map();
-  let dateLast = new Date();
-  dateLast.setDate(dateLast.getDate() - dif);
-    if (dateLast.getDay() == 6) {
-    dateLast.setDate(dateLast.getDate() - 1);
-  } else if (dateLast.getDay() == 0) {
-    dateLast.setDate(dateLast.getDate() - 2);
-  };
-  dateLast = dateLast.toISOString().slice(0, 10);
-  //console.log(`dateLast slice ${dateLast}`);
-  for (let i = 0; i < 201; i += 100) {
-    let url = 'https://iss.moex.com/iss/history/engines/stock/markets/shares/boards/tqbr/securities.json?date=' + dateLast + '&start=' + i;
-    $.ajax({
-    url: url,
-    async: false,
-    dataType: 'json',
-    success: function (data) {
-      let rows = data.history.data;
-      for (let row = 0; row < rows.length; row++) {
-        /*day.set('<a href="https://www.moex.com/ru/issue.aspx?board=TQBR&code=' + rows[row][3] + '">' + rows[row][2] + '</a>', rows[row][9]);*/
-        day.set(rows[row][2] + ' (' + rows[row][3] + ')', rows[row][9]);
-      };
-    }});
-  };
-  //console.log(day);
-  return [day, dateLast];
-};
-
-button.onclick = async function () {
-  let namesHigh = document.querySelectorAll('.name-high');
-  let namesLow = document.querySelectorAll('.name-low');
-  let changesHigh = document.querySelectorAll('.change-high');
-  let changesLow = document.querySelectorAll('.change-low');
-  let dateDict2 = document.querySelector('.date-dict2');
-  
-  for (let i of namesHigh) {
-    if (i.classList.length > 1){
-    i.classList.remove('bg-primary');
-    };
-  };
-  
-  for (let i of namesLow) {
-    if (i.classList.length > 1){
-    i.classList.remove('bg-primary');
-    };
-  };
-  
-  for (let i of changesHigh) {
-    if (i.classList.length > 1){
-    i.classList.remove('bg-success');
-    };
-  };
-  
-  for (let i of changesLow) {
-    if (i.classList.length > 1){
-    i.classList.remove('bg-danger');
-    };
-  };
-  
-  let date = new Date();
-  
-  if (date.getDay() == 1 && parseInt(days.value) < 4) {
-    days.value = 4;
-  } else if (date.getDay() == 0 && parseInt(days.value) < 3) {
-    days.value = 3;
-  };
-  
-  let dict1 = await dict(1)[0];
-  //console.log(dict1);
-  let dict2 = await dict(days.value)[0];
-  //console.log(dict2);
-  dateDict2.textContent = await `(from ${dict(days.value)[1]})`;
-  //console.log(dateDict2);
-  let listKeys = [...dict1.keys()];
-  let outMap = new Map();
-  
-  for (let key = 0; key < listKeys.length; key++) {
-    let val = ((dict1.get(listKeys[key])/dict2.get(listKeys[key])) - 1) * 10000;
-    if (!Number.isNaN(val)) {
-      val = Math.round(val);
-      val = val/100;
-      outMap.set(listKeys[key], val);
-    };
-  };
-  
-  outMapRev = new Map([...outMap.entries()].sort((a,b) => a[1] - b[1]));
-  outMap = new Map([...outMap.entries()].sort((a,b) => b[1] - a[1]));
-  outMapKeys = [...outMap.keys()].slice(0, 100);
-  outMapValues = [...outMap.values()].slice(0, 100);
-  outMapRevKeys = [...outMapRev.keys()].slice(0, 100);
-  outMapRevValues = [...outMapRev.values()].slice(0, 100);
-  
-  let blue = new Set(['(SBER', '(GAZP', '(LKOH', '(YNDX', '(GMKN', '(NVTK', '(POLY', '(ROSN', '(PLZL', '(MGNT', '(MTSS', '(TATN', '(MAIL', '(FIVE', '(SNGS']);
-  let myRe = /[(]\w+/;
-  
-  for (let i = 0; i < namesHigh.length; i++) {
-    namesHigh[i].textContent = outMapKeys[i];
-    if (blue.has(myRe.exec(namesHigh[i].textContent)[0])){
-      namesHigh[i].classList.add('bg-primary')
-    };
-    changesHigh[i].textContent = outMapValues[i];
-    
-    namesLow[i].textContent = outMapRevKeys[i];
-    if (blue.has(myRe.exec(namesLow[i].textContent)[0])){
-      namesLow[i].classList.add('bg-primary')
-    };
-    changesLow[i].textContent = outMapRevValues[i];
-    
-    if (changesHigh[0].textContent != 'Infinity') {
-      changesHigh[i].style.backgroundColor = 'rgba(40, 167, 69,'  + (parseFloat(changesHigh[i].textContent)/parseFloat(changesHigh[0].textContent)) + ')';
-    } else{
-      changesHigh[i].style.backgroundColor = 'rgba(40, 167, 69,'  + (parseFloat(changesHigh[i].textContent)/parseFloat(changesHigh[1].textContent)) + ')';
-    };
-    changesLow[i].style.backgroundColor = 'rgba(220, 53, 69,'  + (parseFloat(changesLow[i].textContent)/parseFloat(changesLow[0].textContent)) + ')';
-  };
-};
-
-window.onload = function(){
-  button.click();
-}
-
-
-let currencyPlus = document.querySelectorAll('.currency-plus');
-let valuePlus = document.querySelectorAll('.value-plus');
-let valuePlus1 = document.querySelectorAll('.value-plus1');
-let valuePlus2 = document.querySelectorAll('.value-plus2');
-let valuePlus3 = document.querySelectorAll('.value-plus3');
-let curRe = /[A-Z]\w+/
-let usdXdr = new Set(['USD', 'XDR', 'EUR']);
-let EM = new Set(['TRY', 'ZAR', 'UAH', 'BRL', 'KZT', 'INR']);
-let com = new Set(['NOK', 'ZAR', 'AUD', 'CAD', 'KZT', 'BRL']);
-let mid = new Set(['CNY', 'KRW', 'PLN']);
-
-let colorVal = (values) => {
-  for (let i = 0; i < values.length; i++) {
-    let val = parseFloat(values[i].textContent);
-    if (val >= 0) {
-      values[i].style.backgroundColor = 'rgba(40, 167, 69,'  + (val/parseFloat(values[0].textContent)) + ')';
-    } else {
-      values[i].style.backgroundColor = 'rgba(220, 53, 69,'  + (val/parseFloat(values[values.length - 1].textContent)) + ')'
+let colorVal = (arr) => {
+  let arrInt = arr.map((i) => parseFloat(i.innerText));
+  let maxArr = Math.max.apply(null, arrInt);
+  let minArr = Math.min.apply(null, arrInt);
+  for (let i = 0; i < arrInt.length; i++) {
+    if (arrInt[i] > 0) {
+      arr[i].style.backgroundColor = 'rgba(40, 167, 69,'  + arrInt[i]/maxArr + ')';
+    }
+    else if (arrInt[i] < 0) {
+      arr[i].style.backgroundColor = 'rgba(220, 53, 69,'  + arrInt[i]/minArr+ ')';
     }
   }
 }
 
-colorVal(valuePlus);
-colorVal(valuePlus1);
-colorVal(valuePlus2);
-colorVal(valuePlus3);
+arrTr = Array.from(tr)
 
-for (let i = 0; i < currencyPlus.length; i++) {
-  if (usdXdr.has(curRe.exec(currencyPlus[i].textContent)[0])) {
-    currencyPlus[i].classList.add('bg-primary')}
-  if (EM.has(curRe.exec(currencyPlus[i].textContent)[0])) {
-    currencyPlus[i].classList.add('bg-warning');}
-  if (com.has(curRe.exec(currencyPlus[i].textContent)[0])) {
-    currencyPlus[i].classList.add('text-info');
-    currencyPlus[i].classList.add('font-weight-bold')}
-  if (mid.has(curRe.exec(currencyPlus[i].textContent)[0])) {
-    currencyPlus[i].classList.add('bg-secondary');
-    currencyPlus[i].classList.add('text-warning')}
+for (let i = 0; i <= arrTr.length; i += 11) {
+  colorVal(arrTr.slice(i, i + 11));
+}
+
+
+let colorInv = (arr) => {
+  arr = Array.from(arr);
+  let arrInt = arr.map((i) => parseFloat(i.innerText));
+  let maxArr = Math.max.apply(null, arrInt);
+  let minArr = Math.min.apply(null, arrInt);
+  for (let i = 0; i < arrInt.length; i++) {
+    if (arrInt[i] > 0) {
+      arr[i].style.backgroundColor = 'rgba(255, 193, 7,'  + arrInt[i]/maxArr + ')';
+    }
+    else if (arrInt[i] < 0) {
+      arr[i].style.backgroundColor = 'rgba(23, 162, 184,'  + arrInt[i]/minArr+ ')';
+    }
+  }
+}
+
+colorInv(trVix);
+colorInv(trTnx);
+
+
+let cor = (list1, list2) => {
+  let average = (list) => {
+    return list.reduce((accum, curr) => accum + curr) / list.length;
+  };
+
+  let avgList1 = average(list1);
+  let avgList2 = average(list2);
+
+  let cov = (list1, avgList1, list2, avgList2) => {
+    let list = [];
+    for (let i = 0; i < list1.length; i++) {
+      list[i] = (list1[i] - avgList1)*(list2[i] - avgList2);
+    };
+    return list;
+  };
+
+  let sum = (list) => {
+    return list.reduce((accum, curr) => accum + curr);
+  }
+
+  let dif2 = (list, avg) => {
+    let initialValue = 0;
+    return list.reduce((accum, curr) => accum + ((curr - avg)**2), initialValue);
+  }
+
+  return (sum(cov(list1, avgList1, list2, avgList2)))/Math.sqrt(dif2(list1, avgList1)*dif2(list2, avgList2));
+};
+
+let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item) {
+  let rcor = [];
+  
+  if (item + win > lengthRD) {
+    rcor = new Array(win).fill(0);
+    for (let i = 0; i < item - win; i++) {
+      rcor.push(cor(x.slice(i, i + win), y.slice(i, i + win)));
+    };
+    //console.log('1_' + rcor.length)
+  }else {  
+    for (let i = 0; i < item + win; i++) {
+      rcor.push(cor(x.slice(i, i + win), y.slice(i, i + win)));
+    };
+    //console.log('2_' + rcor.length)
+  }  
+  
+  let radPoint = 2;
+  let bordWidth = 2;
+  
+  if (item > 125) {
+    radPoint = 0
+  }
+  
+  if (item > 2500) {
+    bordWidth = 1
+  }
+  
+  return new Chart(chart, {
+    type: 'line',
+    data: {
+      labels: date.slice(-item),
+      datasets: [{ 
+          data: x.slice(-item),
+          borderColor: xColor,
+          fill: false,
+          label: xLabel,
+          yAxisID: 'xLabel',
+          pointRadius: radPoint,
+          borderWidth: bordWidth,
+          lineTension: 0
+        }, { 
+          data: y.slice(-item),
+          borderColor: yColor,
+          fill: false,
+          label: yLabel,
+          yAxisID: 'yLabel',
+          pointRadius: radPoint,
+          borderWidth: bordWidth,
+          lineTension: 0
+        }, { 
+          data: rcor,
+          borderColor: '#777777',
+          fill: true,
+          label: 'Rolling correlation',
+          yAxisID: 'RollingCorrelation',
+          pointRadius: 0,
+          borderWidth: 1,
+        }, { 
+          data: vix2.slice(-item),
+          borderColor: '#ff0000',
+          backgroundColor: '#fec6c6',
+          steppedLine: 'middle',
+          fill: true,
+          label: 'VIX',
+          yAxisID: 'VIX2',
+          pointRadius: 0,
+          borderWidth: 0,
+        }
+      ]
+    },
+    options: {
+      animation: {
+        duration: 0
+      },
+      events: [],
+      title: {
+        display: true,
+        text: ''
+      },
+      scales: {
+        yAxes: [
+          {id: 'xLabel',
+          type: 'linear',
+          position: 'left'
+          },
+          {id: 'yLabel',
+          type: 'linear',
+          position: 'right'
+          }, 
+          {id: 'VIX2',
+          type: 'linear',
+          display: false,
+          position: 'left',
+          ticks : {max : 100, min : 0}
+          }, 
+          {id: 'RollingCorrelation',
+          type: 'linear',
+          display: false,
+          position: 'right',
+          ticks : {max : 1, min : -1}
+          }
+        ]
+      }
+    }
+  });
+};
+
+let tickersDict = {'vix': [[], '#ff0000', 'VIX'], 'wti': [[], '#000000', 'WTI'], 'gold': [[], '#dfbd00', 'Gold'],
+   'tnx': [[], '#c000ff', 'TNX'], 'gspc': [[], "#0000ff", 'S&P500'], 'ixic': [[], '#1473b5', 'Nasdaq'], 'rut': [[], "#03007d", 'Russell'], 
+   'wtiGold': [[], '#858344', 'Wti/Gold'], 'sz': [[], "#a1497f", 'Shenzhen Component'], 'bvsp': [[], '#cf7e00', 'IBOVESPA'],
+   'gdaxi': [[], "#016a81", 'DAX'], 'wheat': [[], '#2bdf01', 'Wheat'], 'ss': [[], '#a30202', 'SSE Composite'], 'bsesn': [[], '#9db001', 'S&P BSE SENSEX'], 'wheatGold': [[], '#156e00', 'Wheat/Gold']};
+
+let createCharts = function (offset, level, win, item) {
+  if (lengthRD - item - win - offset < 0) {
+    offset = 0;
+    offsetInput.value = 0;
+  };
+  
+  let i = lengthRD - item - offset - win;
+  if (item + win >  lengthRD) {
+    i = 0
+  }
+  
+  for (i; i < lengthRD - offset; i++) {
+    date.push(received_data[i]['fields']['date_added']);
+    tickersDict.vix[0].push(received_data[i]['fields']['vix']);
+    tickersDict.tnx[0].push(received_data[i]['fields']['tnx']);
+    tickersDict.gspc[0].push(received_data[i]['fields']['gspc']);
+    tickersDict.ixic[0].push(received_data[i]['fields']['ixic']);
+    tickersDict.rut[0].push(received_data[i]['fields']['rut']);
+    tickersDict.wti[0].push(received_data[i]['fields']['wti']);
+    tickersDict.gold[0].push(received_data[i]['fields']['gold']);
+    tickersDict.sz[0].push(received_data[i]['fields']['sz']);
+    tickersDict.bvsp[0].push(received_data[i]['fields']['bvsp']);
+    tickersDict.gdaxi[0].push(received_data[i]['fields']['gdaxi']);
+    tickersDict.wheat[0].push(received_data[i]['fields']['wheat']);
+    tickersDict.ss[0].push(received_data[i]['fields']['ss']);
+    tickersDict.bsesn[0].push(received_data[i]['fields']['bsesn']);
+    if (received_data[i]['fields']['vix'] > level) {
+      vix2.push(received_data[i]['fields']['vix'])
+    } else {vix2.push(0)};
+  }
+  
+  if (data1.value == 'wtiGold' || data2.value == 'wtiGold') {
+    tickersDict.wtiGold[0] = tickersDict.wti[0].map((n, i) => n/tickersDict.gold[0][i]);
+  }
+  
+  if (data1.value == 'wheatGold' || data2.value == 'wheatGold') {
+    tickersDict.wheatGold[0] = tickersDict.wheat[0].map((n, i) => n/tickersDict.gold[0][i]);
+  }
+  
+  return [[lineChart(tickersDict[data1.value][0], tickersDict[data2.value][0], tickersDict[data1.value][2], tickersDict[data2.value][2], tickersDict[data1.value][1], tickersDict[data2.value][1], chart0, win, item), 
+  lineChart(tickersDict.vix[0], tickersDict.gspc[0], 'VIX', 'S&P500', tickersDict['vix'][1], tickersDict['gspc'][1], chart1, win, item),
+  lineChart(tickersDict.tnx[0], tickersDict.gspc[0], 'TNX', 'S&P500 (-0.65)', tickersDict['tnx'][1], tickersDict['gspc'][1], chart4, win, item),
+  lineChart(tickersDict.ixic[0], tickersDict.rut[0], 'Nasdaq', 'Russell', tickersDict['ixic'][1], tickersDict['rut'][1], chart2, win, item),
+  lineChart(tickersDict.wheat[0], tickersDict.wti[0], 'Wheat', 'WTI (0.82)', tickersDict['wheat'][1], tickersDict['wti'][1], chart3, win, item)],
+  
+  [date = [],
+  tickersDict.vix[0] = [],
+  vix2 = [],
+  tickersDict.tnx[0] = [],
+  tickersDict.gspc[0] = [],
+  tickersDict.ixic[0] = [],
+  tickersDict.rut[0] = [],
+  tickersDict.wti[0] = [],
+  tickersDict.gold[0] = [],
+  tickersDict.sz[0] = [],
+  tickersDict.bvsp[0] = [],
+  tickersDict.gdaxi[0] = [],
+  tickersDict.wheat[0] = [],
+  tickersDict.ss[0] = [],
+  tickersDict.wtiGold[0] = [],
+  tickersDict.wheatGold[0] = [],
+  tickersDict.bsesn[0] = []]];
 };
 
 
-let inputDelta = document.getElementById('mytextbox');
-let inputDelta1 = document.getElementById('mytextbox1');
-let inputDelta2 = document.getElementById('mytextbox2');
-let inputDelta3 = document.getElementById('mytextbox3');
-inputDelta.value = delta;
-inputDelta1.value = delta1;
-inputDelta2.value = delta2;
-inputDelta3.value = delta3;
+let rollAvg = (list, meanWin, item) => {
+  let average = (list) => {
+    return list.reduce((accum, curr) => accum + curr) / list.length;
+  };
+  let result = [];
+  
+  if (item + meanWin > lengthRD) {
+    result = new Array(meanWin).fill(0);
+    for (let i = 0; i < item - meanWin; i++) {
+      result.push(average(list.slice(i, i + meanWin)));
+    }
+    //console.log('1_' + result.length);
+  }else {
+    for (let i = 0; i < item + maxWin - meanWin; i++) {
+      result.push(average(list.slice(i, i + meanWin)));
+    }
+    //console.log('2_' + result.length);
+    result = result.slice(-item);
+  }
+  return result;
+};
+
+let tickersDictAvg = {'vix': [[], '#ff0000', 'VIX'], 'wti': [[], '#000000', 'WTI'], 'gold': [[], '#dfbd00', 'Gold'],
+   'tnx': [[], '#c000ff', 'TNX'], 'gspc': [[], "#0000ff", 'S&P500'], 'ixic': [[], '#1473b5', 'Nasdaq'], 'rut': [[], "#03007d", 'Russell'], 
+   'wtiGold': [[], '#858344', 'Wti/Gold'], 'sz': [[], "#a1497f", 'Shenzhen Component'], 'bvsp': [[], '#cf7e00', 'IBOVESPA'],
+   'gdaxi': [[], "#016a81", 'DAX'], 'wheat': [[], '#2bdf01', 'Wheat'], 'ss': [[], '#a30202', 'SSE Composite'], 'bsesn': [[], '#9db001', 'S&P BSE SENSEX'], 'wheatGold': [[], '#156e00', 'Wheat/Gold']};
+
+let createAvgChart = function (offset, level, item, ticker) {
+  if (lengthRD - item - maxWin - offset < 0) {
+    offset = 0;
+    offsetInput.value = 0;
+  };
+  
+  let i = lengthRD - item - offset - maxWin;
+  if (item + maxWin >  lengthRD) {
+    i = 0
+  }
+  
+  for (i; i < lengthRD - offset; i++) {
+    date.push(received_data[i]['fields']['date_added']);
+    data.push(received_data[i]['fields'][ticker]);
+    tickersDictAvg.wti[0].push(received_data[i]['fields']['wti']);
+    tickersDictAvg.gold[0].push(received_data[i]['fields']['gold']);
+    tickersDictAvg.wheat[0].push(received_data[i]['fields']['wheat']);
+    if (received_data[i]['fields']['vix'] > level) {
+      vix2.push(received_data[i]['fields']['vix'])
+    } else {vix2.push(0)};
+  }
+  
+  if (ticker == 'wtiGold') {
+    data = tickersDictAvg.wti[0].map((n, i) => n/tickersDictAvg.gold[0][i])
+  }
+  
+  if (ticker == 'wheatGold') {
+    data = tickersDictAvg.wheat[0].map((n, i) => n/tickersDictAvg.gold[0][i])
+  }
+  
+  let radPoint = 2;
+  let bordWidth = 2;
+  
+  if (item > 125) {
+    radPoint = 0
+  }
+  
+  if (item > 2500) {
+    bordWidth = 1
+  }
+  
+  return [new Chart(chartAvg, {
+    type: 'line',
+    data: {
+      labels: date.slice(-item),
+      datasets: [{ 
+          data: data.slice(-item),
+          borderColor: tickersDictAvg[dataAvg.value][1],
+          fill: false,
+          label: tickersDictAvg[ticker][2],
+          yAxisID: 'xLabel',
+          pointRadius: radPoint,
+          borderWidth: bordWidth,
+          lineTension: 0
+        }, {          
+          data: vix2.slice(-item),
+          borderColor: '#ff0000',
+          backgroundColor: '#fec6c6',
+          steppedLine: 'middle',
+          fill: true,
+          label: 'VIX    Average:',
+          yAxisID: 'VIX2',
+          pointRadius: 0,
+          borderWidth: 0,
+        }, { 
+          data: rollAvg(data, maxWin, item),
+          borderColor: '#444444',
+          fill: false,
+          label: 'year (250)',
+          yAxisID: 'xLabel',
+          pointRadius: 0,
+          borderWidth: 1,
+          borderDash: [50, 10],
+        }, {
+          data: rollAvg(data, 125, item),
+          borderColor: '#444444',
+          fill: false,
+          label: 'half-year (125)',
+          yAxisID: 'xLabel',
+          pointRadius: 0,
+          borderWidth: 1,
+          borderDash: [25, 7],
+        }, {
+          data: rollAvg(data, 60, item),
+          borderColor: '#444444',
+          fill: false,
+          label: 'quarter (60)',
+          yAxisID: 'xLabel',
+          pointRadius: 0,
+          borderWidth: 1,
+          borderDash: [10, 5],
+        }, {
+          data: rollAvg(data, 20, item),
+          borderColor: '#444444',
+          fill: false,
+          label: 'month (20)',
+          yAxisID: 'xLabel',
+          pointRadius: 0,
+          borderWidth: 1,
+          borderDash: [5, 2],
+        }
+      ]
+    },
+    options: {
+      animation: {
+        duration: 0
+      },
+      events: [],
+      title: {
+        display: true,
+        text: ''
+      },
+      scales: {
+        yAxes: [
+          {id: 'xLabel',
+          type: 'linear',
+          position: 'left'
+          },
+          {id: 'VIX2',
+          type: 'linear',
+          display: false,
+          position: 'left',
+          ticks : {max : 100, min : 0}
+          }, 
+          {id: 'avg',
+          type: 'linear',
+          display: false,
+          position: 'right'
+          }
+        ]
+      }
+    }
+  }),
+  
+  [date = [],
+  vix2 = [],
+  tickersDictAvg.wti[0] = [],
+  tickersDictAvg.gold[0] = [],
+  tickersDictAvg.wheat[0] = [],
+  data = []]];
+};
+
+
+let charts = createCharts(offset, level, win, item); 
+let chartAvg2 = createAvgChart(offset, level, item, dataAvg.value);
+
+buttonAvg.onclick = () => {
+  chartAvg2[0].destroy();
+  chartAvg2 = createAvgChart(offset, level, item, dataAvg.value); 
+}
+
+for(let i = 0; i < radio.length; i++){
+  radio[i].addEventListener("change", function(){
+    item = parseInt(radio[i].value);
+    charts[0].map((chart) => chart.destroy());
+    charts = createCharts(offset, level, win, item); 
+    chartAvg2[0].destroy();
+    chartAvg2 = createAvgChart(offset, level, item, dataAvg.value);     
+    periodInput.value = item;
+  });
+}
+
+for(let i = 0; i < radWin.length; i++){
+  radWin[i].addEventListener("change", function(){
+    win = parseInt(radWin[i].value);
+    charts[0].map((chart) => chart.destroy());
+    charts = createCharts(offset, level, win, item); 
+    correlationInput.value = win;
+  });
+}
+
+correlationInput.onchange = function () {
+  win = parseInt(correlationInput.value);
+  charts[0].map((chart) => chart.destroy());
+  charts = createCharts(offset, level, win, item); 
+}
+
+offsetInput.onchange = function () {
+  offset = parseInt(offsetInput.value);
+  charts[0].map((chart) => chart.destroy());
+  charts = createCharts(offset, level, win, item); 
+  chartAvg2[0].destroy();
+  chartAvg2 = createAvgChart(offset, level, item, dataAvg.value); 
+}
+
+levelVix.onchange = function () {
+  level = parseInt(levelVix.value);
+  charts[0].map((chart) => chart.destroy());
+  charts = createCharts(offset, level, win, item); 
+  chartAvg2[0].destroy();
+  chartAvg2 = createAvgChart(offset, level, item, dataAvg.value); 
+}
+
+offsetInput.oninput = function() {
+  offset = parseInt(offsetInput.value);
+  if (offset < lengthRD - win - item + 1) {
+    dateOffsetOutput.innerHTML = dateOffset[offset];
+  } else {
+    dateOffsetOutput.innerHTML = received_data[lengthRD - 1]['fields']['date_added'];;
+  }
+};
+
+periodInput.onchange = () => {
+  item = parseInt(periodInput.value);
+  charts[0].map((chart) => chart.destroy());
+  charts = createCharts(offset, level, win, item); 
+  chartAvg2[0].destroy();
+  chartAvg2 = createAvgChart(offset, level, item, dataAvg.value);
+}
+
+button0.onclick = () => {
+  charts[0].map((chart) => chart.destroy());
+  charts = createCharts(offset, level, win, item); 
+}
+
+
+let animationChart = function (offset, level, win, item, ticker1, ticker2) {
+  if (lengthRD - item - win - offset < 0) {
+    offset = 0;
+    offsetInput.value = 0;
+  };
+  
+  let i = lengthRD - item - offset - win;
+  if (item + win >  lengthRD) {
+    i = 0
+  }
+  
+  for (i; i < lengthRD - offset; i++) {
+    date.push(received_data[i]['fields']['date_added']);
+    dataAnimation1.push(received_data[i]['fields'][ticker1]);
+    dataAnimation2.push(received_data[i]['fields'][ticker2]);
+    tickersDict.wti[0].push(received_data[i]['fields']['wti']);
+    tickersDict.gold[0].push(received_data[i]['fields']['gold']);
+    tickersDict.wheat[0].push(received_data[i]['fields']['wheat']);
+    if (received_data[i]['fields']['vix'] > level) {
+      vix2.push(received_data[i]['fields']['vix'])
+    } else {vix2.push(0)};
+  }
+  
+  if (ticker1 == 'wtiGold') {
+    dataAnimation1 = tickersDict.wti[0].map((n, i) => n/tickersDict.gold[0][i])
+  }
+  
+  if (ticker1 == 'wheatGold') {
+    dataAnimation1 = tickersDict.wheat[0].map((n, i) => n/tickersDict.gold[0][i])
+  }
+  
+  if (ticker2 == 'wtiGold') {
+    dataAnimation2 = tickersDict.wti[0].map((n, i) => n/tickersDict.gold[0][i])
+  }
+  
+  if (ticker2 == 'wheatGold') {
+    dataAnimation2 = tickersDict.wheat[0].map((n, i) => n/tickersDict.gold[0][i])
+  }
+  
+  let radPoint = 2;
+  let bordWidth = 2;
+  
+  if (item > 125) {
+    radPoint = 0
+  }
+  
+  if (item > 2500) {
+    bordWidth = 1
+  }
+  
+  return [lineChart(dataAnimation1, dataAnimation2, tickersDict[data1.value][2], tickersDict[data2.value][2], tickersDict[data1.value][1], tickersDict[data2.value][1], chart0, win, item),
+  
+  [date = [],
+  vix2 = [],
+  tickersDictAvg.wti[0] = [],
+  tickersDictAvg.gold[0] = [],
+  tickersDictAvg.wheat[0] = [],
+  dataAnimation1 = [],
+  dataAnimation2 = []]];
+};
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+animationSpeed.onchange = () => {
+  timeSleep = parseInt(animationSpeed.value);
+};
+
+animationButton.onclick = async function () {
+  if (winAnimation >= item) {
+    winAnimation = 5;
+  }
+  animationButton.value = 'Stop';
+  run = !run;
+  
+  for (winAnimation; winAnimation <= item; winAnimation += Math.ceil(winAnimation/10)) {
+    if (run) {
+      await sleep(timeSleep);
+      correlationInput.value = winAnimation;
+      charts[0][0].destroy();
+      charts[0][0] = animationChart(offset, level, winAnimation, item, data1.value, data2.value)[0];
+    } else {break}
+  }
+  animationButton.value = 'Start';
+  run = false;
+  win = winAnimation;
+}
 
 

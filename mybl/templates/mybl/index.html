@@ -1,229 +1,246 @@
 {% extends "mybl/base.html" %}
-{% load static %}
 {% block content %}
-<body>
-  <div class='d-flex justify-content-around m-2 flex-wrap align-items-start'>
-    <div class='flex-column justify-content-center mt-2'>
-      <small class='d-flex justify-content-around mt-2 text-secondary'>Changes currencies relative to the ruble for periods:</small> 
-      <span>
-        <form class='d-flex justify-content-center mb-2' action="#" method="get" class='ml-auto'>
-          <input class='mr-1' type="number" value="4000" name="mytextbox3" size='3' min='1' max='11000' id='mytextbox3'>
-          <input class='mr-1' type="number" value="1000" name="mytextbox2" size='3' min='1' max='11000' id='mytextbox2'>
-          <input class='mr-1' type="number" value="100" name="mytextbox1" size='3' min='1' max='11000' id='mytextbox1'>
-          <input class='mr-1' type="number" value="1" name="mytextbox" size='3' min='1' max='11000' id='mytextbox'>
-          <input type="submit" class="button" value=" days ago" name="mybtn" id='mybtn'>
-        </form>
+{% load static %}
+<div class='d-flex justify-content-around flex-wrap align-items-center'>
+  <div class='d-flex justify-center mt-2 flex-nowrap align-items-end' style='flex-basis: 30%'>
+    <table class='table-sm table-bordered'>
+      <form>
+      <caption style='caption-side: top'><small></small></caption>
+        <tr>
+          <td class='text-center bg-dark text-light'>day</td>
+        </tr>
+        <tr>
+          <td class='text-center bg-dark text-light' style='border-top: 2px solid'>week</td>
+        </tr>
+        <tr>
+          <td class='bg-dark text-light' style='border-top: 2px solid' nowrap><input type='radio' id='r20' name='period' value="20">month</td>
+        </tr>
+        <tr>
+          <td class='bg-dark text-light' style='border-top: 2px solid' nowrap><input type='radio' id='r60' name='period' value="60">quarter</td>
+        </tr>
+        <tr>
+          <td class='bg-dark text-light' style='border-top: 2px solid' nowrap><input type='radio' id='r125' name='period' value="125">half-year</td>
+        </tr>
+        <tr>
+          <td class='bg-dark text-light' style='border-top: 2px solid' nowrap><input type='radio' id='r250' name='period' value="250" checked="checked">year</td>
+        </tr>
+        <tr>
+          <td class='bg-dark text-light' style='border-top: 2px solid' nowrap><input type='radio' id='r1000' name='period' value="1000">4 years</td>
+        </tr>
+        <tr>
+          <td class='bg-dark text-light' style='border-top: 2px solid' nowrap><input type='radio' id='r5000' name='period' value="5000">20 years</td>
+        </tr>
+      </form>
+    </table>
+    <table class='table-sm'>
+      <caption style='caption-side: top'><small></small></caption>
+      <tr>
+        <th class='px-2 text-center bg-dark text-light font-weight-normal'>TNX</th>
+        <th class='px-2 text-center bg-primary text-light font-weight-normal'>S&P500</th>
+        <th class='px-2 text-center bg-primary text-light font-weight-normal'>IXIC</th>
+        <th class='px-2 text-center bg-primary text-light font-weight-normal'>RUT</th>
+        <th class='px-2 text-center bg-primary text-light font-weight-normal'>DAX</th>
+        <th class='px-2 text-center bg-secondary text-warning font-weight-normal'>SSE</th>
+        <th class='px-2 text-center bg-secondary text-warning font-weight-normal'>SZSE </th>
+        <th class='px-2 text-center bg-warning text-light font-weight-normal'>IBOV</th>
+        <th class='px-2 text-center bg-warning text-light font-weight-normal'>BSE</th>
+        <th class='px-2 text-center bg-dark text-info'>Wheat</th>
+        <th class='px-2 text-center bg-dark text-info'>WTI</th>
+        <th class='px-2 text-center bg-dark text-light'>Gold</th>
+        <th class='px-2 text-center bg-dark text-light font-weight-normal'>VIX</th>
+      </tr>
+      {% for ticker in chart_tickers %}
+        <tr>
+          <td class='change-tnx text-right' style='border-right: 2px solid black'>
+            {{ ticker.dif_tnx }}
+          </td>
+          <td class='change text-right' style='border-top: 2px solid black'>
+            {{ ticker.dif_gspc }}
+          </td>
+          <td class='change text-right' style='border-top: 2px solid black'>
+            {{ ticker.dif_ixic }}
+          </td>
+          <td class='change text-right' style='border-top: 2px solid black'>
+            {{ ticker.dif_rut }}
+          </td>
+          <td class='change text-right' style='border-top: 2px solid black'>
+            {{ ticker.dif_gdaxi }}
+          </td>
+          <td class='change text-right' style='border-top: 2px solid black'>
+            {{ ticker.dif_ss }}
+          </td>
+          <td class='change text-right' style='border-top: 2px solid black'>
+            {{ ticker.dif_sz }}
+          </td>
+          <td class='change text-right' style='border-top: 2px solid black'>
+            {{ ticker.dif_bvsp }}
+          </td>
+          <td class='change text-right' style='border-top: 2px solid black'>
+            {{ ticker.dif_bsesn }}
+          </td>
+          <td class='change text-right' style='border-top: 2px solid black'>
+            {{ ticker.dif_wheat }}
+          </td>
+          <td class='change text-right' style='border-top: 2px solid black'>
+            {{ ticker.dif_wti }}
+          </td>
+          <td class='change text-right' style='border-top: 2px solid black; border-right: 2px solid black'>
+            {{ ticker.dif_gold }}
+          </td>
+          <td class='change-invert text-right'>
+            {{ ticker.dif_vix }}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+  
+  <div class='flex-wrap mt-2'>
+    <span class="d-flex justify-content-center">
+      <span class='mx-1 border border-primary rounded p-1'>
+        <select id="data1" class='mr-1'>
+          <option value="tnx">Treasury Yield 10 Years</option>
+          <option value="gspc">S&P500</option>
+          <option value="ixic">Nasdaq</option>
+          <option value="rut">Russell</option>
+          <option value="gdaxi">DAX</option>
+          <option value="ss">SSE Composite</option>
+          <option value="sz">Shenzhen Component</option>
+          <option value="bvsp">IBOVESPA</option>
+          <option value="bsesn">S&P BSE SENSEX</option>
+          <option value="wheat">Wheat</option>
+          <option value="wti">WTI</option>
+          <option selected value="gold">Gold</option>
+          <option value="wtiGold">Wti/Gold</option>
+          <option value="wheatGold">Wheat/Gold</option>
+          <option value="vix">VIX</option>
+        </select>
+        <select id="data2" class='mr-1'>
+          <option selected value="tnx">Treasury Yield 10 Years</option>
+          <option value="gspc">S&P500</option>
+          <option value="ixic">Nasdaq</option>
+          <option value="rut">Russell</option>
+          <option value="gdaxi">DAX</option>
+          <option value="ss">SSE Composite</option>
+          <option value="sz">Shenzhen Component</option>
+          <option value="bvsp">IBOVESPA</option>
+          <option value="bsesn">S&P BSE SENSEX</option>
+          <option value="wheat">Wheat</option>
+          <option value="wti">WTI</option>
+          <option value="gold">Gold</option>
+          <option value="wtiGold">Wti/Gold</option>
+          <option value="wheatGold">Wheat/Gold</option>
+          <option value="vix">VIX</option>
+        </select>
+        <input type="submit" value="Show" id='button0'>
       </span>
-      <div class='d-flex flex-nowrap'>
-        <div  class='flex-column'>
-          <div>({{ date_delta3 }})</div>
-          <table class='table-sm table-bordered table-dark' style='height: 0px'>
-            {% for name, value in dif_plus3 %}
-              <tr>
-                <td class='currency-plus'>
-                  {{ name }}
-                </td>
-                <td class='value-plus3'>
-                  {{ value }}
-                </td>
-              </tr>
-            {% endfor %}
-          </table>
-        </div>
-        <div  class='flex-column'>
-          <div>({{ date_delta2 }})</div>
-          <table class='table-sm table-bordered table-dark' style='height: 0px'>
-            {% for name, value in dif_plus2 %}
-              <tr>
-                <td class='currency-plus'>
-                  {{ name }}
-                </td>
-                <td class='value-plus2'>
-                  {{ value }}
-                </td>
-              </tr>
-            {% endfor %}
-          </table>
-        </div>
-        <div  class='flex-column'>
-          <div>({{ date_delta1 }})</div>
-          <table class='table-sm table-bordered table-dark' style='height: 0px'>
-            {% for name, value in dif_plus1 %}
-              <tr>
-                <td class='currency-plus'>
-                  {{ name }}
-                </td>
-                <td class='value-plus1'>
-                  {{ value }}
-                </td>
-              </tr>
-            {% endfor %}
-          </table>
-        </div>
-        <div class='mb-3'>
-          <div class='flex-column justify-content-around'>
-            <div>({{ date_delta }})</div>
-          </div>
-          <div class='flex-column'>
-            <table class='table-sm table-bordered table-dark' style='height: 0px'>
-              {% for name, value in dif_plus %}
-                <tr>
-                  <td class='currency-plus'>
-                    {{ name }}
-                  </td>
-                  <td class='value-plus'>
-                    {{ value }}
-                  </td>
-                </tr>
-              {% endfor %}
-            </table>
+      <span class='mx-1 border border-primary rounded p-1'>
+        <input type="button" id="animation-button" value='Start'>
+        <input type="range" id="animation-speed" value='300' min="100" max="1000" class='ml-1'>
+      </span>
+    </span>
+    <canvas id="line-chart0" width="1400" height="600"></canvas>
+  </div>
+  <div class='flex-wrap mt-2'>
+    <span class="d-flex justify-content-center">
+      <select id="data-avg" class='mr-1'>
+        <option value="tnx">Treasury Yield 10 Years</option>
+        <option value="gspc">S&P500</option>
+        <option value="ixic">Nasdaq</option>
+        <option value="rut">Russell</option>
+        <option value="gdaxi">DAX</option>
+        <option value="ss">SSE Composite</option>
+        <option value="sz">Shenzhen Component</option>
+        <option value="bvsp">IBOVESPA</option>
+        <option value="bsesn">S&P BSE SENSEX</option>
+        <option value="wheat">Wheat</option>
+        <option selected value="wti">WTI</option>
+        <option value="gold">Gold</option>
+        <option value="wtiGold">Wti/Gold</option>
+        <option value="wheatGold">Wheat/Gold</option>
+        <option value="vix">VIX</option>
+      </select>
+      <input type="submit" value="Show" id='button-avg'>
+    </span>
+    <canvas id="line-chart-avg" width="1400" height="600"></canvas>
+  </div>
+
+    <!--div class='d-flex justify-content-center flex-wrap align-items-center mt-1'>
+      <span class='border border-primary rounded p-1'>Range
+      <input type="number" id="period-input" name="periodNum" value="250" min="2" max="4500" step='1' size='3'></span>
+      <span class='ml-1 border border-primary rounded p-1' class='mr-2'>Offset
+      <input type="number" id="offset-input" value='0' min="0" max="4500" size='3'>
+      <span class='ml-1'>to </span>
+      <span id="dateOffsetOutput"></span></span>
+      <span class='ml-1 border border-primary rounded p-1'>Level of VIX
+      <input type="number" id="level-input" value='30' min="0" max='100' size='3'></span>
+    </div>
+    <div class='radWin d-flex justify-content-center mt-1'>
+      <div class='border border-primary rounded p-1'>
+        <label>Window of rolling correlation: <input type='radio' id='w5' name='win' value="5">week</label>
+        <label><input type='radio' id='w20' name='win' value="20" checked="checked">month</label>
+        <label><input type='radio' id='w60' name='win' value="60">quarter</label>
+        <label><input type='radio' id='w125' name='win' value="125">half-year</label>
+        <label><input type='radio' id='w250' name='win' value="250">year</label>
+        <label><input type='radio' id='w500' name='win' value="500">2 years</label>
+        <input type="number" id="correlation-input" value='20' min="5" max='500' class='ml-2' size='3'>
+      </div>
+    </div-->
+    <div class='d-flex'>
+      <div class='d-flex'>
+        <canvas id="line-chart1" width="700" height="450"></canvas>
+      </div>
+      <div class='d-flex'>
+        <canvas id="line-chart2" width="700" height="450"></canvas>
+      </div>
+    </div>
+    <div class='d-flex' style='margin-bottom: 100px'>
+      <div class='d-flex'>
+        <canvas id="line-chart3" width="700" height="450"></canvas>
+      </div>
+      <div class='d-flex'>
+        <canvas id="line-chart4" width="700" height="450"></canvas>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center fixed-bottom">
+      <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" style='max-width: 1500px; flex-basis: 1500px;'>
+        <div class="toast-body">
+          <div class='d-flex justify-content-around'>
+            <span class='border border-primary rounded p-1'>Range
+              <input type="number" id="period-input" name="periodNum" value="250" min="2" max="5000" step="50" size='4'>
+              <label><input type='radio' id='r20' name='period' value="20">month</label>
+              <label><input type='radio' id='r60' name='period' value="60">quarter</label>
+              <label><input type='radio' id='r125' name='period' value="125">half-year</label>
+              <label><input type='radio' id='r250' name='period' value="250" checked="checked">year</label>
+              <label><input type='radio' id='r1000' name='period' value="1000">4 years</label>
+              <label><input type='radio' id='r5000' name='period' value="5000">20 years</label>
+            </span>
+            <span class='ml-1 border border-primary rounded p-1' class='mr-2'>Offset 
+              <input type="number" id="offset-input" value='0' min="0" max="4500" step="100" size='4'>
+              <span> to </span>
+              <span id="dateOffsetOutput"></span>
+            </span>
+            <span class='mx-1 border border-primary rounded p-1'>Level of VIX
+              <input type="number" id="level-vix" value='23' min="0" max='100' size='4'>
+            </span>
+            <div class='border border-primary rounded p-1'>
+              <label>Correlation: <input type='radio' id='w5' name='win' value="5">week</label>
+              <label><input type='radio' id='w20' name='win' value="20" checked="checked">month</label>
+              <label><input type='radio' id='w60' name='win' value="60">quarter</label>
+              <label><input type='radio' id='w125' name='win' value="125">half-year</label>
+              <label><input type='radio' id='w250' name='win' value="250">year</label>
+              <label><input type='radio' id='w500' name='win' value="500">2 years</label>
+              <input type="number" id="correlation-input" value='20' min="5" max='5000' class='ml-2' size='4' step="50">
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    
-    <table class='table-sm table-dark table-bordered' id='moex'>
-      <caption style='caption-side: top'>
-        <span class='d-flex justify-content-start'>
-          <small>Stocks moex. Number of</small>
-        </span>
-        <input type='number' id='days' value='2' size='3' min='2' max='3000'>
-        <input type='submit' class='button' id='stocks' value=' days ago'></input>
-        <span>20</span>
-        <input type="radio" name='lenRows' checked="checked" onchange="deleteRow()"/>
-        <span>75</span>
-		  <input type="radio" name='lenRows' onchange="insRow()"/>
-      <div class='date-dict2 text-dark'></div>
-      </caption>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-      <tr>
-        <td class='name-high'>-</td>
-        <td class='change-high'>-</td>
-        <td class='name-low'>-</td>
-        <td class='change-low'>-</td>
-      </tr>
-    </table>
+     </div>
+    <script type="text/javascript">
+      var received_data = {{ tickers5000|safe }};
+    </script>
+    <script src="{% static 'mybl/index.js' %}"></script>
   </div>
-  <script>
-    let delta = {{ delta|safe }};
-    let delta1 = {{ delta1|safe }};
-    let delta2 = {{ delta2|safe }};
-    let delta3 = {{ delta3|safe }};
-  </script>
-  <script src="{% static 'mybl/index.js' %}"></script>
-</body>
-</html>
+</div>
 {% endblock content %}
+
