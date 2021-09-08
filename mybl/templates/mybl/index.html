@@ -46,6 +46,7 @@
         <th class='px-2 text-center bg-warning text-light font-weight-normal'>BSE</th>
         <th class='px-2 text-center bg-dark text-info'>Wheat</th>
         <th class='px-2 text-center bg-dark text-info'>WTI</th>
+        <th class='px-2 text-center bg-dark text-info'>Copper</th>
         <th class='px-2 text-center bg-dark text-light'>Gold</th>
         <th class='px-2 text-center bg-dark text-light font-weight-normal'>VIX</th>
       </tr>
@@ -83,6 +84,8 @@
           </td>
           <td class='change text-right' style='border-top: 2px solid black'>
             {{ ticker.dif_wti }}
+          <td class='change text-right' style='border-top: 2px solid black'>
+            {{ ticker.dif_cop }}
           </td>
           <td class='change text-right' style='border-top: 2px solid black; border-right: 2px solid black'>
             {{ ticker.dif_gold }}

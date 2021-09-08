@@ -232,9 +232,13 @@ def about(request):
 
 
 def index(request):
-    chart_tickers = cache.get('chart_tickers_view')
-    tickers5000 = cache.get('tickers5000')
+    #chart_tickers = cache.get('chart_tickers_view')
+    #tickers5000 = cache.get('tickers5000')
+    
+    chart_tickers_raw = Ticker.objects.raw(chart_tickers)#"select * from chart_tickers")
+    tickers5000_raw = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 5000")
+    tickers5000 = serializers.serialize('json', tickers5000_raw)        
         
-    context = {'chart_tickers': chart_tickers, 'tickers5000': tickers5000}
+    context = {'chart_tickers': chart_tickers_raw, 'tickers5000': tickers5000}
             
     return render(request, 'mybl/index.html', context)

@@ -26,10 +26,10 @@ def ticks(*args):
     t_dict = OrderedDict()
 
     for i in (args):
-        if i not in {'wti', 'gold', 'sz', 'wheat', 'ss'}:
+        if i not in {'wti', 'gold', 'sz', 'wheat', 'ss', 'cop'}:
             url = 'https://finance.yahoo.com/quote/^' + i
         else:
-            commodities = {'wti': 'CL=F', 'gold': 'GC=F', 'wheat': 'KE=F', 'sz': '399001.SZ', 'ss': '000001.SS'}
+            commodities = {'wti': 'CL=F', 'gold': 'GC=F', 'wheat': 'KE=F', 'sz': '399001.SZ', 'ss': '000001.SS', 'cop': 'HG=F'}
             url = 'https://finance.yahoo.com/quote/' + commodities[i]
             
         response = requests.get(url, headers=headers).text
@@ -48,7 +48,10 @@ if len(tickers) == 0:
     if date.today().weekday() not in {0, 6}:
         t = ticks('gspc')
         if Ticker.objects.filter(Q(date_added__gt= date7)).order_by('-date_added')[0].gspc != t['gspc']:
-            t.update(ticks('vix', 'tnx', 'ixic', 'rut', 'wti', 'gold', 'sz', 'bvsp', 'gdaxi', 'wheat', 'ss', 'bsesn'))
+            t.update(ticks('tnx', 'ixic', 'rut', 'gdaxi', 'ss', 'sz', 'bvsp', 'bsesn', 'wheat', 'wti', 'cop', 'gold', 'vix'))
+            t['wheat_gold'] = t['wheat']/t['gold']
+            t['wti_gold'] = t['wti']/t['gold']
+            t['cop_gold'] = (t['cop']*1000)/t['gold']
             obj = Ticker(**t)
             obj.save()
 

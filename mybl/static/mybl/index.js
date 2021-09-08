@@ -220,10 +220,12 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
   });
 };
 
+
 let tickersDict = {'vix': [[], '#ff0000', 'VIX'], 'wti': [[], '#000000', 'WTI'], 'gold': [[], '#dfbd00', 'Gold'],
    'tnx': [[], '#c000ff', 'TNX'], 'gspc': [[], "#0000ff", 'S&P500'], 'ixic': [[], '#1473b5', 'Nasdaq'], 'rut': [[], "#03007d", 'Russell'], 
    'wtiGold': [[], '#858344', 'Wti/Gold'], 'sz': [[], "#a1497f", 'Shenzhen Component'], 'bvsp': [[], '#cf7e00', 'IBOVESPA'],
    'gdaxi': [[], "#016a81", 'DAX'], 'wheat': [[], '#2bdf01', 'Wheat'], 'ss': [[], '#a30202', 'SSE Composite'], 'bsesn': [[], '#9db001', 'S&P BSE SENSEX'], 'wheatGold': [[], '#156e00', 'Wheat/Gold']};
+
 
 let createCharts = function (offset, level, win, item) {
   if (lengthRD - item - win - offset < 0) {
@@ -312,10 +314,12 @@ let rollAvg = (list, meanWin, item) => {
   return result;
 };
 
+
 let tickersDictAvg = {'vix': [[], '#ff0000', 'VIX'], 'wti': [[], '#000000', 'WTI'], 'gold': [[], '#dfbd00', 'Gold'],
    'tnx': [[], '#c000ff', 'TNX'], 'gspc': [[], "#0000ff", 'S&P500'], 'ixic': [[], '#1473b5', 'Nasdaq'], 'rut': [[], "#03007d", 'Russell'], 
    'wtiGold': [[], '#858344', 'Wti/Gold'], 'sz': [[], "#a1497f", 'Shenzhen Component'], 'bvsp': [[], '#cf7e00', 'IBOVESPA'],
    'gdaxi': [[], "#016a81", 'DAX'], 'wheat': [[], '#2bdf01', 'Wheat'], 'ss': [[], '#a30202', 'SSE Composite'], 'bsesn': [[], '#9db001', 'S&P BSE SENSEX'], 'wheatGold': [[], '#156e00', 'Wheat/Gold']};
+
 
 let createAvgChart = function (offset, level, item, ticker) {
   if (lengthRD - item - maxWin - offset < 0) {

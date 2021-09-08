@@ -72,34 +72,42 @@ class Lang_graphs(models.Model):
       
 class Ticker(models.Model):
     date_added = models.DateField(auto_now_add=True)
-    gspc = models.FloatField()
-    vix = models.FloatField()
     tnx = models.FloatField()
-    wti = models.FloatField()
-    gold = models.FloatField()
+    gspc = models.FloatField()
     ixic = models.FloatField()
     rut = models.FloatField()
+    gdaxi = models.FloatField()
+    ss = models.FloatField()
     sz = models.FloatField()
     bvsp = models.FloatField()
-    gdaxi = models.FloatField()
-    wheat = models.FloatField()
-    ss = models.FloatField()
     bsesn = models.FloatField()
-    
+    wheat = models.FloatField()
+    wti = models.FloatField()
+    cop = models.FloatField()
+    gold = models.FloatField()
+    wheat_gold = models.FloatField()
+    wti_gold = models.FloatField()
+    cop_gold = models.FloatField()
+    vix = models.FloatField()
+
     def __float__(self):
-        return self.gspc
-        return self.vix
         return self.tnx
-        return self.wti
-        return self.gold
+        return self.gspc
         return self.ixic
         return self.rut
+        return self.gdaxi
+        return self.ss
         return self.sz
         return self.bvsp
-        return self.gdaxi
-        return self.wheat
-        return self.ss
         return self.bsesn
+        return self.wheat
+        return self.wti
+        return self.cop
+        return self.gold
+        return self.wheat_gold
+        return self.wti_gold
+        return self.cop_gold
+        return self.vix
     
     def __str__(self):
         return self.date_added
