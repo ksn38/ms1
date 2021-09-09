@@ -5,6 +5,8 @@ let offset = 0;
 let date = [];
 let vix2 = [];
 let data = [];
+let ticker1 = [];
+let ticker2 = [];
 let chart0 = document.getElementById("line-chart0");
 let chart1 = document.getElementById("line-chart1");
 let chart2 = document.getElementById("line-chart2");
@@ -223,11 +225,40 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
 
 let tickersDict = {'vix': [[], '#ff0000', 'VIX'], 'wti': [[], '#000000', 'WTI'], 'gold': [[], '#dfbd00', 'Gold'],
    'tnx': [[], '#c000ff', 'TNX'], 'gspc': [[], "#0000ff", 'S&P500'], 'ixic': [[], '#1473b5', 'Nasdaq'], 'rut': [[], "#03007d", 'Russell'], 
-   'wtiGold': [[], '#858344', 'Wti/Gold'], 'sz': [[], "#a1497f", 'Shenzhen Component'], 'bvsp': [[], '#cf7e00', 'IBOVESPA'],
-   'gdaxi': [[], "#016a81", 'DAX'], 'wheat': [[], '#2bdf01', 'Wheat'], 'ss': [[], '#a30202', 'SSE Composite'], 'bsesn': [[], '#9db001', 'S&P BSE SENSEX'], 'wheatGold': [[], '#156e00', 'Wheat/Gold']};
+   'wti_gold': [[], '#858344', 'Wti/Gold'], 'sz': [[], "#a1497f", 'Shenzhen Component'], 'bvsp': [[], '#cf7e00', 'IBOVESPA'],
+   'gdaxi': [[], "#016a81", 'DAX'], 'wheat': [[], '#2bdf01', 'Wheat'], 'ss': [[], '#a30202', 'SSE Composite'], 'bsesn': [[], '#9db001', 'S&P BSE SENSEX'], 
+   'wheat_gold': [[], '#156e00', 'Wheat/Gold'], 'cop': [[], '#8d4734', 'Copper'], 'cop_gold': [[], '#8d6d34', 'Copper/Gold']};
 
 
-let createCharts = function (offset, level, win, item) {
+let createMainChart = function (offset, level, win, item) {
+  if (lengthRD - item - win - offset < 0) {
+    offset = 0;
+    offsetInput.value = 0;
+  };
+  
+  let i = lengthRD - item - offset - win;
+  if (item + win >  lengthRD) {
+    i = 0
+  }
+  
+  for (i; i < lengthRD - offset; i++) {
+    date.push(received_data[i]['fields']['date_added']);
+    ticker1.push(received_data[i]['fields'][data1.value]);
+    ticker2.push(received_data[i]['fields'][data2.value]);
+    if (received_data[i]['fields']['vix'] > level) {
+      vix2.push(received_data[i]['fields']['vix'])
+    } else {vix2.push(0)};
+  }
+  
+  return [lineChart(ticker1, ticker2, tickersDict[data1.value][2], tickersDict[data2.value][2], tickersDict[data1.value][1], tickersDict[data2.value][1], chart0, win, item), 
+  [date = [],
+  vix2 = [],
+  ticker1 = [],
+  ticker2 = []]];
+};
+
+
+let createCharts4 = function (offset, level, win, item) {
   if (lengthRD - item - win - offset < 0) {
     offset = 0;
     offsetInput.value = 0;
@@ -246,27 +277,13 @@ let createCharts = function (offset, level, win, item) {
     tickersDict.ixic[0].push(received_data[i]['fields']['ixic']);
     tickersDict.rut[0].push(received_data[i]['fields']['rut']);
     tickersDict.wti[0].push(received_data[i]['fields']['wti']);
-    tickersDict.gold[0].push(received_data[i]['fields']['gold']);
-    tickersDict.sz[0].push(received_data[i]['fields']['sz']);
-    tickersDict.bvsp[0].push(received_data[i]['fields']['bvsp']);
-    tickersDict.gdaxi[0].push(received_data[i]['fields']['gdaxi']);
     tickersDict.wheat[0].push(received_data[i]['fields']['wheat']);
-    tickersDict.ss[0].push(received_data[i]['fields']['ss']);
-    tickersDict.bsesn[0].push(received_data[i]['fields']['bsesn']);
     if (received_data[i]['fields']['vix'] > level) {
       vix2.push(received_data[i]['fields']['vix'])
     } else {vix2.push(0)};
   }
   
-  if (data1.value == 'wtiGold' || data2.value == 'wtiGold') {
-    tickersDict.wtiGold[0] = tickersDict.wti[0].map((n, i) => n/tickersDict.gold[0][i]);
-  }
-  
-  if (data1.value == 'wheatGold' || data2.value == 'wheatGold') {
-    tickersDict.wheatGold[0] = tickersDict.wheat[0].map((n, i) => n/tickersDict.gold[0][i]);
-  }
-  
-  return [[lineChart(tickersDict[data1.value][0], tickersDict[data2.value][0], tickersDict[data1.value][2], tickersDict[data2.value][2], tickersDict[data1.value][1], tickersDict[data2.value][1], chart0, win, item), 
+  return [[
   lineChart(tickersDict.vix[0], tickersDict.gspc[0], 'VIX', 'S&P500', tickersDict['vix'][1], tickersDict['gspc'][1], chart1, win, item),
   lineChart(tickersDict.tnx[0], tickersDict.gspc[0], 'TNX', 'S&P500 (-0.65)', tickersDict['tnx'][1], tickersDict['gspc'][1], chart4, win, item),
   lineChart(tickersDict.ixic[0], tickersDict.rut[0], 'Nasdaq', 'Russell', tickersDict['ixic'][1], tickersDict['rut'][1], chart2, win, item),
@@ -274,21 +291,13 @@ let createCharts = function (offset, level, win, item) {
   
   [date = [],
   tickersDict.vix[0] = [],
-  vix2 = [],
   tickersDict.tnx[0] = [],
   tickersDict.gspc[0] = [],
   tickersDict.ixic[0] = [],
   tickersDict.rut[0] = [],
   tickersDict.wti[0] = [],
-  tickersDict.gold[0] = [],
-  tickersDict.sz[0] = [],
-  tickersDict.bvsp[0] = [],
-  tickersDict.gdaxi[0] = [],
   tickersDict.wheat[0] = [],
-  tickersDict.ss[0] = [],
-  tickersDict.wtiGold[0] = [],
-  tickersDict.wheatGold[0] = [],
-  tickersDict.bsesn[0] = []]];
+  vix2 = []]];
 };
 
 
@@ -317,8 +326,9 @@ let rollAvg = (list, meanWin, item) => {
 
 let tickersDictAvg = {'vix': [[], '#ff0000', 'VIX'], 'wti': [[], '#000000', 'WTI'], 'gold': [[], '#dfbd00', 'Gold'],
    'tnx': [[], '#c000ff', 'TNX'], 'gspc': [[], "#0000ff", 'S&P500'], 'ixic': [[], '#1473b5', 'Nasdaq'], 'rut': [[], "#03007d", 'Russell'], 
-   'wtiGold': [[], '#858344', 'Wti/Gold'], 'sz': [[], "#a1497f", 'Shenzhen Component'], 'bvsp': [[], '#cf7e00', 'IBOVESPA'],
-   'gdaxi': [[], "#016a81", 'DAX'], 'wheat': [[], '#2bdf01', 'Wheat'], 'ss': [[], '#a30202', 'SSE Composite'], 'bsesn': [[], '#9db001', 'S&P BSE SENSEX'], 'wheatGold': [[], '#156e00', 'Wheat/Gold']};
+   'wti_gold': [[], '#858344', 'Wti/Gold'], 'sz': [[], "#a1497f", 'Shenzhen Component'], 'bvsp': [[], '#cf7e00', 'IBOVESPA'],
+   'gdaxi': [[], "#016a81", 'DAX'], 'wheat': [[], '#2bdf01', 'Wheat'], 'ss': [[], '#a30202', 'SSE Composite'], 'bsesn': [[], '#9db001', 'S&P BSE SENSEX'], 
+   'wheat_gold': [[], '#156e00', 'Wheat/Gold'], 'cop': [[], '#8d4734', 'Copper'], 'cop_gold': [[], '#8d6d34', 'Copper/Gold']};
 
 
 let createAvgChart = function (offset, level, item, ticker) {
@@ -335,20 +345,9 @@ let createAvgChart = function (offset, level, item, ticker) {
   for (i; i < lengthRD - offset; i++) {
     date.push(received_data[i]['fields']['date_added']);
     data.push(received_data[i]['fields'][ticker]);
-    tickersDictAvg.wti[0].push(received_data[i]['fields']['wti']);
-    tickersDictAvg.gold[0].push(received_data[i]['fields']['gold']);
-    tickersDictAvg.wheat[0].push(received_data[i]['fields']['wheat']);
     if (received_data[i]['fields']['vix'] > level) {
       vix2.push(received_data[i]['fields']['vix'])
     } else {vix2.push(0)};
-  }
-  
-  if (ticker == 'wtiGold') {
-    data = tickersDictAvg.wti[0].map((n, i) => n/tickersDictAvg.gold[0][i])
-  }
-  
-  if (ticker == 'wheatGold') {
-    data = tickersDictAvg.wheat[0].map((n, i) => n/tickersDictAvg.gold[0][i])
   }
   
   let radPoint = 2;
@@ -457,14 +456,12 @@ let createAvgChart = function (offset, level, item, ticker) {
   
   [date = [],
   vix2 = [],
-  tickersDictAvg.wti[0] = [],
-  tickersDictAvg.gold[0] = [],
-  tickersDictAvg.wheat[0] = [],
   data = []]];
 };
 
 
-let charts = createCharts(offset, level, win, item); 
+let mainChart = createMainChart(offset, level, win, item); 
+let charts4 = createCharts4(offset, level, win, item); 
 let chartAvg2 = createAvgChart(offset, level, item, dataAvg.value);
 
 buttonAvg.onclick = () => {
@@ -475,8 +472,10 @@ buttonAvg.onclick = () => {
 for(let i = 0; i < radio.length; i++){
   radio[i].addEventListener("change", function(){
     item = parseInt(radio[i].value);
-    charts[0].map((chart) => chart.destroy());
-    charts = createCharts(offset, level, win, item); 
+    mainChart[0].destroy();
+    mainChart = createMainChart(offset, level, win, item); 
+    charts4[0].map((chart) => chart.destroy());
+    charts = createCharts4(offset, level, win, item); 
     chartAvg2[0].destroy();
     chartAvg2 = createAvgChart(offset, level, item, dataAvg.value);     
     periodInput.value = item;
@@ -486,30 +485,38 @@ for(let i = 0; i < radio.length; i++){
 for(let i = 0; i < radWin.length; i++){
   radWin[i].addEventListener("change", function(){
     win = parseInt(radWin[i].value);
-    charts[0].map((chart) => chart.destroy());
-    charts = createCharts(offset, level, win, item); 
+    mainChart[0].destroy();
+    mainChart = createMainChart(offset, level, win, item); 
+    charts4[0].map((chart) => chart.destroy());
+    charts = createCharts4(offset, level, win, item); 
     correlationInput.value = win;
   });
 }
 
 correlationInput.onchange = function () {
   win = parseInt(correlationInput.value);
-  charts[0].map((chart) => chart.destroy());
-  charts = createCharts(offset, level, win, item); 
+  mainChart[0].destroy();
+  mainChart = createMainChart(offset, level, win, item); 
+  charts4[0].map((chart) => chart.destroy());
+  charts = createCharts4(offset, level, win, item); 
 }
 
 offsetInput.onchange = function () {
   offset = parseInt(offsetInput.value);
-  charts[0].map((chart) => chart.destroy());
-  charts = createCharts(offset, level, win, item); 
+  mainChart[0].destroy();
+  mainChart = createMainChart(offset, level, win, item); 
+  charts4[0].map((chart) => chart.destroy());
+  charts = createCharts4(offset, level, win, item); 
   chartAvg2[0].destroy();
   chartAvg2 = createAvgChart(offset, level, item, dataAvg.value); 
 }
 
 levelVix.onchange = function () {
   level = parseInt(levelVix.value);
-  charts[0].map((chart) => chart.destroy());
-  charts = createCharts(offset, level, win, item); 
+  mainChart[0].destroy();
+  mainChart = createMainChart(offset, level, win, item); 
+  charts4[0].map((chart) => chart.destroy());
+  charts = createCharts4(offset, level, win, item); 
   chartAvg2[0].destroy();
   chartAvg2 = createAvgChart(offset, level, item, dataAvg.value); 
 }
@@ -525,14 +532,18 @@ offsetInput.oninput = function() {
 
 periodInput.onchange = () => {
   item = parseInt(periodInput.value);
-  charts[0].map((chart) => chart.destroy());
-  charts = createCharts(offset, level, win, item); 
+  mainChart[0].destroy();
+  mainChart = createMainChart(offset, level, win, item); 
+  charts4[0].map((chart) => chart.destroy());
+  charts = createCharts4(offset, level, win, item); 
   chartAvg2[0].destroy();
   chartAvg2 = createAvgChart(offset, level, item, dataAvg.value);
 }
 
 button0.onclick = () => {
-  charts[0].map((chart) => chart.destroy());
+  mainChart[0].destroy();
+  mainChart = createMainChart(offset, level, win, item); 
+  charts4[0].map((chart) => chart.destroy());
   charts = createCharts(offset, level, win, item); 
 }
 
@@ -552,28 +563,9 @@ let animationChart = function (offset, level, win, item, ticker1, ticker2) {
     date.push(received_data[i]['fields']['date_added']);
     dataAnimation1.push(received_data[i]['fields'][ticker1]);
     dataAnimation2.push(received_data[i]['fields'][ticker2]);
-    tickersDict.wti[0].push(received_data[i]['fields']['wti']);
-    tickersDict.gold[0].push(received_data[i]['fields']['gold']);
-    tickersDict.wheat[0].push(received_data[i]['fields']['wheat']);
     if (received_data[i]['fields']['vix'] > level) {
       vix2.push(received_data[i]['fields']['vix'])
     } else {vix2.push(0)};
-  }
-  
-  if (ticker1 == 'wtiGold') {
-    dataAnimation1 = tickersDict.wti[0].map((n, i) => n/tickersDict.gold[0][i])
-  }
-  
-  if (ticker1 == 'wheatGold') {
-    dataAnimation1 = tickersDict.wheat[0].map((n, i) => n/tickersDict.gold[0][i])
-  }
-  
-  if (ticker2 == 'wtiGold') {
-    dataAnimation2 = tickersDict.wti[0].map((n, i) => n/tickersDict.gold[0][i])
-  }
-  
-  if (ticker2 == 'wheatGold') {
-    dataAnimation2 = tickersDict.wheat[0].map((n, i) => n/tickersDict.gold[0][i])
   }
   
   let radPoint = 2;
@@ -591,9 +583,6 @@ let animationChart = function (offset, level, win, item, ticker1, ticker2) {
   
   [date = [],
   vix2 = [],
-  tickersDictAvg.wti[0] = [],
-  tickersDictAvg.gold[0] = [],
-  tickersDictAvg.wheat[0] = [],
   dataAnimation1 = [],
   dataAnimation2 = []]];
 };
@@ -617,8 +606,8 @@ animationButton.onclick = async function () {
     if (run) {
       await sleep(timeSleep);
       correlationInput.value = winAnimation;
-      charts[0][0].destroy();
-      charts[0][0] = animationChart(offset, level, winAnimation, item, data1.value, data2.value)[0];
+      mainChart[0].destroy();
+      mainChart[0] = animationChart(offset, level, winAnimation, item, data1.value, data2.value)[0];
     } else {break}
   }
   animationButton.value = 'Start';
