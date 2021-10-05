@@ -42,8 +42,8 @@ def currencies(request):
 
     today = date.today().weekday()
     delta = 1
-    delta1 = 100
-    delta2 = 1000
+    delta1 = 500
+    delta2 = 2000
     delta3 = 4000
 
     if today == 6:
