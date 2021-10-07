@@ -165,9 +165,9 @@ let colorVal = (values) => {
   for (let i = 0; i < values.length; i++) {
     let val = parseFloat(values[i].textContent);
     if (val >= 0) {
-      values[i].style.backgroundColor = 'rgba(40, 167, 69,'  + (val/(parseFloat(values[0].textContent)*1.2)) + ')';
+      values[i].style.backgroundColor = 'rgba(40, 167, 69,'  + (val/(parseFloat(values[0].textContent)*2)) + ')';
     } else {
-      values[i].style.backgroundColor = 'rgba(220, 53, 69,'  + (val/(parseFloat(values[values.length - 1].textContent)*1.2)) + ')'
+      values[i].style.backgroundColor = 'rgba(220, 53, 69,'  + (val/(parseFloat(values[values.length - 1].textContent)*1.5)) + ')'
     }
   }
 }
@@ -179,19 +179,18 @@ colorVal(valuePlus3);
 
 for (let i = 0; i < currencyPlus.length; i++) {
   if (usdXdr.has(curRe.exec(currencyPlus[i].textContent)[0])) {
-    currencyPlus[i].classList.add('bg-info')}
+    currencyPlus[i].classList.add('bg-info', 'text-dark', 'font-weight-bold')}
   if (EM.has(curRe.exec(currencyPlus[i].textContent)[0])) {
-    currencyPlus[i].classList.add('bg-warning', 'text-secondary');}
+    currencyPlus[i].classList.add('bg-warning', 'font-weight-bold');}
   if (com.has(curRe.exec(currencyPlus[i].textContent)[0])) {
-    currencyPlus[i].classList.add('text-danger', 'text-lowercase', 'font-weight-bold');}
+    currencyPlus[i].classList.add('text-light', 'font-weight-bold', 'font-italic', 'text-lowercase');}
     //currencyPlus[i].classList.add('font-weight-bold')}
   if (mid.has(curRe.exec(currencyPlus[i].textContent)[0])) {
-    currencyPlus[i].classList.add('bg-secondary');
-    currencyPlus[i].classList.add('text-warning')}
+    currencyPlus[i].classList.add('bg-secondary', 'text-warning');}
   if (new Set(['XDR']).has(curRe.exec(currencyPlus[i].textContent)[0])) {
-    currencyPlus[i].classList.add('bg-light');
-    currencyPlus[i].classList.add('text-primary', 'text-lowercase')}
+    currencyPlus[i].classList.add('bg-primary', 'font-weight-lighter')}
   if (new Set(['CNY']).has(curRe.exec(currencyPlus[i].textContent)[0])) {
+    currencyPlus[i].classList.remove('text-dark');
     currencyPlus[i].classList.add('text-warning')}
 };
 
