@@ -152,7 +152,7 @@ def edit_bpost(request, bpost_id):
     return render(request, 'mybl/edit_bpost.html', context)
     
 def hh(request):
-    def apivac(expir):
+    '''def apivac(expir):
         vac = {}
 
         for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Golang', '1c', 'Data scientist', 'Scala', 'iOS', 'Frontend', 'DevOps', 'ABAP', 'Android']:
@@ -207,22 +207,27 @@ def hh(request):
         context = {'langs': langs}
     else:
         langs = Lang.objects.raw(langs_today)
-        context = {'langs': langs}
-        
+        context = {'langs': langs}'''
+    
+    '''context = {}
+    
+    context['langs'] = Lang.objects.raw(langs_today)
     context['charts'] = Lang.objects.raw(chart_langs)
     context['charts_march'] = Lang.objects.raw(chart_langs_march)
-    #graphs = Lang.objects.filter(Q(name = 'Python') | Q(name = 'c%2B%2B') | Q(name = 'Java') | Q(name = 'Javascript') | Q(name = 'php'))
-
+    
     graphs = Lang_graphs.objects.raw("""select id, name, res_vac, date_added from mybl_lang ml where name = 'Python' or name = 'Java' or name = 'Javascript' or name = 'php' or name = 'cpp' order by date_added, name""")
     context['graphs'] = serializers.serialize('json', graphs)
 
     graphs_avg = Lang_avg.objects.raw("""select distinct max(id) over(partition by date_added) as id, date_added, avg(val_noexp) over(partition by date_added) as avg_vn, avg(res_vac) over(partition by date_added) as avg_rv from mybl_lang order by date_added""")
-    context['graphs_avg'] = serializers.serialize('json', graphs_avg)
-
-    graphs_mean_today = Lang.objects.raw(chart_langs)
-    context['graphs_mean_today'] = serializers.serialize('json', graphs_mean_today)
-    graphs_mean_change = Lang.objects.raw(chart_langs_march)
-    context['graphs_mean_change'] = serializers.serialize('json', graphs_mean_change)
+    context['graphs_avg'] = serializers.serialize('json', graphs_avg)'''
+    
+    langs = cache.get('langs')
+    charts = cache.get('charts')
+    charts_march = cache.get('charts_march')
+    graphs = cache.get('graphs')
+    graphs_avg = cache.get('graphs_avg')
+        
+    context = {'langs': langs, 'charts': charts, 'charts_march': charts_march, 'graphs': graphs, 'graphs_avg': graphs_avg}
     
     return render(request, 'mybl/hh.html', context)
     

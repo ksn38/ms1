@@ -287,7 +287,7 @@ let createCharts4 = function (offset, level, win, item) {
   lineChart(tickersDict.vix[0], tickersDict.gspc[0], 'VIX', 'S&P500', tickersDict['vix'][1], tickersDict['gspc'][1], chart1, win, item),
   lineChart(tickersDict.tnx[0], tickersDict.gspc[0], 'TNX', 'S&P500 (-0.65)', tickersDict['tnx'][1], tickersDict['gspc'][1], chart4, win, item),
   lineChart(tickersDict.ixic[0], tickersDict.rut[0], 'Nasdaq', 'Russell', tickersDict['ixic'][1], tickersDict['rut'][1], chart2, win, item),
-  lineChart(tickersDict.cop_gold[0], tickersDict.wti_gold[0], 'Copper/Gold', 'WTI/Gold', tickersDict['cop_gold'][1], tickersDict['wti_gold'][1], chart3, win, item)],
+  lineChart(tickersDict.cop_gold[0], tickersDict.tnx[0], 'Copper/Gold', 'TNX', tickersDict['cop_gold'][1], tickersDict['tnx'][1], chart3, win, item)],
   
   [date = [],
   tickersDict.vix[0] = [],

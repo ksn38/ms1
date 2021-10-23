@@ -8,13 +8,19 @@ from django.db.models import Q
 import requests
 import json
 import time
+from django.core.cache import cache
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from mybl.psql_req import chart_langs, langs_today, chart_langs_march
+from django.core import serializers
 
 
 if __name__ == '__main__':
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "blog.settings")
     django.setup()
-    from mybl.models import Lang
+    from mybl.models import Lang, Lang_avg, Lang_graphs
 
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 def apivac(expir):
     vac = {}
@@ -69,3 +75,12 @@ if len(langs) == 0:
         obj = Lang(**new_values)
         obj.save()
 
+cache.set('langs', Lang.objects.raw(langs_today))
+cache.set('charts', Lang.objects.raw(chart_langs))
+cache.set('charts_march', Lang.objects.raw(chart_langs_march))
+
+graphs = Lang_graphs.objects.raw("""select id, name, res_vac, date_added from mybl_lang ml where name = 'Python' or name = 'Java' or name = 'Javascript' or name = 'php' or name = 'cpp' order by date_added, name""")
+cache.set('graphs', serializers.serialize('json', graphs))
+
+graphs_avg = Lang_avg.objects.raw("""select distinct max(id) over(partition by date_added) as id, date_added, avg(val_noexp) over(partition by date_added) as avg_vn, avg(res_vac) over(partition by date_added) as avg_rv from mybl_lang order by date_added""")
+cache.set('graphs_avg', serializers.serialize('json', graphs_avg))       
