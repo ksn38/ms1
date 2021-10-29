@@ -358,3 +358,16 @@ for(let i = 0; i < radWin.length; i++){
 
 graph(win);
 graphAvg(win);
+
+
+let curRe = /[A-z]\w{0,}|\d/;
+let nameLang = document.querySelectorAll('.name_lang');
+let nonLang = new Set(['Data', 'Frontend', 'DevOps', 'iOS', 'Android']);
+
+for (let i = 0; i < nameLang.length; i++) {
+  //console.log(curRe.exec(nameLang[i].textContent));
+  if (nonLang.has(curRe.exec(nameLang[i].textContent)[0])) {
+    nameLang[i].classList.remove('bg-dark');
+    nameLang[i].classList.add('bg-secondary')
+  }
+}

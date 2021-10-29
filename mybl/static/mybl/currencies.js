@@ -205,3 +205,4 @@ inputDelta2.value = delta2;
 inputDelta3.value = delta3;
 
 
+//console.log(curRe.exec(currencyPlus[1].textContent));
