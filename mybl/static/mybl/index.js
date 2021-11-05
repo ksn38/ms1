@@ -224,7 +224,7 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
 
 
 let tickersDict = {'vix': [[], '#ff0000', 'VIX'], 'wti': [[], '#000000', 'WTI'], 'gold': [[], '#dfbd00', 'Gold'],
-   'tnx': [[], '#c000ff', 'TNX'], 'gspc': [[], "#0000ff", 'S&P500'], 'ixic': [[], '#1473b5', 'Nasdaq'], 'rut': [[], "#03007d", 'Russell'], 
+   'tnx': [[], '#c000ff', 'UST'], 'gspc': [[], "#0000ff", 'S&P500'], 'ixic': [[], '#1473b5', 'Nasdaq'], 'rut': [[], "#03007d", 'Russell'], 
    'wti_gold': [[], '#858344', 'Wti/Gold'], 'sz': [[], "#a1497f", 'Shenzhen Component'], 'bvsp': [[], '#cf7e00', 'IBOVESPA'],
    'gdaxi': [[], "#016a81", 'DAX'], 'wheat': [[], '#2bdf01', 'Wheat'], 'ss': [[], '#a30202', 'SSE Composite'], 'bsesn': [[], '#9db001', 'S&P BSE SENSEX'], 
    'wheat_gold': [[], '#156e00', 'Wheat/Gold'], 'cop': [[], '#8d4734', 'Copper'], 'cop_gold': [[], '#8d6d34', 'Copper/Gold']};
@@ -285,9 +285,9 @@ let createCharts4 = function (offset, level, win, item) {
   
   return [[
   lineChart(tickersDict.vix[0], tickersDict.gspc[0], 'VIX', 'S&P500', tickersDict['vix'][1], tickersDict['gspc'][1], chart1, win, item),
-  lineChart(tickersDict.tnx[0], tickersDict.gspc[0], 'TNX', 'S&P500 (-0.65)', tickersDict['tnx'][1], tickersDict['gspc'][1], chart4, win, item),
+  lineChart(tickersDict.tnx[0], tickersDict.gspc[0], 'UST', 'S&P500 (-0.65)', tickersDict['tnx'][1], tickersDict['gspc'][1], chart4, win, item),
   lineChart(tickersDict.ixic[0], tickersDict.rut[0], 'Nasdaq', 'Russell', tickersDict['ixic'][1], tickersDict['rut'][1], chart2, win, item),
-  lineChart(tickersDict.cop_gold[0], tickersDict.tnx[0], 'Copper/Gold', 'TNX', tickersDict['cop_gold'][1], tickersDict['tnx'][1], chart3, win, item)],
+  lineChart(tickersDict.cop_gold[0], tickersDict.tnx[0], 'Copper/Gold', 'UST', tickersDict['cop_gold'][1], tickersDict['tnx'][1], chart3, win, item)],
   
   [date = [],
   tickersDict.vix[0] = [],
@@ -325,7 +325,7 @@ let rollAvg = (list, meanWin, item) => {
 
 
 let tickersDictAvg = {'vix': [[], '#ff0000', 'VIX'], 'wti': [[], '#000000', 'WTI'], 'gold': [[], '#dfbd00', 'Gold'],
-   'tnx': [[], '#c000ff', 'TNX'], 'gspc': [[], "#0000ff", 'S&P500'], 'ixic': [[], '#1473b5', 'Nasdaq'], 'rut': [[], "#03007d", 'Russell'], 
+   'tnx': [[], '#c000ff', 'UST'], 'gspc': [[], "#0000ff", 'S&P500'], 'ixic': [[], '#1473b5', 'Nasdaq'], 'rut': [[], "#03007d", 'Russell'], 
    'wti_gold': [[], '#858344', 'Wti/Gold'], 'sz': [[], "#a1497f", 'Shenzhen Component'], 'bvsp': [[], '#cf7e00', 'IBOVESPA'],
    'gdaxi': [[], "#016a81", 'DAX'], 'wheat': [[], '#2bdf01', 'Wheat'], 'ss': [[], '#a30202', 'SSE Composite'], 'bsesn': [[], '#9db001', 'S&P BSE SENSEX'], 
    'wheat_gold': [[], '#156e00', 'Wheat/Gold'], 'cop': [[], '#8d4734', 'Copper'], 'cop_gold': [[], '#8d6d34', 'Copper/Gold']};
