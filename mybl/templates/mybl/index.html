@@ -33,17 +33,16 @@
       </form>
     </table>
     <table class='table-sm'>
-      <caption style='caption-side: top'><small></small></caption>
       <tr>
-        <th class='px-2 text-center bg-dark text-light font-weight-normal'>UST</th>
+        <th class='px-2 text-center bg-dark text-light font-weight-normal' id='ust' v-bind:title="message">UST</th>
         <th class='px-2 text-center bg-info text-dark'>S&P500</th>
-        <th class='px-2 text-center bg-info text-dark'>IXIC</th>
-        <th class='px-2 text-center bg-info text-dark'>RUT</th>
+        <th class='px-2 text-center bg-info text-dark' id='ixic' v-bind:title="message">IXIC</th>
+        <th class='px-2 text-center bg-info text-dark' id='rut' v-bind:title="message">RUT</th>
         <th class='px-2 text-center bg-info text-dark'>DAX</th>
-        <th class='px-2 text-center bg-info text-warning'>SSE</th>
-        <th class='px-2 text-center bg-info text-warning'>SZSE </th>
-        <th class='px-2 text-center bg-warning text-light font-weight-bold font-italic text-lowercase'>IBOV</th>
-        <th class='px-2 text-center bg-warning text-secondary'>BSE</th>
+        <th class='px-2 text-center bg-info text-warning' id='sse' v-bind:title='message'>SSE</th>
+        <th class='px-2 text-center bg-info text-warning' id='szse' v-bind:title='message'>SZSE </th>
+        <th class='px-2 text-center bg-warning text-light font-weight-bold font-italic text-lowercase' id='ibov' v-bind:title='message'>IBOV</th>
+        <th class='px-2 text-center bg-warning text-secondary' id='bse' v-bind:title='message'>BSE</th>
         <th class='px-2 text-center bg-dark text-light font-weight-bold font-italic'>Wheat</th>
         <th class='px-2 text-center bg-dark text-light font-weight-bold font-italic'>WTI</th>
         <th class='px-2 text-center bg-dark text-light font-weight-bold font-italic'>Copper</th>
@@ -98,8 +97,9 @@
     </table>
   </div>
   
-  <div class='flex-wrap mt-2'>
-    <span class="d-flex justify-content-center">
+  <div class='flex-wrap'>
+    <span class="d-flex justify-content-center text-secondary"><small>(from finance.yahoo.com)</small></span>
+    <span class="d-flex justify-content-center mt-2">
       <span class='mx-1 border border-primary rounded p-1'>
         <select id="data1" class='mr-1'>
           <option selected value="tnx">Treasury Yield 10 Years</option>

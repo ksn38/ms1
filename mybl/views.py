@@ -41,15 +41,15 @@ def currencies(request):
         return dict_curr, date_delta
 
     today = date.today().weekday()
-    delta = 1
+    delta = 5
     delta1 = 500
     delta2 = 2000
     delta3 = 4000
 
-    if today == 6:
+    '''if today == 6:
         delta = 2
     elif today == 0:
-        delta = 3
+        delta = 3'''
     
     if(request.GET.get('mybtn')):
         delta = (int(request.GET.get('mytextbox')))

@@ -42,6 +42,7 @@ let maxRangeCor = lengthRD - 100;
 let winAnimation = 5;
 
 
+//coloring table
 for (let i = lengthRD - 1; i >= 0; i--) {
     dateOffset.push(received_data[i]['fields']['date_added']);
     //console.log(i);
@@ -87,6 +88,7 @@ colorInv(trVix);
 colorInv(trTnx);
 
 
+//correlation
 let cor = (list1, list2) => {
   let average = (list) => {
     return list.reduce((accum, curr) => accum + curr) / list.length;
@@ -115,6 +117,7 @@ let cor = (list1, list2) => {
   return (sum(cov(list1, avgList1, list2, avgList2)))/Math.sqrt(dif2(list1, avgList1)*dif2(list2, avgList2));
 };
 
+//linechart for 2 tickers with correlation
 let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item) {
   let rcor = [];
   
@@ -301,6 +304,7 @@ let createCharts4 = function (offset, level, win, item) {
 };
 
 
+//rolling average
 let rollAvg = (list, meanWin, item) => {
   let average = (list) => {
     return list.reduce((accum, curr) => accum + curr) / list.length;
@@ -614,5 +618,56 @@ animationButton.onclick = async function () {
   run = false;
   win = winAnimation;
 }
+
+
+//hovering prompts for tickers
+let ust = new Vue ({
+  el: '#ust',
+  data: {
+    message: "Treasury Yield 10 Years",
+  }
+})
+
+let ixic = new Vue ({
+  el: '#ixic',
+  data: {
+    message: "Nasdaq",
+  }
+})
+
+let rut = new Vue ({
+  el: '#rut',
+  data: {
+    message: 'Russell',
+  }
+})
+
+let sse = new Vue ({
+  el: '#sse',
+  data: {
+    message: 'SSE Composite',
+  }
+})
+
+let szse = new Vue ({
+  el: '#szse',
+  data: {
+    message: 'Shenzhen Component',
+  }
+})
+
+let ibov = new Vue ({
+  el: '#ibov',
+  data: {
+    message: 'IBOVESPA',
+  }
+})
+
+let bse = new Vue ({
+  el: '#bse',
+  data: {
+    message: 'S&P BSE SENSEX',
+  }
+})
 
 

@@ -55,7 +55,7 @@ if len(tickers) == 0:
             obj = Ticker(**t)
             obj.save()
 
-chart_tickers_raw = Ticker.objects.raw(chart_tickers)#"select * from chart_tickers")
+chart_tickers_raw = Ticker.objects.raw(chart_tickers)
 cache.set('chart_tickers_view', chart_tickers_raw)
 
 tickers5000_raw = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 5000")

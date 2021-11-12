@@ -27,6 +27,7 @@ function insRow() {
 }
 
 
+//parse from moex.com to Map
 let dict = function (dif) {
   let day = new Map();
   let dateLast = new Date();
@@ -56,6 +57,7 @@ let dict = function (dif) {
   return [day, dateLast];
 };
 
+//creating and coloring table with moex socks
 button.onclick = async function () {
   let namesHigh = document.querySelectorAll('.name-high');
   let namesLow = document.querySelectorAll('.name-low');
@@ -150,6 +152,7 @@ window.onload = function(){
 }
 
 
+//coloring table of currencies
 let currencyPlus = document.querySelectorAll('.currency-plus');
 let valuePlus = document.querySelectorAll('.value-plus');
 let valuePlus1 = document.querySelectorAll('.value-plus1');
@@ -204,5 +207,3 @@ inputDelta1.value = delta1;
 inputDelta2.value = delta2;
 inputDelta3.value = delta3;
 
-
-//console.log(curRe.exec(currencyPlus[1].textContent));

@@ -10,6 +10,7 @@ let win = 14;
 let radWin = document.getElementsByName('win');
 
 
+//coloring tables
 let colorCol = (arr) => {
   arr = Array.from(arr);
   let arrInt = arr.map((i) => parseInt(i.textContent));
@@ -40,7 +41,6 @@ let colorColInv = (arr) => {
   }
 }
 
-//let start = performance.now();
 colorCol(valChng2020);
 colorCol(val_noexpChng2020);
 colorColInv(res_vacChng2020);
@@ -103,6 +103,8 @@ colorColNow(valNowNod);
 colorColNow(valNoexpNowNod);
 colorColNowInv(resVacNowNod);
 
+
+//linecharts
 let cavas = document.getElementById("line-chart");
 
 if (cavas.width > window.innerWidth) {
@@ -260,14 +262,14 @@ let graphAvg = (win) => {
       labels: dateAvg,
       datasets: [{ 
           data: rollAvg(avgVn),
-          label: "percent without experience",
+          label: "Average percent without experience",
           borderColor: "#00af00",
           fill: false,
           pointRadius: 0,
           yAxisID: 'yLabel',
         }, { 
           data: rollAvg(avgRv),
-          label: "number applicants on vacancy",
+          label: "Average number applicants on vacancy",
           borderColor: "#434343",
           fill: false,
           pointRadius: 0,
@@ -319,6 +321,7 @@ let graphAvg = (win) => {
   });
 };
 
+//correlation
 let cor = (list1, list2) => {
   let average = (list) => {
     return list.reduce((accum, curr) => accum + curr) / list.length;
@@ -360,6 +363,7 @@ graph(win);
 graphAvg(win);
 
 
+//bg-secondary for nonlang
 let curRe = /[A-z]\w{0,}|\d/;
 let nameLang = document.querySelectorAll('.name_lang');
 let nonLang = new Set(['Data', 'Frontend', 'DevOps', 'iOS', 'Android']);
