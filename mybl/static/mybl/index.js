@@ -638,14 +638,14 @@ let ixic = new Vue ({
 let rut = new Vue ({
   el: '#rut',
   data: {
-    message: 'Russell',
+    message: 'Russell 2000',
   }
 })
 
 let sse = new Vue ({
   el: '#sse',
   data: {
-    message: 'SSE Composite',
+    message: 'Shanghai Delayed Price',
   }
 })
 
@@ -659,15 +659,21 @@ let szse = new Vue ({
 let ibov = new Vue ({
   el: '#ibov',
   data: {
-    message: 'IBOVESPA',
+    message: 'Brasil Sao Paulo Stock Exchange Index',
   }
 })
 
 let bse = new Vue ({
   el: '#bse',
   data: {
-    message: 'S&P BSE SENSEX',
+    message: 'S&P Bombay Stock Exchange Sensitive Index',
   }
 })
 
+let vix = new Vue ({
+  el: '#vix',
+  data: {
+    message: 'volatility index',
+  }
+})
 

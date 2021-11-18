@@ -34,49 +34,49 @@
     </table>
     <table class='table-sm'>
       <tr>
-        <th class='px-2 text-center bg-dark text-light font-weight-normal' id='ust' v-bind:title="message">UST</th>
-        <th class='px-2 text-center bg-info text-dark'>S&P500</th>
+        <th class='px-2 text-center bg-dark text-light font-weight-normal' id='vix' v-bind:title="message">VIX</th>
+        <th class='px-2 text-center bg-warning text-secondary' id='bse' v-bind:title='message'>BSE</th>
         <th class='px-2 text-center bg-info text-dark' id='ixic' v-bind:title="message">IXIC</th>
+        <th class='px-2 text-center bg-warning text-light font-weight-bold font-italic text-lowercase' id='ibov' v-bind:title='message'>IBOV</th>
         <th class='px-2 text-center bg-info text-dark' id='rut' v-bind:title="message">RUT</th>
+        <th class='px-2 text-center bg-info text-dark'>S&P500</th>
+        <th class='px-2 text-center bg-info text-warning' id='szse' v-bind:title='message'>SZSE </th>
         <th class='px-2 text-center bg-info text-dark'>DAX</th>
         <th class='px-2 text-center bg-info text-warning' id='sse' v-bind:title='message'>SSE</th>
-        <th class='px-2 text-center bg-info text-warning' id='szse' v-bind:title='message'>SZSE </th>
-        <th class='px-2 text-center bg-warning text-light font-weight-bold font-italic text-lowercase' id='ibov' v-bind:title='message'>IBOV</th>
-        <th class='px-2 text-center bg-warning text-secondary' id='bse' v-bind:title='message'>BSE</th>
         <th class='px-2 text-center bg-dark text-light font-weight-bold font-italic'>Wheat</th>
         <th class='px-2 text-center bg-dark text-light font-weight-bold font-italic'>WTI</th>
         <th class='px-2 text-center bg-dark text-light font-weight-bold font-italic'>Copper</th>
         <th class='px-2 text-center bg-dark text-light'>Gold</th>
-        <th class='px-2 text-center bg-dark text-light font-weight-normal'>VIX</th>
+        <th class='px-2 text-center bg-dark text-light font-weight-normal' id='ust' v-bind:title="message">UST</th>
       </tr>
       {% for ticker in chart_tickers %}
         <tr>
           <td class='change-tnx text-right' style='border-right: 2px solid black'>
-            {{ ticker.dif_tnx }}
+            {{ ticker.dif_vix }}
           </td>
           <td class='change text-right' style='border-top: 2px solid black'>
-            {{ ticker.dif_gspc }}
+            {{ ticker.dif_bsesn }}
           </td>
           <td class='change text-right' style='border-top: 2px solid black'>
             {{ ticker.dif_ixic }}
           </td>
           <td class='change text-right' style='border-top: 2px solid black'>
+            {{ ticker.dif_bvsp }}
+          </td>
+          <td class='change text-right' style='border-top: 2px solid black'>
             {{ ticker.dif_rut }}
+          </td>
+          <td class='change text-right' style='border-top: 2px solid black'>
+            {{ ticker.dif_gspc }}
+          </td>
+          <td class='change text-right' style='border-top: 2px solid black'>
+            {{ ticker.dif_sz }}
           </td>
           <td class='change text-right' style='border-top: 2px solid black'>
             {{ ticker.dif_gdaxi }}
           </td>
           <td class='change text-right' style='border-top: 2px solid black'>
             {{ ticker.dif_ss }}
-          </td>
-          <td class='change text-right' style='border-top: 2px solid black'>
-            {{ ticker.dif_sz }}
-          </td>
-          <td class='change text-right' style='border-top: 2px solid black'>
-            {{ ticker.dif_bvsp }}
-          </td>
-          <td class='change text-right' style='border-top: 2px solid black'>
-            {{ ticker.dif_bsesn }}
           </td>
           <td class='change text-right' style='border-top: 2px solid black'>
             {{ ticker.dif_wheat }}
@@ -90,7 +90,7 @@
             {{ ticker.dif_gold }}
           </td>
           <td class='change-invert text-right'>
-            {{ ticker.dif_vix }}
+            {{ ticker.dif_tnx }}
           </td>
         </tr>
       {% endfor %}
@@ -124,7 +124,7 @@
           <option value="tnx">Treasury Yield 10 Years</option>
           <option value="gspc">S&P500</option>
           <option value="ixic">Nasdaq</option>
-          <option value="rut">Russell</option>
+          <option value="rut">Russell 2000</option>
           <option value="gdaxi">DAX</option>
           <option value="ss">SSE Composite</option>
           <option value="sz">Shenzhen Component</option>
@@ -154,7 +154,7 @@
           <option value="tnx">Treasury Yield 10 Years</option>
           <option value="gspc">S&P500</option>
           <option value="ixic">Nasdaq</option>
-          <option value="rut">Russell</option>
+          <option value="rut">Russell 2000</option>
           <option value="gdaxi">DAX</option>
           <option value="ss">SSE Composite</option>
           <option value="sz">Shenzhen Component</option>
