@@ -631,7 +631,7 @@ let ust = new Vue ({
 let ixic = new Vue ({
   el: '#ixic',
   data: {
-    message: "Nasdaq",
+    message: "NASDAQ Composite",
   }
 })
 
@@ -645,7 +645,7 @@ let rut = new Vue ({
 let sse = new Vue ({
   el: '#sse',
   data: {
-    message: 'Shanghai Delayed Price',
+    message: 'SSE Composite',
   }
 })
 

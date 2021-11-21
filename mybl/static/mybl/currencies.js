@@ -4,7 +4,7 @@ let days = document.getElementById('days');
 let rowTable = document.querySelector('row-table');
 let maxValRows = 76;
 let minValRows = 21;
-
+let checkBoxChange = document.getElementById('checkbox-change');
 
 function deleteRow(row) {
   let moexTable = document.getElementById('moex');
@@ -56,6 +56,28 @@ let dict = function (dif) {
   //console.log(day);
   return [day, dateLast];
 };
+
+let inputDelta = document.getElementById('mytextbox');
+let inputDelta1 = document.getElementById('mytextbox1');
+let inputDelta2 = document.getElementById('mytextbox2');
+let inputDelta3 = document.getElementById('mytextbox3');
+inputDelta.value = delta;
+inputDelta1.value = delta1;
+inputDelta2.value = delta2;
+inputDelta3.value = delta3;
+
+checkBoxChange.onchange = function () {
+  if (checkBoxChange.checked) {
+    inputDelta1.value = 30;
+    inputDelta2.value = 183;
+    inputDelta3.value = 365;
+  } else {
+    inputDelta1.value = 365;
+    inputDelta2.value = 1460;
+    inputDelta3.value = 4018;
+  }
+}
+
 
 //creating and coloring table with moex socks
 button.onclick = async function () {
@@ -151,7 +173,6 @@ window.onload = function(){
   button.click();
 }
 
-
 //coloring table of currencies
 let currencyPlus = document.querySelectorAll('.currency-plus');
 let valuePlus = document.querySelectorAll('.value-plus');
@@ -198,12 +219,5 @@ for (let i = 0; i < currencyPlus.length; i++) {
 };
 
 
-let inputDelta = document.getElementById('mytextbox');
-let inputDelta1 = document.getElementById('mytextbox1');
-let inputDelta2 = document.getElementById('mytextbox2');
-let inputDelta3 = document.getElementById('mytextbox3');
-inputDelta.value = delta;
-inputDelta1.value = delta1;
-inputDelta2.value = delta2;
-inputDelta3.value = delta3;
+
 

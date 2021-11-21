@@ -41,10 +41,10 @@ def currencies(request):
         return dict_curr, date_delta
 
     today = date.today().weekday()
-    delta = 5
-    delta1 = 500
-    delta2 = 2000
-    delta3 = 4000
+    delta = 7
+    delta1 = 365
+    delta2 = 1460
+    delta3 = 4018
 
     '''if today == 6:
         delta = 2
