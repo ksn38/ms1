@@ -11,6 +11,7 @@ from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from mybl.psql_req import chart_tickers
 from django.core import serializers
+import time
 
 
 if __name__ == '__main__':
@@ -27,20 +28,29 @@ def ticks(*args):
 
     for i in (args):
         if i not in {'wti', 'gold', 'sz', 'wheat', 'ss', 'cop'}:
-            url = 'https://finance.yahoo.com/quote/^' + i
+            url = 'https://finance.yahoo.com/quote/^' + i + '/history'
         else:
             commodities = {'wti': 'CL=F', 'gold': 'GC=F', 'wheat': 'KE=F', 'sz': '399001.SZ', 'ss': '000001.SS', 'cop': 'HG=F'}
-            url = 'https://finance.yahoo.com/quote/' + commodities[i]
+            url = 'https://finance.yahoo.com/quote/' + commodities[i] + '/history'
             
         response = requests.get(url, headers=headers).text
         parsed_html = bs(response, 'lxml')
-        t = parsed_html.find('span', {'class': 'Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)'}).text.replace(',', '')
+        t = parsed_html.find('fin-streamer', {'class': 'Fw(b) Fz(36px) Mb(-4px) D(ib)'}).text.replace(',', '')
         #print(t)
         t_dict[i] = float(t)
-
+        '''date_yahoo = parsed_html.find('span', {'data-reactid': '53'}).text
+        print(date_yahoo)
+        if date_yahoo == date_today_2:
+            t = parsed_html.find('span', {'data-reactid': '76'}).text.replace(',', '')
+            t_dict[i] = float(t)
+        else:
+            t = parsed_html.find('span', {'data-reactid': '61'}).text.replace(',', '')
+            t_dict[i] = float(t)'''
+            
     return t_dict
     
 date_today = date.today().strftime("%Y-%m-%d")
+#date_today_2 = date.today().strftime("%b %d, %Y")
 date7 = (date.today() - timedelta(7)).strftime("%Y-%m-%d")
 tickers = Ticker.objects.filter(Q(date_added = date_today))
 
