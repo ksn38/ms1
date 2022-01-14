@@ -35,7 +35,7 @@ def apivac(expir):
     return vac
 
 
-def parservac():
+def parservac0():
     res = {}
 
     for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Golang', '1c', 'Data scientist', 'Scala', 'iOS', 'Frontend', 'DevOps', 'ABAP', 'Android']:
@@ -53,7 +53,13 @@ def parservac():
         #print(i, bloko)
 
     return res
+    
+def parservac():
+    res = {'Python': 17677, 'C%23': 12093, 'c%2B%2B': 12212, 'Java': 22668, 'Javascript': 8942, 'php': 12727, 'Ruby': 984,\
+    'Golang': 946, '1c': 129640, 'Data scientist': 6626, 'Scala': 238, 'iOS': 4385, 'Frontend': 35842, 'DevOps': 4192, 'ABAP': 846, 'Android': 6104}
 
+    return res
+    
 date_today = date.today().strftime("%Y-%m-%d")
 langs = Lang.objects.filter(Q(date_added = date_today))
 
