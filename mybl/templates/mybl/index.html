@@ -19,10 +19,10 @@
           <td class='bg-dark text-light' style='border-top: 2px solid' nowrap><input type='radio' id='r60' name='period' value="60">quarter</td>
         </tr>
         <tr>
-          <td class='bg-dark text-light' style='border-top: 2px solid' nowrap><input type='radio' id='r125' name='period' value="125">half-year</td>
+          <td class='bg-dark text-light' style='border-top: 2px solid' nowrap><input type='radio' id='r125' name='period' value="125" checked="checked">half-year</td>
         </tr>
         <tr>
-          <td class='bg-dark text-light' style='border-top: 2px solid' nowrap><input type='radio' id='r250' name='period' value="250" checked="checked">year</td>
+          <td class='bg-dark text-light' style='border-top: 2px solid' nowrap><input type='radio' id='r250' name='period' value="250">year</td>
         </tr>
         <tr>
           <td class='bg-dark text-light' style='border-top: 2px solid' nowrap><input type='radio' id='r1000' name='period' value="1000">4 years</td>
@@ -197,8 +197,8 @@
               <input type="number" id="period-input" name="periodNum" value="250" min="2" max="5000" step="50" size='4'>
               <label><input type='radio' id='r20' name='period' value="20">month</label>
               <label><input type='radio' id='r60' name='period' value="60">quarter</label>
-              <label><input type='radio' id='r125' name='period' value="125">half-year</label>
-              <label><input type='radio' id='r250' name='period' value="250" checked="checked">year</label>
+              <label><input type='radio' id='r125' name='period' value="125" checked="checked">half-year</label>
+              <label><input type='radio' id='r250' name='period' value="250">year</label>
               <label><input type='radio' id='r1000' name='period' value="1000">4 years</label>
               <label><input type='radio' id='r5000' name='period' value="5000">20 years</label>
             </span>
@@ -211,8 +211,8 @@
               <input type="number" id="level-vix" value='23' min="0" max='100' size='4'>
             </span>
             <div class='border border-primary rounded p-1'>
-              <label>Correlation: <input type='radio' id='w5' name='win' value="5">week</label>
-              <label><input type='radio' id='w20' name='win' value="20" checked="checked">month</label>
+              <label>Correlation: <input type='radio' id='w5' name='win' value="5" checked="checked">week</label>
+              <label><input type='radio' id='w20' name='win' value="20">month</label>
               <label><input type='radio' id='w60' name='win' value="60">quarter</label>
               <label><input type='radio' id='w125' name='win' value="125">half-year</label>
               <label><input type='radio' id='w250' name='win' value="250">year</label>

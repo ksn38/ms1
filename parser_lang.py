@@ -50,13 +50,14 @@ def parservac0():
         else:
             bloko = ''.join(map(str, bloko[:1]))
         res[i] = int(bloko)
-        #print(i, bloko)
+        print(i, bloko)
+        time.sleep(3)
 
     return res
     
 def parservac():
-    res = {'Python': 17677, 'C%23': 12093, 'c%2B%2B': 12212, 'Java': 22668, 'Javascript': 8942, 'php': 12727, 'Ruby': 984,\
-    'Golang': 946, '1c': 129640, 'Data scientist': 6626, 'Scala': 238, 'iOS': 4385, 'Frontend': 35842, 'DevOps': 4192, 'ABAP': 846, 'Android': 6104}
+    res = {'Python': 18159, 'C%23': 12251, 'c%2B%2B': 12369, 'Java': 22994, 'Javascript': 9115, 'php': 12835, 'Ruby': 998,\
+    'Golang': 982, '1c': 130450, 'Data scientist': 6691, 'Scala': 240, 'iOS': 4471, 'Frontend': 36592, 'DevOps': 4344, 'ABAP': 848, 'Android': 6211}
 
     return res
     
