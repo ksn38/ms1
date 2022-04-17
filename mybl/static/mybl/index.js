@@ -63,6 +63,7 @@ let colorVal = (arr) => {
 }
 
 arrTr = Array.from(tr)
+//console.log(arrTr);
 
 for (let i = 0; i <= arrTr.length; i += 12) {
   colorVal(arrTr.slice(i, i + 12));

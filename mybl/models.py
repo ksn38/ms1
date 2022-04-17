@@ -59,7 +59,7 @@ class Lang_avg(models.Model):
 
 class Lang_graphs(models.Model):
     name = models.CharField(max_length=50)
-    res_vac = models.FloatField()
+    val = models.FloatField()
     date_added = models.DateField(auto_now_add=True)
     
     def __str__(self):
@@ -67,7 +67,7 @@ class Lang_graphs(models.Model):
         return self.date_added
     
     def __float__(self):
-        return self.res_vac
+        return self.val
 
       
 class Ticker(models.Model):

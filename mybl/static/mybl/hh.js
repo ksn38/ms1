@@ -69,6 +69,9 @@ let colorColNow = (arr) => {
   let arrInt = arr.map((i) => parseInt(i.textContent));
   let maxArr = Math.max.apply(null, arrInt);
   let minArr = Math.min.apply(null, arrInt);
+  if (minArr == 0) {
+    minArr = 1
+  };
   let medianArr = median(arrInt);
   arrInt = arr.map((i) => parseInt(i.textContent));
   for (let i = 0; i < arrInt.length; i++) {
@@ -122,11 +125,11 @@ let graph = (win) => {
 
   for (let i = 0; i < receivedData.length; i += 5) {
     date.push(receivedData[i]['fields']['date_added']);
-    cpp.push(receivedData[i]['fields']['res_vac']);
-    java.push(receivedData[i + 1]['fields']['res_vac']);
-    js.push(receivedData[i + 2]['fields']['res_vac']);
-    php.push(receivedData[i + 3]['fields']['res_vac']);
-    py.push(receivedData[i + 4]['fields']['res_vac']);
+    cpp.push(receivedData[i]['fields']['val']);
+    java.push(receivedData[i + 1]['fields']['val']);
+    js.push(receivedData[i + 2]['fields']['val']);
+    php.push(receivedData[i + 3]['fields']['val']);
+    py.push(receivedData[i + 4]['fields']['val']);
   };
 
   date = date.slice(win);
@@ -198,7 +201,7 @@ let graph = (win) => {
       },
       title: {
           display: true,
-          text: 'Number applicants on vacancy'
+          text: 'Vacancies'
       },
       scales: {
         yAxes: [{

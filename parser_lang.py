@@ -56,8 +56,8 @@ def parservac0():
     return res
     
 def parservac():
-    res = {'Python': 18159, 'C%23': 12251, 'c%2B%2B': 12369, 'Java': 22994, 'Javascript': 9115, 'php': 12835, 'Ruby': 998,\
-    'Golang': 982, '1c': 130450, 'Data scientist': 6691, 'Scala': 240, 'iOS': 4471, 'Frontend': 36592, 'DevOps': 4344, 'ABAP': 848, 'Android': 6211}
+    res = {'Python': 20557, 'C%23': 13019, 'c%2B%2B': 13040, 'Java': 25074, 'Javascript': 9766, 'php': 13534, 'Ruby': 1026,\
+    'Golang': 1199, '1c': 133613, 'Data scientist': 7282, 'Scala': 273, 'iOS': 4968, 'Frontend': 40318, 'DevOps': 5143, 'ABAP': 887, 'Android': 6636}
 
     return res
     
@@ -86,8 +86,8 @@ cache.set('langs', Lang.objects.raw(langs_today))
 cache.set('charts', Lang.objects.raw(chart_langs))
 cache.set('charts_march', Lang.objects.raw(chart_langs_march))
 
-graphs = Lang_graphs.objects.raw("""select id, name, res_vac, date_added from mybl_lang ml where name = 'Python' or name = 'Java' or name = 'Javascript' or name = 'php' or name = 'cpp' order by date_added, name""")
+graphs = Lang_graphs.objects.raw("""select id, name, val, date_added from mybl_lang ml where name = 'Python' or name = 'Java' or name = 'Javascript' or name = 'php' or name = 'cpp' order by date_added, name""")
 cache.set('graphs', serializers.serialize('json', graphs))
 
 graphs_avg = Lang_avg.objects.raw("""select distinct max(id) over(partition by date_added) as id, date_added, avg(val_noexp) over(partition by date_added) as avg_vn, avg(res_vac) over(partition by date_added) as avg_rv from mybl_lang order by date_added""")
-cache.set('graphs_avg', serializers.serialize('json', graphs_avg))       
+cache.set('graphs_avg', serializers.serialize('json', graphs_avg))
