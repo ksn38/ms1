@@ -6,7 +6,7 @@
     <caption style='caption-side: down'><small>Number of vacancies, percent without experience, number applicants on vacancy (from hh.ru)</small></caption>
     {% for lang in langs %}
       <tr>
-        {% if lang.name == 'C%23' %}
+        {% if lang.name == 'cs' %}
           <td class='bg-dark text-light name_lang'>
           {{ 'C#' }}
           </td>
@@ -38,7 +38,7 @@
     <caption style='caption-side: down'><small>Changing from december 2020 in %</small></caption>
     {% for chart in charts %}
       <tr>
-        {% if chart.name == 'C%23' %}
+        {% if chart.name == 'cs' %}
           <td class='bg-dark text-light name_lang'>
           {{ 'C#' }}
           </td>
@@ -70,7 +70,7 @@
     <caption style='caption-side: down'><small>Changing from march-april 2021 in %</small></caption>
     {% for chart in charts_march %}
       <tr>
-        {% if chart.name == 'C%23' %}
+        {% if chart.name == 'cs' %}
           <td class='bg-dark text-light name_lang'>
           {{ 'C#' }}
           </td>
@@ -107,7 +107,7 @@
         <label><input type='radio' id='w28' name='win' value="28">28</label>
       </div>
     </div>
-    <div class='pr-4'><canvas id="line-chart-avg" width="800" height="450"></canvas></div>
+    <div class=''><canvas id="line-chart-avg" width="800" height="450"></canvas></div>
   </div>
   <script type="text/javascript">
     var receivedData  = {{ graphs|safe }};

@@ -122,14 +122,16 @@ let graph = (win) => {
   let php = [];
   let py = [];
   let cpp = [];
+  let cs = [];
 
-  for (let i = 0; i < receivedData.length; i += 5) {
+  for (let i = 0; i < receivedData.length; i += 6) {
     date.push(receivedData[i]['fields']['date_added']);
     cpp.push(receivedData[i]['fields']['val']);
-    java.push(receivedData[i + 1]['fields']['val']);
-    js.push(receivedData[i + 2]['fields']['val']);
-    php.push(receivedData[i + 3]['fields']['val']);
-    py.push(receivedData[i + 4]['fields']['val']);
+    cs.push(receivedData[i + 1]['fields']['val']);
+    java.push(receivedData[i + 2]['fields']['val']);
+    js.push(receivedData[i + 3]['fields']['val']);
+    php.push(receivedData[i + 4]['fields']['val']);
+    py.push(receivedData[i + 5]['fields']['val']);
   };
 
   date = date.slice(win);
@@ -158,21 +160,28 @@ let graph = (win) => {
           borderColor: "#c53535",
           fill: false,
           pointRadius: 0,
-          yAxisID: 'yLabel',
-        }, { 
-          data: rollAvg(js),
-          label: "Javascript",
-          borderColor: "#d9df32",
-          fill: false,
-          pointRadius: 0,
-          yAxisID: 'yLabel',
+          yAxisID: 'xLabel',
         }, { 
           data: rollAvg(php),
           label: "php",
           borderColor: "#df9c32",
           fill: false,
           pointRadius: 0,
-          yAxisID: 'yLabel',
+          yAxisID: 'xLabel',
+        }, { 
+          data: rollAvg(js),
+          label: "Javascript",
+          borderColor: "#d9df32",
+          fill: false,
+          pointRadius: 0,
+          yAxisID: 'xLabel',
+        }, { 
+          data: rollAvg(cs),
+          label: "C#",
+          borderColor: "#903ba7",
+          fill: false,
+          pointRadius: 0,
+          yAxisID: 'xLabel',
         }, { 
           data: rollAvg(py),
           label: "Python",
@@ -209,10 +218,10 @@ let graph = (win) => {
           type: 'linear',
           position: 'left',
           scaleLabel: {
-              display: true,
-              labelString: "C++, Python"
+              display: false,
+              //labelString: "C++, Python, C#"
             }
-        }, {
+        }, /*{
           id: 'yLabel',
           type: 'linear',
           position: 'right',
@@ -220,7 +229,7 @@ let graph = (win) => {
               display: true,
               labelString: "Javascript, Java, php"
             }
-          }]
+          }*/]
        }
     }
   });
@@ -312,7 +321,7 @@ let graphAvg = (win) => {
           }, {
           id: 'Rolling correlation',
           type: 'linear',
-          display: false,
+          display: true,
           position: 'right',
           ticks : {
             max : 1,    

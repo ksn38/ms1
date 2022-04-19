@@ -77,6 +77,8 @@ if len(langs) == 0:
     for k, v, vne, vrv in zip(vacs.keys(), vacs.values(), vacs_noexp.values(), res.values()):
         if k == 'c%2B%2B':
             k = 'cpp'
+        if k == 'C%23':
+            k = 'cs'
         new_values = {'name': k,
          'val': v, 'val_noexp': vne, 'res_vac': vrv}
         obj = Lang(**new_values)
@@ -86,7 +88,7 @@ cache.set('langs', Lang.objects.raw(langs_today))
 cache.set('charts', Lang.objects.raw(chart_langs))
 cache.set('charts_march', Lang.objects.raw(chart_langs_march))
 
-graphs = Lang_graphs.objects.raw("""select id, name, val, date_added from mybl_lang ml where name = 'Python' or name = 'Java' or name = 'Javascript' or name = 'php' or name = 'cpp' order by date_added, name""")
+graphs = Lang_graphs.objects.raw("""select id, name, val, date_added from mybl_lang ml where name = 'Python' or name = 'Java' or name = 'Javascript' or name = 'php' or name = 'cpp' or name = 'cs' order by date_added, name""")
 cache.set('graphs', serializers.serialize('json', graphs))
 
 graphs_avg = Lang_avg.objects.raw("""select distinct max(id) over(partition by date_added) as id, date_added, avg(val_noexp) over(partition by date_added) as avg_vn, avg(res_vac) over(partition by date_added) as avg_rv from mybl_lang order by date_added""")
