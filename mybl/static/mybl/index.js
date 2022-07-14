@@ -1,6 +1,6 @@
 let item = 125;
 let level = 23;
-let win = 5;
+let win = 60;
 let offset = 0;
 let date = [];
 let vix2 = [];
@@ -476,6 +476,7 @@ buttonAvg.onclick = () => {
 
 for(let i = 0; i < radio.length; i++){
   radio[i].addEventListener("change", function(){
+	//win = 60;
     item = parseInt(radio[i].value);
     mainChart[0].destroy();
     mainChart = createMainChart(offset, level, win, item); 
