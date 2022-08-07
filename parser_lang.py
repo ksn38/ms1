@@ -56,8 +56,8 @@ def parservac0():
     return res
     
 def parservac():
-    res = {'Python': 24230, 'C%23': 14388, 'c%2B%2B': 14090, 'Java': 28177, 'Javascript': 10801, 'php': 14506, 'Ruby': 1109,\
-    'Golang': 1491, '1c': 138317, 'Data scientist': 8265, 'Scala': 291, 'iOS': 5565, 'Frontend': 46521, 'DevOps': 6034, 'ABAP': 949, 'Android': 7420}
+    res = {'Python': 26734, 'C%23': 15656, 'c%2B%2B': 15369, 'Java': 29399, 'Javascript': 11147, 'php': 15014, 'Ruby': 1147,\
+    'Golang': 1665, '1c': 140444, 'Data scientist': 8606, 'Scala': 296, 'iOS': 5768, 'Frontend': 48737, 'DevOps': 6356, 'ABAP': 968, 'Android': 7721}
 
     return res
     
