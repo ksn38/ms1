@@ -176,13 +176,6 @@ let graph = (win) => {
           pointRadius: 0,
           yAxisID: 'xLabel',
         }, { 
-          data: rollAvg(cs),
-          label: "C#",
-          borderColor: "#903ba7",
-          fill: false,
-          pointRadius: 0,
-          yAxisID: 'xLabel',
-        }, { 
           data: rollAvg(py),
           label: "Python",
           borderColor: "#3579c5",
@@ -193,6 +186,13 @@ let graph = (win) => {
           data: rollAvg(cpp),
           label: "C++",
           borderColor: "#5435c5",
+          fill: false,
+          pointRadius: 0,
+          yAxisID: 'xLabel',
+        }, { 
+          data: rollAvg(cs),
+          label: "C#",
+          borderColor: "#903ba7",
           fill: false,
           pointRadius: 0,
           yAxisID: 'xLabel',
