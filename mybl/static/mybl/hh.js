@@ -274,7 +274,7 @@ let graphAvg = (win) => {
       labels: dateAvg,
       datasets: [{ 
           data: rollAvg(avgVn),
-          label: "Average percent without experience",
+          label: "Average percent for interns",
           borderColor: "#00af00",
           fill: false,
           pointRadius: 0,
