@@ -280,7 +280,8 @@ let createCharts4 = function (offset, level, win, item) {
     tickersDict.gspc[0].push(received_data[i]['fields']['gspc']);
     tickersDict.ixic[0].push(received_data[i]['fields']['ixic']);
     tickersDict.rut[0].push(received_data[i]['fields']['rut']);
-    tickersDict.wti_gold[0].push(received_data[i]['fields']['wti_gold']);
+	tickersDict.gold[0].push(received_data[i]['fields']['gold']);
+    //tickersDict.wti_gold[0].push(received_data[i]['fields']['wti_gold']);
     tickersDict.cop_gold[0].push(received_data[i]['fields']['cop_gold']);
     if (received_data[i]['fields']['vix'] > level) {
       vix2.push(received_data[i]['fields']['vix'])
@@ -289,9 +290,9 @@ let createCharts4 = function (offset, level, win, item) {
   
   return [[
   lineChart(tickersDict.vix[0], tickersDict.gspc[0], 'VIX', 'S&P500', tickersDict['vix'][1], tickersDict['gspc'][1], chart1, win, item),
-  lineChart(tickersDict.tnx[0], tickersDict.gspc[0], 'UST', 'S&P500 (-0.65)', tickersDict['tnx'][1], tickersDict['gspc'][1], chart4, win, item),
-  lineChart(tickersDict.ixic[0], tickersDict.rut[0], 'Nasdaq', 'Russell', tickersDict['ixic'][1], tickersDict['rut'][1], chart2, win, item),
-  lineChart(tickersDict.cop_gold[0], tickersDict.tnx[0], 'Copper/Gold', 'UST', tickersDict['cop_gold'][1], tickersDict['tnx'][1], chart3, win, item)],
+  lineChart(tickersDict.tnx[0], tickersDict.gspc[0], 'UST', 'S&P500', tickersDict['tnx'][1], tickersDict['gspc'][1], chart4, win, item),
+  lineChart(tickersDict.ixic[0], tickersDict.rut[0], 'Nasdaq', 'Russell', tickersDict['ixic'][1], tickersDict['rut'][1], chart3, win, item),
+  lineChart(tickersDict.gold[0], tickersDict.tnx[0], 'Gold', 'UST', tickersDict['gold'][1], tickersDict['tnx'][1], chart2, win, item)],
   
   [date = [],
   tickersDict.vix[0] = [],
@@ -299,8 +300,9 @@ let createCharts4 = function (offset, level, win, item) {
   tickersDict.gspc[0] = [],
   tickersDict.ixic[0] = [],
   tickersDict.rut[0] = [],
-  tickersDict.wti_gold[0] = [],
+  //tickersDict.wti_gold[0] = [],
   tickersDict.cop_gold[0] = [],
+  tickersDict.gold[0] = [],
   vix2 = []]];
 };
 
@@ -541,7 +543,7 @@ button0.onclick = () => {
   mainChart[0].destroy();
   mainChart = createMainChart(offset, level, win, item); 
   charts4[0].map((chart) => chart.destroy());
-  charts = createCharts(offset, level, win, item); 
+  charts = createCharts4(offset, level, win, item); 
 }
 
 
