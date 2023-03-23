@@ -278,11 +278,12 @@ let createCharts4 = function (offset, level, win, item) {
     tickersDict.vix[0].push(received_data[i]['fields']['vix']);
     tickersDict.tnx[0].push(received_data[i]['fields']['tnx']);
     tickersDict.gspc[0].push(received_data[i]['fields']['gspc']);
-    tickersDict.ixic[0].push(received_data[i]['fields']['ixic']);
+    //tickersDict.ixic[0].push(received_data[i]['fields']['ixic']);
     tickersDict.rut[0].push(received_data[i]['fields']['rut']);
-	tickersDict.gold[0].push(received_data[i]['fields']['gold']);
-    //tickersDict.wti_gold[0].push(received_data[i]['fields']['wti_gold']);
+	tickersDict.wheat[0].push(received_data[i]['fields']['wheat']);
+    tickersDict.wti[0].push(received_data[i]['fields']['wti']);
     tickersDict.cop_gold[0].push(received_data[i]['fields']['cop_gold']);
+	tickersDict.gold[0].push(received_data[i]['fields']['gold']);
     if (received_data[i]['fields']['vix'] > level) {
       vix2.push(received_data[i]['fields']['vix'])
     } else {vix2.push(0)};
@@ -290,9 +291,9 @@ let createCharts4 = function (offset, level, win, item) {
   
   return [[
   lineChart(tickersDict.vix[0], tickersDict.gspc[0], 'VIX', 'S&P500', tickersDict['vix'][1], tickersDict['gspc'][1], chart1, win, item),
-  lineChart(tickersDict.tnx[0], tickersDict.gspc[0], 'UST', 'S&P500', tickersDict['tnx'][1], tickersDict['gspc'][1], chart4, win, item),
-  lineChart(tickersDict.ixic[0], tickersDict.rut[0], 'Nasdaq', 'Russell', tickersDict['ixic'][1], tickersDict['rut'][1], chart3, win, item),
-  lineChart(tickersDict.gold[0], tickersDict.tnx[0], 'Gold', 'UST', tickersDict['gold'][1], tickersDict['tnx'][1], chart2, win, item)],
+  lineChart(tickersDict.tnx[0], tickersDict.gold[0], 'UST', 'Gold', tickersDict['tnx'][1], tickersDict['gold'][1], chart4, win, item),
+  lineChart(tickersDict.gspc[0], tickersDict.rut[0], 'S&P500', 'Russell', tickersDict['gspc'][1], tickersDict['rut'][1], chart3, win, item),
+  lineChart(tickersDict.wheat[0], tickersDict.wti[0], 'Wheat', 'WTI', tickersDict['wheat'][1], tickersDict['wti'][1], chart2, win, item)],
   
   [date = [],
   tickersDict.vix[0] = [],
@@ -300,9 +301,10 @@ let createCharts4 = function (offset, level, win, item) {
   tickersDict.gspc[0] = [],
   tickersDict.ixic[0] = [],
   tickersDict.rut[0] = [],
-  //tickersDict.wti_gold[0] = [],
+  tickersDict.wti[0] = [],
   tickersDict.cop_gold[0] = [],
   tickersDict.gold[0] = [],
+  tickersDict.wheat[0] = [],
   vix2 = []]];
 };
 
