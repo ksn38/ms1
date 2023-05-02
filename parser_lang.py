@@ -26,7 +26,10 @@ def apivac(expir):
     vac = {}
 
     for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Golang', '1c', 'Data scientist', 'Scala', 'iOS', 'Frontend', 'DevOps', 'ABAP', 'Android']:
-        url = 'https://api.hh.ru/vacancies?&' + expir + 'search_field=name&text=' + i
+        if i == 'iOS' or i == 'Android':
+            url = 'https://api.hh.ru/vacancies?&' + expir + 'industry=43&industry=7&industry=11&search_field=name&text=' + i
+        else:
+            url = 'https://api.hh.ru/vacancies?&' + expir + 'search_field=name&text=' + i
         response = requests.get(url)
         val = json.loads(response.content.decode("utf-8"))
         vac[i] = val['found']
@@ -56,8 +59,8 @@ def parservac0():
     return res
     
 def parservac():
-    res = {'Python': 32357, 'C%23': 15987, 'c%2B%2B': 15686, 'Java': 32220, 'Javascript': 11834, 'php': 14857, 'Ruby': 1203,\
-    'Golang': 2507, '1c': 149313, 'Data scientist': 10281, 'Scala': 276, 'iOS': 6830, 'Frontend': 57870, 'DevOps': 8267, 'ABAP': 1008, 'Android': 8348}
+    res = {'Python': 34391, 'C%23': 16520, 'c%2B%2B': 16155, 'Java': 33943, 'Javascript': 12230, 'php': 15326, 'Ruby': 1257,\
+    'Golang': 2757, '1c': 151521, 'Data scientist': 10726, 'Scala': 294, 'iOS': 7145, 'Frontend': 61091, 'DevOps': 8806, 'ABAP': 1040, 'Android': 8703}
 
     return res
     
