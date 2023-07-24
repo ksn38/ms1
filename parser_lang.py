@@ -38,7 +38,7 @@ def apivac(expir):
     return vac
 
 
-def parservac0():
+'''def parservac0():
     res = {}
 
     for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Golang', '1c', 'Data scientist', 'Scala', 'iOS', 'Frontend', 'DevOps', 'ABAP', 'Android']:
@@ -56,7 +56,7 @@ def parservac0():
         print(i, bloko)
         time.sleep(3)
 
-    return res
+    return res'''
     
 def parservac():
     res = {'Python': 34358, 'C%23': 16261, 'c%2B%2B': 16191, 'Java': 31822, 'Javascript': 11302, 'php': 14860, 'Ruby': 1160,\

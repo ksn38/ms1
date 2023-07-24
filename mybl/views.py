@@ -79,7 +79,7 @@ def currencies(request):
                 'dif_plus3': ordered_array(delta3)[0], 'date_delta3': ordered_array(delta3)[1], 'delta3': delta3}
     return render(request, 'mybl/currencies.html', context)
 
-def blog(request):
+'''def blog(request):
     blog = Bpost.objects.order_by('date_added')
     context = {'blog': blog}
     return render(request, 'mybl/blog.html', context)
@@ -115,7 +115,7 @@ def new_bpost(request):
     context = {'form': form}
     return render(request, 'mybl/new_bpost.html', context)
 
-'''@login_required
+@login_required
 def new_comment(request, bpost_id):
     bpost = Bpost.objects.get(id=bpost_id)
     
@@ -132,7 +132,7 @@ def new_comment(request, bpost_id):
     context = {'bpost': bpost, 'form': form}
     return render(request, 'mybl/new_comment.html', context)
     
-'''
+
     
 @login_required
 def edit_bpost(request, bpost_id):
@@ -149,7 +149,7 @@ def edit_bpost(request, bpost_id):
             return HttpResponseRedirect(reverse('bpost', args=[bpost.id]))
             
     context = {'bpost': bpost, 'form': form}
-    return render(request, 'mybl/edit_bpost.html', context)
+    return render(request, 'mybl/edit_bpost.html', context)'''
     
 def hh(request):
     langs = cache.get('langs')
