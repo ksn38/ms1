@@ -8,11 +8,13 @@ from django.db.models import Q
 import requests
 import json
 import time
+import pandas as pd
 from django.core.cache import cache
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from mybl.psql_req import chart_langs, langs_today, chart_langs_march
 from django.core import serializers
+import json
 
 
 if __name__ == '__main__':
@@ -36,38 +38,17 @@ def apivac(expir):
         #print(i, val['found'])
 
     return vac
-
-
-'''def parservac0():
-    res = {}
-
-    for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Golang', '1c', 'Data scientist', 'Scala', 'iOS', 'Frontend', 'DevOps', 'ABAP', 'Android']:
-        url = 'https://hh.ru/search/resume?clusters=true&exp_period=all_time&logic=normal&no_magic=false&order_by=relevance&pos=position&text=' + i
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'}
-        response = requests.get(url, headers=headers).text
-        parsed_html = bs(response, 'lxml')
-        bloko = parsed_html.find('h1', {'class': 'bloko-header-1'}).text.split(' ')[-1].split('\xa0')
-        if len(bloko) == 3:
-            bloko = ''.join(map(str, bloko[:2]))
-        else:
-            bloko = ''.join(map(str, bloko[:1]))
-        res[i] = int(bloko)
-        print(i, bloko)
-        time.sleep(3)
-
-    return res'''
     
 def parservac():
-    res = {'Python': 34358, 'C%23': 16261, 'c%2B%2B': 16191, 'Java': 31822, 'Javascript': 11302, 'php': 14860, 'Ruby': 1160,\
-    'Golang': 2927, '1c': 152777, 'Data scientist': 10915, 'Scala': 302, 'iOS': 6757, 'Frontend': 58083, 'DevOps': 8748, 'ABAP': 997, 'Android': 8636}
+    res = {'Python': 35470, 'C%23': 16693, 'c%2B%2B': 16595, 'Java': 32641, 'Javascript': 11631, 'php': 15137, 'Ruby': 1192,\
+    'Golang': 3036, '1c': 154558, 'Data scientist': 11212, 'Scala': 300, 'iOS': 6960, 'Frontend': 60188, 'DevOps': 9030, 'ABAP': 1009, 'Android': 9303}
 
     return res
     
 date_today = date.today().strftime("%Y-%m-%d")
 langs = Lang.objects.filter(Q(date_added = date_today))
 
-if len(langs) == 0:
+def get_and_write():
     noexp = 'experience=noExperience&'
     vacs = apivac('')
     vacs_noexp = apivac(noexp)
@@ -87,12 +68,32 @@ if len(langs) == 0:
         obj = Lang(**new_values)
         obj.save()
 
+if len(langs) == 0:
+    try:
+        get_and_write()
+    except KeyError:
+        time.sleep(900)
+        get_and_write()
+
 cache.set('langs', Lang.objects.raw(langs_today))
 cache.set('charts', Lang.objects.raw(chart_langs))
 cache.set('charts_march', Lang.objects.raw(chart_langs_march))
 
-graphs = Lang_graphs.objects.raw("""select id, name, val, date_added from mybl_lang ml where name = 'Python' or name = 'Java' or name = 'Javascript' or name = 'php' or name = 'cpp' or name = 'cs' order by date_added, name""")
-cache.set('graphs', serializers.serialize('json', graphs))
+graphs = Lang_graphs.objects.raw("""select id, name, val, date_added from mybl_lang ml
+                                  order by date_added, name""")
+
+df_langs = [i['fields'] for i in serializers.serialize('python', graphs)]
+graphs = pd.DataFrame(df_langs).pivot(index='date_added', columns='name', values='val')
+graphs = graphs.fillna(0)
+graphs = graphs.sort_index(ascending=False)
+graphs7 = pd.DataFrame(columns=graphs.columns)
+for i in range(len(graphs))[::7]:
+    graphs7.loc[graphs.index[i]] = graphs[i:i+7].mean()
+graphs7 = graphs7.sort_index(ascending=True)
+graphs7['date_added'] = graphs7.index
+graphs7['date_added'] = graphs7['date_added'].astype('str')
+#print(graphs7.columns)
+cache.set('graphs', graphs7.to_dict(orient='list'))
 
 graphs_avg = Lang_avg.objects.raw("""select distinct max(id) over(partition by date_added) as id, date_added, avg(val_noexp) over(partition by date_added) as avg_vn, avg(res_vac) over(partition by date_added) as avg_rv from mybl_lang order by date_added""")
 cache.set('graphs_avg', serializers.serialize('json', graphs_avg))

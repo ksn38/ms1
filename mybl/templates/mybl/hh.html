@@ -6,9 +6,20 @@
     <div class='mb-3'><canvas id="line-chart" width="900" height="500"></canvas></div>
     <div class='radWin d-flex justify-content-around'>
       <div>
-        <label>Window of rolling mean: <input type='radio' id='w7' name='win' value="7">7</label>
-        <label><input type='radio' id='w14' name='win' value="14" checked="checked">14</label>
-        <label><input type='radio' id='w28' name='win' value="28">28</label>
+        <select id="lang" class='mr-1'>
+          <option value="1c">1C</option>
+          <option value="ABAP">ABAP</option>
+          <option value="Android">Android</option>
+          <option value="Data scientist">Data scientist</option>
+          <option value="DevOps">DevOps</option>
+          <option selected value="Frontend">Frontend</option>
+          <option value="Golang">Golang</option>
+          <option value="Javascript">Javascript</option>
+          <option value="Ruby">Ruby</option>
+          <option value="Scala">Scala</option>
+          <option value="iOS">iOS</option>
+        </select>
+        <input type="submit" value="Show" id='button-lang'>
       </div>
     </div>
     <div class=''><canvas id="line-chart-avg" width="900" height="500"></canvas></div>

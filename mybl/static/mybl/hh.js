@@ -6,9 +6,9 @@ let val_noexpChng2021 = document.querySelectorAll('.val_noexp-cndg-2021');
 let res_vacChng2021 = document.querySelectorAll('.res_vac-cndg-2021');
 let rateToday = document.querySelectorAll('.rate-today');
 let rateToMarch = document.querySelectorAll('.rate-to-march');
-let win = 14;
-let radWin = document.getElementsByName('win');
-
+//let radWin = document.getElementsByName('win');
+let button_lang = document.getElementById('button-lang');
+let lang = document.getElementById('lang');
 
 //coloring tables
 let colorCol = (arr) => {
@@ -115,82 +115,59 @@ if (cavas.width > window.innerWidth) {
   cavas.height = window.innerWidth * 0.5625;
 }
 
-let graph = (win) => {
-  let date = [];
-  let java = [];
-  let js = [];
-  let php = [];
-  let py = [];
-  let cpp = [];
-  let cs = [];
+let graph = (lang) => {
+  let date = Array.from(receivedData['date_added']);
+  let java = Array.from(receivedData['Java']);
+  let js = Array.from(receivedData[lang.value]);
+  let php = Array.from(receivedData['php']);
+  let py = Array.from(receivedData['Python']);
+  let cpp = Array.from(receivedData['cpp']);
+  let cs = Array.from(receivedData['cs']);
 
-  for (let i = 0; i < receivedData.length; i += 6) {
-    date.push(receivedData[i]['fields']['date_added']);
-    cpp.push(receivedData[i]['fields']['val']);
-    cs.push(receivedData[i + 1]['fields']['val']);
-    java.push(receivedData[i + 2]['fields']['val']);
-    js.push(receivedData[i + 3]['fields']['val']);
-    php.push(receivedData[i + 4]['fields']['val']);
-    py.push(receivedData[i + 5]['fields']['val']);
-  };
-
-  date = date.slice(win);
-
-  let average = (list) => {
-    return list.reduce((accum, curr) => accum + curr) / list.length;
-  };
-
-  let rollAvg = (list) => {
-    let result = [];
-    for (let i = 0; i < list.length - win; i++) {
-      result.push(average(list.slice(i, i + win - 1)));
-    };
-    return result;
-  };
-
-  //console.log(rollAvg(py).length);
+  //date = date.slice(win);
 
   new Chart(document.getElementById("line-chart"), {
     type: 'line',
     data: {
       labels: date,
       datasets: [{ 
-          data: rollAvg(java),
+        data: js,
+        label: lang.value,
+        borderColor: "#299f45",
+        fill: false,
+        pointRadius: 0,
+        borderWidth: 3,
+        yAxisID: 'xLabel',
+      }, { 
+          data: java,
           label: "Java",
           borderColor: "#c53535",
           fill: false,
           pointRadius: 0,
           yAxisID: 'xLabel',
         }, { 
-          data: rollAvg(php),
+          data: php,
           label: "php",
           borderColor: "#df9c32",
           fill: false,
           pointRadius: 0,
           yAxisID: 'xLabel',
         }, { 
-          data: rollAvg(js),
-          label: "Javascript",
-          borderColor: "#d9df32",
-          fill: false,
-          pointRadius: 0,
-          yAxisID: 'xLabel',
-        }, { 
-          data: rollAvg(py),
+          data: py,
           label: "Python",
           borderColor: "#3579c5",
           fill: false,
           pointRadius: 0,
           yAxisID: 'xLabel',
         }, { 
-          data: rollAvg(cpp),
+          data: cpp,
           label: "C++",
           borderColor: "#5435c5",
           fill: false,
           pointRadius: 0,
           yAxisID: 'xLabel',
         }, { 
-          data: rollAvg(cs),
+          data: cs,
           label: "C#",
           borderColor: "#903ba7",
           fill: false,
@@ -251,8 +228,6 @@ let graphAvg = (win) => {
   for (let i = 0; i < avgVn.length - win; i++) {
     rCor.push(cor(avgVn.slice(i, i + win), avgRv.slice(i, i + win)));
   };
-  
-  //console.log(rCor);
 
   dateAvg = dateAvg.slice(win);
 
@@ -363,17 +338,20 @@ let cor = (list1, list2) => {
 };
 
 
-for(let i = 0; i < radWin.length; i++){
+/*for(let i = 0; i < radWin.length; i++){
   radWin[i].addEventListener("change", function(){
     win = parseInt(radWin[i].value);
     graph(win);
-    graphAvg(win);
   })
+}*/
+
+graph(lang);
+graphAvg(28);
+
+button_lang.onclick = () => {
+  //graph[0].destroy();
+  graph(lang);
 }
-
-graph(win);
-graphAvg(win);
-
 
 //bg-secondary for nonlang
 let curRe = /[A-z]\w{0,}|\d/;
