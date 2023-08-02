@@ -68,11 +68,21 @@ def get_and_write():
         obj = Lang(**new_values)
         obj.save()
 
+'''while len(langs) == 0:
+    try:
+        get_and_write()
+        langs = Lang.objects.filter(Q(date_added = date_today))
+    except KeyError:
+        time.sleep(1800)
+        get_and_write()
+        langs = Lang.objects.filter(Q(date_added = date_today))
+        time.sleep(1800)'''
+
 if len(langs) == 0:
     try:
         get_and_write()
     except KeyError:
-        time.sleep(900)
+        time.sleep(15)
         get_and_write()
 
 cache.set('langs', Lang.objects.raw(langs_today))

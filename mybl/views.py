@@ -63,7 +63,8 @@ def currencies(request):
         order_dif = {}
         
         for key in now[0].keys():
-            if key not in {'BYN', 'HUF', 'KGS', 'MDL', 'TJS', 'UZS', 'HKD', 'AZN', 'AMD', 'TMT', 'CZK', 'DKK', 'BGN', 'RON', 'RSD', 'GEL', 'NZD', 'THB', 'VND', 'AED', 'QAR', 'EGP', 'IDR'}:
+            if key not in {'BYN', 'HUF', 'KGS', 'MDL', 'TJS', 'UZS', 'HKD', 'AZN', 'AMD', 'TMT', 'CZK', 'DKK', \
+            'BGN', 'RON', 'RSD', 'GEL', 'NZD', 'THB', 'VND', 'AED', 'QAR', 'EGP', 'IDR'}:
                 try:
                     order_dif[key] = round((now[0][key] / delta[0][key] - 1) * 100, 2)
                 except KeyError:
