@@ -45,11 +45,6 @@ def currencies(request):
     delta1 = 365
     delta2 = 1460
     delta3 = 4018
-
-    '''if today == 6:
-        delta = 2
-    elif today == 0:
-        delta = 3'''
     
     if(request.GET.get('mybtn')):
         delta = (int(request.GET.get('mytextbox')))
@@ -72,11 +67,27 @@ def currencies(request):
         order_dif_plus = OrderedDict(sorted(order_dif.items(), key=lambda item: item[1], reverse=True))
 
         return order_dif_plus.items(), delta[1]
+    
+    if cache.get('dif_plus') == None  and delta == 7 and delta1 == 365 and delta2 == 1460 and delta3 == 4018:
+        cache.set('dif_plus', list(ordered_array(delta)[0]))
+        cache.set('dif_plus1', list(ordered_array(delta1)[0]))
+        cache.set('dif_plus2', list(ordered_array(delta2)[0]))
+        cache.set('dif_plus3', list(ordered_array(delta3)[0]))
+        cache.set('date_delta', list(ordered_array(delta)[1]))
+        cache.set('date_delta1', list(ordered_array(delta1)[1]))
+        cache.set('date_delta2', list(ordered_array(delta2)[1]))
+        cache.set('date_delta3', list(ordered_array(delta3)[1]))
 
-    context = {'dif_plus': ordered_array(delta)[0], 'date_delta': ordered_array(delta)[1], 'delta': delta,\
-                'dif_plus1': ordered_array(delta1)[0], 'date_delta1': ordered_array(delta1)[1], 'delta1': delta1,\
-                'dif_plus2': ordered_array(delta2)[0], 'date_delta2': ordered_array(delta2)[1], 'delta2': delta2,\
-                'dif_plus3': ordered_array(delta3)[0], 'date_delta3': ordered_array(delta3)[1], 'delta3': delta3}
+    if cache.get('dif_plus') != None and delta == 7 and delta1 == 365 and delta2 == 1460 and delta3 == 4018:
+        context = {'dif_plus': cache.get('dif_plus'), 'date_delta': cache.get('date_delta'), 'delta': delta,\
+                'dif_plus1': cache.get('dif_plus1'), 'date_delta1': cache.get('date_delta1'), 'delta1': delta1,\
+                'dif_plus2': cache.get('dif_plus2'), 'date_delta2': cache.get('date_delta2'), 'delta2': delta2,\
+                'dif_plus3': cache.get('dif_plus3'), 'date_delta3': cache.get('date_delta3'), 'delta3': delta3}
+    else:
+        context = {'dif_plus': ordered_array(delta)[0], 'date_delta': ordered_array(delta)[1], 'delta': delta,\
+                    'dif_plus1': ordered_array(delta1)[0], 'date_delta1': ordered_array(delta1)[1], 'delta1': delta1,\
+                    'dif_plus2': ordered_array(delta2)[0], 'date_delta2': ordered_array(delta2)[1], 'delta2': delta2,\
+                    'dif_plus3': ordered_array(delta3)[0], 'date_delta3': ordered_array(delta3)[1], 'delta3': delta3}
     return render(request, 'mybl/currencies.html', context)
 
 '''def blog(request):
