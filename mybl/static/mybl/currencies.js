@@ -57,11 +57,11 @@ let dict = function (dif) {
   return [day, dateLast];
 };
 
-let inputDelta = document.getElementById('mytextbox');
+let inputDelta0 = document.getElementById('mytextbox0');
 let inputDelta1 = document.getElementById('mytextbox1');
 let inputDelta2 = document.getElementById('mytextbox2');
 let inputDelta3 = document.getElementById('mytextbox3');
-inputDelta.value = delta;
+inputDelta0.value = delta0;
 inputDelta1.value = delta1;
 inputDelta2.value = delta2;
 inputDelta3.value = delta3;

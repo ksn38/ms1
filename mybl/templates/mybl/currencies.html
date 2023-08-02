@@ -10,7 +10,7 @@
           <input class='mr-1' type="number" name="mytextbox3" size='3' min='1' max='11000' id='mytextbox3'>
           <input class='mr-1' type="number" name="mytextbox2" size='3' min='1' max='11000' id='mytextbox2'>
           <input class='mr-1' type="number" name="mytextbox1" size='3' min='1' max='11000' id='mytextbox1'>
-          <input class='mr-1' type="number" name="mytextbox" size='3' min='1' max='11000' id='mytextbox'>
+          <input class='mr-1' type="number" name="mytextbox0" size='3' min='1' max='11000' id='mytextbox0'>
           <input type="submit" value="days ago" name="mybtn" id='mybtn'>
         </form>
         <input class='ml-1' type="checkbox" id='checkbox-change'>  
@@ -63,11 +63,11 @@
         </div>
         <div class='mb-3'>
           <div class='flex-column justify-content-around'>
-            <div>({{ date_delta }})</div>
+            <div>({{ date_delta0 }})</div>
           </div>
           <div class='flex-column'>
             <table class='table-sm table-bordered table-dark' style='height: 0px'>
-              {% for name, value in dif_plus %}
+              {% for name, value in dif_plus0 %}
                 <tr>
                   <td class='currency-plus text-secondary'>
                     {{ name }}
@@ -219,7 +219,7 @@
     </table>
   </div>
   <script>
-    let delta = {{ delta|safe }};
+    let delta0 = {{ delta0|safe }};
     let delta1 = {{ delta1|safe }};
     let delta2 = {{ delta2|safe }};
     let delta3 = {{ delta3|safe }};
