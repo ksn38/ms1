@@ -28,7 +28,7 @@ def apivac(expir):
     vac = {}
 
     for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Golang', '1c', 'Data scientist', 'Scala', 'iOS', 'Frontend', 'DevOps', 'ABAP', 'Android']:
-        if i == 'iOS' or i == 'Android':
+        if i == 'Android': #or i == 'iOS':
             url = 'https://api.hh.ru/vacancies?&' + expir + 'industry=43&industry=7&industry=11&search_field=name&text=' + i
         else:
             url = 'https://api.hh.ru/vacancies?&' + expir + 'search_field=name&text=' + i
@@ -36,6 +36,7 @@ def apivac(expir):
         val = json.loads(response.content.decode("utf-8"))
         vac[i] = val['found']
         #print(i, val['found'])
+        time.sleep(1)
 
     return vac
     
@@ -58,31 +59,24 @@ def get_and_write():
         res[k2] = round(res[k2] / vacs[k], 1)
         vacs_noexp[k] = round(vacs_noexp[k] * 100 / vacs[k])
 
-    for k, v, vne, vrv in zip(vacs.keys(), vacs.values(), vacs_noexp.values(), res.values()):
+    for k, v, vne, rv in zip(vacs.keys(), vacs.values(), vacs_noexp.values(), res.values()):
         if k == 'c%2B%2B':
             k = 'cpp'
         if k == 'C%23':
             k = 'cs'
+        if k == 'Android':
+            v = round(v * 1.3)
+            rv = round(rv / 1.3)
         new_values = {'name': k,
-         'val': v, 'val_noexp': vne, 'res_vac': vrv}
+         'val': v, 'val_noexp': vne, 'res_vac': rv}
         obj = Lang(**new_values)
         obj.save()
-
-'''while len(langs) == 0:
-    try:
-        get_and_write()
-        langs = Lang.objects.filter(Q(date_added = date_today))
-    except KeyError:
-        time.sleep(1800)
-        get_and_write()
-        langs = Lang.objects.filter(Q(date_added = date_today))
-        time.sleep(1800)'''
 
 if len(langs) == 0:
     try:
         get_and_write()
     except KeyError:
-        time.sleep(15)
+        time.sleep(1800)
         get_and_write()
 
 cache.set('langs', Lang.objects.raw(langs_today))
