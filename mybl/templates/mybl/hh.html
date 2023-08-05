@@ -2,30 +2,9 @@
 {% load static %}
 {% block content %}
 <div class='d-flex justify-content-around m-2 flex-wrap align-items-start'>
-  <div class='flex-wrap mb-4'>
-    <div class='mb-3'><canvas id="line-chart" width="900" height="500"></canvas></div>
-    <div class='radWin d-flex justify-content-around'>
-      <div>
-        <select id="lang" class='mr-1'>
-          <option value="1c">1C</option>
-          <option value="ABAP">ABAP</option>
-          <option value="Android">Android</option>
-          <option value="Data scientist">Data scientist</option>
-          <option value="DevOps">DevOps</option>
-          <option selected value="Frontend">Frontend</option>
-          <option value="Golang">Golang</option>
-          <option value="Javascript">Javascript</option>
-          <option value="Ruby">Ruby</option>
-          <option value="Scala">Scala</option>
-          <option value="iOS">iOS</option>
-        </select>
-        <input type="submit" value="Show" id='button-lang'>
-      </div>
-    </div>
-  </div>
   <div class='d-flex justify-content-around mt-2 flex-wrap align-items-start'>
   <table class='table-sm table-dark table-bordered m-2'>
-    <caption style='caption-side: down'><small>Search word, number of vacancies, percent for interns, number applicants on vacancy (from hh.ru)</small></caption>
+    <caption style='caption-side: down'><small>Search word, number of vacancies, percent for interns, resumes/vacancies (from hh.ru)</small></caption>
     {% for lang in langs %}
       <tr>
         {% if lang.name == 'cs' %}
@@ -121,9 +100,34 @@
     {% endfor %}
   </table>
   </div>
-  <div class=''><canvas id="line-chart-avg" width="900" height="500"></canvas></div>
+  <div class='flex-wrap mb-4'>
+    <div class='mb-3'><canvas id="line-chart-val" width="900" height="500"></canvas></div>
+    <div class='radWin d-flex justify-content-around'>
+      <div>
+        <select id="lang" class='mr-1'>
+          <option value="1c">1C</option>
+          <option value="ABAP">ABAP</option>
+          <option value="Android">Android</option>
+          <option value="Data scientist">Data scientist</option>
+          <option value="DevOps">DevOps</option>
+          <option selected value="Frontend">Frontend</option>
+          <option value="Golang">Golang</option>
+          <option value="Javascript">Javascript</option>
+          <option value="Ruby">Ruby</option>
+          <option value="Scala">Scala</option>
+          <option value="iOS">iOS</option>
+        </select>
+        <input type="submit" value="Show" id='button-lang'>
+      </div>
+    </div>
+    <div class='mb-3'><canvas id="line-chart-val_noexp" width="900" height="500"></canvas></div>
+    <div class='mb-3'><canvas id="line-chart-res" width="900" height="500"></canvas></div>
+    <div class=''><canvas id="line-chart-avg" width="900" height="500"></canvas></div>
+  </div>
   <script type="text/javascript">
-    var receivedData  = {{ graphs|safe }};
+    var receivedDataVal  = {{ graphs_val|safe }};
+    var receivedDataValNoExp  = {{ graphs_val_noexp|safe }};
+    var receivedDataRes  = {{ graphs_res|safe }};
     var receivedDataAvg  = {{ graphs_avg|safe }};
     //console.log(receivedData);
   </script>

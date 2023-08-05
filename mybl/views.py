@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from mybl.models import Bpost, Comment, Lang, Ticker, Lang_avg, Lang_graphs
-from django.http import HttpResponseRedirect, Http404
-from django.urls import reverse
-from mybl.forms import BpostForm, CommentForm
-from django.contrib.auth.decorators import login_required
+# from mybl.models import Bpost, Comment, Lang, Ticker
+# from django.http import HttpResponseRedirect, Http404
+# from django.urls import reverse
+# from mybl.forms import BpostForm, CommentForm
+# from django.contrib.auth.decorators import login_required
 import requests
 from datetime import date
 from datetime import timedelta
@@ -165,10 +165,13 @@ def hh(request):
     langs = cache.get('langs')
     charts = cache.get('charts')
     charts_march = cache.get('charts_march')
-    graphs = cache.get('graphs')
+    graphs_val = cache.get('graphs_val')
+    graphs_val_noexp = cache.get('graphs_val_noexp')
+    graphs_res = cache.get('graphs_res')
     graphs_avg = cache.get('graphs_avg')
         
-    context = {'langs': langs, 'charts': charts, 'charts_march': charts_march, 'graphs': graphs, 'graphs_avg': graphs_avg}
+    context = {'langs': langs, 'charts': charts, 'charts_march': charts_march, 'graphs_val': graphs_val, \
+               'graphs_avg': graphs_avg, 'graphs_val_noexp': graphs_val_noexp, 'graphs_res': graphs_res}
     
     return render(request, 'mybl/hh.html', context)
     

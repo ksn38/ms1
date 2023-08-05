@@ -6,7 +6,6 @@ let val_noexpChng2021 = document.querySelectorAll('.val_noexp-cndg-2021');
 let res_vacChng2021 = document.querySelectorAll('.res_vac-cndg-2021');
 let rateToday = document.querySelectorAll('.rate-today');
 let rateToMarch = document.querySelectorAll('.rate-to-march');
-//let radWin = document.getElementsByName('win');
 let button_lang = document.getElementById('button-lang');
 let lang = document.getElementById('lang');
 
@@ -108,14 +107,7 @@ colorColNowInv(resVacNowNod);
 
 
 //linecharts
-let cavas = document.getElementById("line-chart");
-
-if (cavas.width > window.innerWidth) {
-  cavas.width = window.innerWidth;
-  cavas.height = window.innerWidth * 0.5625;
-}
-
-let graph = (lang) => {
+let graph = (lang, receivedData, cavas, title) => {
   let date = Array.from(receivedData['date_added']);
   let java = Array.from(receivedData['Java']);
   let js = Array.from(receivedData[lang.value]);
@@ -124,9 +116,7 @@ let graph = (lang) => {
   let cpp = Array.from(receivedData['cpp']);
   let cs = Array.from(receivedData['cs']);
 
-  //date = date.slice(win);
-
-  new Chart(document.getElementById("line-chart"), {
+  new Chart(cavas, {
     type: 'line',
     data: {
       labels: date,
@@ -187,7 +177,7 @@ let graph = (lang) => {
       },
       title: {
           display: true,
-          text: 'Vacancies'
+          text: title
       },
       scales: {
         yAxes: [{
@@ -256,7 +246,7 @@ let graphAvg = (win) => {
           yAxisID: 'yLabel',
         }, { 
           data: rollAvg(avgRv),
-          label: "Average number applicants on vacancy",
+          label: "Average resumes/vacancies",
           borderColor: "#434343",
           fill: false,
           pointRadius: 0,
@@ -337,20 +327,19 @@ let cor = (list1, list2) => {
   return (sum(cov(list1, avgList1, list2, avgList2)))/Math.sqrt(dif2(list1, avgList1)*dif2(list2, avgList2));
 };
 
-
-/*for(let i = 0; i < radWin.length; i++){
-  radWin[i].addEventListener("change", function(){
-    win = parseInt(radWin[i].value);
-    graph(win);
-  })
-}*/
-
-graph(lang);
+let canvasVal = document.getElementById("line-chart-val");
+let canvasValNoExp = document.getElementById("line-chart-val_noexp");
+let canvasRes = document.getElementById("line-chart-res");
+graph(lang, receivedDataVal, canvasVal, 'Vacancies');
+graph(lang, receivedDataValNoExp, canvasValNoExp, 'Percent vacancies for interns');
+graph(lang, receivedDataRes, canvasRes, 'Resumes/vacancies');
 graphAvg(28);
 
 button_lang.onclick = () => {
   //graph[0].destroy();
-  graph(lang);
+  graph(lang, receivedDataVal, canvasVal, 'Vacancies');
+  graph(lang, receivedDataValNoExp, canvasValNoExp, 'Percent vacancies for interns');
+  graph(lang, receivedDataRes, canvasRes, 'Resumes/vacancies');
 }
 
 //bg-secondary for nonlang

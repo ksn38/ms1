@@ -20,7 +20,7 @@ import json
 if __name__ == '__main__':
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "blog.settings")
     django.setup()
-    from mybl.models import Lang, Lang_avg, Lang_graphs
+    from mybl.models import Lang, Lang_avg, Lang_graphs_val, Lang_graphs_val_noexp, Lang_graphs_res
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
@@ -83,21 +83,25 @@ cache.set('langs', Lang.objects.raw(langs_today))
 cache.set('charts', Lang.objects.raw(chart_langs))
 cache.set('charts_march', Lang.objects.raw(chart_langs_march))
 
-graphs = Lang_graphs.objects.raw("""select id, name, val, date_added from mybl_lang ml
-                                  order by date_added, name""")
+def pivot_and_set_in_cache(sql_req, column, period):
+    df_langs = [i['fields'] for i in serializers.serialize('python', sql_req)]
+    graphs = pd.DataFrame(df_langs).pivot(index='date_added', columns='name', values=column)
+    graphs = graphs.fillna(0)
+    graphs = graphs.sort_index(ascending=False)
+    graphs_short = pd.DataFrame(columns=graphs.columns)
+    for i in range(len(graphs))[::period]:
+        graphs_short.loc[graphs.index[i]] = graphs[i:i+period].mean()
+    graphs_short = graphs_short.sort_index(ascending=True)
+    graphs_short['date_added'] = graphs_short.index
+    graphs_short['date_added'] = graphs_short['date_added'].astype('str')
+    cache.set('graphs_' + column, graphs_short.to_dict(orient='list'))
 
-df_langs = [i['fields'] for i in serializers.serialize('python', graphs)]
-graphs = pd.DataFrame(df_langs).pivot(index='date_added', columns='name', values='val')
-graphs = graphs.fillna(0)
-graphs = graphs.sort_index(ascending=False)
-graphs7 = pd.DataFrame(columns=graphs.columns)
-for i in range(len(graphs))[::7]:
-    graphs7.loc[graphs.index[i]] = graphs[i:i+7].mean()
-graphs7 = graphs7.sort_index(ascending=True)
-graphs7['date_added'] = graphs7.index
-graphs7['date_added'] = graphs7['date_added'].astype('str')
-#print(graphs7.columns)
-cache.set('graphs', graphs7.to_dict(orient='list'))
+val = Lang_graphs_val.objects.raw("""select id, name, val, date_added from mybl_lang ml order by date_added, name""")
+val_noexp = Lang_graphs_val_noexp.objects.raw("""select id, name, val_noexp, date_added from mybl_lang ml order by date_added, name""")
+res_vac = Lang_graphs_res.objects.raw("""select id, name, res_vac as res, date_added from mybl_lang ml order by date_added, name""")
+pivot_and_set_in_cache(val, 'val', 7)
+pivot_and_set_in_cache(val_noexp, 'val_noexp', 28)
+pivot_and_set_in_cache(res_vac, 'res', 28)
 
 graphs_avg = Lang_avg.objects.raw("""select distinct max(id) over(partition by date_added) as id, date_added, avg(val_noexp) over(partition by date_added) as avg_vn, avg(res_vac) over(partition by date_added) as avg_rv from mybl_lang order by date_added""")
 cache.set('graphs_avg', serializers.serialize('json', graphs_avg))
