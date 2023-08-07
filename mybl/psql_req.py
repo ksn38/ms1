@@ -11,12 +11,21 @@ from mean a
 left join  mybl_lang b on a."name"  = b."name" 
 where b.date_added = current_date order by rate;'''
 
-chart_langs_march = '''select distinct b.id, a."name", ((b.val - a.aval)*100/a.aval) as cnd_val, ((b.val_noexp - a.aval_noexp)*100/a.aval_noexp) as cnd_vn, 
+chart_langs_2021 = '''select distinct b.id, a."name", ((b.val - a.aval)*100/a.aval) as cnd_val, ((b.val_noexp - a.aval_noexp)*100/a.aval_noexp) as cnd_vn, 
 ((b.res_vac - a.ares_vac)*100/a.ares_vac)::integer as cnd_rv,
 (rank() over(order by  ((b.val - a.aval)*100/a.aval) desc) + 
 rank() over(order by ((b.val_noexp - a.aval_noexp)*100/a.aval_noexp) desc) + 
 rank() over(order by ((b.res_vac - a.ares_vac)*100/a.ares_vac)::integer)) as rate
-from mean_march a
+from mean_2021 a
+left join  mybl_lang b on a."name"  = b."name" 
+where b.date_added = current_date order by rate;'''
+
+chart_langs_2022 = '''select distinct b.id, a."name", ((b.val - a.aval)*100/a.aval) as cnd_val, ((b.val_noexp - a.aval_noexp)*100/a.aval_noexp) as cnd_vn, 
+((b.res_vac - a.ares_vac)*100/a.ares_vac)::integer as cnd_rv,
+(rank() over(order by  ((b.val - a.aval)*100/a.aval) desc) + 
+rank() over(order by ((b.val_noexp - a.aval_noexp)*100/a.aval_noexp) desc) + 
+rank() over(order by ((b.res_vac - a.ares_vac)*100/a.ares_vac)::integer)) as rate
+from mean_2022 a
 left join  mybl_lang b on a."name"  = b."name" 
 where b.date_added = current_date order by rate;'''
 

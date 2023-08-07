@@ -9,7 +9,6 @@ import pandas as pd
 from django.core.cache import cache
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
-from mybl.psql_req import chart_langs, langs_today, chart_langs_march
 from django.core import serializers
 import json
 
@@ -76,26 +75,22 @@ if len(langs) == 0:
         time.sleep(1800)
         get_and_write()
 
-cache.set('langs', Lang.objects.raw(langs_today))
-cache.set('charts', Lang.objects.raw(chart_langs))
-cache.set('charts_march', Lang.objects.raw(chart_langs_march))
-
 def pivot_and_set_in_cache(sql_req, column, period):
-    df_langs = [i['fields'] for i in serializers.serialize('python', sql_req)]
+    df_langs = [i['fields'] for i in serializers.serialize('python', Lang.objects.raw(sql_req))]
     graphs = pd.DataFrame(df_langs).pivot(index='date_added', columns='name', values=column)
-    graphs = graphs.fillna(0)
     graphs = graphs.sort_index(ascending=False)
-    graphs_short = pd.DataFrame(columns=graphs.columns)
+    graphs_average = pd.DataFrame(columns=graphs.columns)
     for i in range(len(graphs))[::period]:
-        graphs_short.loc[graphs.index[i]] = graphs[i:i+period].mean()
-    graphs_short = graphs_short.sort_index(ascending=True)
-    graphs_short['date_added'] = graphs_short.index
-    graphs_short['date_added'] = graphs_short['date_added'].astype('str')
-    cache.set('graphs_' + column, graphs_short.to_dict(orient='list'))
+        graphs_average.loc[graphs.index[i]] = graphs[i:i+period].mean()
+    graphs_average = graphs_average.fillna(0)
+    graphs_average = graphs_average.sort_index(ascending=True)
+    graphs_average['date_added'] = graphs_average.index
+    graphs_average['date_added'] = graphs_average['date_added'].astype('str')
+    cache.set('graphs_' + column, graphs_average.to_dict(orient='list'))
 
-val = Lang.objects.raw("""select id, name, val, date_added from mybl_lang ml order by date_added, name""")
-val_noexp = Lang.objects.raw("""select id, name, val_noexp, date_added from mybl_lang ml order by date_added, name""")
-res_vac = Lang.objects.raw("""select id, name, res_vac, date_added from mybl_lang ml order by date_added, name""")
+val = """select id, name, val, date_added from mybl_lang ml order by date_added, name"""
+val_noexp = """select id, name, val_noexp, date_added from mybl_lang ml order by date_added, name"""
+res_vac = """select id, name, res_vac, date_added from mybl_lang ml order by date_added, name"""
 pivot_and_set_in_cache(val, 'val', 7)
 pivot_and_set_in_cache(val_noexp, 'val_noexp', 56)
 pivot_and_set_in_cache(res_vac, 'res_vac', 28)

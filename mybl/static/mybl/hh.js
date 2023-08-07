@@ -8,6 +8,10 @@ let rateToday = document.querySelectorAll('.rate-today');
 let rateToMarch = document.querySelectorAll('.rate-to-march');
 let button_lang = document.getElementById('button-lang');
 let lang = document.getElementById('lang');
+let radio1 = document.getElementsByName('year1');
+let radio2 = document.getElementsByName('year2');
+let table2021 = document.getElementById('table-2021');
+let table2022 = document.getElementById('table-2022');
 
 //coloring tables
 let colorCol = (arr) => {
@@ -339,7 +343,7 @@ button_lang.onclick = () => {
   //graph[0].destroy();
   graph(lang, receivedDataVal, canvasVal, 'Vacancies');
   graph(lang, receivedDataValNoExp, canvasValNoExp, 'Percent vacancies for interns');
-  graph(lang, receivedDataRes, canvasRes, 'Resumes/vacancies');
+  graph(lang, receivedDataResVac, canvasResVac, 'Resumes/vacancies');
 }
 
 //bg-secondary for nonlang
@@ -353,4 +357,18 @@ for (let i = 0; i < nameLang.length; i++) {
     nameLang[i].classList.remove('bg-dark');
     nameLang[i].classList.add('bg-secondary')
   }
+}
+
+for(let i = 0; i < radio1.length; i++){
+  radio1[i].addEventListener("change", function(){
+    item = parseInt(radio1[i].value);
+    if (item == 2022){
+      table2021.hidden = true;
+      table2022.hidden = false;
+      //radio2[i].checked
+    } else if (item == 2021){
+      table2021.hidden = false;
+      table2022.hidden = true;
+    }
+  });
 }
