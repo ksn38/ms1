@@ -329,10 +329,10 @@ let cor = (list1, list2) => {
 
 let canvasVal = document.getElementById("line-chart-val");
 let canvasValNoExp = document.getElementById("line-chart-val_noexp");
-let canvasRes = document.getElementById("line-chart-res");
+let canvasResVac = document.getElementById("line-chart-res");
 graph(lang, receivedDataVal, canvasVal, 'Vacancies');
 graph(lang, receivedDataValNoExp, canvasValNoExp, 'Percent vacancies for interns');
-graph(lang, receivedDataRes, canvasRes, 'Resumes/vacancies');
+graph(lang, receivedDataResVac, canvasResVac, 'Resumes/vacancies');
 graphAvg(28);
 
 button_lang.onclick = () => {

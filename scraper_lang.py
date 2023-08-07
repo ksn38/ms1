@@ -1,9 +1,6 @@
 import os
 import django
 from datetime import date
-from datetime import timedelta
-from collections import OrderedDict
-from bs4 import BeautifulSoup as bs
 from django.db.models import Q
 import requests
 import json
@@ -20,7 +17,7 @@ import json
 if __name__ == '__main__':
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "blog.settings")
     django.setup()
-    from mybl.models import Lang, Lang_avg, Lang_graphs_val, Lang_graphs_val_noexp, Lang_graphs_res
+    from mybl.models import Lang, Lang_avg
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
@@ -96,12 +93,12 @@ def pivot_and_set_in_cache(sql_req, column, period):
     graphs_short['date_added'] = graphs_short['date_added'].astype('str')
     cache.set('graphs_' + column, graphs_short.to_dict(orient='list'))
 
-val = Lang_graphs_val.objects.raw("""select id, name, val, date_added from mybl_lang ml order by date_added, name""")
-val_noexp = Lang_graphs_val_noexp.objects.raw("""select id, name, val_noexp, date_added from mybl_lang ml order by date_added, name""")
-res_vac = Lang_graphs_res.objects.raw("""select id, name, res_vac as res, date_added from mybl_lang ml order by date_added, name""")
+val = Lang.objects.raw("""select id, name, val, date_added from mybl_lang ml order by date_added, name""")
+val_noexp = Lang.objects.raw("""select id, name, val_noexp, date_added from mybl_lang ml order by date_added, name""")
+res_vac = Lang.objects.raw("""select id, name, res_vac, date_added from mybl_lang ml order by date_added, name""")
 pivot_and_set_in_cache(val, 'val', 7)
-pivot_and_set_in_cache(val_noexp, 'val_noexp', 28)
-pivot_and_set_in_cache(res_vac, 'res', 28)
+pivot_and_set_in_cache(val_noexp, 'val_noexp', 56)
+pivot_and_set_in_cache(res_vac, 'res_vac', 28)
 
 graphs_avg = Lang_avg.objects.raw("""select distinct max(id) over(partition by date_added) as id, date_added, avg(val_noexp) over(partition by date_added) as avg_vn, avg(res_vac) over(partition by date_added) as avg_rv from mybl_lang order by date_added""")
 cache.set('graphs_avg', serializers.serialize('json', graphs_avg))

@@ -8,11 +8,6 @@ import requests
 from datetime import date
 from datetime import timedelta
 from collections import OrderedDict
-import json
-from bs4 import BeautifulSoup as bs
-from django.core import serializers
-from django.db.models import Q
-from mybl.psql_req import chart_langs, chart_tickers, langs_today, chart_langs_march
 import re
 from django.core.cache import cache
 from django.conf import settings
@@ -40,7 +35,6 @@ def currencies(request):
 
         return dict_curr, date_delta
 
-    today = date.today().weekday()
     delta0 = 7
     delta1 = 365
     delta2 = 1460
@@ -88,6 +82,34 @@ def currencies(request):
             context['delta' + str(i)] = j
 
     return render(request, 'mybl/currencies.html', context)
+
+def hh(request):
+    langs = cache.get('langs')
+    charts = cache.get('charts')
+    charts_march = cache.get('charts_march')
+    graphs_val = cache.get('graphs_val')
+    graphs_val_noexp = cache.get('graphs_val_noexp')
+    graphs_res_vac = cache.get('graphs_res_vac')
+    graphs_avg = cache.get('graphs_avg')
+        
+    context = {'langs': langs, 'charts': charts, 'charts_march': charts_march, 'graphs_val': graphs_val, \
+               'graphs_avg': graphs_avg, 'graphs_val_noexp': graphs_val_noexp, 'graphs_res_vac': graphs_res_vac}
+    
+    return render(request, 'mybl/hh.html', context)
+    
+    
+def about(request):
+    return render(request, 'mybl/about.html')
+
+
+def index(request):
+    chart_tickers = cache.get('chart_tickers_view')
+    tickers5000 = cache.get('tickers5000')
+        
+    context = {'chart_tickers': chart_tickers, 'tickers5000': tickers5000}
+            
+    return render(request, 'mybl/index.html', context)
+
 
 '''def blog(request):
     blog = Bpost.objects.order_by('date_added')
@@ -160,30 +182,4 @@ def edit_bpost(request, bpost_id):
             
     context = {'bpost': bpost, 'form': form}
     return render(request, 'mybl/edit_bpost.html', context)'''
-    
-def hh(request):
-    langs = cache.get('langs')
-    charts = cache.get('charts')
-    charts_march = cache.get('charts_march')
-    graphs_val = cache.get('graphs_val')
-    graphs_val_noexp = cache.get('graphs_val_noexp')
-    graphs_res = cache.get('graphs_res')
-    graphs_avg = cache.get('graphs_avg')
-        
-    context = {'langs': langs, 'charts': charts, 'charts_march': charts_march, 'graphs_val': graphs_val, \
-               'graphs_avg': graphs_avg, 'graphs_val_noexp': graphs_val_noexp, 'graphs_res': graphs_res}
-    
-    return render(request, 'mybl/hh.html', context)
-    
-    
-def about(request):
-    return render(request, 'mybl/about.html')
 
-
-def index(request):
-    chart_tickers = cache.get('chart_tickers_view')
-    tickers5000 = cache.get('tickers5000')
-        
-    context = {'chart_tickers': chart_tickers, 'tickers5000': tickers5000}
-            
-    return render(request, 'mybl/index.html', context)

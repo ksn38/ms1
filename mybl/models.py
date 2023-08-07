@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+'''from django.contrib.auth.models import User
 
 class Bpost(models.Model):
     header = models.CharField(max_length=200)
@@ -22,6 +22,7 @@ class Comment(models.Model):
 	
     def __str__(self):
         return self.text[:50] + '...'
+'''
 
         
 class Lang(models.Model):
@@ -56,45 +57,6 @@ class Lang_avg(models.Model):
     def __str__(self):
         return self.date_added
         
-
-class Lang_graphs_val(models.Model):
-    name = models.CharField(max_length=50)
-    val = models.FloatField()
-    date_added = models.DateField(auto_now_add=True)
-    
-    def __str__(self):
-        return self.name
-        return self.date_added
-    
-    def __float__(self):
-        return self.val
-
-
-class Lang_graphs_val_noexp(models.Model):
-    name = models.CharField(max_length=50)
-    val_noexp = models.FloatField()
-    date_added = models.DateField(auto_now_add=True)
-    
-    def __str__(self):
-        return self.name
-        return self.date_added
-    
-    def __float__(self):
-        return self.val_noexp
-
-
-class Lang_graphs_res(models.Model):
-    name = models.CharField(max_length=50)
-    res = models.FloatField()
-    date_added = models.DateField(auto_now_add=True)
-    
-    def __str__(self):
-        return self.name
-        return self.date_added
-    
-    def __float__(self):
-        return self.res
-
 
 class Ticker(models.Model):
     date_added = models.DateField(auto_now_add=True)
