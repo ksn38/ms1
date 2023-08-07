@@ -1,0 +1,13 @@
+ksn38@ef3ip6av45ba7lgtji56:~$ python3 ms1/scraper_lang.py
+time: 7.62939453125e-06
+ksn38@ef3ip6av45ba7lgtji56:~$ python3 ms1/scraper_lang.py
+time: 21.374056577682495
+ksn38@ef3ip6av45ba7lgtji56:~$ python3 ms1/scraper_lang.py
+time: 42.75375032424927
+ksn38@ef3ip6av45ba7lgtji56:~$
+ksn38@ef3ip6av45ba7lgtji56:~$
+ksn38@ef3ip6av45ba7lgtji56:~$ python3 ms1/scraper_lang.py
+time: 64.45080471038818
+ksn38@ef3ip6av45ba7lgtji56:~$
+ksn38@ef3ip6av45ba7lgtji56:~$ python3 ms1/scraper_lang.py
+time: 65.33974504470825

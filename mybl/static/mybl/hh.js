@@ -365,10 +365,19 @@ for(let i = 0; i < radio1.length; i++){
     if (item == 2022){
       table2021.hidden = true;
       table2022.hidden = false;
-      //radio2[i].checked
+      //radio1[i].checked = true
     } else if (item == 2021){
       table2021.hidden = false;
       table2022.hidden = true;
+      radio1[2].checked = true
+    } else if (item == 20222){
+      table2021.hidden = true;
+      table2022.hidden = false;
+      radio1[1].checked = true
+    } else if (item == 20212){
+      table2021.hidden = false;
+      table2022.hidden = true;
+      //radio1[i].checked = true
     }
   });
 }
