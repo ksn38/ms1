@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from mybl.models import Lang#, Ticker, Bpost, Comment
+from mybl.models import Lang, Ticker#, Bpost, Comment
 # from django.http import HttpResponseRedirect, Http404
 # from django.urls import reverse
 # from mybl.forms import BpostForm, CommentForm
@@ -12,7 +12,7 @@ import re
 from django.core.cache import cache
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
-from .psql_req import chart_langs, langs_today, chart_langs_2021, chart_langs_2022
+from .psql_req import chart_langs, langs_today, chart_langs_2021, chart_langs_2022, chart_tickers
 
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
@@ -99,19 +99,15 @@ def hh(request):
     
     return render(request, 'mybl/hh.html', context)
     
-    
 def about(request):
     return render(request, 'mybl/about.html')
 
-
 def index(request):
-    chart_tickers = cache.get('chart_tickers_view')
     tickers5000 = cache.get('tickers5000')
         
-    context = {'chart_tickers': chart_tickers, 'tickers5000': tickers5000}
+    context = {'chart_tickers': Ticker.objects.raw(chart_tickers), 'tickers5000': tickers5000}
             
     return render(request, 'mybl/index.html', context)
-
 
 '''def blog(request):
     blog = Bpost.objects.order_by('date_added')
@@ -165,8 +161,6 @@ def new_comment(request, bpost_id):
             
     context = {'bpost': bpost, 'form': form}
     return render(request, 'mybl/new_comment.html', context)
-    
-
     
 @login_required
 def edit_bpost(request, bpost_id):

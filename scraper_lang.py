@@ -62,8 +62,8 @@ def get_and_write():
         if k == 'C%23':
             k = 'cs'
         if k == 'Android':
-            v = round(v * 1.3)
-            rv = round(rv / 1.3)
+            v = round(v * 1.35)
+            rv = round(rv / 1.35)
         new_values = {'name': k,
          'val': v, 'val_noexp': vne, 'res_vac': rv}
         obj = Lang(**new_values)

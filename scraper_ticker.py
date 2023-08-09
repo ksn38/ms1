@@ -9,7 +9,6 @@ import requests
 from django.core.cache import cache
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
-from mybl.psql_req import chart_tickers
 from django.core import serializers
 import time
 
@@ -38,15 +37,7 @@ def ticks(*args):
         t = parsed_html.find('fin-streamer', {'class': 'Fw(b) Fz(36px) Mb(-4px) D(ib)'}).text.replace(',', '')
         #print(t)
         t_dict[i] = float(t)
-        '''date_yahoo = parsed_html.find('span', {'data-reactid': '53'}).text
-        print(date_yahoo)
-        if date_yahoo == date_today_2:
-            t = parsed_html.find('span', {'data-reactid': '76'}).text.replace(',', '')
-            t_dict[i] = float(t)
-        else:
-            t = parsed_html.find('span', {'data-reactid': '61'}).text.replace(',', '')
-            t_dict[i] = float(t)'''
-            
+
     return t_dict
     
 date_today = date.today().strftime("%Y-%m-%d")
@@ -64,9 +55,6 @@ if len(tickers) == 0:
             t['cop_gold'] = (t['cop']*1000)/t['gold']
             obj = Ticker(**t)
             obj.save()
-
-chart_tickers_raw = Ticker.objects.raw(chart_tickers)
-cache.set('chart_tickers_view', chart_tickers_raw)
 
 tickers5000_raw = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 5000")
 tickers5000_raw = serializers.serialize('json', tickers5000_raw)        
