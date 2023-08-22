@@ -59,3 +59,5 @@ if len(tickers) == 0:
 tickers5000_raw = Ticker.objects.raw("select * from mybl_ticker mt where id > (select max(id) from mybl_ticker mt2) - 5000")
 tickers5000_raw = serializers.serialize('json', tickers5000_raw)        
 cache.set('tickers5000', tickers5000_raw)
+
+cache.delete('dif_plus0')

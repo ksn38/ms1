@@ -25,7 +25,7 @@ def apivac(expir):
     vac = {}
 
     for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Golang', '1c', 'Data scientist', 'Scala', 'iOS', 'Frontend', 'DevOps', 'ABAP', 'Android']:
-        if i == 'Android': #or i == 'iOS':
+        if i == 'Android' or i == 'iOS':
             url = 'https://api.hh.ru/vacancies?&' + expir + 'industry=43&industry=7&industry=11&search_field=name&text=' + i
         else:
             url = 'https://api.hh.ru/vacancies?&' + expir + 'search_field=name&text=' + i
@@ -64,6 +64,9 @@ def get_and_write():
         if k == 'Android':
             v = round(v * 1.35)
             rv = round(rv / 1.35)
+        if k == 'iOS':
+            v = round(v * 1.25)
+            rv = round(rv / 1.25)
         new_values = {'name': k,
          'val': v, 'val_noexp': vne, 'res_vac': rv}
         obj = Lang(**new_values)
@@ -73,7 +76,7 @@ if len(langs) == 0:
     try:
         get_and_write()
     except KeyError:
-        time.sleep(1800)
+        time.sleep(3600)
         get_and_write()
 
 def pivot_and_set_in_cache(sql_req, column, period):

@@ -200,8 +200,14 @@ let graph = (lang, receivedData, cavas, title) => {
               display: true,
               labelString: "Javascript, Java, php"
             }
-          }*/]
-       }
+          }*/],
+        xAxes: [{
+          ticks: {
+            maxRotation: 45,
+            minRotation: 45
+          }
+        }]
+      }
     }
   });
 };
