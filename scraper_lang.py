@@ -25,10 +25,7 @@ def apivac(expir):
     vac = {}
 
     for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Golang', '1c', 'Data scientist', 'Scala', 'iOS', 'Frontend', 'DevOps', 'ABAP', 'Android']:
-        if i == 'Android' or i == 'iOS':
-            url = 'https://api.hh.ru/vacancies?&' + expir + 'industry=43&industry=7&industry=11&search_field=name&text=' + i
-        else:
-            url = 'https://api.hh.ru/vacancies?&' + expir + 'search_field=name&text=' + i
+        url = 'https://api.hh.ru/vacancies?&' + expir + 'search_field=name&text=' + i + '+not+%D0%BF%D1%80%D0%B5%D0%BF%D0%BE%D0%B4%D0%B0%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C+not+%D0%BA%D1%83%D1%80%D1%8C%D0%B5%D1%80'
         response = requests.get(url)
         val = json.loads(response.content.decode("utf-8"))
         vac[i] = val['found']
@@ -61,12 +58,6 @@ def get_and_write():
             k = 'cpp'
         if k == 'C%23':
             k = 'cs'
-        if k == 'Android':
-            v = round(v * 1.35)
-            rv = round(rv / 1.35)
-        if k == 'iOS':
-            v = round(v * 1.25)
-            rv = round(rv / 1.25)
         new_values = {'name': k,
          'val': v, 'val_noexp': vne, 'res_vac': rv}
         obj = Lang(**new_values)

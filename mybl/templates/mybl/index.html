@@ -39,8 +39,8 @@
 		<th class='px-2 text-center bg-warning text-light font-weight-bold font-italic text-lowercase' id='ibov' v-bind:title='message'>IBOV</th>
 		<th class='px-2 text-center bg-info text-dark' id='ixic' v-bind:title="message">IXIC</th>
         
-		<th class='px-2 text-center bg-info text-dark' id='rut' v-bind:title="message">RUT</th>
-		<th class='px-2 text-center bg-info text-dark'>S&P500</th>
+		<th class='px-2 text-center bg-info text-dark' id='rut' v-bind:title="message">S&P500</th>
+		<th class='px-2 text-center bg-info text-dark'>RUT</th>
         <th class='px-2 text-center bg-info text-dark'>DAX</th>
 		<th class='px-2 text-center bg-info text-warning' id='szse' v-bind:title='message'>SZSE </th>
         
@@ -66,10 +66,10 @@
             {{ ticker.dif_ixic }}
           </td>
           <td class='change text-right' style='border-top: 2px solid black'>
-            {{ ticker.dif_rut }}
+            {{ ticker.dif_gspc }}
           </td>
           <td class='change text-right' style='border-top: 2px solid black'>
-            {{ ticker.dif_gspc }}
+            {{ ticker.dif_rut }}
           </td>
           <td class='change text-right' style='border-top: 2px solid black'>
             {{ ticker.dif_gdaxi }}
