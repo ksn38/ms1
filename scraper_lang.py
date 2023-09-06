@@ -35,8 +35,8 @@ def apivac(expir):
     return vac
     
 def parservac():
-    res = {'Python': 35470, 'C%23': 16693, 'c%2B%2B': 16595, 'Java': 32641, 'Javascript': 11631, 'php': 15137, 'Ruby': 1192,\
-    'Golang': 3036, '1c': 154558, 'Data scientist': 11212, 'Scala': 300, 'iOS': 6960, 'Frontend': 60188, 'DevOps': 9030, 'ABAP': 1009, 'Android': 9303}
+    res = {'Python': 36330, 'C%23': 16939, 'c%2B%2B': 17029, 'Java': 33433, 'Javascript': 11889, 'php': 15482, 'Ruby': 1237,\
+    'Golang': 3170, '1c': 156676, 'Data scientist': 11475, 'Scala': 299, 'iOS': 7119, 'Frontend': 62053, 'DevOps': 9358, 'ABAP': 1022, 'Android': 9645}
 
     return res
     

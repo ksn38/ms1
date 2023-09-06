@@ -4,7 +4,7 @@ let days = document.getElementById('days');
 let rowTable = document.querySelector('row-table');
 let maxValRows = 76;
 let minValRows = 21;
-let checkBoxChange = document.getElementById('checkbox-change');
+
 
 function deleteRow(row) {
   let moexTable = document.getElementById('moex');
@@ -65,18 +65,6 @@ inputDelta0.value = delta0;
 inputDelta1.value = delta1;
 inputDelta2.value = delta2;
 inputDelta3.value = delta3;
-
-checkBoxChange.onchange = function () {
-  if (checkBoxChange.checked) {
-    inputDelta1.value = 30;
-    inputDelta2.value = 183;
-    inputDelta3.value = 365;
-  } else {
-    inputDelta1.value = 365;
-    inputDelta2.value = 1460;
-    inputDelta3.value = 4018;
-  }
-}
 
 
 //creating and coloring table with moex socks
