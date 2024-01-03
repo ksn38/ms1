@@ -68,13 +68,7 @@
     {% endfor %}
   </table>
   <span>
-  <table class='table-sm mx-2 mt-2 table-dark table-bordered' id='table-2022'>
-    <caption style='caption-side: down'>
-      <small>Changing from 
-          <input type='radio' id='r2021' name='year1' value='2021'>2021</td>
-          <input type='radio' id='r2022' name='year1' value='2022' checked="checked">2022</td>
-      </small>
-    </caption>
+  <table class='table-sm mx-2 mt-2 mb-3 table-dark table-bordered' id='table-2022' hidden="true">
     {% for chart in charts_2022 %}
       <tr>
         {% if chart.name == 'cs' %}
@@ -105,13 +99,7 @@
       </tr>
     {% endfor %}
   </table>
-  <table class='table-sm mx-2 mt-2 table-dark table-bordered' id='table-2021' hidden="true">
-    <caption style='caption-side: down'>
-      <small>Changing from 
-          <input type='radio' id='r2021' name='year1' value='20212'>2021</td>
-          <input type='radio' id='r2022' name='year1' value='20222'>2022</td>
-      </small>
-    </caption>
+  <table class='table-sm mx-2 mt-2 mb-3 table-dark table-bordered' id='table-2021' hidden="true">
     {% for chart in charts_2021 %}
       <tr>
         {% if chart.name == 'cs' %}
@@ -142,10 +130,42 @@
       </tr>
     {% endfor %}
   </table>
-  <!--small class='mx-2'>
-    <input type='radio' id='r2021' name='year' value='2021' checked="checked">2021</td>
-    <input type='radio' id='r2022' name='year' value='2022'>2022</td>
-  </small-->
+  <table class='table-sm mx-2 mt-2 mb-3 table-dark table-bordered' id='table-2023'>
+    {% for chart in charts_2023 %}
+      <tr>
+        {% if chart.name == 'cs' %}
+          <td class='bg-dark text-light name_lang'>
+          {{ 'C#' }}
+          </td>
+        {% elif chart.name == 'cpp' %}
+          <td class='bg-dark text-light name_lang'>
+          {{ 'C++' }}
+          </td>
+        {% else %}
+          <td class='bg-dark text-light name_lang'>
+          {{ chart.name }}
+          </td>
+        {% endif %}
+        <td class='val-cndg-2021 text-right'>
+          {{ chart.cnd_val }}
+        </td>
+        <td class='val_noexp-cndg-2021 text-right'>
+          {{ chart.cnd_vn }}
+        </td>
+        <td class='res_vac-cndg-2021 text-right'>
+          {{ chart.cnd_rv }}
+        </td>
+        <td class='text-right rate-to-march text-secondary bg-dark'>
+          {{ chart.rate }}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+  <small style='margin-left: 10px'>Changing from 
+    <input type='radio' id='r2021' name='year1' value='2021'>2021</td>
+    <input type='radio' id='r2022' name='year1' value='2022'>2022</td>
+    <input type='radio' id='r2023' name='year1' value='2023' checked="checked">2023</td>
+  </small>
   </span>
   </div>
   <div class='flex-wrap mb-4'>

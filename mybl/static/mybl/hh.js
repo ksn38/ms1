@@ -12,6 +12,7 @@ let radio1 = document.getElementsByName('year1');
 let radio2 = document.getElementsByName('year2');
 let table2021 = document.getElementById('table-2021');
 let table2022 = document.getElementById('table-2022');
+let table2023 = document.getElementById('table-2023');
 
 //coloring tables
 let colorCol = (arr) => {
@@ -369,21 +370,20 @@ for(let i = 0; i < radio1.length; i++){
   radio1[i].addEventListener("change", function(){
     item = parseInt(radio1[i].value);
     if (item == 2022){
+      radio1[i].checked = true;
       table2021.hidden = true;
       table2022.hidden = false;
-      //radio1[i].checked = true
+      table2023.hidden = true;
     } else if (item == 2021){
+      radio1[i].checked = true;
       table2021.hidden = false;
       table2022.hidden = true;
-      radio1[2].checked = true
-    } else if (item == 20222){
+      table2023.hidden = true;
+    } else if (item == 2023){
+      radio1[i].checked = true;
       table2021.hidden = true;
-      table2022.hidden = false;
-      radio1[1].checked = true
-    } else if (item == 20212){
-      table2021.hidden = false;
       table2022.hidden = true;
-      //radio1[i].checked = true
+      table2023.hidden = false;
     }
   });
 }
