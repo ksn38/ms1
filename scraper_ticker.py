@@ -34,7 +34,7 @@ def ticks(*args):
             
         response = requests.get(url, headers=headers).text
         parsed_html = bs(response, 'lxml')
-        t = parsed_html.find('fin-streamer', {'class': 'Fw(b) Fz(36px) Mb(-4px) D(ib)'}).text.replace(',', '')
+        t = parsed_html.find('fin-streamer', {'class': 'livePrice svelte-mgkamr'}).text.replace(',', '')
         #print(t)
         t_dict[i] = float(t)
 
