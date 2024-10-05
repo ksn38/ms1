@@ -42,8 +42,6 @@
 		<th class='px-2 text-center bg-info text-dark'>S&P500</th>
 		<th class='px-2 text-center bg-info text-dark' id='rut' v-bind:title="message">RUT</th>
         <th class='px-2 text-center bg-info text-dark'>DAX</th>
-		<th class='px-2 text-center bg-info text-warning' id='szse' v-bind:title='message'>SZSE </th>
-        
         <th class='px-2 text-center bg-info text-warning' id='sse' v-bind:title='message'>SSE</th>
         <th class='px-2 text-center bg-dark text-light font-weight-bold font-italic'>Wheat</th>
         <th class='px-2 text-center bg-dark text-light font-weight-bold font-italic'>WTI</th>
@@ -74,9 +72,6 @@
           <td class='change text-right' style='border-top: 2px solid black'>
             {{ ticker.dif_gdaxi }}
           </td>
-		  <td class='change text-right' style='border-top: 2px solid black'>
-            {{ ticker.dif_sz }}
-          </td>
           <td class='change text-right' style='border-top: 2px solid black'>
             {{ ticker.dif_ss }}
           </td>
@@ -87,7 +82,7 @@
             {{ ticker.dif_wti }}
 		  </td>
           <td class='change text-right' style='border-top: 2px solid black'>
-            {{ ticker.dif_cop }}
+            {{ ticker.dif_copper }}
           </td>
           <td class='change text-right' style='border-top: 2px solid black; border-right: 2px solid black'>
             {{ ticker.dif_gold }}
@@ -101,7 +96,6 @@
   </div>
   
   <div class='flex-wrap'>
-    <span class="d-flex justify-content-center text-secondary"><small>(from finance.yahoo.com)</small></span>
     <span class="d-flex justify-content-center mt-2">
       <span class='mx-1 border border-primary rounded p-1'>
         <select id="data1" class='mr-1'>
@@ -111,16 +105,15 @@
           <option value="bvsp">IBOVESPA</option>
           <option value="rut">Russell 2000</option>
           <option value="gspc">S&P500</option>
-          <option value="sz">Shenzhen Component</option>
           <option value="gdaxi">DAX</option>
           <option value="ss">SSE Composite</option>
           <option value="wheat">Wheat</option>
           <option value="wti">WTI</option>
-          <option value="cop">Copper</option>
+          <option value="copper">Copper</option>
           <option value="gold">Gold</option>
           <option value="wti_gold">Wti/Gold</option>
           <option value="wheat_gold">Wheat/Gold</option>
-          <option value="cop_gold">Copper/Gold</option>
+          <option value="copper_gold">Copper/Gold</option>
           <option selected value="tnx">Treasury Yield 10 Years</option>
         </select>
         <select id="data2" class='mr-1'>
@@ -130,16 +123,15 @@
           <option value="bvsp">IBOVESPA</option>
           <option value="rut">Russell 2000</option>
           <option value="gspc">S&P500</option>
-          <option value="sz">Shenzhen Component</option>
           <option value="gdaxi">DAX</option>
           <option value="ss">SSE Composite</option>
           <option value="wheat">Wheat</option>
           <option value="wti">WTI</option>
-          <option value="cop">Copper</option>
+          <option value="copper">Copper</option>
           <option value="gold">Gold</option>
           <option value="wti_gold">Wti/Gold</option>
           <option value="wheat_gold">Wheat/Gold</option>
-          <option selected value="cop_gold">Copper/Gold</option>
+          <option selected value="copper_gold">Copper/Gold</option>
           <option value="tnx">Treasury Yield 10 Years</option>
         </select>
         <input type="submit" value="Show" id='button0'>
@@ -160,16 +152,15 @@
         <option value="bvsp">IBOVESPA</option>
         <option value="rut">Russell 2000</option>
         <option value="gspc">S&P500</option>
-        <option value="sz">Shenzhen Component</option>
         <option value="gdaxi">DAX</option>
         <option value="ss">SSE Composite</option>
         <option value="wheat">Wheat</option>
         <option value="wti">WTI</option>
-        <option value="cop">Copper</option>
+        <option value="copper">Copper</option>
         <option selected value="gold">Gold</option>
         <option value="wti_gold">Wti/Gold</option>
         <option value="wheat_gold">Wheat/Gold</option>
-        <option value="cop_gold">Copper/Gold</option>
+        <option value="copper_gold">Copper/Gold</option>
         <option value="tnx">Treasury Yield 10 Years</option>
       </select>      
       <input type="submit" value="Show" id='button-avg'>

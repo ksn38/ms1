@@ -229,9 +229,9 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
 
 let tickersDict = {'vix': [[], '#ff0000', 'VIX'], 'wti': [[], '#000000', 'WTI'], 'gold': [[], '#dfbd00', 'Gold'],
    'tnx': [[], '#c000ff', 'UST'], 'gspc': [[], "#0000ff", 'S&P500'], 'ixic': [[], '#1473b5', 'Nasdaq'], 'rut': [[], "#03007d", 'Russell'], 
-   'wti_gold': [[], '#858344', 'Wti/Gold'], 'sz': [[], "#a1497f", 'Shenzhen Component'], 'bvsp': [[], '#cf7e00', 'IBOVESPA'],
+   'wti_gold': [[], '#858344', 'Wti/Gold'], 'bvsp': [[], '#cf7e00', 'IBOVESPA'],
    'gdaxi': [[], "#016a81", 'DAX'], 'wheat': [[], '#2bdf01', 'Wheat'], 'ss': [[], '#a30202', 'SSE Composite'], 'bsesn': [[], '#9db001', 'S&P BSE SENSEX'], 
-   'wheat_gold': [[], '#156e00', 'Wheat/Gold'], 'cop': [[], '#8d4734', 'Copper'], 'cop_gold': [[], '#8d6d34', 'Copper/Gold']};
+   'wheat_gold': [[], '#156e00', 'Wheat/Gold'], 'copper': [[], '#8d4734', 'copper'], 'copper_gold': [[], '#8d6d34', 'copper/Gold']};
 
 
 let createMainChart = function (offset, level, win, item) {
@@ -282,7 +282,7 @@ let createCharts4 = function (offset, level, win, item) {
     tickersDict.rut[0].push(received_data[i]['fields']['rut']);
 	tickersDict.wheat[0].push(received_data[i]['fields']['wheat']);
     tickersDict.wti[0].push(received_data[i]['fields']['wti']);
-    tickersDict.cop_gold[0].push(received_data[i]['fields']['cop_gold']);
+    tickersDict.copper_gold[0].push(received_data[i]['fields']['copper_gold']);
 	tickersDict.gold[0].push(received_data[i]['fields']['gold']);
     if (received_data[i]['fields']['vix'] > level) {
       vix2.push(received_data[i]['fields']['vix'])
@@ -302,7 +302,7 @@ let createCharts4 = function (offset, level, win, item) {
   //tickersDict.ixic[0] = [],
   tickersDict.rut[0] = [],
   tickersDict.wti[0] = [],
-  tickersDict.cop_gold[0] = [],
+  tickersDict.copper_gold[0] = [],
   tickersDict.gold[0] = [],
   tickersDict.wheat[0] = [],
   vix2 = []]];
@@ -335,9 +335,9 @@ let rollAvg = (list, meanWin, item) => {
 
 let tickersDictAvg = {'vix': [[], '#ff0000', 'VIX'], 'wti': [[], '#000000', 'WTI'], 'gold': [[], '#dfbd00', 'Gold'],
    'tnx': [[], '#c000ff', 'UST'], 'gspc': [[], "#0000ff", 'S&P500'], 'ixic': [[], '#1473b5', 'Nasdaq'], 'rut': [[], "#03007d", 'Russell'], 
-   'wti_gold': [[], '#858344', 'Wti/Gold'], 'sz': [[], "#a1497f", 'Shenzhen Component'], 'bvsp': [[], '#cf7e00', 'IBOVESPA'],
+   'wti_gold': [[], '#858344', 'Wti/Gold'], 'bvsp': [[], '#cf7e00', 'IBOVESPA'],
    'gdaxi': [[], "#016a81", 'DAX'], 'wheat': [[], '#2bdf01', 'Wheat'], 'ss': [[], '#a30202', 'SSE Composite'], 'bsesn': [[], '#9db001', 'S&P BSE SENSEX'], 
-   'wheat_gold': [[], '#156e00', 'Wheat/Gold'], 'cop': [[], '#8d4734', 'Copper'], 'cop_gold': [[], '#8d6d34', 'Copper/Gold']};
+   'wheat_gold': [[], '#156e00', 'Wheat/Gold'], 'copper': [[], '#8d4734', 'copper'], 'copper_gold': [[], '#8d6d34', 'copper/Gold']};
 
 
 let createAvgChart = function (offset, level, item, ticker) {

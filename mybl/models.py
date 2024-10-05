@@ -66,16 +66,15 @@ class Ticker(models.Model):
     rut = models.FloatField()
     gdaxi = models.FloatField()
     ss = models.FloatField()
-    sz = models.FloatField()
     bvsp = models.FloatField()
     bsesn = models.FloatField()
     wheat = models.FloatField()
     wti = models.FloatField()
-    cop = models.FloatField()
+    copper = models.FloatField()
     gold = models.FloatField()
     wheat_gold = models.FloatField()
     wti_gold = models.FloatField()
-    cop_gold = models.FloatField()
+    copper_gold = models.FloatField()
     vix = models.FloatField()
 
     def __float__(self):
@@ -85,16 +84,15 @@ class Ticker(models.Model):
         return self.rut
         return self.gdaxi
         return self.ss
-        return self.sz
         return self.bvsp
         return self.bsesn
         return self.wheat
         return self.wti
-        return self.cop
+        return self.copper
         return self.gold
         return self.wheat_gold
         return self.wti_gold
-        return self.cop_gold
+        return self.copper_gold
         return self.vix
     
     def __str__(self):
