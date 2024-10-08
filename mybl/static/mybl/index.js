@@ -65,8 +65,8 @@ let colorVal = (arr) => {
 arrTr = Array.from(tr)
 //console.log(arrTr);
 
-for (let i = 0; i <= arrTr.length; i += 12) {
-  colorVal(arrTr.slice(i, i + 12));
+for (let i = 0; i <= arrTr.length; i += 11) {
+  colorVal(arrTr.slice(i, i + 11));
 }
 
 
@@ -278,12 +278,12 @@ let createCharts4 = function (offset, level, win, item) {
     tickersDict.vix[0].push(received_data[i]['fields']['vix']);
     tickersDict.tnx[0].push(received_data[i]['fields']['tnx']);
     tickersDict.gspc[0].push(received_data[i]['fields']['gspc']);
-    //tickersDict.ixic[0].push(received_data[i]['fields']['ixic']);
+    tickersDict.ixic[0].push(received_data[i]['fields']['ixic']);
     tickersDict.rut[0].push(received_data[i]['fields']['rut']);
-	tickersDict.wheat[0].push(received_data[i]['fields']['wheat']);
+	  tickersDict.wheat[0].push(received_data[i]['fields']['wheat']);
     tickersDict.wti[0].push(received_data[i]['fields']['wti']);
     tickersDict.copper_gold[0].push(received_data[i]['fields']['copper_gold']);
-	tickersDict.gold[0].push(received_data[i]['fields']['gold']);
+	  tickersDict.gold[0].push(received_data[i]['fields']['gold']);
     if (received_data[i]['fields']['vix'] > level) {
       vix2.push(received_data[i]['fields']['vix'])
     } else {vix2.push(0)};
@@ -299,7 +299,7 @@ let createCharts4 = function (offset, level, win, item) {
   tickersDict.vix[0] = [],
   tickersDict.tnx[0] = [],
   tickersDict.gspc[0] = [],
-  //tickersDict.ixic[0] = [],
+  tickersDict.ixic[0] = [],
   tickersDict.rut[0] = [],
   tickersDict.wti[0] = [],
   tickersDict.copper_gold[0] = [],
