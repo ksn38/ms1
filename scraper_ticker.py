@@ -23,22 +23,22 @@ CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 urli = 'https://finance.yahoo.com/markets/world-indices/'
 urlt = 'https://finance.yahoo.com/markets/bonds/'
-regi = '\" data-field=\"regularMarketPrice\" data-trend=\"none\" data-pricehint=\"2\" data-value=\"\d*\.\d*\" active'
-regt = '\" data-field=\"regularMarketPrice\" data-trend=\"none\" data-pricehint=\"4\" data-value=\"\d*\.\d*\" active'
         
-def ticks(url, reg, *args):
+def ticks(url, *args):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'}
+    reg = '\" data-field=\"regularMarketPrice\" data-trend=\"none\" data-pricehint=\"\d\" data-value=\"\d*\.*\d*\" active'
     
     d = dict()
     response = requests.get(url, headers=headers).text
 
     for i in (args):
         x = re.findall(i + reg, response)
+        #print(x)
         if i != '000001.SS':
-            d[str.lower(i)] = float(re.findall('\d+\.\d+', str(x))[0])
+            d[str.lower(i)] = float(re.findall('\d+\.*\d*', str(x))[-1])
         else:
-            d['ss'] = float(re.findall('\d+\.\d+', str(x))[0])
+            d['ss'] = float(re.findall('\d+\.*\d*', str(x))[-1])
 
     return d
 
@@ -69,9 +69,9 @@ tickers = Ticker.objects.filter(Q(date_added = date_today))
 
 if len(tickers) == 0:
     if date.today().weekday() not in {0, 6}:
-        t = ticks(urli, regi, 'GSPC', 'IXIC', 'RUT', 'VIX', 'GDAXI', 'BVSP', '000001.SS', 'BSESN')
+        t = ticks(urli, 'GSPC', 'IXIC', 'RUT', 'VIX', 'GDAXI', 'BVSP', '000001.SS', 'BSESN')
         if Ticker.objects.filter(Q(date_added__gt= date7)).order_by('-date_added')[0].gspc != t['gspc']:
-            t.update(ticks(urlt, regt, 'TNX'))
+            t.update(ticks(urlt, 'TNX'))
             t.update(trec())
             t['wheat_gold'] = t['wheat']/t['gold']
             t['wti_gold'] = t['wti']/t['gold']
@@ -84,3 +84,4 @@ tickers5000_raw = serializers.serialize('json', tickers5000_raw)
 cache.set('tickers5000', tickers5000_raw)
 
 cache.delete('dif_plus0')
+
