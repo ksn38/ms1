@@ -35,8 +35,8 @@ def apivac(expir):
     return vac
     
 def parservac():
-    res = {'Python': 50572, 'C%23': 21456, 'c%2B%2B': 23769, 'Java': 46584, 'Javascript': 15606, 'php': 20895, 'Ruby': 1531,\
-    'Golang': 6061, '1c': 192389, 'Data scientist': 14839, 'Scala': 395, 'iOS': 9085, 'Frontend': 84587, 'DevOps': 15555, 'ABAP': 1221, 'Android': 11953}
+    res = {'Python': 51231, 'C%23': 21704, 'c%2B%2B': 24077, 'Java': 47185, 'Javascript': 15664, 'php': 21113, 'Ruby': 1549,\
+    'Golang': 6253, '1c': 193898, 'Data scientist': 15049, 'Scala': 403, 'iOS': 9152, 'Frontend': 85574, 'DevOps': 15849, 'ABAP': 1231, 'Android': 12033}
 
     return res
     
@@ -88,7 +88,7 @@ t1 = time.time()
 val = """select id, name, val, date_added from mybl_lang ml order by date_added, name"""
 val_noexp = """select id, name, val_noexp, date_added from mybl_lang ml order by date_added, name"""
 res_vac = """select id, name, res_vac, date_added from mybl_lang ml order by date_added, name"""
-pivot_and_set_in_cache(val, 'val', 7)
+pivot_and_set_in_cache(val, 'val', 14)
 pivot_and_set_in_cache(val_noexp, 'val_noexp', 125)
 pivot_and_set_in_cache(res_vac, 'res_vac', 77)
 

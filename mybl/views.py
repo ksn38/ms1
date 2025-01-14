@@ -12,7 +12,7 @@ import re
 from django.core.cache import cache
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
-from .psql_req import chart_langs, langs_today, chart_langs_2021, chart_langs_2022, chart_langs_2023, chart_tickers
+from .psql_req import chart_langs, langs_today, chart_langs_2021, chart_langs_2022, chart_langs_2023, chart_langs_2024, chart_tickers
 
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
@@ -87,6 +87,7 @@ def currencies(request):
 def hh(request):
     langs = Lang.objects.raw(langs_today)
     charts = Lang.objects.raw(chart_langs)
+    charts_2024 = Lang.objects.raw(chart_langs_2024)
     charts_2023 = Lang.objects.raw(chart_langs_2023)
     charts_2022 = Lang.objects.raw(chart_langs_2022)
     charts_2021 = Lang.objects.raw(chart_langs_2021)
@@ -95,7 +96,7 @@ def hh(request):
     graphs_res_vac = cache.get('graphs_res_vac')
     graphs_avg = cache.get('graphs_avg')
         
-    context = {'langs': langs, 'charts': charts, 'charts_2021': charts_2021, 'charts_2022': charts_2022, 'charts_2023': charts_2023, \
+    context = {'langs': langs, 'charts': charts, 'charts_2021': charts_2021, 'charts_2022': charts_2022, 'charts_2023': charts_2023, 'charts_2024': charts_2024, \
                 'graphs_val': graphs_val, 'graphs_avg': graphs_avg, 'graphs_val_noexp': graphs_val_noexp, 'graphs_res_vac': graphs_res_vac}
     
     return render(request, 'mybl/hh.html', context)

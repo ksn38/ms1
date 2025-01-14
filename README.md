@@ -34,3 +34,16 @@ UPDATE mybl_ticker SET id=nextval('mybl_tickers_id_seq');
 sudo apt-get install redis-server  
 pip3 install django-redis  
 sudo redis-server  
+
+
+drop table if exists mean;  
+create table mean (  
+name varchar,  
+aval int,  
+aval_noexp int,  
+ares_vac numeric(9, 2)  
+);
+
+insert into mean  
+select distinct name, avg(val) as aval, avg(val_noexp) as aval_noexp, avg(res_vac) as ares_vac from mybl_lang ml 
+where date_added between '2020-11-20' and '2020-12-31' group by name;
