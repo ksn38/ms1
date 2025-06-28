@@ -10,6 +10,7 @@
     <link rel="shortcut icon" href="{% static 'mybl/favicon.png' %}">
     <script src="{% static 'mybl/jquery-3.5.1.js' %}"></script>
     <script src="{% static 'mybl/Chart.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
     </head>
   <body class='bg-success bg-light'>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -27,7 +28,10 @@
         <a class="nav-link" href="{% url 'about' %}">About</a>
       </div>
     </nav>
-    <div class="container">
+    <div id="loadingOverlay" class='d-flex justify-content-center'>
+      <div id="lottie-container" style="width: 200px; height: 200px;"></div>
+    </div>
+    <div id="content" class="container" style="display: none;">
       <div>
         {% block header %}{% endblock header %}
       </div>
@@ -36,4 +40,24 @@
       </div>
     </div> 
   </body>
+  <script type="text/javascript">
+    var animation = lottie.loadAnimation({
+    container: document.getElementById('lottie-container'), // the dom element that will contain the animation
+    renderer: 'svg', // or 'canvas'
+    loop: true,
+    autoplay: true,
+    path: '{% static "mybl/ball.json" %}' // your Lottie JSON file path
+  });
+    window.addEventListener('load', function() {
+    const loader = document.getElementById('lottie-container');
+    const content = document.getElementById('content');
+    
+    // ????????????? ???????? ??? ???????????? (? ???????? ??????? ???????)
+    setTimeout(() => {
+      loader.style.opacity = '0';
+      loader.style.display = 'none';
+      content.style.display = 'block';
+    }, 0); // ???????? 1000 ?? 0 ??? ????????? ?????????????
+  });
+  </script>
 </html>

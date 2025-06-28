@@ -2,7 +2,7 @@ sudo apt-get install postgresql postgresql-server-dev-all
 sudo -u postgres psql postgres  
 \password postgres  
 
-create user *user* with password *password*;  
+create user *user* with password *'password'*;  
 alter role *user* set client_encoding to 'utf8';  
 alter role *user* set default_transaction_isolation to 'read committed';  
 alter role *user* set timezone to 'UTC';  
@@ -20,10 +20,10 @@ DATABASES = {
 &emsp;}  
 }  
 
-pg_restore -d *database* latest.dump  
 pg_dump *database* > latest.dump
+psql *database* < latest.dump
 
-pip3 install -r requirements.txt  
+pip3 install -r requirements.txt --break-system-packages
 nohup python3 manage.py runserver 0.0.0.0:8000 &  
 
 ALTER SEQUENCE mybl_tickers_id_seq RESTART WITH 1;  
