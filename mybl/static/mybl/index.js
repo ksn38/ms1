@@ -190,6 +190,8 @@ let lineChart = function(x, y, xLabel, yLabel, xColor, yColor, chart, win, item)
       ]
     },
     options: {
+      responsive: false,
+      maintainAspectRatio: false,
       animation: {
         duration: 0
       },
@@ -424,6 +426,8 @@ let createAvgChart = function (offset, level, item, ticker) {
       ]
     },
     options: {
+      responsive: false,
+      maintainAspectRatio: false,
       animation: {
         duration: 0
       },

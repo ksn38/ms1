@@ -173,6 +173,8 @@ let graph = (lang, receivedData, cavas, title) => {
       ]
     },
     options: {
+      responsive: false,
+      maintainAspectRatio: false,
       animation: {
           duration: 0
       },
@@ -275,6 +277,8 @@ let graphAvg = (win) => {
       ]
     },
     options: {
+      responsive: false,
+      maintainAspectRatio: false,
       animation: {
           duration: 0
       },
