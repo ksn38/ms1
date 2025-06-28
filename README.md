@@ -20,10 +20,10 @@ DATABASES = {
 &emsp;}  
 }  
 
-pg_dump *database* > latest.dump
+pg_dump *database* > latest.dump  
 psql *database* < latest.dump
 
-pip3 install -r requirements.txt --break-system-packages
+pip3 install -r requirements.txt --break-system-packages  
 nohup python3 manage.py runserver 0.0.0.0:8000 &  
 
 ALTER SEQUENCE mybl_tickers_id_seq RESTART WITH 1;  
