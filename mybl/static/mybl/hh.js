@@ -122,7 +122,7 @@ let graph = (lang, receivedData, cavas, title) => {
   let cpp = Array.from(receivedData['cpp']);
   let cs = Array.from(receivedData['cs']);
 
-  new Chart(cavas, {
+  return new Chart(cavas, {
     type: 'line',
     data: {
       labels: date,
@@ -346,16 +346,18 @@ let cor = (list1, list2) => {
 let canvasVal = document.getElementById("line-chart-val");
 let canvasValNoExp = document.getElementById("line-chart-val_noexp");
 let canvasResVac = document.getElementById("line-chart-res");
-graph(lang, receivedDataVal, canvasVal, 'Vacancies');
-graph(lang, receivedDataValNoExp, canvasValNoExp, 'Percent vacancies for interns');
-graph(lang, receivedDataResVac, canvasResVac, 'Resumes/vacancies');
+let vac = graph(lang, receivedDataVal, canvasVal, 'Vacancies');
+let interns = graph(lang, receivedDataValNoExp, canvasValNoExp, 'Percent vacancies for interns');
+let resVac = graph(lang, receivedDataResVac, canvasResVac, 'Resumes/vacancies');
 graphAvg(28);
 
 button_lang.onclick = () => {
-  //graph[0].destroy();
-  graph(lang, receivedDataVal, canvasVal, 'Vacancies');
-  graph(lang, receivedDataValNoExp, canvasValNoExp, 'Percent vacancies for interns');
-  graph(lang, receivedDataResVac, canvasResVac, 'Resumes/vacancies');
+  vac.destroy();
+  vac = graph(lang, receivedDataVal, canvasVal, 'Vacancies');
+  interns.destroy();
+  interns = graph(lang, receivedDataValNoExp, canvasValNoExp, 'Percent vacancies for interns');
+  resVac.destroy();
+  resVac = graph(lang, receivedDataResVac, canvasResVac, 'Resumes/vacancies');
 }
 
 //bg-secondary for nonlang

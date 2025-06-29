@@ -480,7 +480,7 @@ for(let i = 0; i < radio.length; i++){
     mainChart[0].destroy();
     mainChart = createMainChart(offset, level, win, item); 
     charts4[0].map((chart) => chart.destroy());
-    charts = createCharts4(offset, level, win, item); 
+    charts4 = createCharts4(offset, level, win, item); 
     chartAvg2[0].destroy();
     chartAvg2 = createAvgChart(offset, level, item, dataAvg.value);     
     periodInput.value = item;
@@ -493,7 +493,7 @@ for(let i = 0; i < radWin.length; i++){
     mainChart[0].destroy();
     mainChart = createMainChart(offset, level, win, item); 
     charts4[0].map((chart) => chart.destroy());
-    charts = createCharts4(offset, level, win, item); 
+    charts4 = createCharts4(offset, level, win, item); 
     correlationInput.value = win;
   });
 }
@@ -503,7 +503,7 @@ correlationInput.onchange = function () {
   mainChart[0].destroy();
   mainChart = createMainChart(offset, level, win, item); 
   charts4[0].map((chart) => chart.destroy());
-  charts = createCharts4(offset, level, win, item); 
+  charts4 = createCharts4(offset, level, win, item); 
 }
 
 offsetInput.onchange = function () {
@@ -511,7 +511,7 @@ offsetInput.onchange = function () {
   mainChart[0].destroy();
   mainChart = createMainChart(offset, level, win, item); 
   charts4[0].map((chart) => chart.destroy());
-  charts = createCharts4(offset, level, win, item); 
+  charts4 = createCharts4(offset, level, win, item); 
   chartAvg2[0].destroy();
   chartAvg2 = createAvgChart(offset, level, item, dataAvg.value); 
 }
@@ -521,7 +521,7 @@ levelVix.onchange = function () {
   mainChart[0].destroy();
   mainChart = createMainChart(offset, level, win, item); 
   charts4[0].map((chart) => chart.destroy());
-  charts = createCharts4(offset, level, win, item); 
+  charts4 = createCharts4(offset, level, win, item); 
   chartAvg2[0].destroy();
   chartAvg2 = createAvgChart(offset, level, item, dataAvg.value); 
 }
@@ -540,7 +540,7 @@ periodInput.onchange = () => {
   mainChart[0].destroy();
   mainChart = createMainChart(offset, level, win, item); 
   charts4[0].map((chart) => chart.destroy());
-  charts = createCharts4(offset, level, win, item); 
+  charts4 = createCharts4(offset, level, win, item); 
   chartAvg2[0].destroy();
   chartAvg2 = createAvgChart(offset, level, item, dataAvg.value);
 }
@@ -549,7 +549,7 @@ button0.onclick = () => {
   mainChart[0].destroy();
   mainChart = createMainChart(offset, level, win, item); 
   charts4[0].map((chart) => chart.destroy());
-  charts = createCharts4(offset, level, win, item); 
+  charts4 = createCharts4(offset, level, win, item); 
 }
 
 
