@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анализ языков программирования - Временные ряды</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-bottom: 50px;
+        }
+        .chart-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            height: 400px;
+        }
+        .chart-wrapper-sm {
+            position: relative;
+            width: 100%;
+            height: 300px;
+        }
+        .chart-title {
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            border-radius: 0 0 10px 10px;
+        }
+        .control-panel {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .select2-container {
+            width: 100% !important;
+        }
+        .legend-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            padding: 5px 10px;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .legend-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+        }
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            margin-right: 8px;
+            display: inline-block;
+        }
+        .chart-controls {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        .chart-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .smoothing-controls {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        .range-value {
+            min-width: 40px;
+            text-align: center;
+            font-weight: bold;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Заголовок -->
+        <div class="header text-center">
+            <div class="container">
+                <h1>📈 Анализ языков программирования</h1>
+                <p class="lead">Временные ряды для 5 выбираемых языков</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Панель управления -->
+            <div class="control-panel">
+                <h4>⚙️ Панель управления</h4>
+                <div class="row align-items-end">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Выберите языки (максимум 5):</label>
+                        <select id="languageSelect" class="form-select" multiple="multiple" style="width: 100%">
+                            <!-- Языки загрузятся через JavaScript -->
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Метрика для отображения:</label>
+                        <select id="metricSelect" class="form-select">
+                            <option value="val">Вакансии</option>
+                            <option value="val_noexp">Вакансии без опыта (%)</option>
+                            <option value="res_vac">Резюме/Вакансии</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button onclick="loadData()" class="btn btn-primary w-100">Обновить график</button>
+                    </div>
+                </div>
+                
+                <!-- Настройки сглаживания -->
+                <div class="smoothing-controls">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="smoothLines" checked>
+                                <label class="form-check-label fw-bold" for="smoothLines">
+                                    Включить сглаживание линий
+                                </label>
+                            </div>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="showTrendLine">
+                                <label class="form-check-label fw-bold" for="showTrendLine">
+                                    Показать линию тренда
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Уровень сглаживания:</label>
+                            <div class="d-flex align-items-center">
+                                <span class="me-2 text-muted">Мин</span>
+                                <input type="range" class="form-range flex-grow-1" id="smoothingSlider" 
+                                       min="0" max="1" step="0.05" value="0.4">
+                                <span class="ms-2 text-muted">Макс</span>
+                                <span class="ms-3 range-value" id="smoothingValue">0.40</span>
+                            </div>
+                            <div class="form-text small">Регулируйте для изменения степени плавности линий</div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Метод сглаживания:</label>
+                            <select id="smoothingMethod" class="form-select">
+                                <option value="moving_average">Скользящее среднее</option>
+                                <option value="exponential">Экспоненциальное</option>
+                                <option value="double_exponential">Двойное экспоненциальное</option>
+                                <option value="adaptive">Адаптивное</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check form-switch mt-4">
+                                <input class="form-check-input" type="checkbox" id="autoSmooth">
+                                <label class="form-check-label" for="autoSmooth">
+                                    Автоматическое сглаживание
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Статистика -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="stat-card text-center">
+                        <div class="stat-value" id="totalLanguages">0</div>
+                        <div class="stat-label">Языков в базе</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card text-center">
+                        <div class="stat-value" id="totalRecords">0</div>
+                        <div class="stat-label">Записей всего</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card text-center">
+                        <div class="stat-value" id="dateRange">0</div>
+                        <div class="stat-label">Дней данных</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card text-center">
+                        <div class="stat-value" id="selectedCount">0</div>
+                        <div class="stat-label">Выбрано языков</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Основной график временных рядов -->
+            <div class="chart-container">
+                <div class="chart-toolbar">
+                    <h4 class="chart-title mb-0" id="mainChartTitle">Временные ряды языков программирования</h4>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="toggleFullscreen()">
+                            <i class="bi bi-arrows-fullscreen"></i> Полный экран
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="downloadChart()">
+                            <i class="bi bi-download"></i> Экспорт
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="resetZoom()">
+                            <i class="bi bi-zoom-out"></i> Сброс масштаба
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="legend-container" id="chartLegend">
+                    <!-- Легенда будет добавлена через JS -->
+                </div>
+                
+                <div class="chart-wrapper">
+                    <canvas id="mainChart"></canvas>
+                </div>
+                
+                <div class="mt-3 text-center">
+                    <small class="text-muted">Используйте колесико мыши для масштабирования, перетаскивание для перемещения</small>
+                </div>
+            </div>
+
+            <!-- Дополнительные графики -->
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="chart-container">
+                        <h4 class="chart-title">📊 Сравнение последних значений</h4>
+                        <div class="chart-wrapper-sm">
+                            <canvas id="comparisonChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="chart-container">
+                        <h4 class="chart-title">📈 Изменение за период (%)</h4>
+                        <div class="chart-wrapper-sm">
+                            <canvas id="changeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Таблица с данными -->
+            <div class="chart-container">
+                <h4 class="chart-title">📋 Текущие значения выбранных языков</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Язык</th>
+                                <th>Вакансии</th>
+                                <th>Вакансии без опыта (%)</th>
+                                <th>Резюме/Вакансии</th>
+                                <th>Последняя дата</th>
+                                <th>Изменение за период</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTableBody">
+                            <!-- Данные загрузятся через JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Скрипты -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    
+    <script>
+        // Глобальные переменные
+        let mainChart = null;
+        let comparisonChart = null;
+        let changeChart = null;
+        let allLanguages = [];
+        let selectedLanguages = ['Python', 'Java', 'Javascript', 'php', 'Ruby'];
+        let currentMetric = 'val';
+        let chartData = null;
+        let smoothingFactor = 0.4;
+        let showTrendLine = false;
+
+        // Цветовая палитра для языков
+        const languageColors = {
+            'Python': '#306998',
+            'Java': '#ED8B00',
+            'Javascript': '#F0DB4F',
+            'php': '#8892BF',
+            'Ruby': '#CC342D',
+            '1c': '#134A9B',
+            'Data scientist': '#4B9CD3',
+            'Scala': '#DC3220',
+            'Swift': '#F05138'
+        };
+
+        // Функция для получения цвета языка
+        function getLanguageColor(language) {
+            return languageColors[language] || generateColor(language);
+        }
+
+        // Генерация цвета на основе названия языка
+        function generateColor(language) {
+            let hash = 0;
+            for (let i = 0; i < language.length; i++) {
+                hash = language.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const hue = hash % 360;
+            return `hsl(${hue}, 70%, 50%)`;
+        }
+
+        // Преобразование hex в rgba
+        function hexToRgba(hex, alpha) {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+
+        // Инициализация при загрузке страницы
+        $(document).ready(function() {
+            initSelect2();
+            loadLanguagesList();
+            loadStatistics();
+            loadData();
+            
+            // Инициализация слайдера
+            $('#smoothingSlider').on('input', function() {
+                smoothingFactor = parseFloat($(this).val());
+                $('#smoothingValue').text(smoothingFactor.toFixed(2));
+                if ($('#smoothLines').is(':checked') && selectedLanguages.length > 0) {
+                    updateMainChart();
+                }
+            });
+            
+            // Обработка изменения размера окна
+            window.addEventListener('resize', function() {
+                if (mainChart) mainChart.resize();
+                if (comparisonChart) comparisonChart.resize();
+                if (changeChart) changeChart.resize();
+            });
+            
+            // Обработчики для чекбоксов
+            $('#smoothLines, #showTrendLine, #autoSmooth').change(function() {
+                if (selectedLanguages.length > 0) {
+                    updateMainChart();
+                }
+            });
+            
+            $('#metricSelect, #smoothingMethod').change(function() {
+                if (selectedLanguages.length > 0) {
+                    loadData();
+                }
+            });
+        });
+
+        // Инициализация Select2 для выбора языков
+        function initSelect2() {
+            $('#languageSelect').select2({
+                placeholder: "Выберите языки...",
+                maximumSelectionLength: 5,
+                allowClear: true,
+                width: '100%',
+                dropdownParent: $('body')
+            }).on('change', function() {
+                selectedLanguages = $(this).val() || [];
+                updateSelectedCount();
+                
+                if (selectedLanguages.length > 0 && selectedLanguages.length <= 5) {
+                    setTimeout(loadData, 300);
+                }
+            });
+        }
+
+        // Загрузка списка языков
+        async function loadLanguagesList() {
+            try {
+                const response = await fetch('/api/languages');
+                const data = await response.json();
+                allLanguages = data.languages;
+                
+                const $select = $('#languageSelect');
+                $select.empty();
+                allLanguages.forEach(lang => {
+                    const selected = selectedLanguages.includes(lang) ? 'selected' : '';
+                    $select.append(`<option value="${lang}" ${selected}>${lang}</option>`);
+                });
+                
+                $select.trigger('change');
+                updateSelectedCount();
+                
+            } catch (error) {
+                console.error('Ошибка загрузки языков:', error);
+            }
+        }
+
+        // Загрузка статистики
+        async function loadStatistics() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+                
+                $('#totalLanguages').text(data.overall_stats.total_languages);
+                $('#totalRecords').text(data.overall_stats.total_records);
+                
+                const firstDate = new Date(data.overall_stats.first_date);
+                const lastDate = new Date(data.overall_stats.last_date);
+                const daysDiff = Math.ceil((lastDate - firstDate) / (1000 * 60 * 60 * 24)) + 1;
+                $('#dateRange').text(daysDiff);
+                
+            } catch (error) {
+                console.error('Ошибка загрузки статистики:', error);
+            }
+        }
+
+        // Обновление счетчика выбранных языков
+        function updateSelectedCount() {
+            $('#selectedCount').text(selectedLanguages.length);
+        }
+
+        // Основная функция загрузки данных
+        async function loadData() {
+            if (selectedLanguages.length === 0) {
+                return;
+            }
+            
+            if (selectedLanguages.length > 5) {
+                alert('Можно выбрать максимум 5 языков');
+                return;
+            }
+            
+            currentMetric = $('#metricSelect').val();
+            
+            try {
+                const params = selectedLanguages.map(lang => `languages[]=${encodeURIComponent(lang)}`).join('&');
+                const url = `/api/timeseries?${params}`;
+                
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                chartData = await response.json();
+                
+                updateMainChart();
+                updateComparisonChart();
+                updateChangeChart();
+                updateDataTable();
+                
+            } catch (error) {
+                console.error('Ошибка загрузки данных:', error);
+            }
+        }
+
+        // Функции сглаживания данных
+        class DataSmoother {
+            static movingAverage(data, windowSize = 3) {
+                if (!data || data.length === 0) return data;
+                
+                const result = [];
+                for (let i = 0; i < data.length; i++) {
+                    const start = Math.max(0, i - Math.floor(windowSize / 2));
+                    const end = Math.min(data.length, i + Math.floor(windowSize / 2) + 1);
+                    const window = data.slice(start, end).filter(v => v !== null);
+                    
+                    result.push(window.length > 0 ? window.reduce((a, b) => a + b, 0) / window.length : data[i]);
+                }
+                return result;
+            }
+            
+            static exponentialSmoothing(data, alpha = 0.3) {
+                if (!data || data.length === 0) return data;
+                
+                const result = [data[0] || 0];
+                for (let i = 1; i < data.length; i++) {
+                    const prev = result[i - 1];
+                    const current = data[i] !== null ? data[i] : prev;
+                    result.push(alpha * current + (1 - alpha) * prev);
+                }
+                return result;
+            }
+        }
+
+        // Функция для расчета линии тренда
+        function calculateTrendLine(data) {
+            const validData = data.map((val, idx) => val !== null ? {x: idx, y: val} : null)
+                                 .filter(item => item !== null);
+            
+            if (validData.length < 2) return data;
+            
+            const n = validData.length;
+            const sumX = validData.reduce((a, b) => a + b.x, 0);
+            const sumY = validData.reduce((a, b) => a + b.y, 0);
+            const sumXY = validData.reduce((a, b) => a + b.x * b.y, 0);
+            const sumX2 = validData.reduce((a, b) => a + b.x * b.x, 0);
+            
+            const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+            const intercept = (sumY - slope * sumX) / n;
+            
+            return data.map((val, idx) => {
+                if (val === null) return null;
+                return slope * idx + intercept;
+            });
+        }
+
+        // Обновление основного графика
+        function updateMainChart() {
+            const ctx = document.getElementById('mainChart').getContext('2d');
+            
+            if (mainChart) {
+                mainChart.destroy();
+            }
+            
+            const useSmoothing = $('#smoothLines').is(':checked');
+            const showTrend = $('#showTrendLine').is(':checked');
+            const smoothingMethod = $('#smoothingMethod').val();
+            
+            // Подготавливаем данные для Chart.js
+            const datasets = selectedLanguages.map((language) => {
+                const rawData = chartData.data[language][currentMetric];
+                const color = getLanguageColor(language);
+                
+                // Применяем сглаживание если включено
+                let displayData = [...rawData];
+                if (useSmoothing) {
+                    const windowSize = Math.max(3, Math.floor(smoothingFactor * 10));
+                    switch(smoothingMethod) {
+                        case 'moving_average':
+                            displayData = DataSmoother.movingAverage(rawData, windowSize);
+                            break;
+                        case 'exponential':
+                            displayData = DataSmoother.exponentialSmoothing(rawData, smoothingFactor);
+                            break;
+                        case 'double_exponential':
+                            displayData = DataSmoother.exponentialSmoothing(
+                                DataSmoother.exponentialSmoothing(rawData, smoothingFactor), 
+                                smoothingFactor
+                            );
+                            break;
+                        case 'adaptive':
+                            // Простое адаптивное сглаживание
+                            const volatility = rawData.filter(v => v !== null).reduce((sum, val, idx, arr) => {
+                                if (idx === 0) return 0;
+                                return sum + Math.abs(val - arr[idx - 1]);
+                            }, 0) / rawData.length;
+                            const adaptiveAlpha = Math.max(0.1, Math.min(0.9, 1 - volatility));
+                            displayData = DataSmoother.exponentialSmoothing(rawData, adaptiveAlpha);
+                            break;
+                    }
+                }
+                
+                // Линия тренда (если включена)
+                let trendLineData = null;
+                if (showTrend) {
+                    trendLineData = calculateTrendLine(rawData);
+                }
+                
+                // Основная линия (сглаженная или нет)
+                const dataset = {
+                    label: language,
+                    data: displayData.map((value, idx) => ({
+                        x: chartData.dates[idx],
+                        y: value
+                    })),
+                    borderColor: color,
+                    backgroundColor: hexToRgba(color, 0.1),
+                    borderWidth: useSmoothing ? 4 : 3,
+                    fill: false,
+                    pointRadius: 0, // Точки всегда скрыты
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: color,
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    tension: useSmoothing ? Math.min(0.8, smoothingFactor * 1.5) : 0,
+                    cubicInterpolationMode: useSmoothing ? 'monotone' : 'default',
+                    spanGaps: true
+                };
+                
+                // Если включена линия тренда, добавляем ее
+                if (showTrend && trendLineData) {
+                    return [
+                        dataset,
+                        {
+                            label: `${language} (тренд)`,
+                            data: trendLineData.map((value, idx) => ({
+                                x: chartData.dates[idx],
+                                y: value
+                            })),
+                            borderColor: hexToRgba(color, 0.5),
+                            backgroundColor: 'transparent',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            fill: false,
+                            pointRadius: 0,
+                            tension: 0
+                        }
+                    ];
+                }
+                
+                return [dataset];
+            }).flat();
+            
+            // Обновляем заголовок
+            const metricNames = {
+                'val': 'Вакансии',
+                'val_noexp': 'Вакансии без опыта (%)',
+                'res_vac': 'Резюме/Вакансии'
+            };
+            
+            let title = `Временные ряды: ${metricNames[currentMetric]}`;
+            if (useSmoothing) {
+                title += ` (сглажено: ${smoothingMethod}, уровень: ${smoothingFactor.toFixed(2)})`;
+            }
+            if (showTrend) {
+                title += ' + тренд';
+            }
+            
+            $('#mainChartTitle').text(title);
+            
+            // Создаем новый график
+            mainChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: {
+                        duration: 800,
+                        easing: 'easeOutQuart'
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day',
+                                tooltipFormat: 'dd MMM yyyy',
+                                displayFormats: {
+                                    day: 'dd MMM'
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Дата',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
+                            },
+                            grid: {
+                                drawBorder: true,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: metricNames[currentMetric],
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
+                            },
+                            grid: {
+                                drawBorder: false,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
+                            borderWidth: 1,
+                            padding: 12,
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.parsed.y.toLocaleString()}`;
+                                }
+                            }
+                        },
+                        zoom: {
+                            zoom: {
+                                wheel: {
+                                    enabled: true,
+                                    speed: 0.1
+                                },
+                                pinch: {
+                                    enabled: true
+                                },
+                                mode: 'xy'
+                            },
+                            pan: {
+                                enabled: true,
+                                mode: 'xy'
+                            }
+                        }
+                    },
+                    elements: {
+                        line: {
+                            tension: useSmoothing ? Math.min(0.8, smoothingFactor * 1.5) : 0
+                        },
+                        point: {
+                            hitRadius: 10,
+                            hoverRadius: 6
+                        }
+                    }
+                }
+            });
+            
+            updateChartLegend();
+        }
+
+        // Обновление легенды
+        function updateChartLegend() {
+            const legendContainer = $('#chartLegend');
+            legendContainer.empty();
+            
+            selectedLanguages.forEach(language => {
+                const color = getLanguageColor(language);
+                legendContainer.append(`
+                    <div class="legend-item" onclick="toggleLanguageVisibility('${language}')">
+                        <span class="legend-color" style="background-color: ${color}"></span>
+                        <span class="legend-text">${language}</span>
+                        <span class="ms-2 text-muted" style="font-size: 0.8rem;">
+                            <i class="bi bi-eye"></i>
+                        </span>
+                    </div>
+                `);
+            });
+        }
+
+        // Переключение видимости языка
+        function toggleLanguageVisibility(language) {
+            if (mainChart) {
+                const meta = mainChart.getDatasetMeta(selectedLanguages.indexOf(language));
+                meta.hidden = meta.hidden === null ? !mainChart.data.datasets[meta.index].hidden : null;
+                mainChart.update();
+            }
+        }
+
+        // Переключение полноэкранного режима
+        function toggleFullscreen() {
+            const chartContainer = document.querySelector('.chart-container');
+            if (!document.fullscreenElement) {
+                chartContainer.requestFullscreen().catch(err => {
+                    console.error(`Ошибка полноэкранного режима: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Сброс масштаба графика
+        function resetZoom() {
+            if (mainChart) {
+                mainChart.resetZoom();
+            }
+        }
+
+        // Экспорт графика
+        function downloadChart() {
+            if (mainChart) {
+                const link = document.createElement('a');
+                link.download = `chart-${new Date().toISOString().slice(0, 10)}.png`;
+                link.href = mainChart.toBase64Image();
+                link.click();
+            }
+        }
+
+        // Обновление графика сравнения
+        function updateComparisonChart() {
+            const ctx = document.getElementById('comparisonChart').getContext('2d');
+            
+            if (comparisonChart) {
+                comparisonChart.destroy();
+            }
+            
+            const labels = selectedLanguages;
+            const lastValues = labels.map(lang => {
+                const data = chartData.data[lang][currentMetric];
+                const lastValidValue = data.filter(v => v !== null).pop();
+                return lastValidValue || 0;
+            });
+            
+            comparisonChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Последнее значение',
+                        data: lastValues,
+                        backgroundColor: labels.map(lang => getLanguageColor(lang)),
+                        borderColor: labels.map(lang => getLanguageColor(lang)),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Обновление графика изменений
+        function updateChangeChart() {
+            const ctx = document.getElementById('changeChart').getContext('2d');
+            
+            if (changeChart) {
+                changeChart.destroy();
+            }
+            
+            const labels = selectedLanguages;
+            const changes = labels.map(lang => {
+                const data = chartData.data[lang][currentMetric].filter(val => val !== null);
+                if (data.length < 2) return 0;
+                const first = data[0];
+                const last = data[data.length - 1];
+                return ((last - first) / first * 100);
+            });
+            
+            changeChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Изменение (%)',
+                        data: changes.map(c => c.toFixed(1)),
+                        backgroundColor: changes.map(c => c >= 0 ? 'rgba(75, 192, 192, 0.7)' : 'rgba(255, 99, 132, 0.7)'),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Изменение (%)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Обновление таблицы с данными
+        function updateDataTable() {
+            const tbody = $('#dataTableBody');
+            tbody.empty();
+            
+            selectedLanguages.forEach(language => {
+                const data = chartData.data[language];
+                const lastIdx = data[currentMetric].length - 1;
+                
+                let firstIdx = 0;
+                while (firstIdx < data[currentMetric].length && data[currentMetric][firstIdx] === null) {
+                    firstIdx++;
+                }
+                
+                const lastVal = data.val[lastIdx] || 0;
+                const lastNoExp = data.val_noexp[lastIdx] || 0;
+                const lastResVac = data.res_vac[lastIdx] || 0;
+                const firstVal = data[currentMetric][firstIdx] || 0;
+                const change = firstVal ? ((lastVal - firstVal) / firstVal * 100) : 0;
+                
+                tbody.append(`
+                    <tr>
+                        <td>
+                            <span class="legend-color" style="background-color: ${getLanguageColor(language)}; display: inline-block; width: 12px; height: 12px; margin-right: 8px;"></span>
+                            <strong>${language}</strong>
+                        </td>
+                        <td>${lastVal.toLocaleString()}</td>
+                        <td>${lastNoExp.toLocaleString()}</td>
+                        <td>${lastResVac.toLocaleString()}</td>
+                        <td>${chartData.dates[lastIdx]}</td>
+                        <td class="${change >= 0 ? 'text-success' : 'text-danger'} fw-bold">
+                            ${change >= 0 ? '+' : ''}${change.toFixed(1)}%
+                        </td>
+                    </tr>
+                `);
+            });
+        }
+    </script>
+</body>
+</html>
