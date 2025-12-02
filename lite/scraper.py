@@ -6,6 +6,8 @@ import json
 import time
 import pandas as pd
 import json
+from datetime import datetime
+from datetime import timedelta
 
 
 con = sqlite3.connect("djdb.db")
@@ -33,7 +35,7 @@ def parservac():
 date_today = date.today().strftime("%Y-%m-%d")
 data = []
 
-def get_and_write():
+def get_hh():
     noexp = 'experience=noExperience&'
     vacs = apivac('')
     vacs_noexp = apivac(noexp)
@@ -48,15 +50,29 @@ def get_and_write():
             k = 'cpp'
         if k == 'C%23':
             k = 'cs'
-        '''new_values = {'name': k,
-         'val': v, 'val_noexp': vne, 'res_vac': rv}
-        obj = Lang(**new_values)
-        obj.save()'''
         data.append((k, v, vne, rv, date_today))
 
-    print(data)
-    cur.executemany("INSERT INTO lang (id, name, val, val_noexp, res_vac, date_added) VALUES(NULL, ?, ?, ?, ?, ?)", data)
-    con.commit()
+    return data
 
-get_and_write()
+#get_and_write()
+
+last_date = cur.execute("SELECT date_added FROM lang order by id desc limit 1").fetchone()[0]
+
+# Преобразование строк в даты
+date_today = datetime.strptime(date_today, "%Y-%m-%d")
+last_date = datetime.strptime(last_date, "%Y-%m-%d")
+
+data = get_hh()
+
+dif = (date_today - last_date).days
+data_prev = []
+
+while dif != 0:
+    dif -= 1
+    for i in data:
+        data_prev.append((i[0], i[1], i[2], i[3], (i[4] - timedelta(dif)).strftime("%Y-%m-%d")))
+    cur.executemany("INSERT INTO lang (id, name, val, val_noexp, res_vac, date_added) VALUES(NULL, ?, ?, ?, ?, ?)", data_prev)
+    data_prev = []
+
+con.commit()
 
