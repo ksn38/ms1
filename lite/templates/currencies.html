@@ -1,0 +1,148 @@
+{% extends "mybl/base.html" %}
+{% block content %}
+<body>
+  <div class='d-flex justify-content-around flex-wrap align-items-start'>
+    <div class='flex-column justify-content-center'>
+      <small class='d-flex justify-content-around mt-2 text-secondary'>Changes currencies relative to the ruble for periods:</small> 
+      <span class="d-flex flex-nowrap mb-2">    
+        <form class='d-flex justify-content-center' action="#" method="get" class='ml-auto'>        
+          <input class='mr-1' type="number" name="mytextbox3" size='3' min='1' max='11000' id='mytextbox3'>
+          <input class='mr-1' type="number" name="mytextbox2" size='3' min='1' max='11000' id='mytextbox2'>
+          <input class='mr-1' type="number" name="mytextbox1" size='3' min='1' max='11000' id='mytextbox1'>
+          <input class='mr-1' type="number" name="mytextbox0" size='3' min='1' max='11000' id='mytextbox0'>
+          <input type="submit" value="days ago" name="mybtn" id='mybtn'>
+        </form>
+      </span>
+      <div class='d-flex flex-nowrap'>
+        <div  class='flex-column'>
+          <div>({{ date_delta3 }})</div>
+          <table class='table table-sm table-bordered table-dark' style='height: 0px'>
+            {% for name, value in dif_plus3 %}
+              <tr>
+                <td class='currency-plus text-secondary'>
+                  {{ name }}
+                </td>
+                <td class='value-plus3 text-dark'>
+                  {{ value }}
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <div  class='flex-column'>
+          <div>({{ date_delta2 }})</div>
+          <table class='table table-sm table-bordered table-dark' style='height: 0px'>
+            {% for name, value in dif_plus2 %}
+              <tr>
+                <td class='currency-plus text-secondary'>
+                  {{ name }}
+                </td>
+                <td class='value-plus2 text-dark'>
+                  {{ value }}
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <div  class='flex-column'>
+          <div>({{ date_delta1 }})</div>
+          <table class='table table-sm table-bordered table-dark' style='height: 0px'>
+            {% for name, value in dif_plus1 %}
+              <tr>
+                <td class='currency-plus text-secondary'>
+                  {{ name }}
+                </td>
+                <td class='value-plus1 text-dark'>
+                  {{ value }}
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <div class='mb-3'>
+          <div class='flex-column justify-content-around'>
+            <div>({{ date_delta0 }})</div>
+          </div>
+          <div class='flex-column'>
+            <table class='table table-sm table-bordered table-dark' style='height: 0px'>
+              {% for name, value in dif_plus0 %}
+                <tr>
+                  <td class='currency-plus text-secondary'>
+                    {{ name }}
+                  </td>
+                  <td class='value-plus text-dark'>
+                    {{ value }}
+                  </td>
+                </tr>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <table class='table table-sm table-dark table-bordered w-auto' id='moex'>
+      <caption style='caption-side: top'>
+        <span class='d-flex justify-content-start'>
+          <small>Stocks moex. Number of</small>
+        </span>
+        <input type='number' id='days' value='2' size='3' min='2' max='3000'>
+        <input type='submit' class='button' id='stocks' value=' days ago'></input>
+        <span>20</span>
+        <input type="radio" name='lenRows' checked="checked" onchange="deleteRow()"/>
+        <span>75</span>
+		  <input type="radio" name='lenRows' onchange="insRow()"/>
+      <div class='date-dict2 text-dark'></div>
+      </caption>
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      <!-- Добавлены строки для таблицы -->
+      {% for i in range(1, 20) %}
+      <tr>
+        <td class='name-high'>-</td>
+        <td class='change-high'>-</td>
+        <td class='name-low'>-</td>
+        <td class='change-low'>-</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  
+  <script>
+    // Переменные передаются напрямую из Flask
+    let delta0 = {{ delta0|default(7)|tojson }};
+    let delta1 = {{ delta1|default(365)|tojson }};
+    let delta2 = {{ delta2|default(1460)|tojson }};
+    let delta3 = {{ delta3|default(4018)|tojson }};
+    
+    // Функции для работы с таблицей акций
+    function deleteRow() {
+      let moexTable = document.getElementById('moex');
+      let minValRows = 21;
+      while (moexTable.rows.length > minValRows) {
+        moexTable.deleteRow(-1);
+      }
+    }
+    
+    function insRow() {
+      let moexTable = document.getElementById('moex');
+      let maxValRows = 76;
+      let i = 0;
+      while (i < maxValRows) {
+        let newRow = moexTable.rows[19].cloneNode(true);
+        moexTable.appendChild(newRow);
+        i += 1;
+      }
+      if (document.getElementById('stocks')) {
+        document.getElementById('stocks').click();
+      }
+    }
+  </script>
+  
+  <script src="{{ url_for('static', filename='mybl/currencies.js') }}"></script>
+</body>
+{% endblock %}

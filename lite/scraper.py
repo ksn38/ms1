@@ -54,8 +54,6 @@ def get_hh():
 
     return data
 
-#get_and_write()
-
 last_date = cur.execute("SELECT date_added FROM lang order by id desc limit 1").fetchone()[0]
 
 # Преобразование строк в даты

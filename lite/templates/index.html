@@ -17,7 +17,7 @@
             background: white;
             border-radius: 10px;
             padding: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: relative;
         }
@@ -36,18 +36,11 @@
             margin-bottom: 20px;
             font-weight: 600;
         }
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px 0;
-            margin-bottom: 30px;
-            border-radius: 0 0 10px 10px;
-        }
         .control-panel {
             background: white;
-            padding: 25px;
+            padding: 20px;
             border-radius: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         .stat-card {
@@ -127,18 +120,39 @@
 </head>
 <body>
     <div class="container-fluid">
-        <!-- Заголовок -->
-        <div class="header text-center">
-            <div class="container">
-                <h1>📈 Анализ языков программирования</h1>
-                <p class="lead">Временные ряды для 5 выбираемых языков</p>
-            </div>
-        </div>
-
         <div class="container">
+            <!-- Основной график временных рядов -->
+            <div class="chart-container">
+                <div class="chart-toolbar">
+                    <h4 class="chart-title mb-0" id="mainChartTitle">Временные ряды языков программирования</h4>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="toggleFullscreen()">
+                            <i class="bi bi-arrows-fullscreen"></i> Полный экран
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="downloadChart()">
+                            <i class="bi bi-download"></i> Экспорт
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="resetZoom()">
+                            <i class="bi bi-zoom-out"></i> Сброс масштаба
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="legend-container" id="chartLegend">
+                    <!-- Легенда будет добавлена через JS -->
+                </div>
+                
+                <div class="chart-wrapper">
+                    <canvas id="mainChart"></canvas>
+                </div>
+                
+                <div class="mt-3 text-center">
+                    <small class="text-muted">Используйте колесико мыши для масштабирования, перетаскивание для перемещения</small>
+                </div>
+            </div>
             <!-- Панель управления -->
             <div class="control-panel">
-                <h4>⚙️ Панель управления</h4>
+                <a href="/currencies">currencies</a>
                 <div class="row align-items-end">
                     <div class="col-md-6">
                         <label class="form-label fw-bold">Выберите языки (максимум 5):</label>
@@ -181,9 +195,9 @@
                             <div class="d-flex align-items-center">
                                 <span class="me-2 text-muted">Мин</span>
                                 <input type="range" class="form-range flex-grow-1" id="smoothingSlider" 
-                                       min="0" max="1" step="0.05" value="0.4">
+                                       min="0" max="10" step="0.5" value="4">
                                 <span class="ms-2 text-muted">Макс</span>
-                                <span class="ms-3 range-value" id="smoothingValue">0.40</span>
+                                <span class="ms-3 range-value" id="smoothingValue">4</span>
                             </div>
                             <div class="form-text small">Регулируйте для изменения степени плавности линий</div>
                         </div>
@@ -208,64 +222,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Статистика -->
-            <div class="row mb-4">
-                <div class="col-md-3">
-                    <div class="stat-card text-center">
-                        <div class="stat-value" id="totalLanguages">0</div>
-                        <div class="stat-label">Языков в базе</div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stat-card text-center">
-                        <div class="stat-value" id="totalRecords">0</div>
-                        <div class="stat-label">Записей всего</div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stat-card text-center">
-                        <div class="stat-value" id="dateRange">0</div>
-                        <div class="stat-label">Дней данных</div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stat-card text-center">
-                        <div class="stat-value" id="selectedCount">0</div>
-                        <div class="stat-label">Выбрано языков</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Основной график временных рядов -->
-            <div class="chart-container">
-                <div class="chart-toolbar">
-                    <h4 class="chart-title mb-0" id="mainChartTitle">Временные ряды языков программирования</h4>
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="toggleFullscreen()">
-                            <i class="bi bi-arrows-fullscreen"></i> Полный экран
-                        </button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="downloadChart()">
-                            <i class="bi bi-download"></i> Экспорт
-                        </button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="resetZoom()">
-                            <i class="bi bi-zoom-out"></i> Сброс масштаба
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="legend-container" id="chartLegend">
-                    <!-- Легенда будет добавлена через JS -->
-                </div>
-                
-                <div class="chart-wrapper">
-                    <canvas id="mainChart"></canvas>
-                </div>
-                
-                <div class="mt-3 text-center">
-                    <small class="text-muted">Используйте колесико мыши для масштабирования, перетаскивание для перемещения</small>
                 </div>
             </div>
 
@@ -328,10 +284,10 @@
         let comparisonChart = null;
         let changeChart = null;
         let allLanguages = [];
-        let selectedLanguages = ['Python', 'Java', 'Javascript', 'php', 'Ruby'];
+        let selectedLanguages = ['Python', 'Java', 'cpp', 'php', 'Frontend'];
         let currentMetric = 'val';
         let chartData = null;
-        let smoothingFactor = 0.4;
+        let smoothingFactor = 4;
         let showTrendLine = false;
 
         // Цветовая палитра для языков
@@ -344,7 +300,7 @@
             '1c': '#134A9B',
             'Data scientist': '#4B9CD3',
             'Scala': '#DC3220',
-            'Swift': '#F05138'
+            'Frontend': '#F05138'
         };
 
         // Функция для получения цвета языка
@@ -380,7 +336,7 @@
             // Инициализация слайдера
             $('#smoothingSlider').on('input', function() {
                 smoothingFactor = parseFloat($(this).val());
-                $('#smoothingValue').text(smoothingFactor.toFixed(2));
+                $('#smoothingValue').text(smoothingFactor.toFixed(1));
                 if ($('#smoothLines').is(':checked') && selectedLanguages.length > 0) {
                     updateMainChart();
                 }
@@ -660,7 +616,7 @@
             
             let title = `Временные ряды: ${metricNames[currentMetric]}`;
             if (useSmoothing) {
-                title += ` (сглажено: ${smoothingMethod}, уровень: ${smoothingFactor.toFixed(2)})`;
+                title += ` (сглажено: ${smoothingMethod}, уровень: ${smoothingFactor.toFixed(1)})`;
             }
             if (showTrend) {
                 title += ' + тренд';
