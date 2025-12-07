@@ -173,7 +173,7 @@ def get_language_data(name):
         'val_noexp': val_noexp,
         'res_vac': res_vac
     })
-    
+
 # ====================== ВСТРОЕННОЕ КЭШИРОВАНИЕ ======================
 class SimpleCache:
     """Простой кэш в памяти с TTL"""
