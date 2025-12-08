@@ -190,7 +190,7 @@ class SimpleCache:
                 del self.cache[key]
             return None
     
-    def set(self, key, value, ttl=300):
+    def set(self, key, value, ttl=86400):
         with self.lock:
             self.cache[key] = (value, datetime.now() + timedelta(seconds=ttl))
     
@@ -200,7 +200,7 @@ class SimpleCache:
 
 # Глобальный кэш
 cache = SimpleCache()
-CACHE_TTL = 300  # 5 минут
+CACHE_TTL = 86400
 
 # ====================== ОСНОВНАЯ ЛОГИКА КУРСОВ ВАЛЮТ ======================
 def parse_currency(dif_days, now=False):
@@ -363,12 +363,6 @@ def clear_cache():
     return "✅ Кэш очищен! <a href='/'>Вернуться на главную</a>"
 
 if __name__ == '__main__':
-    print("Доступные endpoints:")
-    print("  http://localhost:5000 - главная страница с графиками")
-    print("  http://localhost:5000/api/languages - список языков")
-    print("  http://localhost:5000/api/timeseries?languages[]=Python&languages[]=Java - временные ряды")
-    print("  http://localhost:5000/api/stats - статистика")
-    print("👉 API валют: http://localhost:5000/api/currencies/30")
-    print("👉 Очистка кэша: http://localhost:5000/clear_cache")
+    print("http://localhost:5000 - главная страница с графиками")
     
     app.run(debug=True, host='0.0.0.0', port=5000)
