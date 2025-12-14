@@ -7,6 +7,7 @@ import time
 import json
 from datetime import datetime
 from datetime import timedelta
+from requests.exceptions import Timeout, RequestException
 
 
 con = sqlite3.connect("djdb.db")
@@ -17,7 +18,25 @@ def apivac(expir):
 
     for i in ['Python', 'C%23', 'c%2B%2B', 'Java', 'Javascript', 'php', 'Ruby', 'Golang', '1c', 'Data scientist', 'Scala', 'iOS', 'Frontend', 'DevOps', 'ABAP', 'Android']:
         url = 'https://api.hh.ru/vacancies?&' + expir + 'search_field=name&text=' + i + '+not+%D0%BF%D1%80%D0%B5%D0%BF%D0%BE%D0%B4%D0%B0%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C+not+%D0%BA%D1%83%D1%80%D1%8C%D0%B5%D1%80'
-        response = requests.get(url)
+        max_retries = 3  # максимальное количество попыток
+        retry_delay = 20  # задержка между попытками
+
+        for attempt in range(max_retries):
+            try:
+                response = requests.get(url, timeout=10)
+                break  # если успешно, выходим из цикла
+            except Timeout:
+                print(f'Запрос превысил время ожидания, попытка {attempt + 1}...')
+                if attempt < max_retries - 1:
+                    time.sleep(retry_delay)
+                else:
+                    print('Достигнуто максимальное количество попыток, запрос не удался')
+                    response = None
+                    break
+            except RequestException as e:
+                print(f'Ошибка сетевого запроса: {e}')
+                response = None
+                break
         val = json.loads(response.content.decode("utf-8"))
         vac[i] = val['found']
         print(i, val['found'])
