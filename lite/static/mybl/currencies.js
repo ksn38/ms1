@@ -149,7 +149,7 @@ button.onclick = async function () {
   outMapRevKeys = [...outMapRev.keys()].slice(0, 100);
   outMapRevValues = [...outMapRev.values()].slice(0, 100);
   
-  let blue = new Set(['(SBER', '(GAZP', '(LKOH', '(YNDX', '(GMKN', '(NVTK', '(POLY', '(ROSN', '(PLZL', '(MGNT', '(MTSS', '(TATN', '(MAIL', '(FIVE', '(SNGS']);
+  let blue = new Set(['(SBER', '(GAZP', '(LKOH', '(YDEX', '(GMKN', '(NVTK', '(VTBR', '(ROSN', '(PLZL', '(IMOEX', '(TATN', '(OZON', '(T', '(SNGS', '(X5']);
   let myRe = /[(]\w+/;
   
   for (let i = 0; i < namesHigh.length; i++) {
